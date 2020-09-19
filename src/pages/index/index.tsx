@@ -1,5 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
+import VanIcon from "../../components/vant-react/icon";
 import './index.less'
 
 export default class Index extends Component {
@@ -28,7 +29,8 @@ export default class Index extends Component {
   render () {
     return (
       <View className='index'>
-        <Text>Hello world!</Text>
+        {/* <Text>Hello world!</Text> */}
+        <VanIcon name="add" color="red" size={29}/>
       </View>
     )
   }
