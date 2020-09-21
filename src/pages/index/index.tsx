@@ -31,7 +31,7 @@ export default class Index extends Component {
     return (
       <View className='index'>
         {/* <Text>Hello world!</Text> */}
-        <VanIcon name="add" color="red" size={29}/>
+        <VanIcon name="add" color="red" />
         <VanLoading center={true} vertical={true} size={40} textSize={30}>aasassa</VanLoading> 
         <VanLoading type="spinner" />
       </View>

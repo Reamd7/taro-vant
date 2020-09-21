@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import classNames from "classnames";
-import { addUnit } from "../common/utils";
+import { addUnit, CssProperties } from "../common/utils";
 import { ITouchEvent } from "@tarojs/components/types/common";
 import VanInfo from "../info";
 import "./icon.less";
@@ -23,8 +23,8 @@ export type IconEvents = {
 const VanIcon: Taro.FunctionComponent<IconProps & IconEvents> = (props) => {
   const {
     customStyle,
-    size = "inherit",
-    color = "inherit",
+    size,
+    color,
     name,
     classPrefix = "van-icon",
   } = props;
@@ -36,11 +36,11 @@ const VanIcon: Taro.FunctionComponent<IconProps & IconEvents> = (props) => {
         classPrefix,
         isImageName ? "van-icon--image" : `${classPrefix}-${name}`
       )}
-      style={{
+      style={CssProperties({
         color,
         fontSize: addUnit(size),
         ...customStyle,
-      }}
+      })}
       onClick={props.onClick}
     >
       {props.children}

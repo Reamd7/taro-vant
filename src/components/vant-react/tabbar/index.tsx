@@ -4,17 +4,24 @@ import classnames from 'classnames';
 import "./index.less";
 
 export interface TabbarProps {
-    // active?: number;
-    // activeColor?: string;
-    // inactiveColor?: string;
+    active?: number;
+    activeColor?: string;
+    inactiveColor?: string;
+    activeBg?: string;
+    inactiveBg?: string;
+
     fixed?: boolean;
     border?: boolean;
     zIndex?:number;
     safeAreaInsetBottom?: boolean;
-
     className?: string
 }
-
+/**
+ * 这里因为children不可以处理，
+ * 所以，像 vant 将 tabbar 和 tabbar-item 区分开是不行的，
+ * 必须将两个组合性的组件放在一个组件内使用。
+ * @param props 
+ */
 const VanTabbar: Taro.FunctionComponent<TabbarProps> = function(props) {
     const {
         fixed = true,
