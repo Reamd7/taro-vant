@@ -50,7 +50,8 @@
     "nervjs": "^1.5.5",
     "regenerator-runtime": "0.11.1",
     "rxjs": "^6.6.3",
-    "taro-axios": "^1.1.1"
+    "taro-axios": "^1.1.1",
+    "utility-types": "^3.10.0"
   },
   "devDependencies": {
     "@tarojs/mini-runner": "2.2.13",
