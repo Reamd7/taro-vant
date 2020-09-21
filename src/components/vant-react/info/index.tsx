@@ -1,7 +1,8 @@
 import { View, Text } from "@tarojs/components";
-import classnames from 'classnames';
 import Taro from "@tarojs/taro";
 import "./index.less";
+import { useMemoClassNames } from "../common/utils";
+
 export type InfoProps = {
   dot?: boolean;
   info?: string | number;
@@ -11,16 +12,17 @@ export type InfoProps = {
 };
 
 const VanInfo: Taro.FunctionComponent<InfoProps> = function (props: InfoProps) {
+  const classnames = useMemoClassNames()
   return (
     props.info !== null && props.info !== '' || props.dot
   ) ? <View 
-        className={classnames(
+    className={classnames(
           props.className,
           'van-info',
           props.dot && 'van-info-dot'
         )}
-        style={props.style}
-      >
+    style={props.style}
+  >
       <Text>{props.dot ? "" : props.info}</Text>
     </View> : null;
 }

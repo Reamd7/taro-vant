@@ -1,10 +1,10 @@
 import Taro from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import classNames from "classnames";
-import { addUnit, CssProperties } from "../common/utils";
-import { ITouchEvent } from "@tarojs/components/types/common";
+import { useMemoAddUnit, useMemoCssProperties } from "../common/utils";
 import VanInfo from "../info";
 import "./icon.less";
+
 export type IconProps = {
   dot?: boolean;
   name?: string;
@@ -18,7 +18,7 @@ export type IconProps = {
 };
 
 export type IconEvents = {
-  onClick?(event: ITouchEvent): void;
+  onClick?: React.ComponentProps<typeof View>['onClick']
 };
 const VanIcon: Taro.FunctionComponent<IconProps & IconEvents> = (props) => {
   const {
@@ -29,6 +29,9 @@ const VanIcon: Taro.FunctionComponent<IconProps & IconEvents> = (props) => {
     classPrefix = "van-icon",
   } = props;
   const isImageName = name ? name.indexOf("/") !== -1 : false;
+
+  const addUnit = useMemoAddUnit()
+  const CssProperties = useMemoCssProperties();
   return (
     <View
       className={classNames(
@@ -45,10 +48,10 @@ const VanIcon: Taro.FunctionComponent<IconProps & IconEvents> = (props) => {
     >
       {props.children}
       {isImageName && (
-        <Image className="van-icon__image" src={name!} mode="aspectFit" />
+        <Image className='van-icon__image' src={name!} mode='aspectFit' />
       )}
       {(props.info !== null || props.dot) && (
-        <VanInfo dot={props.dot} info={props.info} className="van-icon__info" />
+        <VanInfo dot={props.dot} info={props.info} className='van-icon__info' />
       )}
     </View>
   );

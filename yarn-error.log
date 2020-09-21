@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add className
+  /usr/local/bin/node /usr/local/bin/yarn add src/components/vant-react/Button --silent --no-progress
 
 PATH: 
-  /Users/gemini/.cargo/bin:/Users/gemini/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/gemini/.cargo/bin
+  /usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/gemini/Desktop/myshop/node_modules/.bin:/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/gemini/Desktop/myshop/node_modules/.bin:/Users/gemini/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands
 
 Yarn version: 
   1.22.0
@@ -14,15 +14,15 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/className: Not found
+  Error: https://registry.npm.taobao.org/src%2fcomponents/vant-react/Button: [not_found] document not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66975:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140727:22)
       at Request.emit (events.js:311:20)
       at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141699:10)
       at Request.emit (events.js:311:20)
-      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141621:12)
+      at Gunzip.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141621:12)
       at Object.onceWrapper (events.js:417:28)
-      at IncomingMessage.emit (events.js:323:22)
+      at Gunzip.emit (events.js:323:22)
       at endReadableNT (_stream_readable.js:1204:12)
       at processTicksAndRejections (internal/process/task_queues.js:84:21)
 
@@ -74,17 +74,21 @@ npm manifest:
       "@tarojs/taro-tt": "2.2.13",
       "@tarojs/taro-weapp": "2.2.13",
       "babel-runtime": "^6.26.0",
+      "classnames": "^2.2.6",
+      "fast-memoize": "^2.5.2",
       "nerv-devtools": "^1.5.5",
       "nervjs": "^1.5.5",
       "regenerator-runtime": "0.11.1",
       "rxjs": "^6.6.3",
-      "taro-axios": "^1.1.1"
+      "taro-axios": "^1.1.1",
+      "utility-types": "^3.10.0"
     },
     "devDependencies": {
       "@tarojs/mini-runner": "2.2.13",
       "@tarojs/plugin-less": "2.2.13",
       "@tarojs/plugin-terser": "2.2.13",
       "@tarojs/webpack-runner": "2.2.13",
+      "@types/classnames": "^2.2.10",
       "@types/react": "^16.4.6",
       "@types/webpack-env": "^1.13.6",
       "@typescript-eslint/eslint-plugin": "^2.13.0",
@@ -1679,6 +1683,11 @@ Lockfile:
     version "0.0.31"
     resolved "https://registry.npm.taobao.org/@types/archy/download/@types/archy-0.0.31.tgz#01650a4641e7e1d11dbd64eda42eec9a2f829c7f"
     integrity sha1-AWUKRkHn4dEdvWTtpC7smi+CnH8=
+  
+  "@types/classnames@^2.2.10":
+    version "2.2.10"
+    resolved "https://registry.npm.taobao.org/@types/classnames/download/@types/classnames-2.2.10.tgz#cc658ca319b6355399efc1f5b9e818f1a24bf999"
+    integrity sha1-zGWMoxm2NVOZ78H1uegY8aJL+Zk=
   
   "@types/cli-color@^0.3.29":
     version "0.3.30"
@@ -3772,7 +3781,7 @@ Lockfile:
       isobject "^3.0.0"
       static-extend "^0.1.1"
   
-  classnames@^2.2.5:
+  classnames@^2.2.5, classnames@^2.2.6:
     version "2.2.6"
     resolved "https://registry.npm.taobao.org/classnames/download/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
     integrity sha1-Q5Nb/90pHzJtrQogUwmzjQD2UM4=
@@ -5303,6 +5312,11 @@ Lockfile:
     version "2.0.6"
     resolved "https://registry.npm.taobao.org/fast-levenshtein/download/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
     integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
+  
+  fast-memoize@^2.5.2:
+    version "2.5.2"
+    resolved "https://registry.npm.taobao.org/fast-memoize/download/fast-memoize-2.5.2.tgz#79e3bb6a4ec867ea40ba0e7146816f6cdce9b57e"
+    integrity sha1-eeO7ak7IZ+pAug5xRoFvbNzptX4=
   
   faye-websocket@^0.10.0:
     version "0.10.0"
@@ -10954,6 +10968,11 @@ Lockfile:
     version "0.4.0"
     resolved "https://registry.npm.taobao.org/utila/download/utila-0.4.0.tgz#8a16a05d445657a3aea5eecc5b12a4fa5379772c"
     integrity sha1-ihagXURWV6Oupe7MWxKk+lN5dyw=
+  
+  utility-types@^3.10.0:
+    version "3.10.0"
+    resolved "https://registry.npm.taobao.org/utility-types/download/utility-types-3.10.0.tgz#ea4148f9a741015f05ed74fd615e1d20e6bed82b"
+    integrity sha1-6kFI+adBAV8F7XT9YV4dIOa+2Cs=
   
   utils-merge@1.0.1:
     version "1.0.1"

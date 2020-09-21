@@ -1,7 +1,7 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import classnames from "classnames";
-import { addUnit, CssProperties } from "../common/utils";
+import { useMemoAddUnit, useMemoCssProperties } from "../common/utils";
 import "./index.less";
 
 export type LoadingType = "circular" | "spinner";
@@ -21,7 +21,8 @@ const VanLoading: Taro.FunctionComponent<LoadingProps> = (props) => {
   const array12 = Array.from({
     length: 12,
   });
-
+  const addUnit = useMemoAddUnit()
+  const CssProperties = useMemoCssProperties();
   return (
     <View
       className={classnames(
@@ -44,11 +45,11 @@ const VanLoading: Taro.FunctionComponent<LoadingProps> = (props) => {
       >
         {type === "spinner" &&
           array12.map((_, index) => (
-            <View key={index} className="van-loading__dot"></View>
+            <View key={index} className='van-loading__dot'></View>
           ))}
       </View>
       <View
-        className="van-loading__text"
+        className='van-loading__text'
         style={CssProperties({
           fontSize: addUnit(textSize),
         })}

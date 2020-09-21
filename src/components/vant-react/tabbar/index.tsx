@@ -1,6 +1,6 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import classnames from 'classnames';
+import { useMemoClassNames } from "../common/utils";
 import "./index.less";
 
 export interface TabbarProps {
@@ -23,6 +23,7 @@ export interface TabbarProps {
  * @param props 
  */
 const VanTabbar: Taro.FunctionComponent<TabbarProps> = function(props) {
+    const classnames = useMemoClassNames()
     const {
         fixed = true,
         border = true,
@@ -30,13 +31,13 @@ const VanTabbar: Taro.FunctionComponent<TabbarProps> = function(props) {
         safeAreaInsetBottom = true
     } = props
     return <View
-        className={classnames(
+      className={classnames(
             props.className,
             border && 'van-hairline--top-bottom', // hairline.less
             fixed && 'van-tabbar--fixed',
             safeAreaInsetBottom && 'van-tabbar--safe'
         )}
-        style={zIndex ? { zIndex } : undefined}
+      style={zIndex ? { zIndex } : undefined}
     >
         {props.children}
     </View>
