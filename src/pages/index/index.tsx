@@ -1,7 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import VanIcon from "../../components/vant-react/icon";
 import './index.less'
+import VanLoading from '../../components/vant-react/loading';
 
 export default class Index extends Component {
 
@@ -31,6 +32,8 @@ export default class Index extends Component {
       <View className='index'>
         {/* <Text>Hello world!</Text> */}
         <VanIcon name="add" color="red" size={29}/>
+        <VanLoading center={true} vertical={true} size={40} textSize={30}>aasassa</VanLoading> 
+        <VanLoading type="spinner" />
       </View>
     )
   }
