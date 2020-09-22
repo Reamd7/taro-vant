@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import VanIcon from "../../../components/vant-react/icon";
+import VanIcon from "src/components/vant-react/icon";
 import { View } from "@tarojs/components";
 import "./index.less";
 

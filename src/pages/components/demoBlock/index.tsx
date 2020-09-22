@@ -4,8 +4,8 @@ import { View } from "@tarojs/components";
 import "./index.less";
 
 interface DemoBlockProps {
-  title: String;
-  padding: Boolean;
+  title?: String;
+  padding?: Boolean;
   className?: string;
 }
 

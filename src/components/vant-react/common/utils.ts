@@ -2,6 +2,7 @@ import { useCallback } from "@tarojs/taro";
 import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
+import { CSSProperties } from "react";
 
 function addUnit(value?: string | number | null) {
   if (value == null) {
@@ -12,8 +13,9 @@ function addUnit(value?: string | number | null) {
     return value
   }
 }
-function CssProperties<T extends Record<string, null | undefined | string | number>>(dict: T) {
-  return Object.keys(dict).reduce<T>((res, key: keyof T) => {
+function CssProperties<T extends CSSProperties>(dict?: T | null | undefined) {
+  if (!dict) return {} as T;
+  return Object.keys(dict).reduce<T>((res, key) => {
     const value = dict[key]
     if (value != null) res[key] = value;
     return res;

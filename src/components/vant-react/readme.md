@@ -1,7 +1,7 @@
 # 组件
 ## 基础组件
 - [x] Button 按钮
-- [ ] Cell 单元格
+- [x] Cell 单元格
 - [x] Icon 图标
 - [ ] Image 图片
 - [ ] Layout 布局

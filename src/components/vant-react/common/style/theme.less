@@ -1,5 +1,3 @@
-@import (reference) './var.less';
-
 .theme(@property, @imp) {
   @{property}: e(replace(@imp, '@([^() ]+)', '@{$1}', 'ig'));
   @{property}: e(replace(@imp, '@([^() ]+)', 'var(--$1, @{$1})', 'ig'));

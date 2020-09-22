@@ -10,10 +10,7 @@ function join(name: string, mods: string[]) {
     return mods.join(' ');
 }
 
-function traversing(mods: string[], conf?: string |
-    Array<string | Record<string, boolean | undefined | string>> |
-    Record<string, boolean | undefined | string>
-) {
+function traversing(mods: string[], conf?: confValue) {
     if (!conf) {
         return;
     }
@@ -30,11 +27,12 @@ function traversing(mods: string[], conf?: string |
         });
     }
 }
-
+type bemValue = boolean | undefined | string
+type confValue = bemValue |
+    Array<bemValue | Record<string, bemValue>> |
+    Record<string, bemValue>
 export default function bem(name: string, conf?:
-    string |
-    Array<string | Record<string, boolean | undefined | string>> |
-    Record<string, boolean | undefined | string>
+    confValue
 ) {
     const mods: string[] = [];
     traversing(mods, conf);
