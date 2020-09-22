@@ -10,6 +10,8 @@ import VanIcon from "../icon";
 import VanLoading from "../loading";
 import type { LoadingType } from '../loading'
 import "./index.less";
+import { MixinsButtonProps } from "../common/mixins/button";
+import { MixinsOpenTypeProps, MixinsOpenTypeEvents } from "../common/mixins/open-type";
 
 type ButtonType = "default" | "primary" | "info" | "warning" | "danger";
 type ButtonSize = "large" | "normal" | "small" | "mini";
@@ -48,31 +50,9 @@ export type ButtonProps = {
 export type ButtonEvents = {
   onClick?: SourceBtnProps["onClick"];
 };
+
 // ==================================
-export type MixinsButtonProps = Pick<
-  SourceBtnProps,
-  | "id"
-  | "lang"
-  | "sessionFrom"
-  | "sendMessageTitle"
-  | "sendMessagePath"
-  | "sendMessageImg"
-  | "showMessageCard"
-  | "appParameter"
-  | "disabled"
-  | "hoverClass"
->;
-// ==================================
-export type MixinsOpenTypeProps = Pick<SourceBtnProps, "openType">;
-export type MixinsOpenTypeEvents = Pick<
-  SourceBtnProps,
-  | "onGetUserInfo"
-  | "onContact"
-  | "onGetPhoneNumber"
-  | "onError"
-  | "onLaunchapp"
-  | "onOpenSetting"
->;
+
 // ==================================
 
 const loadingColor = (type: string, color?: string, plain?: boolean) => {
