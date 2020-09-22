@@ -4,7 +4,7 @@ import { View } from "@tarojs/components";
 import "./index.less";
 
 const VanRow: Taro.FunctionComponent<{
-  gutter?: string | number;
+  gutter?: number;
   classNames?: string;
 }> = (props) => {
   const { gutter } = props;

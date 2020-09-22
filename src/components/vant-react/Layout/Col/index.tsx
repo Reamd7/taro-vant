@@ -4,8 +4,8 @@ import { View } from "@tarojs/components";
 import "./index.less";
 
 const VanCol: Taro.FunctionComponent<{
-  span?: number;
-  offset?: number;
+  span?: number | string;
+  offset?: number | string;
   gutter?: number;
   classNames?: string;
 }> = (props) => {

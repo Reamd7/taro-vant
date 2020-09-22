@@ -31,6 +31,7 @@ class App extends Component {
       'pages/index/index',
       'pages/button/index',
       'pages/cell/index',
+      'pages/image/index',
       'pages/layout/index'
     ],
     window: {
