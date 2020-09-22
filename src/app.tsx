@@ -33,7 +33,9 @@ class App extends Component {
       'pages/cell/index',
       'pages/image/index',
       'pages/layout/index',
-      'pages/transition/index'
+      'pages/transition/index',
+
+      'pages/overlay/index'
     ],
     window: {
       backgroundTextStyle: 'light',

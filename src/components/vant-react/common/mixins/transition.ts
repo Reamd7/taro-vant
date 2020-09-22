@@ -54,10 +54,10 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
 
     const getClassNames = useCallback((name: string) => {
         return {
-            enter: `van-${name}-enter van-${name}-enter-active ${props.enterClass} ${props.enterActiveClass}`,
-            'enter-to': `van-${name}-enter-to van-${name}-enter-active ${props.enterToClass} ${props.enterActiveClass}`,
-            leave: `van-${name}-leave van-${name}-leave-active ${props.leaveClass} ${props.leaveActiveClass}`,
-            'leave-to': `van-${name}-leave-to van-${name}-leave-active ${props.leaveToClass} ${props.leaveActiveClass}`,
+            enter: `van-${name}-enter van-${name}-enter-active ${props.enterClass || ""} ${props.enterActiveClass || ""}`,
+            'enter-to': `van-${name}-enter-to van-${name}-enter-active ${props.enterToClass || ""} ${props.enterActiveClass || ""}`,
+            leave: `van-${name}-leave van-${name}-leave-active ${props.leaveClass || ""} ${props.leaveActiveClass || ""}`,
+            'leave-to': `van-${name}-leave-to van-${name}-leave-active ${props.leaveToClass || ""} ${props.leaveActiveClass || ""}`,
         }
     }, [props.enterActiveClass, props.enterClass, props.enterToClass, props.leaveActiveClass, props.leaveClass, props.leaveToClass, name])
 
@@ -162,5 +162,11 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
     }, [show])
 
 
-    return { data, onTransitionEnd }
+    return {
+        data,
+        show,
+        duration,
+        name,
+        onTransitionEnd
+    }
 }

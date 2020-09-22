@@ -8,7 +8,7 @@ export default function TransitionPage() {
   const [data, setData] = useState({
     show: false,
     name: "fade",
-    showCustom: false,
+    showCustom: false
   });
 
   const trigger = useCallback(
@@ -16,12 +16,12 @@ export default function TransitionPage() {
       setData({
         ...data,
         name,
-        show: true,
+        show: true
       });
       setTimeout(() => {
         setData({
           ...data,
-          show: false,
+          show: false
         });
       }, 500);
     },
@@ -103,10 +103,14 @@ export default function TransitionPage() {
         }}
         isLink
       />
-      <VanTransition show={data.show} name={data.name} className="block" />
+      <VanTransition
+        show={data.show}
+        name={data.name as "fade"}
+        className="block"
+      />
       <VanTransition
         show={data.showCustom}
-        name=""
+        // name=""
         duration={{ enter: 300, leave: 1000 }}
         className="block"
         enterClass="van-enter-class"
