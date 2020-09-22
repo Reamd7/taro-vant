@@ -6,7 +6,7 @@
 - [x] Image 图片
 - [x] Layout 布局
 - [ ] Popup 弹出层
-- [ ] Transition 动画
+- [x] Transition 动画
 ## 表单组件
 - [ ] Calendar 日历
 - [ ] Checkbox 复选框
