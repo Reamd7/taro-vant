@@ -14,9 +14,8 @@ function traversing(mods: string[], conf?: confValue) {
     if (!conf) {
         return;
     }
-    // if (typeof conf === 'string' || typeof conf === 'number') {
-    if (typeof conf === 'string') {
-        mods.push(conf);
+    if (typeof conf === 'string' || typeof conf === 'number') {
+        mods.push(String(conf));
     } else if (Array.isArray(conf)) {
         conf.forEach(function (item) {
             traversing(mods, item);
@@ -27,7 +26,7 @@ function traversing(mods: string[], conf?: confValue) {
         });
     }
 }
-type bemValue = boolean | undefined | string
+type bemValue = boolean | undefined | string | number
 type confValue = bemValue |
     Array<bemValue | Record<string, bemValue>> |
     Record<string, bemValue>

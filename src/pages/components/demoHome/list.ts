@@ -20,7 +20,7 @@ export default [
           title: 'Image 图片',
         },
         {
-          path: '/col',
+          path: '/layout',
           title: 'Layout 布局',
         },
         {

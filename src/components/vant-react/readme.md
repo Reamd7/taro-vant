@@ -4,7 +4,7 @@
 - [x] Cell 单元格
 - [x] Icon 图标
 - [ ] Image 图片
-- [ ] Layout 布局
+- [x] Layout 布局
 - [ ] Popup 弹出层
 - [ ] Transition 动画
 ## 表单组件

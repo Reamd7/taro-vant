@@ -27,9 +27,7 @@ const config = {
         'polyfill': false,
         'regenerator': true,
         'moduleName': 'babel-runtime'
-      }],
-      "@babel/plugin-proposal-nullish-coalescing-operator",
-      "@babel/plugin-proposal-optional-chaining"
+      }]
     ]
   },
   plugins: [

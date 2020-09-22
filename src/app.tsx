@@ -30,7 +30,8 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/button/index',
-      'pages/cell/index'
+      'pages/cell/index',
+      'pages/layout/index'
     ],
     window: {
       backgroundTextStyle: 'light',
