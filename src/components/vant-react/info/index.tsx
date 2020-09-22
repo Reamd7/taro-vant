@@ -14,7 +14,7 @@ export type InfoProps = {
 const VanInfo: Taro.FunctionComponent<InfoProps> = function (props: InfoProps) {
   const classnames = useMemoClassNames()
   return (
-    props.info !== null && props.info !== '' || props.dot
+    props.info != null && props.info !== '' || props.dot
   ) ? <View 
     className={classnames(
           props.className,
