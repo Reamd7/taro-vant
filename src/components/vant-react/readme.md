@@ -21,7 +21,7 @@
 - [ ] Switch 开关
 - [ ] Uploader 文件上传
 ## 反馈组件
-- [ ] ActionSheet 上拉菜单
+- [x] ActionSheet 上拉菜单
 - [ ] Dialog 弹出框
 - [ ] DropdownMenu 下拉菜单
 - [x] Loading 加载

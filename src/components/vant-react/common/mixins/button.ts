@@ -14,3 +14,5 @@ export type MixinsButtonProps = Pick<
   | "disabled"
   | "hoverClass"
 >;
+
+export const MixinsButtonExternalClass = ['hover-class']

@@ -16,6 +16,7 @@ import { Block, View } from "@tarojs/components";
 import VanIcon from "../icon";
 import VanOverlay from "../Overlay";
 import "./index.less";
+import { ITouchEvent } from "@tarojs/components/types/common";
 
 const VanPopup: Taro.FunctionComponent<{
   show?: boolean;
@@ -35,8 +36,8 @@ const VanPopup: Taro.FunctionComponent<{
   // transition?: string;
   className?: string;
   ['custom-class']?: string;
-  onClose?: VoidFunction;
-  onClickOverlay?: VoidFunction;
+  onClose?: React.ComponentProps<typeof VanIcon>['onClick'];
+  onClickOverlay?: React.ComponentProps<typeof VanOverlay>['onClick'];
 
   noScroll?: boolean; // 这个开关一开就整个遮罩层都无法滚动了。
   closeIconClass?: string;
@@ -58,10 +59,10 @@ const VanPopup: Taro.FunctionComponent<{
   } = props;
   (props as any).name = position; // ?????
   const { data, onTransitionEnd } = useMixinsTransition(props, false);
-  const _ClickOverlay = useCallback(() => {
-    onClickOverlay();
+  const _ClickOverlay = useCallback((e: ITouchEvent) => {
+    onClickOverlay(e);
     if (closeOnClickOverlay) {
-      onClose();
+      onClose(e);
     }
   }, [closeOnClickOverlay, onClickOverlay, onClose]);
   const classNames = useMemoClassNames();

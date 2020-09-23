@@ -149,12 +149,12 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
       showMessageCard={props.showMessageCard}
       appParameter={props.appParameter}
       onClick={(!disabled && !loading) ? props.onClick : noop}
-      onGetUserInfo={props.onGetUserInfo}
-      onContact={props.onContact}
-      onGetPhoneNumber={props.onGetPhoneNumber}
-      onError={props.onError}
-      onLaunchapp={props.onLaunchapp}
-      onOpenSetting={props.onOpenSetting}
+      onGetUserInfo={props.onGetUserInfo || noop}
+      onContact={props.onContact || noop}
+      onGetPhoneNumber={props.onGetPhoneNumber || noop}
+      onError={props.onError || noop}
+      onLaunchapp={props.onLaunchapp || noop}
+      onOpenSetting={props.onOpenSetting || noop}
     >
       {loading ? (
         <Block>

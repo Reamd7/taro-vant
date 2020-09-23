@@ -34,10 +34,10 @@ class App extends Component {
       'pages/image/index',
       'pages/layout/index',
       'pages/transition/index',
-
       'pages/popup/index',
-
       'pages/overlay/index',
+
+      'pages/action-sheet/index'
     ],
     window: {
       backgroundTextStyle: 'light',
