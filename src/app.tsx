@@ -35,7 +35,7 @@ class App extends Component {
       'pages/layout/index',
       'pages/transition/index',
 
-      'pages/overlay/index'
+      'pages/overlay/index',
     ],
     window: {
       backgroundTextStyle: 'light',

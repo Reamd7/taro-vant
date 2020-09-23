@@ -9,8 +9,9 @@ import { useMemoClassNames } from "../common/utils";
 
 const VanTransition: Taro.FunctionComponent<{
   className?: string;
-  onClick?: React.ComponentProps<typeof View>["onClick"];
-  onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];
+  // onClick?: React.ComponentProps<typeof View>["onClick"];
+  // onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];
+  // useCatchTouch?: boolean;
 } & MixinsTransitionProps> = props => {
   const { data, onTransitionEnd } = useMixinsTransition(props, true);
   const classname = useMemoClassNames();
@@ -28,8 +29,6 @@ const VanTransition: Taro.FunctionComponent<{
             }),
         ...props.style
       }}
-      onClick={props.onClick}
-      onTouchMove={props.onTouchMove}
       onTransitionEnd={onTransitionEnd}
     >
       {props.children}
