@@ -89,7 +89,7 @@ export default function TransitionPage() {
       <VanCell
         title="Slide Right"
         onClick={() => {
-          trigger("fade");
+          trigger("slide-right");
         }}
         isLink
       />
