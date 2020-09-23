@@ -107,16 +107,22 @@ export default function TransitionPage() {
         show={data.show}
         name={data.name as "fade"}
         className="block"
+        custom-class="block"
       />
       <VanTransition
         show={data.showCustom}
-        // name=""
+        name=""
         duration={{ enter: 300, leave: 1000 }}
         className="block"
+        custom-class="block"
         enterClass="van-enter-class"
+        enter-class="van-enter-class"
         enterActiveClass="van-enter-active-class"
+        enter-active-class="van-enter-active-class"
         leaveActiveClass="van-leave-active-class"
+        leave-active-class="van-leave-active-class"
         leaveToClass="van-leave-to-class"
+        leave-to-class="van-leave-to-class"
         onBeforeEnter={() => console.log("before enter")}
         onEnter={() => console.log("enter")}
         onAfterEnter={() => console.log("after enter")}

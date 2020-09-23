@@ -22,8 +22,8 @@ const DemoHomeNav: Taro.FunctionComponent<HomeNavProps> = (props) => {
   }
   return (
     <View className="demo-home-nav">
-      <View className="demo-home-nav__title">{group.groupName}</View>
-      <View className="demo-home-nav__group">
+      {group && <View className="demo-home-nav__title">{group.groupName}</View>}
+      {group && <View className="demo-home-nav__group">
         {group.list.map((item) => (
           <View
             key={item.title}
@@ -35,7 +35,7 @@ const DemoHomeNav: Taro.FunctionComponent<HomeNavProps> = (props) => {
             <VanIcon name="arrow" className="demo-home-nav__icon" />
           </View>
         ))}
-      </View>
+      </View>}
     </View>
   );
 };

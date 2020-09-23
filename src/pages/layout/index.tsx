@@ -9,42 +9,42 @@ const Layout: Taro.FunctionComponent<{}> = () => {
     <Block>
       <DemoBlock title="基础用法" padding>
         <VanRow>
-          <VanCol span={8} classNames="dark">
+          <VanCol span={8} classNames="dark" custom-class="dark">
             span: 8
           </VanCol>
-          <VanCol span={8} classNames="light">
+          <VanCol span={8} classNames="light" custom-class="light">
             span: 8
           </VanCol>
-          <VanCol span={8} classNames="dark">
+          <VanCol span={8} classNames="dark" custom-class="dark">
             span: 8
           </VanCol>
         </VanRow>
 
         <VanRow>
-          <VanCol span={4} classNames="dark">
+          <VanCol span={4} classNames="dark" custom-class="dark">
             span: 4
           </VanCol>
-          <VanCol span={10} offset={4} classNames="light">
+          <VanCol span={10} offset={4} classNames="light" custom-class="light">
             offset: 4, span: 10
           </VanCol>
         </VanRow>
 
         <VanRow>
-          <VanCol offset={12} span={12} classNames="dark">
+          <VanCol offset={12} span={12} classNames="dark" custom-class="dark">
             offset: 12, span: 12
           </VanCol>
         </VanRow>
       </DemoBlock>
 
       <DemoBlock title="在列元素之间增加间距" padding>
-        <VanRow gutter="20">
-          <VanCol span={8} classNames="dark">
+        <VanRow gutter={20}>
+          <VanCol gutter={20} span={8} classNames="dark" custom-class="dark">
             span: 8
           </VanCol>
-          <VanCol span={8} classNames="light">
+          <VanCol gutter={20} span={8} classNames="light" custom-class="light">
             span: 8
           </VanCol>
-          <VanCol span={8} classNames="dark">
+          <VanCol gutter={20} span={8} classNames="dark" custom-class="dark">
             span: 8
           </VanCol>
         </VanRow>

@@ -1,4 +1,4 @@
-import { requestAnimationFrame } from "../utils";
+import { requestAnimationFrame, isH5, isWeapp } from "../utils";
 import { useState, useEffect, useRef, useCallback } from "@tarojs/taro";
 export type MixinsTransitionProps = {
     style?: React.CSSProperties;
@@ -7,7 +7,7 @@ export type MixinsTransitionProps = {
         enter: number;
         leave: number;
     };
-    name?: 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right'
+    name?: 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | ''
 } & {
     onBeforeEnter?: VoidFunction;
     onEnter?: VoidFunction;
@@ -17,11 +17,17 @@ export type MixinsTransitionProps = {
     onAfterLeave?: VoidFunction;
 } & {
     enterClass?: string;
+    ['enter-class']?: string;
     enterActiveClass?: string;
+    ['enter-active-class']?: string;
     enterToClass?: string;
+    ['enter-to-class']?: string;
     leaveClass?: string;
+    ['leave-class']?: string;
     leaveActiveClass?: string;
+    ['leave-active-class']?: string;
     leaveToClass?: string;
+    ['leave-to-class']?: string;
 }
 function isObj(x?: number | {
     enter: number;
@@ -53,11 +59,20 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
     }, [])
 
     const getClassNames = useCallback((name: string) => {
-        return {
-            enter: `van-${name}-enter van-${name}-enter-active ${props.enterClass || ""} ${props.enterActiveClass || ""}`,
-            'enter-to': `van-${name}-enter-to van-${name}-enter-active ${props.enterToClass || ""} ${props.enterActiveClass || ""}`,
-            leave: `van-${name}-leave van-${name}-leave-active ${props.leaveClass || ""} ${props.leaveActiveClass || ""}`,
-            'leave-to': `van-${name}-leave-to van-${name}-leave-active ${props.leaveToClass || ""} ${props.leaveActiveClass || ""}`,
+        if (isH5) {
+            return {
+                enter: `van-${name}-enter van-${name}-enter-active ${props.enterClass || ""} ${props.enterActiveClass || ""}`,
+                'enter-to': `van-${name}-enter-to van-${name}-enter-active ${props.enterToClass || ""} ${props.enterActiveClass || ""}`,
+                leave: `van-${name}-leave van-${name}-leave-active ${props.leaveClass || ""} ${props.leaveActiveClass || ""}`,
+                'leave-to': `van-${name}-leave-to van-${name}-leave-active ${props.leaveToClass || ""} ${props.leaveActiveClass || ""}`,
+            }
+        } else { // TODO 支持RN端。
+            return {
+                enter: `van-${name}-enter van-${name}-enter-active enter-class enter-active-class`,
+                'enter-to': `van-${name}-enter-to van-${name}-enter-active enter-to-class enter-active-class`,
+                leave: `van-${name}-leave van-${name}-leave-active leave-class leave-active-class`,
+                'leave-to': `van-${name}-leave-to van-${name}-leave-active leave-to-class leave-active-class`,
+            }
         }
     }, [props.enterActiveClass, props.enterClass, props.enterToClass, props.leaveActiveClass, props.leaveClass, props.leaveToClass, name])
 
@@ -170,3 +185,12 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
         onTransitionEnd
     }
 }
+
+export const MixinsTransitionExternalClass = [
+    'enter-class',
+    'enter-active-class',
+    'enter-to-class',
+    'leave-class',
+    'leave-active-class',
+    'leave-to-class'
+]

@@ -17,7 +17,7 @@ const fits = [
   "heightFix",
 ] as const;
 const src = "https://img.yzcdn.cn/vant/cat.jpeg";
-const Cell: Taro.FunctionComponent<{}> = () => {
+const ImagePage: Taro.FunctionComponent<{}> = () => {
   return (
     <View>
       <DemoBlock title="基础用法" padding>
@@ -91,12 +91,12 @@ const Cell: Taro.FunctionComponent<{}> = () => {
   );
 };
 
-Cell.config = {
-  navigationBarTitleText: "Cell 单元格",
+ImagePage.config = {
+  navigationBarTitleText: "ImagePage 图片",
 };
 
-Cell.options = {
+ImagePage.options = {
   addGlobalClass: true,
 };
 
-export default Cell;
+export default ImagePage;

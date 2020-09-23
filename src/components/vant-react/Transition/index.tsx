@@ -2,7 +2,8 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import {
   MixinsTransitionProps,
-  useMixinsTransition
+  useMixinsTransition,
+  MixinsTransitionExternalClass
 } from "src/components/vant-react/common/mixins/transition";
 import "./index.less";
 import { useMemoClassNames, isWeapp, isH5 } from "../common/utils";
@@ -45,5 +46,8 @@ const VanTransition: Taro.FunctionComponent<{
 VanTransition.options = {
   addGlobalClass: true
 };
-
+VanTransition.externalClasses = [
+  'custom-class',
+  ...MixinsTransitionExternalClass
+]
 export default VanTransition;
