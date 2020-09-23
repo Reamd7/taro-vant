@@ -5,7 +5,7 @@
 - [x] Icon 图标
 - [x] Image 图片
 - [x] Layout 布局
-- [ ] Popup 弹出层
+- [x] Popup 弹出层
 - [x] Transition 动画
 ## 表单组件
 - [ ] Calendar 日历
