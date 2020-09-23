@@ -5,10 +5,11 @@ import {
   useMixinsTransition
 } from "src/components/vant-react/common/mixins/transition";
 import "./index.less";
-import { useMemoClassNames } from "../common/utils";
+import { useMemoClassNames, isWeapp, isH5 } from "../common/utils";
 
 const VanTransition: Taro.FunctionComponent<{
   className?: string;
+  ["custom-class"]?: string;
   // onClick?: React.ComponentProps<typeof View>["onClick"];
   // onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];
   // useCatchTouch?: boolean;
@@ -18,7 +19,12 @@ const VanTransition: Taro.FunctionComponent<{
   const { inited, classes, currentDuration, display } = data;
   return inited ? (
     <View
-      className={classname("van-transition", classes, props.className)}
+      className={classname(
+        "van-transition",
+        classes,
+        isH5 && props.className,
+        isWeapp && "custom-class"
+      )}
       style={{
         transitionDuration: currentDuration + "ms",
         WebkitTransitionDuration: currentDuration + "ms",

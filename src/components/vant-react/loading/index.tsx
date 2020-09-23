@@ -1,7 +1,7 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import classnames from "classnames";
-import { useMemoAddUnit, useMemoCssProperties } from "../common/utils";
+import { useMemoAddUnit, useMemoCssProperties, isWeapp, isH5 } from "../common/utils";
 import "./index.less";
 
 export type LoadingType = "circular" | "spinner";
@@ -12,8 +12,8 @@ export type LoadingProps = {
   vertical?: boolean;
   center?: boolean;
   textSize?: string | number;
-
   className?: string;
+  ['custom-class']?: string;
 };
 
 const VanLoading: Taro.FunctionComponent<LoadingProps> = (props) => {
@@ -26,7 +26,8 @@ const VanLoading: Taro.FunctionComponent<LoadingProps> = (props) => {
   return (
     <View
       className={classnames(
-        props.className,
+        isH5 && props.className,
+        isWeapp && "custom-class",
         "van-loading",
         center && 'van-loading--center',
         vertical && "van-loading--vertical"
@@ -62,5 +63,7 @@ const VanLoading: Taro.FunctionComponent<LoadingProps> = (props) => {
 VanLoading.options = {
   addGlobalClass: true,
 };
-
+VanLoading.externalClasses = [
+  'custom-class'
+]
 export default VanLoading;

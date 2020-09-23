@@ -4,7 +4,9 @@ import {
   noop,
   useMemoBem,
   useMemoClassNames,
-  useMemoCssProperties
+  useMemoCssProperties,
+  isH5,
+  isWeapp
 } from "../common/utils";
 import VanIcon from "../icon";
 import VanLoading from "../loading";
@@ -42,9 +44,11 @@ export type ButtonProps = {
   formType?: SourceBtnProps['formType'];
 
   className?: string;
+  ['custom-class']?: string;
   hoverClass?: string;
+  ['hover-class']?: string;
   loadingClass?: string;
-
+  ['loading-class']?: string;
   style?: React.CSSProperties;
 };
 export type ButtonEvents = {
@@ -108,7 +112,8 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
       id={props.id}
       data-detail={dataset}
       className={classnames(
-        props.className,
+        isH5 && props.className,
+        isWeapp && 'custom-class',
         bem("button", [
           type,
           size,
@@ -125,7 +130,11 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
         ]),
         hairline && "van-hairline--surround"
       )}
-      hoverClass={classnames("van-button--active", props.hoverClass)}
+      hoverClass={classnames(
+        "van-button--active",
+        isWeapp && "hover-class",
+        isH5 && props.hoverClass
+      )}
       lang={props.lang}
       formType={props.formType}
       style={css({
@@ -150,7 +159,18 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
       {loading ? (
         <Block>
           <VanLoading
-            className={props.loadingClass}
+            className={
+              classnames(
+                isH5 && props.loadingClass,
+                isWeapp && 'loading-class'
+              )
+            }
+            custom-class={
+              classnames(
+                isH5 && props.loadingClass,
+                isWeapp && 'loading-class'
+              )
+            }
             size={loadingSize}
             type={loadingType}
             color={loadingColor(type, props.color, plain)}
@@ -169,6 +189,7 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
               name={props.icon}
               classPrefix={IconClassPrefix}
               className='van-button__icon'
+              custom-class='van-button__icon'
               customStyle={{
                 lineHeight: "inherit",
               }}
@@ -183,5 +204,9 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
 VanButton.options = {
   addGlobalClass: true,
 };
-
+VanButton.externalClasses = [
+  'custom-class',
+  'hover-class',
+  'loading-class'
+]
 export default VanButton;

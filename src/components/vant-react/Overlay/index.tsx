@@ -10,6 +10,7 @@ type VanOverlayProps = {
   zIndex?: number;
   duration?: MixinsTransitionProps['duration'];
   className?: string;
+  ['custom-class']?: string;
   style?: React.CSSProperties;
   noScroll?: boolean; // 这个开关一开就整个遮罩层都无法滚动了。
   onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];

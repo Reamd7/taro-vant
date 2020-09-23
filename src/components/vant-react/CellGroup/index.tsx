@@ -2,11 +2,13 @@ import Taro from "@tarojs/taro";
 import { Block, View } from "@tarojs/components";
 import classNames from "classnames";
 import "./index.less";
+import { isH5, isWeapp } from "../common/utils";
 
 const VanCellGroup: Taro.FunctionComponent<{
   title?: string;
   border?: boolean;
   className?: string;
+  ['custom-class']?: string;
 }> = (props) => {
   const { border = true, title } = props;
 
@@ -15,7 +17,8 @@ const VanCellGroup: Taro.FunctionComponent<{
       {title && <View className="van-cell-group__title">{title}</View>}
       <View
         className={classNames(
-          props.className,
+          isH5 && props.className,
+          isWeapp && "custom-class",
           "van-cell-group",
           border && "van-hairline--top-bottom"
         )}
@@ -25,5 +28,10 @@ const VanCellGroup: Taro.FunctionComponent<{
     </Block>
   );
 };
-
+VanCellGroup.externalClasses = [
+  'custom-class'
+]
+VanCellGroup.options = {
+  addGlobalClass: true,
+}
 export default VanCellGroup;
