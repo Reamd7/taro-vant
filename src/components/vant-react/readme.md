@@ -25,7 +25,7 @@
 - [ ] Dialog 弹出框
 - [ ] DropdownMenu 下拉菜单
 - [x] Loading 加载
-- [ ] Notify 消息通知
+- [x] Notify 消息通知
 - [x] Overlay 遮罩层
 - [ ] ShareSheet 分享面板
 - [ ] SwipeCell 滑动单元格

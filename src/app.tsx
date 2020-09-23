@@ -37,13 +37,15 @@ class App extends Component {
       'pages/popup/index',
       'pages/overlay/index',
 
-      'pages/action-sheet/index'
+      'pages/action-sheet/index',
+      'pages/notify/index'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'black',
+      navigationStyle: "custom"
     }
   }
 

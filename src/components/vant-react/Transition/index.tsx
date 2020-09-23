@@ -11,7 +11,7 @@ import { useMemoClassNames, isWeapp, isH5 } from "../common/utils";
 const VanTransition: Taro.FunctionComponent<{
   className?: string;
   ["custom-class"]?: string;
-  // onClick?: React.ComponentProps<typeof View>["onClick"];
+  onClick?: React.ComponentProps<typeof View>["onClick"];
   // onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];
   // useCatchTouch?: boolean;
 } & MixinsTransitionProps> = props => {

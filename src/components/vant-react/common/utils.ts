@@ -1,4 +1,4 @@
-import Taro, { useCallback } from "@tarojs/taro";
+import Taro, { useCallback, getCurrentPages } from "@tarojs/taro";
 import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
@@ -71,3 +71,9 @@ export function requestAnimationFrame(cb: Function) {
 
 export const isH5 = process.env.TARO_ENV === "h5";
 export const isWeapp = (process.env.TARO_ENV !== "h5" && process.env.TARO_ENV !== "rn")
+
+
+export function getContext() {
+  const pages = getCurrentPages();
+  return pages[pages.length - 1];
+}
