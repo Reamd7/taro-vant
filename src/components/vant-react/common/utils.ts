@@ -44,7 +44,7 @@ export const noop = () => { }
 
 let systemInfo: Taro.getSystemInfoSync.Result | null = null;
 export function nextTick(fn: Function) {
-  setTimeout(() => {
+  return setTimeout(() => {
     fn();
   }, 1000 / 30);
 }
@@ -54,18 +54,36 @@ export function getSystemInfoSync() {
   }
   return systemInfo;
 }
+
+// let lastTime = 0;
+// export const requestAnimationFrame = function (callback) {
+//   var currTime = Date.now();
+//   var timeToCall = Math.max(0, 30 - (currTime - lastTime));
+//   // console.log(16 - (currTime - lastTime));
+//   const id = setTimeout(function () {
+//     callback(currTime + timeToCall);
+//   }, timeToCall);
+//   lastTime = currTime + timeToCall;
+//   // console.log(lastTime);
+//   return id;
+// };
+
+export const cancelAnimationFrame = function (id: ReturnType<typeof requestAnimationFrame>) {
+  clearTimeout(id);
+}
 export function requestAnimationFrame(cb: Function) {
-  const systemInfo = getSystemInfoSync();
-  if (systemInfo.platform === 'devtools') {
+  // const Info = systemInfo || (systemInfo = getSystemInfoSync());
+  // const el = Taro
+  //   .createSelectorQuery()
+  //   .selectViewport()
+  //   .boundingClientRect();
+  // console.log(performance.now())
+  // if (Info.platform === 'devtools') {
     return nextTick(cb);
-  }
-  return Taro
-    .createSelectorQuery()
-    .selectViewport()
-    .boundingClientRect()
-    .exec(() => {
-      cb();
-    });
+  // }
+  // return el.exec(() => {
+  //   cb();
+  // });
 }
 
 

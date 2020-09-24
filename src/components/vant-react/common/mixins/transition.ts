@@ -126,13 +126,14 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
 
             requestAnimationFrame(() => {
                 checkStatus('enter')
-                transitionEnded.current = false;
                 setData({
                     inited: true,
                     classes: classNames["enter-to"],
                     currentDuration,
                     display: true
                 })
+                transitionEnded.current = false;
+                setTimeout(() => onTransitionEnd(), currentDuration);
                 // setDisplay(true)
             })
         })
@@ -162,14 +163,14 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
 
             requestAnimationFrame(() => {
                 checkStatus('leave')
-                transitionEnded.current = false;
-                setTimeout(() => onTransitionEnd(), currentDuration);
                 setData({
                     inited: true,
                     classes: classNames["leave-to"],
                     currentDuration,
                     display: true
                 })
+                transitionEnded.current = false;
+                setTimeout(() => onTransitionEnd(), currentDuration);
                 // setDisplay(true)
             })
         })
