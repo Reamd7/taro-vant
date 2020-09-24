@@ -58,23 +58,21 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
         }
     }, [])
 
-    const getClassNames = useCallback((name: string) => {
-        if (isH5) {
-            return {
-                enter: `van-${name}-enter van-${name}-enter-active ${props.enterClass || ""} ${props.enterActiveClass || ""}`,
-                'enter-to': `van-${name}-enter-to van-${name}-enter-active ${props.enterToClass || ""} ${props.enterActiveClass || ""}`,
-                leave: `van-${name}-leave van-${name}-leave-active ${props.leaveClass || ""} ${props.leaveActiveClass || ""}`,
-                'leave-to': `van-${name}-leave-to van-${name}-leave-active ${props.leaveToClass || ""} ${props.leaveActiveClass || ""}`,
-            }
-        } else { // TODO 支持RN端。
-            return {
-                enter: `van-${name}-enter van-${name}-enter-active enter-class enter-active-class`,
-                'enter-to': `van-${name}-enter-to van-${name}-enter-active enter-to-class enter-active-class`,
-                leave: `van-${name}-leave van-${name}-leave-active leave-class leave-active-class`,
-                'leave-to': `van-${name}-leave-to van-${name}-leave-active leave-to-class leave-active-class`,
-            }
+    const getClassNames = useCallback(isH5 ? (name: string) => { // TODO 支持RN端。
+        return {
+            enter: `van-${name}-enter van-${name}-enter-active ${props.enterClass || ""} ${props.enterActiveClass || ""}`,
+            'enter-to': `van-${name}-enter-to van-${name}-enter-active ${props.enterToClass || ""} ${props.enterActiveClass || ""}`,
+            leave: `van-${name}-leave van-${name}-leave-active ${props.leaveClass || ""} ${props.leaveActiveClass || ""}`,
+            'leave-to': `van-${name}-leave-to van-${name}-leave-active ${props.leaveToClass || ""} ${props.leaveActiveClass || ""}`,
         }
-    }, [props.enterActiveClass, props.enterClass, props.enterToClass, props.leaveActiveClass, props.leaveClass, props.leaveToClass, name])
+    } : (name: string) => {
+        return {
+            enter: `van-${name}-enter van-${name}-enter-active enter-class enter-active-class`,
+            'enter-to': `van-${name}-enter-to van-${name}-enter-active enter-to-class enter-active-class`,
+            leave: `van-${name}-leave van-${name}-leave-active leave-class leave-active-class`,
+            'leave-to': `van-${name}-leave-to van-${name}-leave-active leave-to-class leave-active-class`,
+        }
+    }, isH5 ? [props.enterActiveClass, props.enterClass, props.enterToClass, props.leaveActiveClass, props.leaveClass, props.leaveToClass] : [])
 
     const [data, setData] = useState({
         inited: false,
@@ -175,7 +173,6 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
         }
         // }, [show, Enter, Leave]) // TODO : 因为不能因为Enter来响应更新，所以这里所有逻辑都要重写。。
     }, [show])
-
 
     return {
         data,

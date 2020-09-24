@@ -1,4 +1,4 @@
-import Taro from "@tarojs/taro";
+import Taro, { useMemo } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import {
   MixinsTransitionProps,
@@ -18,24 +18,30 @@ const VanTransition: Taro.FunctionComponent<{
   const { data, onTransitionEnd } = useMixinsTransition(props, true);
   const classname = useMemoClassNames();
   const { inited, classes, currentDuration, display } = data;
+  const ViewClass = useMemo(() => {
+    return classname(
+      "van-transition",
+      classes,
+      isH5 && props.className,
+      isWeapp && "custom-class"
+    );
+  }, [classes, isH5 && props.className]);
+  const ViewStyle = useMemo(() => {
+    return {
+      transitionDuration: currentDuration + "ms",
+      WebkitTransitionDuration: currentDuration + "ms",
+      ...(display
+        ? undefined
+        : {
+            display: "none"
+          }),
+      ...props.style
+    } as React.CSSProperties;
+  }, [currentDuration, display , props.style]);
   return inited ? (
     <View
-      className={classname(
-        "van-transition",
-        classes,
-        isH5 && props.className,
-        isWeapp && "custom-class"
-      )}
-      style={{
-        transitionDuration: currentDuration + "ms",
-        WebkitTransitionDuration: currentDuration + "ms",
-        ...(display
-          ? undefined
-          : {
-              display: "none"
-            }),
-        ...props.style
-      }}
+      className={ViewClass}
+      style={ViewStyle}
       onTransitionEnd={onTransitionEnd}
     >
       {props.children}
@@ -47,7 +53,7 @@ VanTransition.options = {
   addGlobalClass: true
 };
 VanTransition.externalClasses = [
-  'custom-class',
+  "custom-class",
   ...MixinsTransitionExternalClass
-]
+];
 export default VanTransition;
