@@ -3,30 +3,33 @@ import DemoBlock from "../components/demoBlock";
 import VanCell from "../../components/vant-react/Cell";
 import VanTransition from "../../components/vant-react/Transition";
 import "./index.less";
-
+const cusDur = { enter: 300, leave: 1000 };
+const onBeforeEnter=() => console.log("before enter")
+const onEnter=() => console.log("enter")
+const onAfterEnter=() => console.log("after enter")
+const onBeforeLeave=() => console.log("before leave")
+const onLeave=() => console.log("leave")
+const onAfterLeave=() => console.log("after leave")
 export default function TransitionPage() {
   const [data, setData] = useState({
     show: false,
-    name: "fade",
-    showCustom: false
+    name: "fade"
   });
 
-  const trigger = useCallback(
-    (name: string) => {
+  const [showCustom, setShowCustom] = useState(false);
+
+  const trigger = useCallback((name: string) => {
+    setData({
+      name,
+      show: true
+    });
+    setTimeout(() => {
       setData({
-        ...data,
         name,
-        show: true
+        show: false
       });
-      setTimeout(() => {
-        setData({
-          ...data,
-          show: false
-        });
-      }, 500);
-    },
-    [data]
-  );
+    }, 500);
+  }, []);
 
   return (
     <DemoBlock title="基础用法" padding>
@@ -96,9 +99,9 @@ export default function TransitionPage() {
       <VanCell
         title="Custom"
         onClick={() => {
-          setData({ ...data, showCustom: true });
+          setShowCustom(true);
           setTimeout(() => {
-            setData({ ...data, showCustom: false });
+            setShowCustom(false);
           }, 1000);
         }}
         isLink
@@ -110,9 +113,9 @@ export default function TransitionPage() {
         custom-class="block"
       />
       <VanTransition
-        show={data.showCustom}
+        show={showCustom}
         name=""
-        duration={{ enter: 300, leave: 1000 }}
+        duration={cusDur}
         className="block"
         custom-class="block"
         enterClass="van-enter-class"
@@ -123,12 +126,12 @@ export default function TransitionPage() {
         leave-active-class="van-leave-active-class"
         leaveToClass="van-leave-to-class"
         leave-to-class="van-leave-to-class"
-        onBeforeEnter={() => console.log("before enter")}
-        onEnter={() => console.log("enter")}
-        onAfterEnter={() => console.log("after enter")}
-        onBeforeLeave={() => console.log("before leave")}
-        onLeave={() => console.log("leave")}
-        onAfterLeave={() => console.log("after leave")}
+        onBeforeEnter={onBeforeEnter}
+        onEnter={onEnter}
+        onAfterEnter={onAfterEnter}
+        onBeforeLeave={onBeforeLeave}
+        onLeave={onLeave}
+        onAfterLeave={onAfterLeave}
       />
     </DemoBlock>
   );

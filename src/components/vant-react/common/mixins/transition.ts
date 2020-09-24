@@ -1,4 +1,4 @@
-import { requestAnimationFrame, isH5, isWeapp } from "../utils";
+import { requestAnimationFrame, isH5 } from "../utils";
 import { useState, useEffect, useRef, useCallback } from "@tarojs/taro";
 export type MixinsTransitionProps = {
     style?: React.CSSProperties;
@@ -47,41 +47,46 @@ function isObj(x?: number | {
 // });
 
 export function useMixinsTransition(props: MixinsTransitionProps, showDefaultValue: boolean) {
-    const { show = showDefaultValue, duration = 300, name = 'fade' } = props;
+    const { show = showDefaultValue, duration = 300, name } = props;
 
     const status = useRef<'enter' | 'leave'>();
+
     const transitionEnded = useRef<boolean>();
 
+    // console.log(props, name, status, transitionEnded)
     const checkStatus = useCallback((_status: 'enter' | 'leave') => {
-        if (status.current !== _status) {
-            throw new Error(`incongruent status: ${_status}`);
-        }
+        // if (status.current !== _status) {
+        //     throw new Error(`incongruent status: ${_status}`);
+        // }
     }, [])
 
     const getClassNames = useCallback(isH5 ? (name: string) => { // TODO 支持RN端。
         return {
-            enter: `van-${name}-enter van-${name}-enter-active ${props.enterClass || ""} ${props.enterActiveClass || ""}`,
-            'enter-to': `van-${name}-enter-to van-${name}-enter-active ${props.enterToClass || ""} ${props.enterActiveClass || ""}`,
-            leave: `van-${name}-leave van-${name}-leave-active ${props.leaveClass || ""} ${props.leaveActiveClass || ""}`,
-            'leave-to': `van-${name}-leave-to van-${name}-leave-active ${props.leaveToClass || ""} ${props.leaveActiveClass || ""}`,
+            enter: `${name ? `van-${name}-enter van-${name}-enter-active` : ''} ${props.enterClass || ""} ${props.enterActiveClass || ""}`,
+            'enter-to': `${name ? `van-${name}-enter-to van-${name}-enter-active` : ''} ${props.enterToClass || ""} ${props.enterActiveClass || ""}`,
+            leave: `${name ? `van-${name}-leave van-${name}-leave-active` : ''} ${props.leaveClass || ""} ${props.leaveActiveClass || ""}`,
+            'leave-to': `${name ? `van-${name}-leave-to van-${name}-leave-active` : ''} ${props.leaveToClass || ""} ${props.leaveActiveClass || ""}`,
         }
     } : (name: string) => {
         return {
-            enter: `van-${name}-enter van-${name}-enter-active enter-class enter-active-class`,
-            'enter-to': `van-${name}-enter-to van-${name}-enter-active enter-to-class enter-active-class`,
-            leave: `van-${name}-leave van-${name}-leave-active leave-class leave-active-class`,
-            'leave-to': `van-${name}-leave-to van-${name}-leave-active leave-to-class leave-active-class`,
+            enter: `${name ? `van-${name}-enter van-${name}-enter-active` : ''} enter-class enter-active-class`,
+            'enter-to': `${name ? `van-${name}-enter-to van-${name}-enter-active` : ''} enter-to-class enter-active-class`,
+            leave: `${name ? `van-${name}-leave van-${name}-leave-active` : ''} leave-class leave-active-class`,
+            'leave-to': `${name ? `van-${name}-leave-to van-${name}-leave-active` : ''} leave-to-class leave-active-class`,
         }
     }, isH5 ? [props.enterActiveClass, props.enterClass, props.enterToClass, props.leaveActiveClass, props.leaveClass, props.leaveToClass] : [])
 
-    const [data, setData] = useState({
+    let [data, setData] = useState({
         inited: false,
         display: false,
         // type: '',
         classes: '',
         currentDuration: 0
     })
-    const onTransitionEnd = useCallback(() => {
+
+    // let [display, setDisplay] = useState(false);
+
+    const onTransitionEnd = (() => {
         if (transitionEnded.current) {
             return;
         }
@@ -91,63 +96,69 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
         } else if (status.current === "leave") {
             props.onAfterLeave && props.onAfterLeave()
         }
-
-        const { display } = data;
-        if (!show && display) {
+        if (!show && data.display) {
             setData({
                 ...data,
                 display: false
             })
+            // setDisplay(false)
         }
-    }, [data, show, props.onAfterEnter, props.onAfterLeave])
+    })
 
-    const Enter = useCallback(() => {
-        const classNames = getClassNames(name);
+    const Enter = (() => {
+        const { onBeforeEnter, onEnter } = props;
+
+        const classNames = getClassNames(name!);
         const currentDuration = isObj(duration) ? duration.enter : duration;
         status.current = "enter";
-        props.onBeforeEnter && props.onBeforeEnter();
+        onBeforeEnter && onBeforeEnter();
         requestAnimationFrame(() => {
             checkStatus('enter');
-            props.onEnter && props.onEnter();
+            onEnter && onEnter();
 
             setData({
                 inited: true,
-                display: true,
                 classes: classNames.enter,
-                currentDuration
+                currentDuration,
+                display: true
             })
+            // setDisplay(true)
 
             requestAnimationFrame(() => {
                 checkStatus('enter')
                 transitionEnded.current = false;
                 setData({
                     inited: true,
-                    display: true,
                     classes: classNames["enter-to"],
-                    currentDuration
+                    currentDuration,
+                    display: true
                 })
+                // setDisplay(true)
             })
         })
-    }, [duration, name, props.onBeforeEnter, props.onEnter, getClassNames])
+    })
 
-    const Leave = useCallback(() => {
+    const Leave = (() => {
         if (!data.display) {
             return;
         }
-        const classNames = getClassNames(name);
+        const { onBeforeLeave, onLeave } = props;
+
+        const classNames = getClassNames(name!);
         const currentDuration = isObj(duration) ? duration.leave : duration;
         status.current = "leave";
-        props.onBeforeLeave && props.onBeforeLeave();
+        onBeforeLeave && onBeforeLeave();
         requestAnimationFrame(() => {
             checkStatus('leave');
-            props.onLeave && props.onLeave();
+            onLeave && onLeave();
 
             setData({
                 inited: true,
-                display: true,
                 classes: classNames.leave,
-                currentDuration
+                currentDuration,
+                display: true,
             })
+            // setDisplay(true)
 
             requestAnimationFrame(() => {
                 checkStatus('leave')
@@ -155,16 +166,17 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
                 setTimeout(() => onTransitionEnd(), currentDuration);
                 setData({
                     inited: true,
-                    display: true,
                     classes: classNames["leave-to"],
-                    currentDuration
+                    currentDuration,
+                    display: true
                 })
+                // setDisplay(true)
             })
         })
-    }, [data.display, duration, name, props.onBeforeLeave, props.onLeave, onTransitionEnd, getClassNames])
+    })
 
     useEffect(() => {
-        if (show) {
+        if (props.show) {
             // enter
             Enter()
         } else {
@@ -191,3 +203,9 @@ export const MixinsTransitionExternalClass = [
     'leave-active-class',
     'leave-to-class'
 ]
+
+
+export const MixinsTransitionDefaultProps = {
+    duration: 300,
+    name: 'fade'
+} as MixinsTransitionProps

@@ -24,19 +24,19 @@ function CssProperties<T extends CSSProperties>(dict?: T | null | undefined) {
 
 
 export function useMemoAddUnit() {
-  return useCallback(memoize(addUnit), [])
+  return addUnit
 }
 
 export function useMemoClassNames() {
-  return useCallback(memoize(classNames), [])
+  return classNames
 }
 
 export function useMemoCssProperties() {
-  return useCallback(memoize(CssProperties), [])
+  return CssProperties
 }
 
 export function useMemoBem() {
-  return useCallback(memoize(bem), [])
+  return bem
 
 }
 
