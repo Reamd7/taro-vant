@@ -28,8 +28,7 @@ export default function NotifyPage() {
             custom-class="demo-margin-right"
             type="info"
             data-type="primary"
-            onClick={event => {
-              const { type } = event.currentTarget.dataset;
+            onClick={() => {
               Notify({
                 type: "primary",
                 message: "通知内容"
@@ -41,8 +40,7 @@ export default function NotifyPage() {
           <VanButton
             type="primary"
             data-type="success"
-            onClick={event => {
-              const { type } = event.currentTarget.dataset;
+            onClick={() => {
               Notify({
                 type: "success",
                 message: "通知内容"
@@ -58,9 +56,7 @@ export default function NotifyPage() {
             custom-class="demo-margin-right"
             type="danger"
             data-type="danger"
-            onClick={event => {
-              console.log(event)
-              const { type } = event.currentTarget.dataset;
+            onClick={() => {
               Notify({
                 type: "danger",
                 message: "通知内容"
@@ -72,8 +68,7 @@ export default function NotifyPage() {
           <VanButton
             type="warning"
             data-type="warning"
-            onClick={event => {
-              const { type } = event.currentTarget.dataset;
+            onClick={() => {
               Notify({
                 type: "warning",
                 message: "通知内容"

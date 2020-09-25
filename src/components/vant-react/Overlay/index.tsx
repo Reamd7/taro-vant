@@ -1,14 +1,13 @@
 import Taro, { useMemo } from "@tarojs/taro";
-import VanTransition from "../Transition";
+import VanTransition, { VanTransitionProps } from "../Transition";
 import { useMemoCssProperties, noop } from "../common/utils";
 import { View } from "@tarojs/components";
 import "./index.less";
-import { MixinsTransitionProps } from "../common/mixins/transition";
 
-type VanOverlayProps = {
-  show?: boolean;
+export type VanOverlayProps = {
+  show?: VanTransitionProps['show'];
   zIndex?: number;
-  duration?: MixinsTransitionProps['duration'];
+  duration?: VanTransitionProps['duration'];
   className?: string;
   ['custom-class']?: string;
   style?: React.CSSProperties;

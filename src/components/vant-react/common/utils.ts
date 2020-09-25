@@ -92,6 +92,10 @@ export const isWeapp = (process.env.TARO_ENV !== "h5" && process.env.TARO_ENV !=
 
 
 export function getContext() {
-  const pages = getCurrentPages();
-  return pages[pages.length - 1];
+  const pages = getCurrentPages(); // weapp + h5 都支持
+  if (pages.length > 0) {
+    return pages[pages.length - 1].route
+  } else {
+    return null
+  }
 }

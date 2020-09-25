@@ -10,7 +10,7 @@ import {
 import VanInfo from "../info";
 import "./icon.less";
 
-export type IconProps = {
+export type VanIconProps = {
   dot?: boolean;
   name?: string;
   size?: string | number;
@@ -26,7 +26,7 @@ export type IconProps = {
 export type IconEvents = {
   onClick?: React.ComponentProps<typeof View>["onClick"];
 };
-const VanIcon: Taro.FunctionComponent<IconProps & IconEvents> = props => {
+const VanIcon: Taro.FunctionComponent<VanIconProps & IconEvents> = props => {
   const { customStyle, size, color, name, classPrefix = "van-icon" } = props;
   const isImageName = name ? name.indexOf("/") !== -1 : false;
 

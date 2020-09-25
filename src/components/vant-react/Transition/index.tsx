@@ -9,13 +9,15 @@ import {
 import "./index.less";
 import { useMemoClassNames, isWeapp, isH5 } from "../common/utils";
 
-const VanTransition: Taro.FunctionComponent<{
+export type VanTransitionProps = {
   className?: string;
   ["custom-class"]?: string;
   onClick?: React.ComponentProps<typeof View>["onClick"];
   // onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];
   // useCatchTouch?: boolean;
-} & MixinsTransitionProps> = props => {
+} & MixinsTransitionProps;
+
+const VanTransition: Taro.FunctionComponent<VanTransitionProps> = props => {
   const { data, onTransitionEnd } = useMixinsTransition(props, true);
   const classname = useMemoClassNames();
   const { inited, classes, currentDuration, display } = data;
@@ -38,7 +40,7 @@ const VanTransition: Taro.FunctionComponent<{
           }),
       ...props.style
     } as React.CSSProperties;
-  }, [currentDuration, display , props.style]);
+  }, [currentDuration, display, props.style]);
   return inited ? (
     <View
       className={ViewClass}
@@ -49,7 +51,7 @@ const VanTransition: Taro.FunctionComponent<{
     </View>
   ) : null;
 };
-VanTransition.defaultProps = MixinsTransitionDefaultProps
+VanTransition.defaultProps = MixinsTransitionDefaultProps;
 VanTransition.options = {
   addGlobalClass: true
 };

@@ -5,7 +5,7 @@ import { useMemoAddUnit, useMemoCssProperties, isWeapp, isH5 } from "../common/u
 import "./index.less";
 
 export type LoadingType = "circular" | "spinner";
-export type LoadingProps = {
+export type VanLoadingProps = {
   type?: LoadingType;
   size?: string | number;
   color?: string;
@@ -16,7 +16,7 @@ export type LoadingProps = {
   ['custom-class']?: string;
 };
 
-const VanLoading: Taro.FunctionComponent<LoadingProps> = (props) => {
+const VanLoading: Taro.FunctionComponent<VanLoadingProps> = (props) => {
   const { type = "circular", vertical, color, size, textSize, center } = props;
   const array12 = Array.from({
     length: 12,
@@ -45,7 +45,7 @@ const VanLoading: Taro.FunctionComponent<LoadingProps> = (props) => {
         })}
       >
         {type === "spinner" &&
-          array12.map((_, index) => (
+          array12.map((_) => (
             <View className='van-loading__dot'></View>
           ))}
       </View>

@@ -39,7 +39,8 @@ class App extends Component {
 
       'pages/action-sheet/index',
       'pages/notify/index',
-      'pages/share-sheet/index'
+      'pages/share-sheet/index',
+      'pages/toast/index'
     ],
     window: {
       backgroundTextStyle: 'light',
