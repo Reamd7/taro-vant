@@ -46,7 +46,7 @@ const VanLoading: Taro.FunctionComponent<LoadingProps> = (props) => {
       >
         {type === "spinner" &&
           array12.map((_, index) => (
-            <View key={index} className='van-loading__dot'></View>
+            <View className='van-loading__dot'></View>
           ))}
       </View>
       <View

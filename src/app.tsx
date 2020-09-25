@@ -38,7 +38,8 @@ class App extends Component {
       'pages/overlay/index',
 
       'pages/action-sheet/index',
-      'pages/notify/index'
+      'pages/notify/index',
+      'pages/share-sheet/index'
     ],
     window: {
       backgroundTextStyle: 'light',

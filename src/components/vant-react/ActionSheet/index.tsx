@@ -102,7 +102,7 @@ const VanActionSheet: Taro.FunctionComponent<ActionSheetProps & {
           {/* button外包一层view，防止actions动态变化，导致渲染时button被打散 */}
           {props.actions.map((item, index) => (
             <Button
-              key={index}
+              key={item.name}
               openType={item.openType}
               style={css({
                 color: item.color
