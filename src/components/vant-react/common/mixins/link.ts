@@ -1,5 +1,5 @@
 import { useCallback } from "@tarojs/taro"
-
+import Taro from '@tarojs/taro';
 export type MixinLinkProps = {
     url?: string;
     linkType?: 'navigateTo' | 'redirectTo' | 'reLaunch' | 'switchTab' | 'navigateBack';

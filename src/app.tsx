@@ -42,7 +42,8 @@ class App extends Component {
       'pages/share-sheet/index',
       'pages/toast/index',
       'pages/swipe-cell/index',
-      'pages/nav-bar/index'
+      'pages/nav-bar/index',
+      'pages/grid/index'
     ],
     window: {
       backgroundTextStyle: 'light',

@@ -45,7 +45,7 @@
 - [ ] Tag 标记
 - [ ] TreeSelect 分类选择
 ## 导航组件
-- [ ] Grid 宫格
+- [x] Grid 宫格
 - [ ] IndexBar 索引栏
 - [ ] Sidebar 侧边导航
 - [x] NavBar 导航栏

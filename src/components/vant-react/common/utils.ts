@@ -1,5 +1,5 @@
-import Taro, { useCallback, getCurrentPages } from "@tarojs/taro";
-import memoize from "fast-memoize";
+import Taro, { getCurrentPages } from "@tarojs/taro";
+// import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
 import { CSSProperties } from "react";
