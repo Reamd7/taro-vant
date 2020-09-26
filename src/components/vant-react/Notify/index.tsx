@@ -4,7 +4,8 @@ import {
   noop,
   useMemoCssProperties,
   useMemoAddUnit,
-  getContext
+  getContext,
+  getSystemInfoSync
 } from "../common/utils";
 import { View, Text } from "@tarojs/components";
 import { VanNotifyMap, defaultOptions, NotifyProps } from "./common/utils";
@@ -13,7 +14,7 @@ import "./index.less";
 const VanNotify: Taro.FunctionComponent<{}> = (props) => {
   const [statusBarHeight, setstatusBarHeight] = useState(0);
   useEffect(() => {
-    setstatusBarHeight(Taro.getSystemInfoSync().statusBarHeight);
+    setstatusBarHeight(getSystemInfoSync().statusBarHeight);
   }, []);
   const [data, setData] = useState<NotifyProps>(defaultOptions);
 

@@ -48,7 +48,7 @@
 - [ ] Grid 宫格
 - [ ] IndexBar 索引栏
 - [ ] Sidebar 侧边导航
-- [ ] NavBar 导航栏
+- [x] NavBar 导航栏
 - [ ] Tab 标签页
 - [ ] Tabbar 标签栏
 ## 业务组件

@@ -8,7 +8,7 @@ function addUnit(value?: string | number | null) {
   if (value == null) {
     return undefined;
   } else if (typeof value === "number") {
-    return value + "rpx"
+    return (value * 2) + "rpx"
   } else {
     return value
   }
