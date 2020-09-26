@@ -28,7 +28,7 @@
 - [x] Notify 消息通知
 - [x] Overlay 遮罩层
 - [x] ShareSheet 分享面板
-- [ ] SwipeCell 滑动单元格
+- [x] SwipeCell 滑动单元格
 - [x] Toast 轻提示 ( 这个如果是默认显示的情况下 好像有点问题？)
 ## 展示组件
 - [ ] Circle 进度条
