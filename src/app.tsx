@@ -43,7 +43,8 @@ class App extends Component {
       'pages/toast/index',
       'pages/swipe-cell/index',
       'pages/nav-bar/index',
-      'pages/grid/index'
+      'pages/grid/index',
+      'pages/tag/index'
     ],
     window: {
       backgroundTextStyle: 'light',
