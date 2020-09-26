@@ -25,10 +25,10 @@ const VanTransition: Taro.FunctionComponent<VanTransitionProps> = props => {
     return classname(
       "van-transition",
       classes,
-      true &&props.className,
+      true && props.className,
       isWeapp && "custom-class"
     );
-  }, [classes, true &&props.className]);
+  }, [classes, true && props.className]);
   const ViewStyle = useMemo(() => {
     return {
       transitionDuration: currentDuration + "ms",

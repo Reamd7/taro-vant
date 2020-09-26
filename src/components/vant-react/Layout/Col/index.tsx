@@ -35,7 +35,7 @@ const VanCol: Taro.FunctionComponent<{
   return (
     <View
       className={classname(
-        true &&props.classNames,
+        true && props.classNames,
         isWeapp && 'custom-class',
         bem("col", [span]),
         offset && `van-col--offset-${offset}`

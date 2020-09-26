@@ -58,7 +58,7 @@ const VanTag: Taro.FunctionComponent<VanTagProps> = props => {
     <View
       className={classnames(
         isWeapp && "custom-class",
-        props.className,
+        true &&  props.className,
         bem("tag", [type, size, { mark, plain, round }])
       )}
       style={ViewStyle}

@@ -119,7 +119,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
   return (
     <View
       className={classnames(
-        true &&props.className,
+        true && props.className,
         isWeapp && "custom-class",
         bem("grid-item", { square })
       )}
@@ -129,7 +129,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
       <View
         className={classnames(
           isWeapp && "content-class",
-          true &&props.className,
+          true && props.className,
           bem("grid-item__content", [
             direction,
             { center, square, clickable, surround: border && gutter }
@@ -145,7 +145,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
             <View
               className={classnames(
                 "van-grid-item__icon",
-                true &&props.iconClass,
+                true && props.iconClass,
                 isWeapp && "icon-class"
               )}
             >
@@ -164,7 +164,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
             </View>
             <View
               className={classnames(
-                true &&props.textClass,
+                true && props.textClass,
                 isWeapp && "text-class",
                 "van-grid-item__text"
               )}

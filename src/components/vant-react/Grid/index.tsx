@@ -79,7 +79,7 @@ const VanGrid: Taro.FunctionComponent<VanGridProps> = props => {
       className={classnames(
         "van-grid",
         isWeapp && "custom-class",
-        true &&props.className,
+        true && props.className,
         border && !gutter ? "van-hairline--top" : ""
       )}
       style={viewStyle}

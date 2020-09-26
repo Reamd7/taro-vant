@@ -26,7 +26,7 @@ const VanLoading: Taro.FunctionComponent<VanLoadingProps> = (props) => {
   return (
     <View
       className={classnames(
-        true &&props.className,
+        true && props.className,
         isWeapp && "custom-class",
         "van-loading",
         center && 'van-loading--center',
