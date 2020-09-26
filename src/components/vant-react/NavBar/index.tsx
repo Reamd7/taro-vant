@@ -97,7 +97,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
         className={classnames(
           bem("nav-bar", { fixed }),
           isWeapp && "custom-class",
-          isH5 && props.className,
+          true &&props.className,
           border && "van-hairline--bottom"
         )}
         style={{

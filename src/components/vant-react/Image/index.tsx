@@ -109,7 +109,7 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
   return (
     <View
       className={classnames(
-        isH5 && props.className,
+        true &&props.className,
         isWeapp && 'custom-class',
         bem("image", { round })
       )}
@@ -122,7 +122,7 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
           mode={mode}
           lazyLoad={props.lazyLoad}
           className={classnames(
-            isH5 && props.imageClass,
+            true &&props.imageClass,
             isWeapp && "image-class",
             "van-image__img"
           )}
@@ -133,7 +133,7 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
       )}
       {showLoading && data.loading && (
         <View className={classnames(
-          isH5 && props.loadingClass,
+          true &&props.loadingClass,
           isWeapp && "loading-class",
           "van-image__loading")
         }>
@@ -146,7 +146,7 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
       )}
       {showError && data.error && (
         <View className={classnames(
-          isH5 && props.errorClass,
+          true &&props.errorClass,
           isWeapp && "error-class",
           "van-image__error"
         )}>

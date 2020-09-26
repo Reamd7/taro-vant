@@ -79,7 +79,7 @@ const VanCell: Taro.FunctionComponent<{
   return (
     <View
       className={classNames(
-        isH5 && props.className,
+        true &&props.className,
         isWeapp && "custom-class",
         bem("cell", [
           size,
@@ -94,7 +94,7 @@ const VanCell: Taro.FunctionComponent<{
       hoverClass={classNames(
         "van-cell--hover",
         isWeapp && "hover-class",
-        isH5 && props.hoverClass
+        true &&props.hoverClass
       )}
       hoverStayTime={70}
       style={props.customStyle}
@@ -112,7 +112,7 @@ const VanCell: Taro.FunctionComponent<{
 
       <View
         className={classNames(
-          isH5 && props.titleClass,
+          true &&props.titleClass,
           isWeapp && "title-class",
           "van-cell__title"
         )}
@@ -134,7 +134,7 @@ const VanCell: Taro.FunctionComponent<{
             className={classNames(
               "van-cell__label",
               isWeapp && "label-class",
-              isH5 && props.labelClass
+              true &&props.labelClass
             )}
           >
             {props.useLabelSlot && props.renderLabel}
@@ -146,7 +146,7 @@ const VanCell: Taro.FunctionComponent<{
         className={classNames(
           "van-cell__value",
           isWeapp && "value-class",
-          isH5 && props.valueClass
+          true &&props.valueClass
         )}
       >
         {props.value || props.value === 0 ? (
@@ -162,12 +162,12 @@ const VanCell: Taro.FunctionComponent<{
               props.arrowDirection ? `arrow-${props.arrowDirection}` : "arrow"
             }
             custom-class={classNames(
-              isH5 && props.rightIconClass,
+              true &&props.rightIconClass,
               isWeapp && "right-icon-class",
               "van-cell__right-icon"
             )}
             className={classNames(
-              isH5 && props.rightIconClass,
+              true &&props.rightIconClass,
               isWeapp && "right-icon-class",
               "van-cell__right-icon"
             )}

@@ -112,7 +112,7 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
       id={props.id}
       data-detail={dataset}
       className={classnames(
-        isH5 && props.className,
+        true &&props.className,
         isWeapp && 'custom-class',
         bem("button", [
           type,
@@ -133,7 +133,7 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
       hoverClass={classnames(
         "van-button--active",
         isWeapp && "hover-class",
-        isH5 && props.hoverClass
+        true &&props.hoverClass
       )}
       lang={props.lang}
       formType={props.formType}
@@ -161,13 +161,13 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
           <VanLoading
             className={
               classnames(
-                isH5 && props.loadingClass,
+                true &&props.loadingClass,
                 isWeapp && 'loading-class'
               )
             }
             custom-class={
               classnames(
-                isH5 && props.loadingClass,
+                true &&props.loadingClass,
                 isWeapp && 'loading-class'
               )
             }
