@@ -31,18 +31,19 @@
 - [x] SwipeCell 滑动单元格
 - [x] Toast 轻提示 ( 这个如果是默认显示的情况下 好像有点问题？)
 ## 展示组件
-- [ ] Circle 进度条
+- [ ] Circle 进度条 ( Canvas )
 - [ ] Collapse 折叠面板
-- [ ] CountDown 倒计时
-- [ ] Divider 分割线
-- [ ] Empty 空状态
-- [ ] NoticeBar 通告栏
-- [ ] Panel 面板
-- [ ] Progress 进度条
-- [ ] Skeleton 骨架屏
-- [ ] Steps 步骤条
-- [ ] Sticky 粘性布局
-- [ ] Tag 标记
+    - item
+- [-] CountDown 倒计时
+- [-] Divider 分割线
+- [-] Empty 空状态
+- [-] NoticeBar 通告栏
+- [-] Panel 面板
+- [-] Progress 进度条
+- [-] Skeleton 骨架屏
+- [-] Steps 步骤条
+- [ ] Sticky 粘性布局( 需要处理 页面 级别 scroll 事件 )
+- [x] Tag 标记
 - [ ] TreeSelect 分类选择
 ## 导航组件
 - [x] Grid 宫格
@@ -50,7 +51,8 @@
 - [ ] Sidebar 侧边导航
 - [x] NavBar 导航栏
 - [ ] Tab 标签页
-- [ ] Tabbar 标签栏
+- [-] Tabbar 标签栏
+    - item
 ## 业务组件
 - [ ] Area 省市区选择
 - [ ] Card 商品卡片

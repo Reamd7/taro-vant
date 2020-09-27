@@ -46,11 +46,11 @@ export const useGridItemContext = function (id: string) {
       if (val) {
         return val
       } else {
-        throw `ID = ${id} 组件未挂载`
+        throw `ID = ${id} GridItem 组件未挂载`
         // return null;
       }
     } else {
-      throw `ID = ${id} 组件未挂载`
+      throw `ID = ${id} GridItem 组件未挂载`
       // return null
     }
   }, [key]);

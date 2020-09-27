@@ -79,7 +79,7 @@ export function requestAnimationFrame(cb: Function) {
   //   .boundingClientRect();
   // console.log(performance.now())
   // if (Info.platform === 'devtools') {
-    return nextTick(cb);
+  return nextTick(cb);
   // }
   // return el.exec(() => {
   //   cb();
@@ -91,11 +91,47 @@ export const isH5 = process.env.TARO_ENV === "h5";
 export const isWeapp = (process.env.TARO_ENV !== "h5" && process.env.TARO_ENV !== "rn")
 
 
-export function getContext() {
+export function getCurrentPage() {
   const pages = getCurrentPages(); // weapp + h5 都支持
   if (pages.length > 0) {
-    return pages[pages.length - 1].route
+    return pages[pages.length - 1]
   } else {
     return null
   }
+}
+
+export function getContext() {
+  const page = getCurrentPage();
+  if (page) {
+    return page.route
+  } else {
+    return null;
+  }
+}
+
+
+export function getRect(
+  scope: WechatMiniprogram.Component.TrivialInstance,
+  selector: string
+): Promise<Taro.NodesRef.BoundingClientRectCallbackResult> {
+  return new Promise<Taro.NodesRef.BoundingClientRectCallbackResult>((resolve) => {
+    Taro.createSelectorQuery()
+      .in(scope)
+      .select(selector)
+      .boundingClientRect()
+      .exec((rect = []) => resolve(rect[0]));
+  });
+}
+
+export function getAllRect(
+  scope: WechatMiniprogram.Component.TrivialInstance,
+  selector: string
+): Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]> {
+  return new Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]>((resolve) => {
+    Taro.createSelectorQuery()
+      .in(scope)
+      .selectAll(selector)
+      .boundingClientRect()
+      .exec((rect = []) => resolve(rect[0]));
+  });
 }

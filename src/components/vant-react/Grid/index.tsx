@@ -72,7 +72,8 @@ const VanGrid: Taro.FunctionComponent<VanGridProps> = props => {
   }, [gutter]);
 
   if (!Context) {
-    throw "组件未挂载";
+    return null;
+    // throw "VanGrid 组件未挂载";
   }
   return (
     <View

@@ -70,7 +70,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
     onClick(e)
     jumpLink();
   }
-
+  const ContextData = useGridItemContext(props.gid) || {};
   const {
     columnNum,
     border,
@@ -80,7 +80,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
     center,
     direction,
     iconSize
-  } = useGridItemContext(props.gid);
+  } = ContextData
 
   const viewStyle = useMemo(() => {
     const width = `${100 / columnNum}%`;
