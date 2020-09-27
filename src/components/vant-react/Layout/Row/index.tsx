@@ -31,7 +31,7 @@ const VanRow: Taro.FunctionComponent<{
   return (
     <View
       className={classname(
-        true && props.classNames,
+        isH5 && props.classNames,
         isWeapp && "custom-class",
         "van-row"
       )}

@@ -79,7 +79,7 @@ const VanCell: Taro.FunctionComponent<{
   return (
     <View
       className={classNames(
-        true && props.className,
+        isH5 && props.className,
         isWeapp && "custom-class",
         bem("cell", [
           size,
@@ -94,7 +94,7 @@ const VanCell: Taro.FunctionComponent<{
       hoverClass={classNames(
         "van-cell--hover",
         isWeapp && "hover-class",
-        true && props.hoverClass
+        isH5 && props.hoverClass
       )}
       hoverStayTime={70}
       style={props.customStyle}
@@ -112,7 +112,7 @@ const VanCell: Taro.FunctionComponent<{
 
       <View
         className={classNames(
-          true && props.titleClass,
+          isH5 && props.titleClass,
           isWeapp && "title-class",
           "van-cell__title"
         )}
@@ -134,7 +134,7 @@ const VanCell: Taro.FunctionComponent<{
             className={classNames(
               "van-cell__label",
               isWeapp && "label-class",
-              true && props.labelClass
+              isH5 && props.labelClass
             )}
           >
             {props.useLabelSlot && props.renderLabel}
@@ -146,7 +146,7 @@ const VanCell: Taro.FunctionComponent<{
         className={classNames(
           "van-cell__value",
           isWeapp && "value-class",
-          true && props.valueClass
+          isH5 && props.valueClass
         )}
       >
         {props.value || props.value === 0 ? (
@@ -162,12 +162,12 @@ const VanCell: Taro.FunctionComponent<{
               props.arrowDirection ? `arrow-${props.arrowDirection}` : "arrow"
             }
             custom-class={classNames(
-              true && props.rightIconClass,
+              isH5 && props.rightIconClass,
               isWeapp && "right-icon-class",
               "van-cell__right-icon"
             )}
             className={classNames(
-              true && props.rightIconClass,
+              isH5 && props.rightIconClass,
               isWeapp && "right-icon-class",
               "van-cell__right-icon"
             )}

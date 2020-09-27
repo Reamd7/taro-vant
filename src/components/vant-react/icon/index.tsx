@@ -39,7 +39,7 @@ const VanIcon: Taro.FunctionComponent<VanIconProps & IconEvents> = props => {
         classPrefix,
         isImageName ? "van-icon--image" : `${classPrefix}-${name}`,
         isWeapp && "custom-class",
-        true && props.className
+        isH5 && props.className
       )}
       style={CssProperties({
         color,

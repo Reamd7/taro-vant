@@ -1,15 +1,21 @@
 import Taro, { useMemo } from "@tarojs/taro";
 import VanTransition, { VanTransitionProps } from "../Transition";
-import { useMemoCssProperties, noop } from "../common/utils";
+import {
+  useMemoCssProperties,
+  noop,
+  useMemoClassNames,
+  isH5,
+  isWeapp
+} from "../common/utils";
 import { View } from "@tarojs/components";
 import "./index.less";
 
 export type VanOverlayProps = {
-  show?: VanTransitionProps['show'];
+  show?: VanTransitionProps["show"];
   zIndex?: number;
-  duration?: VanTransitionProps['duration'];
+  duration?: VanTransitionProps["duration"];
   className?: string;
-  ['custom-class']?: string;
+  ["custom-class"]?: string;
   style?: React.CSSProperties;
   noScroll?: boolean; // 这个开关一开就整个遮罩层都无法滚动了。
   onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];
@@ -27,6 +33,7 @@ const VanOverlayStyle: React.CSSProperties = {
 };
 const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
   const css = useMemoCssProperties();
+  const classnames = useMemoClassNames();
   const Style = useMemo(() => {
     return props.className
       ? css({
@@ -41,7 +48,7 @@ const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
   }, [VanOverlayStyle, props.style, props.zIndex, props.className]);
   return (
     <VanTransition
-      className={props.className} // globalClass，在页面级别重定义的
+      className={classnames(isH5 && props.className, isWeapp && "custom-class")}
       style={Style}
       show={props.show}
       duration={props.duration}
@@ -73,5 +80,5 @@ const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
 VanOverlay.options = {
   addGlobalClass: true
 };
-
+VanOverlay.externalClasses = ["custom-class"];
 export default VanOverlay;

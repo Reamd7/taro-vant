@@ -80,7 +80,7 @@ const VanGrid: Taro.FunctionComponent<VanGridProps> = props => {
       className={classnames(
         "van-grid",
         isWeapp && "custom-class",
-        true && props.className,
+        isH5 && props.className,
         border && !gutter ? "van-hairline--top" : ""
       )}
       style={viewStyle}
@@ -92,5 +92,7 @@ const VanGrid: Taro.FunctionComponent<VanGridProps> = props => {
 VanGrid.options = {
   addGlobalClass: true
 };
-
+VanGrid.externalClasses = [
+  'custom-class'
+]
 export default VanGrid;

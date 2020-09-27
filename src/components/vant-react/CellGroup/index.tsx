@@ -17,7 +17,7 @@ const VanCellGroup: Taro.FunctionComponent<{
       {title && <View className="van-cell-group__title">{title}</View>}
       <View
         className={classNames(
-          true && props.className,
+          isH5 && props.className,
           isWeapp && "custom-class",
           "van-cell-group",
           border && "van-hairline--top-bottom"

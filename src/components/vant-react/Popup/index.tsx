@@ -84,7 +84,7 @@ const VanPopup: Taro.FunctionComponent<{
       {inited && (
         <View
           className={classNames(
-            true && props.className,
+            isH5 && props.className,
             isWeapp && 'custom-class',
             classes,
             bem("popup", [
@@ -111,14 +111,14 @@ const VanPopup: Taro.FunctionComponent<{
               name={closeIcon}
               className={
                 classNames(
-                  true && props.closeIconClass,
+                  isH5 && props.closeIconClass,
                   isWeapp && "close-icon-class",
                   `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
                 )
               }
               custom-class={
                 classNames(
-                  true && props.closeIconClass,
+                  isH5 && props.closeIconClass,
                   isWeapp && "close-icon-class",
                   `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
                 )

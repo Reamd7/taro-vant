@@ -17,7 +17,7 @@ const VanInfo: Taro.FunctionComponent<InfoProps> = function(props: InfoProps) {
   return (props.info != null && props.info !== "") || props.dot ? (
     <View
       className={classnames(
-        true && props.className,
+        isH5 && props.className,
         isWeapp && "custom-class",
         "van-info",
         props.dot && "van-info-dot"

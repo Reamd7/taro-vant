@@ -97,7 +97,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
         className={classnames(
           bem("nav-bar", { fixed }),
           isWeapp && "custom-class",
-          true && props.className,
+          isH5 && props.className,
           border && "van-hairline--bottom"
         )}
         style={{
@@ -155,5 +155,8 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
 VanNavBar.options = {
   addGlobalClass: true
 };
-
+VanNavBar.externalClasses = [
+  "custom-class",
+  "title-class"
+]
 export default VanNavBar;

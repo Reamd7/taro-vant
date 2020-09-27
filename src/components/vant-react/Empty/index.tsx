@@ -1,6 +1,6 @@
 import Taro, { useMemo } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import { useMemoClassNames, isWeapp } from "../common/utils";
+import { useMemoClassNames, isWeapp, isH5 } from "../common/utils";
 import "./index.less";
 
 export type VanEmptyProps = {
@@ -29,7 +29,7 @@ const VanEmpty: Taro.FunctionComponent<VanEmptyProps> = props => {
     <View
       className={classnames(
         isWeapp && "custom-class",
-        props.className,
+        isH5 && props.className,
         "van-empty"
       )}
     >
@@ -49,5 +49,7 @@ const VanEmpty: Taro.FunctionComponent<VanEmptyProps> = props => {
 VanEmpty.options = {
   addGlobalClass: true
 };
-
+VanEmpty.externalClasses = [
+  'custom-class'
+]
 export default VanEmpty;

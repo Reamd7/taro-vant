@@ -58,7 +58,7 @@ const VanTag: Taro.FunctionComponent<VanTagProps> = props => {
     <View
       className={classnames(
         isWeapp && "custom-class",
-        true &&  props.className,
+        isH5 && props.className,
         bem("tag", [type, size, { mark, plain, round }])
       )}
       style={ViewStyle}
@@ -79,5 +79,7 @@ const VanTag: Taro.FunctionComponent<VanTagProps> = props => {
 VanTag.options = {
   addGlobalClass: true
 };
-
+VanTag.externalClasses = [
+  "custom-class"
+]
 export default VanTag;

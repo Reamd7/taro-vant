@@ -64,12 +64,12 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
     onClick = noop
   } = props;
 
-  const { jumpLink } = useLink(props)
+  const { jumpLink } = useLink(props);
 
   const _onClick = (e: ITouchEvent) => {
-    onClick(e)
+    onClick(e);
     jumpLink();
-  }
+  };
   const ContextData = useGridItemContext(props.gid) || {};
   const {
     columnNum,
@@ -80,7 +80,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
     center,
     direction,
     iconSize
-  } = ContextData
+  } = ContextData;
 
   const viewStyle = useMemo(() => {
     const width = `${100 / columnNum}%`;
@@ -119,7 +119,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
   return (
     <View
       className={classnames(
-        true && props.className,
+        isH5 && props.className,
         isWeapp && "custom-class",
         bem("grid-item", { square })
       )}
@@ -129,7 +129,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
       <View
         className={classnames(
           isWeapp && "content-class",
-          true && props.className,
+          isH5 && props.className,
           bem("grid-item__content", [
             direction,
             { center, square, clickable, surround: border && gutter }
@@ -145,7 +145,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
             <View
               className={classnames(
                 "van-grid-item__icon",
-                true && props.iconClass,
+                isH5 && props.iconClass,
                 isWeapp && "icon-class"
               )}
             >
@@ -164,7 +164,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
             </View>
             <View
               className={classnames(
-                true && props.textClass,
+                isH5 && props.textClass,
                 isWeapp && "text-class",
                 "van-grid-item__text"
               )}
@@ -181,5 +181,10 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
 VanGridItem.options = {
   addGlobalClass: true
 };
-
+VanGridItem.externalClasses = [
+  "custom-class",
+  "content-class",
+  "icon-class",
+  "text-class"
+];
 export default VanGridItem;
