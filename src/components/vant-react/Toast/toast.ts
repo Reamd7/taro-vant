@@ -63,7 +63,6 @@ const ToastCore = (
   >
 ) => {
   options.show = true;
-  debugger;
 
   const id = options.id || getContext();
   if (id === null) return ; // 跳过初次渲染

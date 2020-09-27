@@ -28,6 +28,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/count-down/index',
       'pages/index/index',
       'pages/button/index',
       'pages/cell/index',

@@ -1,3 +1,4 @@
 {
-    "typescript.tsdk": "/Users/gemini/Desktop/myshop/node_modules/typescript/lib"
+    "typescript.tsdk": "/Users/gemini/Desktop/myshop/node_modules/typescript/lib",
+    "explorer.compactFolders": false
 }

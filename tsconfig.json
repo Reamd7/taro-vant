@@ -20,10 +20,8 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types", "global.d.ts", "typings"],
-    "sourceRoot": ".",
-    "rootDirs": ["."],
     "paths": {
-      "src/*": ["./src/"]
+      "src/*": ["./src/*"]
     }
   },
   "exclude": ["node_modules", "dist"],

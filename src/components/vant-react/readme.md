@@ -32,9 +32,9 @@
 - [x] Toast 轻提示 ( 这个如果是默认显示的情况下 好像有点问题？)
 ## 展示组件
 - [ ] Circle 进度条 ( Canvas )
-- [ ] Collapse 折叠面板
+- [-] Collapse 折叠面板
     - item
-- [-] CountDown 倒计时
+- [x] CountDown 倒计时
 - [-] Divider 分割线
 - [-] Empty 空状态
 - [-] NoticeBar 通告栏
