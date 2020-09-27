@@ -7,7 +7,8 @@ import {
   isWeapp,
   isH5,
   useMemoBem,
-  noop
+  noop,
+  useMemoCssProperties
 } from "../common/utils";
 import VanIcon from "../icon";
 
@@ -42,6 +43,7 @@ const VanTag: Taro.FunctionComponent<VanTagProps> = props => {
 
   const classnames = useMemoClassNames();
   const bem = useMemoBem();
+  const css = useMemoCssProperties()
 
   const ViewStyle = useMemo(() => {
     let res: React.CSSProperties = {};
@@ -51,7 +53,7 @@ const VanTag: Taro.FunctionComponent<VanTagProps> = props => {
     if (textColor || (color && plain)) {
       res.color = textColor || color;
     }
-    return res;
+    return css(res);
   }, []);
 
   return (

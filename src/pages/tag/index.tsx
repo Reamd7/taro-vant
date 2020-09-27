@@ -208,6 +208,7 @@ export default function VanTagPage() {
         {data.primary && (
           <VanTag
             className="demo-margin-right"
+            custom-class="demo-margin-right"
             type="primary"
             size="medium"
             closeable
@@ -224,6 +225,7 @@ export default function VanTagPage() {
         {data.success && (
           <VanTag
             className="demo-margin-right"
+            custom-class="demo-margin-right"
             type="success"
             size="medium"
             closeable
