@@ -35,7 +35,7 @@
 - [-] Collapse 折叠面板
     - item
 - [x] CountDown 倒计时
-- [-] Divider 分割线
+- [x] Divider 分割线
 - [-] Empty 空状态
 - [-] NoticeBar 通告栏
 - [-] Panel 面板

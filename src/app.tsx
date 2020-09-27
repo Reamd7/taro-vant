@@ -28,8 +28,9 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/count-down/index',
       'pages/index/index',
+
+      // 基础组件
       'pages/button/index',
       'pages/cell/index',
       'pages/image/index',
@@ -45,7 +46,9 @@ class App extends Component {
       'pages/swipe-cell/index',
       'pages/nav-bar/index',
       'pages/grid/index',
-      'pages/tag/index'
+      'pages/tag/index',
+      'pages/count-down/index',
+      'pages/divider/index',
     ],
     window: {
       backgroundTextStyle: 'light',
