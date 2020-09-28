@@ -41,7 +41,7 @@
 - [x] Panel 面板
 - [-] Progress 进度条
 - [x] Skeleton 骨架屏
-- [-] Steps 步骤条
+- [x] Steps 步骤条
 - [ ] Sticky 粘性布局( 需要处理 页面 级别 scroll 事件 )
 - [x] Tag 标记
 - [ ] TreeSelect 分类选择

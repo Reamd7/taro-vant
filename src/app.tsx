@@ -52,7 +52,8 @@ class App extends Component {
       'pages/empty/index',
       'pages/notice-bar/index',
       'pages/skeleton/index',
-      'pages/panel/index'
+      'pages/panel/index',
+      'pages/steps/index'
     ],
     window: {
       backgroundTextStyle: 'light',
