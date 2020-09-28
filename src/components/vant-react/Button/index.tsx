@@ -99,13 +99,22 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
   const [baseStyle, setBaseStyle] = useState({});
 
   useEffect(()=>{
-    setBaseStyle(css({
-      color: plain ? color : 'white',
-      background: plain ? undefined : color,
-      border: (color && color.indexOf('gradient') !== -1) ? 0 : undefined,
-      borderColor: (color && color.indexOf('gradient') !== -1) ? undefined : color
-    }))
-  }, [color, css, plain])
+    const BaseStyle: React.CSSProperties = {};
+
+    if (color) {
+      BaseStyle.color = plain ? color : "white"
+      if (plain) {
+        BaseStyle.background = color
+      }
+
+      if (color.indexOf('gradient') !== -1) {
+        BaseStyle.border = 0
+      } else {
+        BaseStyle.borderColor = color
+      }
+    }
+    setBaseStyle(BaseStyle)
+  }, [color, plain])
 
   return (
     <Button
