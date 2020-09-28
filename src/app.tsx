@@ -53,7 +53,8 @@ class App extends Component {
       'pages/notice-bar/index',
       'pages/skeleton/index',
       'pages/panel/index',
-      'pages/steps/index'
+      'pages/steps/index',
+      'pages/progress/index'
     ],
     window: {
       backgroundTextStyle: 'light',

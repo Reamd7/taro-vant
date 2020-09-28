@@ -58,6 +58,8 @@ const VanSteps: Taro.FunctionComponent<VanStepsProp> = props => {
 
   const classname = useMemoClassNames();
   const bem = useMemoBem();
+
+  if (!steps) return null
   return (
     <View
       className={classname(
