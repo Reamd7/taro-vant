@@ -51,7 +51,8 @@ class App extends Component {
       'pages/divider/index',
       'pages/empty/index',
       'pages/notice-bar/index',
-      'pages/skeleton/index'
+      'pages/skeleton/index',
+      'pages/panel/index'
     ],
     window: {
       backgroundTextStyle: 'light',
