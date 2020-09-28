@@ -50,7 +50,8 @@ class App extends Component {
       'pages/count-down/index',
       'pages/divider/index',
       'pages/empty/index',
-      'pages/notice-bar/index'
+      'pages/notice-bar/index',
+      'pages/skeleton/index'
     ],
     window: {
       backgroundTextStyle: 'light',
