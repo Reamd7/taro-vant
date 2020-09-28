@@ -49,7 +49,8 @@ class App extends Component {
       'pages/tag/index',
       'pages/count-down/index',
       'pages/divider/index',
-      'pages/empty/index'
+      'pages/empty/index',
+      'pages/notice-bar/index'
     ],
     window: {
       backgroundTextStyle: 'light',
