@@ -1,8 +1,9 @@
-import Taro, { getCurrentPages } from "@tarojs/taro";
+import Taro, { getCurrentPages, useCallback, useScope } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
 import { CSSProperties } from "react";
+import { CommonEvent } from "@tarojs/components/types/common";
 
 function addUnit(value?: string | number | null) {
   if (value == null) {
@@ -38,6 +39,22 @@ export function useMemoCssProperties() {
 export function useMemoBem() {
   return bem
 
+}
+
+export function useMemoWarpEvents<T extends CommonEvent>() {
+  const scope = useScope();
+  const dataSet = (scope || {}).dataset
+  const warpEvents = useCallback(
+  (fn: (event?: T) => unknown) => {
+    if (fn === noop) {
+      return noop
+    }
+    return (event: T) => {
+      event.currentTarget.dataset = dataSet
+      return fn(event)
+    }
+  }, [dataSet]);
+  return warpEvents;
 }
 
 export const noop = () => { }
@@ -131,7 +148,11 @@ export function getAllRect(
     Taro.createSelectorQuery()
       .in(scope)
       .selectAll(selector)
-      .boundingClientRect()
-      .exec((rect = []) => resolve(rect[0]));
+      .boundingClientRect((rect) => {
+        if (Array.isArray(rect) && rect.length) {
+          resolve(rect)
+        }
+      })
+      .exec();
   });
 }
