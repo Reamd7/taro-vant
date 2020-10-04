@@ -1,19 +1,22 @@
 import { View } from '@tarojs/components';
 import { ITouchEvent } from '@tarojs/components/types/common';
-import Taro, { useMemo, useScope, useState, useCallback } from '@tarojs/taro';
-import { getAllRect, isH5, isWeapp, useMemoAddUnit, useMemoBem, useMemoClassNames, useMemoCssProperties } from '../common/utils';
+import Taro, { useMemo, useScope, useCallback } from '@tarojs/taro';
+import { FormField, useFormItem } from '../common/formitem';
+import { getAllRect, isH5, isWeapp, useMemoAddUnit, useMemoClassNames, useMemoCssProperties } from '../common/utils';
 import VanIcon from '../icon';
 
 import "./index.less";
 
-export type VanRateProps = {
+
+export type VanRateProps<T extends string> = {
   className?: string;
   ['custom-class']?: string;
   ['icon-class']?: string;
   iconClass?: string;
 
   size?: number;
-  value?: number;
+  // defaultValue?: number; // 默认值
+  // value?: number; // 受控组件
   readonly?: boolean;
   disabled?: boolean;
   allowHalf?: boolean;
@@ -26,11 +29,12 @@ export type VanRateProps = {
   gutter?: number;
   touchable?: boolean;
 
-  onInput?: (val: number) => void;
-  onChange?: (val: number) => void;
-}
+  // onInput?: (val: number) => void;
+  // onChange?: (val: number) => void;
 
-const VanRate: Taro.FunctionComponent<VanRateProps> = (props) => {
+} & FormField<T, number>
+
+const VanRate = function <T extends string>(props: VanRateProps<T>) {
   const {
     readonly,
     disabled,
@@ -43,30 +47,38 @@ const VanRate: Taro.FunctionComponent<VanRateProps> = (props) => {
     disabledColor = '#bdbdbd',
     count = 5,
     gutter = 4,
-    touchable = true
+    touchable = true,
+
+    defaultValue = 0,
+    FormData,
+    fieldName,
+    value
   } = props;
-  const [innerValue, setInnerValue] = useState(props.value || 0);
+  // 这个就有一个问题，需要这样使用表单组件，因为，需要定义当defaultValue 和 Value 都是 undefined 的情况下的值。所以这样是合理滴。就算初次 defaultValue 不是 undefined，那之后是不是undefined，要如何处理
+  const [innerValue, setInnerValue] = useFormItem({
+    fieldName,
+    FormData,
+    defaultValue, // 受控组件
+    value,        // 非受控组件
+    onChange: props.onChange
+  });
+
   const innerCountArray = useMemo(() => Array.from({ length: count }).map((_, index) => index), [count]);
-  // useEffect(() => {
-  //   props.value != null && setInnerValue(props.value);
-  // }, [props.value])
   const classnames = useMemoClassNames();
   const scope = useScope();
   const css = useMemoCssProperties();
   const addUnit = useMemoAddUnit();
-  const bem = useMemoBem();
+  // const bem = useMemoBem();
   const onSelect = useCallback((event: ITouchEvent) => {
-
     const { score } = event.currentTarget.dataset;
     if (!disabled && !readonly) {
       setInnerValue(score + 1);
 
       Taro.nextTick(() => {
         props.onChange && props.onChange(score + 1);
-        props.onInput && props.onInput(score + 1);
       })
     }
-  }, [props.onInput, props.onChange, disabled, readonly])
+  }, [props.onChange, disabled, readonly])
   return <View
     className={classnames(
       'van-rate',
@@ -185,16 +197,17 @@ const VanRate: Taro.FunctionComponent<VanRateProps> = (props) => {
       </View>
     })}
   </View>
-}
+};
 
-VanRate.options = {
+(VanRate as Taro.FunctionComponent<any>).options = {
   addGlobalClass: true
-}
+};
 
-VanRate.externalClasses = [
+(VanRate as Taro.FunctionComponent<any>).externalClasses = [
   'custom-class',
   'icon-class'
 ];
+
 (VanRate as any).behaviors = ['wx://form-field'];
 
 export default VanRate

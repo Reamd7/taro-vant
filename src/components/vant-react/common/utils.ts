@@ -43,14 +43,17 @@ export function useMemoBem() {
 
 export function useMemoWarpEvents<T extends CommonEvent>() {
   const scope = useScope();
-  const dataSet = (scope || {}).dataset
+  const dataSet = (scope || {}).dataset // 自定义作用域的dataset
   const warpEvents = useCallback(
   (fn: (event?: T) => unknown) => {
     if (fn === noop) {
       return noop
     }
     return (event: T) => {
-      event.currentTarget.dataset = dataSet
+      event.currentTarget.dataset = {
+        ...event.currentTarget.dataset,
+        ...dataSet
+      }
       return fn(event)
     }
   }, [dataSet]);
