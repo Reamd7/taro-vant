@@ -60,7 +60,6 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
     FormData,
     defaultValue, // 受控组件
     value,        // 非受控组件
-    onChange: props.onChange
   });
 
   const innerCountArray = useMemo(() => Array.from({ length: count }).map((_, index) => index), [count]);
@@ -78,7 +77,7 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
         props.onChange && props.onChange(score + 1);
       })
     }
-  }, [props.onChange, disabled, readonly])
+  }, [props.onChange, setInnerValue, disabled, readonly])
   return <View
     className={classnames(
       'van-rate',

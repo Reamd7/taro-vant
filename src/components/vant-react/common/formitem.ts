@@ -18,6 +18,9 @@ export function useFormItem<KeyName extends string, M>(props:
     defaultValue: M
   }
 ): [M, (val: M) => void]
+export function useFormItem<KeyName extends string, M>(props:
+  FormField<KeyName, M>
+): [M | undefined, (val: M) => void]
 export function useFormItem<KeyName extends string, M>({
   fieldName,
   FormData,
@@ -53,12 +56,15 @@ export function useFormItem<KeyName extends string, M>({
     } else {
       _setInnerValue(val); // 默认行为
     }
-    onChange &&
-      Taro.nextTick(() => { // NOTE 是否应该内嵌到这里
-        onChange(val); // 下一Tick 响应更新，不立即进行的原因是?
-      })
+    // 这里不主动触发更新，因为允许用户在外部通过onChange -> value -> innerValue 的通路进行修改
+    // 自己也可以在外部函数调用处主动处理
+
+    // onChange &&
+    //   Taro.nextTick(() => { // NOTE 是否应该内嵌到这里
+    //     onChange(val); // 下一Tick 响应更新，不立即进行的原因是?
+    //   })
   }, [
-    onChange, fieldName, FormDataState, FormDataDispatch, FormDataRef
+    fieldName, FormDataState, FormDataDispatch, FormDataRef
   ]);
 
   return [innerValue, setInnerValue] as const
