@@ -29,7 +29,6 @@ class App extends Component {
   config: Config = {
     pages: [
 
-      'pages/rate/index',
       'pages/index/index',
 
       // 基础组件
@@ -41,6 +40,7 @@ class App extends Component {
       'pages/popup/index',
       'pages/overlay/index',
 
+      'pages/rate/index',
 
 
       'pages/action-sheet/index',

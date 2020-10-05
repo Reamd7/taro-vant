@@ -47,27 +47,6 @@ export function useMemoBem() {
 export function useScope() {
   return Taro.useScope ? Taro.useScope() : null
 }
-export function useMemoWarpEvents<T extends CommonEvent>() {
-  const scope = useScope();
-  const dataSet = (scope || {}).dataset // 自定义作用域的dataset
-  const warpEvents = useCallback(
-  (fn: (event?: T) => unknown) => {
-    if (fn === noop) {
-      return noop
-    }
-    if (dataSet === undefined) {
-      return fn;
-    }
-    return (event: T) => {
-      event.currentTarget.dataset = {
-        ...event.currentTarget.dataset,
-        ...dataSet
-      }
-      return fn(event)
-    }
-  }, [dataSet]);
-  return warpEvents;
-}
 
 export const noop = () => { }
 

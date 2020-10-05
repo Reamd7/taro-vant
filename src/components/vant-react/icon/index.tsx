@@ -6,8 +6,7 @@ import {
   useMemoCssProperties,
   isWeapp,
   isH5,
-  noop,
-  useMemoWarpEvents
+  noop
 } from "../common/utils";
 import VanInfo from "../info";
 import "./icon.less";
@@ -36,7 +35,6 @@ const VanIcon: Taro.FunctionComponent<VanIconProps & IconEvents> = props => {
 
   const addUnit = useMemoAddUnit();
   const CssProperties = useMemoCssProperties();
-  const warpEvents = useMemoWarpEvents();
 
   return (
     <View
@@ -51,7 +49,7 @@ const VanIcon: Taro.FunctionComponent<VanIconProps & IconEvents> = props => {
         fontSize: addUnit(size),
         ...customStyle
       })}
-      onClick={warpEvents(props.onClick || noop)}
+      onClick={props.onClick || noop}
     >
       {props.children}
       {isImageName && (
