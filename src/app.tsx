@@ -28,6 +28,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/stepper/index',
 
       'pages/index/index',
 

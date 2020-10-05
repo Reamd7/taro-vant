@@ -12,14 +12,14 @@
 - [ ] Checkbox 复选框
 - [ ] DatetimePicker 时间选择
 - [ ] Field 输入框
-- [ ] Picker 选择器
+- [-] Picker 选择器
 - [ ] Radio 单选框
 - [x] Rate 评分
-- [ ] Search 搜索
-- [ ] Slider 滑块
-- [ ] Stepper 步进器
-- [ ] Switch 开关
-- [ ] Uploader 文件上传
+- [-] Search 搜索
+- [-] Slider 滑块
+- [-] Stepper 步进器
+- [-] Switch 开关
+- [-] Uploader 文件上传
 ## 反馈组件
 - [x] ActionSheet 上拉菜单
 - [ ] Dialog 弹出框
@@ -66,6 +66,13 @@
 所以需要对事件进行包装
 
 之前没有意识到这个问题，所以就没有处理，在Rate的Demo中发现这个问题了，这是所有自定义组件都需要的一个吧。
+
+上面的理解是错的，因为没有把这个理解为React的组件，
+对于react自定义组件来说，是没有dataset的，只有props
+如果使用内置组件View 等价于 div，自然也有dataset，但是注意一点，dataset在HTML中是`readonly Record<string, string>`。而在小程序不是。
+
+1、自定义组件不可以传递我没有支持的props。包括data-xxx。
+2、非自定义组件（原生组件、内置组件），可以支持data-xxx（也是HTML，Weapp，如果需要使用RN，就不支持了）
 
 2、不太能够搞得清楚getRect / getAllRect 为什么不能处理自定义组件（slot）内class，如果需要用到这个api
 还是需要针对对应的自定义组件外层加一个View

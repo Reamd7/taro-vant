@@ -10,8 +10,6 @@ export type FormField<KeyName extends string, M> = {
   ]
   defaultValue?: M;
   value?: M;
-
-  onChange?: (val: M) => void;
 }
 export function useFormItem<KeyName extends string, M>(props:
   Omit<FormField<KeyName, M>, "defaultValue"> & {
@@ -26,7 +24,6 @@ export function useFormItem<KeyName extends string, M>({
   FormData,
   value,
   defaultValue,
-  onChange,
 }: FormField<KeyName, M>) {
   const isArray = useMemo(() => !!(FormData && Array.isArray(FormData)), [FormData]);
   const initValue = (defaultValue !== undefined ? defaultValue : value);
@@ -43,7 +40,7 @@ export function useFormItem<KeyName extends string, M>({
   const FormDataRef = isArray ? null : (FormData! as Taro.MutableRefObject<{
     [key in KeyName]?: M
   }>) || null;
-
+  // 自动更新下的东西。
   const setInnerValue = useCallback((val: M) => {
     if (FormDataState && FormDataDispatch && fieldName) {
       FormDataDispatch({
