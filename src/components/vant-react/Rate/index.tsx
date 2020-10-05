@@ -70,11 +70,12 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
   // const bem = useMemoBem();
   const onSelect = useCallback((event: ITouchEvent) => {
     const { score } = event.currentTarget.dataset;
+
     if (!disabled && !readonly) {
-      setInnerValue(score + 1);
+      setInnerValue(Number(score) + 1);
 
       Taro.nextTick(() => {
-        props.onChange && props.onChange(score + 1);
+        props.onChange && props.onChange(Number(score) + 1);
       })
     }
   }, [props.onChange, setInnerValue, disabled, readonly])
@@ -131,12 +132,12 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
           ) : undefined
         })}
       >
-        {allowHalf ? <View className="van-rate__icon" style={{
+        {allowHalf ? <View className="van-rate__icon" style={css({
           width: addUnit(size),
           height: addUnit(size),
           fontSize: addUnit(size)
-        }}>
-          <View className="van-rate__half van-rate__icon--left" data-score={index - 0.5}>
+        })}>
+          <View className="van-rate__half van-rate__icon--left" data-score={index - 0.5}  onClick={onSelect}>
             <VanIcon
               name={index + 0.5 <= innerValue ? icon : voidIcon}
               className={classnames(
@@ -147,13 +148,13 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
                 isH5 && props.iconClass,
                 isWeapp && 'icon-class',
               )}
-              data-score={index - 0.5}
+              // data-score={index - 0.5}
               color={disabled ? disabledColor : index + 0.5 <= innerValue ? color : voidColor}
-              onClick={onSelect}
+              // onClick={onSelect}
               size={size}
             />
           </View>
-          <View className="van-rate__half van-rate__icon--right" data-score={index}>
+          <View className="van-rate__half van-rate__icon--right" data-score={index} onClick={onSelect}>
             <VanIcon
               name={index + 1 <= innerValue ? icon : voidIcon}
               className={classnames(
@@ -164,9 +165,9 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
                 isH5 && props.iconClass,
                 isWeapp && 'icon-class',
               )}
-              data-score={index}
+              // data-score={index}
               color={disabled ? disabledColor : index + 1 <= innerValue ? color : voidColor}
-              onClick={onSelect}
+              // onClick={onSelect}
               size={size}
             />
           </View>
@@ -174,7 +175,7 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
           <View className="van-rate__icon" data-score={index} style={{
             width: addUnit(size),
             height: addUnit(size)
-          }}>
+          }} onClick={onSelect}>
             <VanIcon
               name={index + 1 <= innerValue ? icon : voidIcon}
               className={classnames(
@@ -187,9 +188,7 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
                 isH5 && props.iconClass,
                 isWeapp && 'icon-class',
               )}
-              data-score={index}
               color={disabled ? disabledColor : index + 1 <= innerValue ? color : voidColor}
-              onClick={onSelect}
               size={size}
             />
           </View>}

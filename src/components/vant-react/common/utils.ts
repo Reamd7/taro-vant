@@ -4,12 +4,16 @@ import classNames from 'classnames';
 import bem from "./bem";
 import { CSSProperties } from "react";
 import { CommonEvent } from "@tarojs/components/types/common";
-
+const dpi = 2;
 function addUnit(value?: string | number | null) {
   if (value == null) {
     return undefined;
   } else if (typeof value === "number") {
-    return (value * 2) + "rpx"
+    if (isWeapp) {
+      return (value * dpi) + "rpx"
+    } else {
+      return (value) + "px"
+    }
   } else {
     return value
   }
@@ -41,7 +45,7 @@ export function useMemoBem() {
 
 }
 export function useScope() {
-  return Taro.useScope ? Taro.useScope() : {}
+  return Taro.useScope ? Taro.useScope() : null
 }
 export function useMemoWarpEvents<T extends CommonEvent>() {
   const scope = useScope();
@@ -50,6 +54,9 @@ export function useMemoWarpEvents<T extends CommonEvent>() {
   (fn: (event?: T) => unknown) => {
     if (fn === noop) {
       return noop
+    }
+    if (dataSet === undefined) {
+      return fn;
     }
     return (event: T) => {
       event.currentTarget.dataset = {
