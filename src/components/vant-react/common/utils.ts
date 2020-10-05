@@ -1,4 +1,4 @@
-import Taro, { getCurrentPages, useCallback, useScope } from "@tarojs/taro";
+import Taro, { getCurrentPages, useCallback } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
@@ -40,7 +40,9 @@ export function useMemoBem() {
   return bem
 
 }
-
+export function useScope() {
+  return Taro.useScope ? Taro.useScope() : {}
+}
 export function useMemoWarpEvents<T extends CommonEvent>() {
   const scope = useScope();
   const dataSet = (scope || {}).dataset // 自定义作用域的dataset

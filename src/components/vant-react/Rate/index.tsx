@@ -1,8 +1,8 @@
 import { View } from '@tarojs/components';
 import { ITouchEvent } from '@tarojs/components/types/common';
-import Taro, { useMemo, useScope, useCallback } from '@tarojs/taro';
+import Taro, { useMemo,  useCallback } from '@tarojs/taro';
 import { FormField, useFormItem } from '../common/formitem';
-import { getAllRect, isH5, isWeapp, useMemoAddUnit, useMemoClassNames, useMemoCssProperties } from '../common/utils';
+import { useScope, getAllRect, isH5, isWeapp, useMemoAddUnit, useMemoClassNames, useMemoCssProperties } from '../common/utils';
 import VanIcon from '../icon';
 
 import "./index.less";

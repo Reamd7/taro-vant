@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect, useScope, useMemo } from "@tarojs/taro";
+import Taro, { useState, useEffect, useMemo } from "@tarojs/taro";
 import { ReactNode } from "react";
 import { View, Block } from "@tarojs/components";
 import {
@@ -8,7 +8,8 @@ import {
   getSystemInfoSync,
   useMemoAddUnit,
   isWeapp,
-  isH5
+  isH5,
+  useScope
 } from "src/components/vant-react/common/utils";
 import VanIcon from "src/components/vant-react/icon";
 import "./index.less"

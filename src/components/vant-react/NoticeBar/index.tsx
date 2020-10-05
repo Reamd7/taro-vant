@@ -1,7 +1,7 @@
 import Taro, {
   useState,
   useRef,
-  useScope,
+  
   useEffect,
   useCallback
 } from "@tarojs/taro";
@@ -18,7 +18,7 @@ import {
   useMemoCssProperties,
   noop,
   getRect,
-  requestAnimationFrame
+  requestAnimationFrame, useScope
 } from "../common/utils";
 
 export type VanNoticeBarProps = {
