@@ -105,8 +105,7 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
 
   const [inputVal, setInputVal] = useState(String(currentValue)); // 定义一个inputVal 输入框的默认值
   useEffect(() => {
-    console.log(currentValue)
-    setInputVal(currentValue.toFixed(decimalLength))
+    setInputVal(currentValue + "")
   }, [currentValue, decimalLength]) // 当实际currentValue值变化的时候，响应更新输入框的值。
 
   // inputVal , 当输入的时候无条件更新，但是不会影响currentValue，也不会触发onChange事件。
@@ -147,6 +146,7 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
         if (prevNumber === value) {
           setInputVal(prevNumber + "")
         } else {
+          console.log(prevNumber, value)
           setCurrentValue(value)
         }
         // 先进行自动更新
@@ -193,11 +193,12 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
         return;
       }
     }
-    const newValue = isPlus ? Big(currentValue).add(step).valueOf() : Big(currentValue).minus(step).valueOf();
+    const activeVal = isNaN(Number(inputVal)) ? currentValue : inputVal;
+    const newValue = isPlus ? Big(activeVal).add(step).valueOf() : Big(activeVal).minus(step).valueOf();
     const NumVal = filter(newValue);
     ChangeValue(NumVal);
 
-  }, [disabled, disablePlus, disableMinus, currentValue, min, max, props.onOverlimit, filter, ChangeValue]);
+  }, [disabled, disablePlus, disableMinus, inputVal, min, max, props.onOverlimit, filter, ChangeValue]);
 
   // ====================================================
   // 长按节流事件
@@ -220,7 +221,6 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
       longPressStep(type)
     }, LONG_PRESS_START_TIME)
   }, [longPress, longPressStep, onTap])
-
   const onTouchEnd = useCallback(() => {
     if (!longPress) {
       return;
@@ -231,7 +231,7 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
   }, [longPress])
 
 
-  const size = useMemo(() => addUnit(size), [buttonSize]);
+  const size = useMemo(() => addUnit(buttonSize), [buttonSize]);
   return <View className={classnames(
     'van-stepper',
     isH5 && props.className,

@@ -45,24 +45,24 @@ export default function StepperPage() {
         manualChange
         onChange={({
           // previousValue,
-          value,
-          // updateValue,
+          // value,
+          updateValue,
           // revertValue
         }) => {
-          Toast.loading({
+          const id = Toast.loading({
             forbidClick: true
           });
           setTimeout(() => {
-            Toast.clear();
-            // updateValue()
-            setValue(value)
+            id && id.clear();
+            updateValue()
+            // setValue(value)
           }, 500);
         }}
       />
     </VanCell>
 
     <VanCell center title="自定义大小">
-      <VanStepper value={1} input-width="40px" button-size="32px" />
+      <VanStepper value={1} inputWidth={40} buttonSize={64} />
     </VanCell>
 
     <VanToast id="van-toast" />
