@@ -146,7 +146,6 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
         if (prevNumber === value) {
           setInputVal(prevNumber + "")
         } else {
-          console.log(prevNumber, value)
           setCurrentValue(value)
         }
         // 先进行自动更新
