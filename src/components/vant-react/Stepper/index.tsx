@@ -183,12 +183,12 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
   const onTap = useCallback((type: "plus" | "minus") => {
     const isPlus = (type === "plus");
     if (isPlus) {
-      if (disabled || disableMinus || currentValue < min) {
+      if (disabled || disableMinus || currentValue > max) {
         props.onOverlimit && props.onOverlimit(type)
         return;
       }
     } else {
-      if (disabled || disableMinus || currentValue > max) {
+      if (disabled || disableMinus || currentValue < min) {
         props.onOverlimit && props.onOverlimit(type)
         return;
       }
@@ -197,16 +197,32 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
     const newValue = isPlus ? Big(activeVal).add(step).valueOf() : Big(activeVal).minus(step).valueOf();
     const NumVal = filter(newValue);
     ChangeValue(NumVal);
-
   }, [disabled, disablePlus, disableMinus, inputVal, min, max, props.onOverlimit, filter, ChangeValue]);
 
   // ====================================================
-  // 长按节流事件 ( TODO 有点bug )
+  // 长按节流事件 ( TODO 有点bug prevNumber 会持续是÷值而不是改变过的值。 )
   const longPressTimer = useRef<NodeJS.Timeout>();
   const longPressCallback = useCallback((activeVal: string | number,  type: "plus" | "minus")=>{
     const isPlus = (type === "plus");
     longPressTimer.current = setTimeout(()=>{
       const newValue = isPlus ? Big(activeVal).add(step).valueOf() : Big(activeVal).minus(step).valueOf();
+      if (isPlus) {
+        if (disabled || disableMinus || Number(newValue) > max) {
+          props.onOverlimit && props.onOverlimit(type)
+          if (longPressTimer.current != null) {
+            clearTimeout(longPressTimer.current)
+          }
+          return;
+        }
+      } else {
+        if (disabled || disableMinus || Number(newValue) < min) {
+          props.onOverlimit && props.onOverlimit(type)
+          if (longPressTimer.current != null) {
+            clearTimeout(longPressTimer.current)
+          }
+          return;
+        }
+      }
       activeVal = filter(newValue);
       ChangeValue(activeVal);
       longPressCallback(activeVal, type)
