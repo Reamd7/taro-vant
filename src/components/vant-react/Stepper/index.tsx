@@ -201,14 +201,17 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
   }, [disabled, disablePlus, disableMinus, inputVal, min, max, props.onOverlimit, filter, ChangeValue]);
 
   // ====================================================
-  // 长按节流事件
+  // 长按节流事件 ( TODO 有点bug )
   const longPressTimer = useRef<NodeJS.Timeout>();
-  const longPressStep = useCallback((type: "plus" | "minus") => {
-    longPressTimer.current = setTimeout(() => {
-      onTap(type);
-      longPressStep(type)
+  const longPressCallback = useCallback((activeVal: string | number,  type: "plus" | "minus")=>{
+    const isPlus = (type === "plus");
+    longPressTimer.current = setTimeout(()=>{
+      const newValue = isPlus ? Big(activeVal).add(step).valueOf() : Big(activeVal).minus(step).valueOf();
+      activeVal = filter(newValue);
+      ChangeValue(activeVal);
+      longPressCallback(activeVal, type)
     }, LONG_PRESS_START_TIME)
-  }, [onTap])
+  }, [disabled, disablePlus, disableMinus, inputVal, min, max, props.onOverlimit, filter, ChangeValue])
   const onTouchStart = useCallback((type: "plus" | "minus") => {
     if (!longPress) {
       return;
@@ -216,11 +219,9 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
     if (longPressTimer.current != null) {
       clearTimeout(longPressTimer.current)
     }
-    longPressTimer.current = setTimeout(() => {
-      onTap(type);
-      longPressStep(type)
-    }, LONG_PRESS_START_TIME)
-  }, [longPress, longPressStep, onTap])
+    const activeVal = isNaN(Number(inputVal)) ? currentValue : inputVal;
+    longPressCallback(activeVal, type);
+  }, [longPress, longPressCallback, inputVal, currentValue])
   const onTouchEnd = useCallback(() => {
     if (!longPress) {
       return;
@@ -229,7 +230,6 @@ const VanStepper = <T extends string>(props: VanStepperProps<T>) => {
       clearTimeout(longPressTimer.current as unknown as number)
     }
   }, [longPress])
-
 
   const size = useMemo(() => addUnit(buttonSize), [buttonSize]);
   return <View className={classnames(
