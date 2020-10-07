@@ -1,4 +1,4 @@
-import { SetStateAction, useMemo, useRef, useState, useEffect, useCallback } from "@tarojs/taro";
+import Taro, { SetStateAction, useRef, useState, useEffect, useCallback } from "@tarojs/taro";
 
 export type FormField<KeyName extends string, M> = {
   fieldName?: KeyName;
@@ -15,17 +15,16 @@ export function useFormItem<KeyName extends string, M>(props:
   Omit<FormField<KeyName, M>, "defaultValue"> & {
     defaultValue: M
   }
-): [M, (val: M) => void]
+): [M, (val: M) => void, (val: M, onChange?: (val: M) => void) => void]
 export function useFormItem<KeyName extends string, M>(props:
   FormField<KeyName, M>
-): [M | undefined, (val: M) => void]
+): [M | undefined, (val: M) => void, (val: M, onChange?: (val: M) => void) => void]
 export function useFormItem<KeyName extends string, M>({
   fieldName,
   FormData,
   value,
   defaultValue,
 }: FormField<KeyName, M>) {
-  const isArray = useMemo(() => !!(FormData && Array.isArray(FormData)), [FormData]);
   const initValue = (defaultValue !== undefined ? defaultValue : value);
   const prevValue = useRef(initValue); // ref 值
   const [innerValue, _setInnerValue] = useState(initValue);
@@ -35,34 +34,44 @@ export function useFormItem<KeyName extends string, M>({
       prevValue.current = value;
     }
   }, [value]); // 受控组件
-  const FormDataState = isArray ? FormData![0] as { [key in KeyName]?: M } : null;
-  const FormDataDispatch = isArray ? FormData![1] as Taro.Dispatch<SetStateAction<{ [key in KeyName]?: M }>> : null;
-  const FormDataRef = isArray ? null : (FormData! as Taro.MutableRefObject<{
-    [key in KeyName]?: M
-  }>) || null;
   // 自动更新下的东西。
   const setInnerValue = useCallback((val: M) => {
-    if (FormDataState && FormDataDispatch && fieldName) {
-      FormDataDispatch({
-        ...FormDataState,
-        [fieldName]: val
-      }); // 受控组件，我直接调用SetState，等待 props.value 更新之后的更新
-    } else if (fieldName && FormDataRef) {
-      FormDataRef.current[fieldName] = val;
-      _setInnerValue(val); // 非受控组件，这个因为也没有调用外部的SetState，所以也不会出现 prop.value 的更新。
-    } else {
-      _setInnerValue(val); // 默认行为
+    if (!!FormData) { // 需要更新外部表单对象
+      if (Array.isArray(FormData)) { // 表单对象是 [FromState, setFormState]
+        const FormDataState = FormData[0]
+        const FormDataDispatch = FormData[1]
+        if (fieldName) { // 有传递表单字段值
+          FormDataDispatch({
+            ...FormDataState,
+            [fieldName]: val
+          }); // 受控组件，我直接调用SetState，等待 props.value 更新之后的更新
+          return; // 禁止调用 _setInnerValue 这里不主动触发更新，因为允许用户在外部通过onChange -> value -> innerValue 的通路进行修改
+        }
+      } else {
+        const FormDataRef = FormData;
+        if (fieldName) { // 有传递表单字段值
+          FormDataRef.current[fieldName] = val;
+        }
+      }
     }
-    // 这里不主动触发更新，因为允许用户在外部通过onChange -> value -> innerValue 的通路进行修改
-    // 自己也可以在外部函数调用处主动处理
+    if (value === undefined) { // 非受控组件
+      _setInnerValue(val); // 默认行为 主动修改内部值，以和外部表单字段保持统一
+    }
 
     // onChange &&
     //   Taro.nextTick(() => { // NOTE 是否应该内嵌到这里
     //     onChange(val); // 下一Tick 响应更新，不立即进行的原因是?
     //   })
   }, [
-    fieldName, FormDataState, FormDataDispatch, FormDataRef
+    value, fieldName, FormData
   ]);
 
-  return [innerValue, setInnerValue] as const
+  const setInnerValueAndChange = useCallback((val: M, onChange?: (val: M) => void) => {
+    setInnerValue(val);
+    onChange && Taro.nextTick(() => {
+      onChange && onChange(val)
+    })
+  }, [setInnerValue])
+
+  return [innerValue, setInnerValue, setInnerValueAndChange] as const
 }

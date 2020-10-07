@@ -1,11 +1,11 @@
-import Taro, { getCurrentPages, useCallback } from "@tarojs/taro";
+import Taro, { getCurrentPages, useCallback, useContext, useEffect, useMemo } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
 import { CSSProperties } from "react";
 import { CommonEvent } from "@tarojs/components/types/common";
 const dpi = 2;
-function addUnit(value?: string | number | null) {
+export function addUnit(value?: string | number | null) {
   if (value == null) {
     return undefined;
   } else if (typeof value === "number") {
@@ -117,6 +117,66 @@ export function getContext() {
   }
 }
 
+export function GroupContextCreator<T>(ComponentName: string) {
+  const RelationMap = new Map<string, Taro.Context<T>>();
+
+  const useGroupContainerContext = function (id: string, defaultValue: T) {
+    const page = getContext()
+    const key = page ? `${id}${page}` : null;
+
+    const Context = useMemo(() => {
+      if (key) {
+        const val = RelationMap.get(key);
+
+        if (val) {
+          return val
+        } else {
+          const context = Taro.createContext<T>(defaultValue);
+          RelationMap.set(key, context);
+
+          return context;
+        }
+      } else {
+        return null
+      }
+    }, [key]);
+
+    useEffect(() => {
+      return function () {
+        if (key) {
+          RelationMap.delete(key)
+        }
+      }
+    }, [key])
+    return Context;
+  }
+
+  const useGroupItemContext = function (id: string) {
+    const page = getContext()
+    const key = page ? `${id}${page}` : null;
+    const Context = useMemo(() => {
+      if (key) {
+        const val = RelationMap.get(key);
+
+        if (val) {
+          return val
+        } else {
+          throw `ID = ${id} ${ComponentName} 组件未挂载`
+          // return null;
+        }
+      } else {
+        throw `ID = ${id} ${ComponentName} 组件未挂载`
+        // return null
+      }
+    }, [key]);
+    return useContext(Context)
+  }
+
+  return {
+    useGroupContainerContext,
+    useGroupItemContext
+  } as const
+}
 
 export function getRect(
   scope: WechatMiniprogram.Component.TrivialInstance,

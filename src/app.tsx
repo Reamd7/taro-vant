@@ -28,7 +28,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/stepper/index',
+      'pages/checkbox/index',
 
       'pages/index/index',
 
@@ -42,6 +42,7 @@ class App extends Component {
       'pages/overlay/index',
 
       'pages/rate/index',
+      'pages/stepper/index',
 
 
       'pages/action-sheet/index',

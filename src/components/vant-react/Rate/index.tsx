@@ -30,7 +30,7 @@ export type VanRateProps<T extends string> = {
   touchable?: boolean;
 
   // onInput?: (val: number) => void;
-  // onChange?: (val: number) => void;
+  onChange?: (val: number) => void;
 
 } & FormField<T, number>
 
@@ -52,10 +52,11 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
     defaultValue = 0,
     FormData,
     fieldName,
-    value
+    value,
+    onChange
   } = props;
   // 这个就有一个问题，需要这样使用表单组件，因为，需要定义当defaultValue 和 Value 都是 undefined 的情况下的值。所以这样是合理滴。就算初次 defaultValue 不是 undefined，那之后是不是undefined，要如何处理
-  const [innerValue, setInnerValue] = useFormItem({
+  const [innerValue, setInnerValue, setInnerValueAndChange] = useFormItem({
     fieldName,
     FormData,
     defaultValue, // 受控组件
@@ -72,13 +73,9 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
     const { score } = event.currentTarget.dataset;
 
     if (!disabled && !readonly) {
-      setInnerValue(Number(score) + 1);
-
-      Taro.nextTick(() => {
-        props.onChange && props.onChange(Number(score) + 1);
-      })
+      setInnerValueAndChange(Number(score) + 1, onChange)
     }
-  }, [props.onChange, setInnerValue, disabled, readonly])
+  }, [setInnerValueAndChange, disabled, readonly, onChange])
   return <View
     className={classnames(
       'van-rate',
