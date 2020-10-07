@@ -17,6 +17,8 @@ export type VanCheckBoxProps<Key extends string> = {
   checkedColor?: string;
   iconSize?: number;
 
+  inline?: boolean;
+
   className?: string;
   ['custom-class']?: string;
   iconClass?: string;
@@ -56,9 +58,11 @@ const VanCheckBox = <Key extends string>(props: VanCheckBoxProps<Key>) => {
     useIconSlot = false,
     checkedColor = "#1989fa",
     iconSize = 20,
+    inline,
+
     value,
     fieldName,
-    FormData
+    FormData,
   } = props;
   if (props.gid) {
     if (fieldName === undefined) {
@@ -116,6 +120,7 @@ const VanCheckBox = <Key extends string>(props: VanCheckBoxProps<Key>) => {
   return <View className={
     classnames(
       "van-checkbox",
+      inline && 'van-checkbox__inline',
       isWeapp && "custom-class",
       isH5 && props.className
     )

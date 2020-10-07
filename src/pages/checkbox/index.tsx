@@ -1,4 +1,4 @@
-import { Block, Image } from '@tarojs/components';
+import { Block, Image, View } from '@tarojs/components';
 import Taro, { useState } from '@tarojs/taro';
 import VanCell from 'src/components/vant-react/Cell';
 import VanCellGroup from 'src/components/vant-react/CellGroup';
@@ -118,6 +118,7 @@ export function CheckBoxPage() {
             gid="result2"
             key={item}
             fieldName={item}
+            inline
             custom-class="demo-checkbox"
             className="demo-checkbox"
           >复选框 {item}</VanCheckBox>
@@ -145,7 +146,13 @@ export function CheckBoxPage() {
                   }
                 }}
               >
-                <VanCheckBox gid="result3" fieldName={item} />
+                <View style={{
+                  display: 'flex',
+                  height: "100%",
+                  alignItems: "center"
+                }}>
+                  <VanCheckBox gid="result3" fieldName={item} />
+                </View>
               </VanCell>
             })}
           </VanCellGroup>
