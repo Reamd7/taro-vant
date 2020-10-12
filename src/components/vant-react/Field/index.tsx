@@ -38,7 +38,7 @@ type VanFieldPropsEvt<T> = {
 }
 
 type VanFieldStringProps<Key extends string> = {
-  type?: "text" | "idcard" | "textarea" | 'password'
+  type?: "text" | "idcard" | "textarea" | 'password' | 'search'
 
 } & FormField<Key, string> & VanFieldPropsEvt<string>;
 
@@ -72,13 +72,13 @@ type VanFieldCommonProps = {
   disableDefaultPadding?: boolean;
   // ===================================
   size?: VanCellProps['size'];
-  icon?: string;
+  icon?: VanCellProps['icon'];
   label?: string;
   error?: boolean;
   center?: boolean;
   isLink?: boolean;
   leftIcon?: VanCellProps['icon'];
-  rightIcon?: string;
+  rightIcon?: VanCellProps['icon'];
   autoSize?: false | {
     maxHeight: number;
     minHeight: number;
