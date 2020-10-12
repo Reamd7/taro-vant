@@ -16,7 +16,7 @@
 - [ ] Radio 单选框
 - [x] Rate 评分
 - [-] Search 搜索
-- [] Slider 滑块
+- [-] Slider 滑块
 - [x] Stepper 步进器
 - [-] Switch 开关
 - [] Uploader 文件上传
