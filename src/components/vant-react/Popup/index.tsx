@@ -17,8 +17,7 @@ import VanIcon from "../icon";
 import VanOverlay from "../Overlay";
 import "./index.less";
 import { ITouchEvent } from "@tarojs/components/types/common";
-
-const VanPopup: Taro.FunctionComponent<{
+export type VanPopupProps = {
   show?: boolean;
   zIndex?: number;
   overlay?: boolean;
@@ -42,7 +41,8 @@ const VanPopup: Taro.FunctionComponent<{
   noScroll?: boolean; // 这个开关一开就整个遮罩层都无法滚动了。
   closeIconClass?: string;
   ['close-icon-class']?: string;
-} & MixinsTransitionProps> = props => {
+} & MixinsTransitionProps
+const VanPopup: Taro.FunctionComponent<VanPopupProps> = props => {
   const {
     zIndex = 100,
     overlay = true,

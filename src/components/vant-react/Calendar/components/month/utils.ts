@@ -1,0 +1,60 @@
+/* eslint-disable */
+var utils = require('../../utils.wxs');
+
+export function getMark(date) {
+  return getDate(date).getMonth() + 1;
+}
+
+const ROW_HEIGHT = 64;
+
+export function getDayStyle(type, index, date, rowHeight, color) {
+  var style = [];
+  var offset = getDate(date).getDay();
+
+  if (index === 0) {
+    style.push(['margin-left', (100 * offset) / 7 + '%']);
+  }
+
+  if (rowHeight !== ROW_HEIGHT) {
+    style.push(['height', rowHeight + 'px']);
+  }
+
+  if (color) {
+    if (
+      type === 'start' ||
+      type === 'end' ||
+      type === 'multiple-selected' ||
+      type === 'multiple-middle'
+    ) {
+      style.push(['background', color]);
+    } else if (type === 'middle') {
+      style.push(['color', color]);
+    }
+  }
+
+  return style
+    .map(function(item) {
+      return item.join(':');
+    })
+    .join(';');
+}
+
+export function formatMonthTitle(date) {
+  date = getDate(date);
+  return date.getFullYear() + '年' + (date.getMonth() + 1) + '月';
+}
+
+export function getMonthStyle(visible, date, rowHeight) {
+  if (!visible) {
+    date = getDate(date);
+
+    var totalDay = utils.getMonthEndDay(
+      date.getFullYear(),
+      date.getMonth() + 1
+    );
+    var offset = getDate(date).getDay();
+    var padding = Math.ceil((totalDay + offset) / 7) * rowHeight;
+
+    return 'padding-bottom:' + padding + 'px';
+  }
+}

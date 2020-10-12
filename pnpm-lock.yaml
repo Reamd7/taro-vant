@@ -17,6 +17,7 @@ dependencies:
   babel-runtime: 6.26.0
   big.js: 6.0.1
   classnames: 2.2.6
+  dayjs: 1.9.1
   fast-memoize: 2.5.2
   nerv-devtools: 1.5.7
   nervjs: 1.5.7
@@ -5977,6 +5978,11 @@ packages:
     resolution:
       integrity: sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
       tarball: 'https://registry.npm.taobao.org/dashdash/download/dashdash-1.14.1.tgz'
+  /dayjs/1.9.1:
+    dev: false
+    resolution:
+      integrity: sha1-IBp1X321ED7W3mO6k6mEFBx1RUE=
+      tarball: 'https://registry.npm.taobao.org/dayjs/download/dayjs-1.9.1.tgz'
   /de-indent/1.0.2:
     dev: false
     resolution:
@@ -16008,6 +16014,7 @@ specifiers:
   babel-runtime: ^6.26.0
   big.js: ^6.0.1
   classnames: ^2.2.6
+  dayjs: ^1.9.1
   eslint: ^7.9.0
   eslint-config-taro: 2.2.15
   eslint-plugin-import: ^2.12.0

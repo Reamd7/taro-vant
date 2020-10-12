@@ -8,11 +8,11 @@
 - [x] Popup 弹出层
 - [x] Transition 动画
 ## 表单组件
-- [ ] Calendar 日历
+- [-] Calendar 日历
 - [x] Checkbox 复选框
 - [ ] DatetimePicker 时间选择
 - [-] Field 输入框
-- [-] Picker 选择器
+- [] Picker 选择器
 - [ ] Radio 单选框
 - [x] Rate 评分
 - [] Search 搜索
