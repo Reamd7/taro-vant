@@ -1,9 +1,8 @@
-import Taro, { getCurrentPages, useCallback, useContext, useEffect, useMemo } from "@tarojs/taro";
+import Taro, { getCurrentPages, useContext, useEffect, useMemo } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
 import { CSSProperties } from "react";
-import { CommonEvent } from "@tarojs/components/types/common";
 const dpi = 2;
 export function addUnit(value?: string | number | null) {
   if (value == null) {
@@ -206,4 +205,7 @@ export function getAllRect(
       })
       .exec();
   });
+}
+export function range(num: number, min: number, max: number) {
+  return Math.min(Math.max(num, min), max);
 }
