@@ -11,15 +11,15 @@
 - [ ] Calendar 日历
 - [x] Checkbox 复选框
 - [ ] DatetimePicker 时间选择
-- [ ] Field 输入框
+- [-] Field 输入框
 - [-] Picker 选择器
 - [ ] Radio 单选框
 - [x] Rate 评分
-- [-] Search 搜索
-- [-] Slider 滑块
+- [] Search 搜索
+- [] Slider 滑块
 - [x] Stepper 步进器
-- [-] Switch 开关
-- [-] Uploader 文件上传
+- [] Switch 开关
+- [] Uploader 文件上传
 ## 反馈组件
 - [x] ActionSheet 上拉菜单
 - [ ] Dialog 弹出框

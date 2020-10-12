@@ -11,7 +11,7 @@ import {
 import VanIcon from "../icon";
 import "./index.less";
 
-const VanCell: Taro.FunctionComponent<{
+export type VanCellProps = {
   className?: string;
   ["custom-class"]?: string;
   titleClass?: string;
@@ -39,7 +39,7 @@ const VanCell: Taro.FunctionComponent<{
   useLabelSlot?: boolean;
   border?: boolean;
 
-  customStyle?: string;
+  customStyle?: React.CSSProperties;
   titleStyle?: React.CSSProperties;
 } & {
   onClick?: React.ComponentProps<typeof View>["onClick"];
@@ -49,7 +49,9 @@ const VanCell: Taro.FunctionComponent<{
   renderLabel?: React.ReactNode;
   renderRightIcon?: React.ReactNode;
   renderExtra?: React.ReactNode;
-} & MixinLinkProps> = props => {
+} & MixinLinkProps
+
+const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
   const {
     size,
     center,
