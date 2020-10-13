@@ -31,7 +31,7 @@
 - [x] SwipeCell 滑动单元格
 - [x] Toast 轻提示 ( 这个如果是默认显示的情况下 好像有点问题？)
 ## 展示组件
-- [ ] Circle 进度条 ( Canvas )
+- [-] Circle 进度条 ( Canvas )
 - [-] Collapse 折叠面板
     - item
 - [x] CountDown 倒计时
@@ -76,3 +76,5 @@
 
 2、不太能够搞得清楚getRect / getAllRect 为什么不能处理自定义组件（slot）内class，如果需要用到这个api
 还是需要针对对应的自定义组件外层加一个View
+
+3、问题来了，这样封装会导致组件多一层就多几个State变量。这样太不优雅了
