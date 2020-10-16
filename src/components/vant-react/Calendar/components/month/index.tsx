@@ -3,8 +3,17 @@ import "./index.less";
 import { View, Text } from "@tarojs/components";
 import dayjs from "dayjs";
 import { useMemoClassNames, useMemoBem } from "src/components/vant-react/common/utils";
-import { getDayStyle } from "./utils";
+import { getDayStyle } from "../../utils";
 
+type dayType = "disabled" | "selected" | "" | "start" | "start-end" | "end" | "middle" | "multiple-middle" | "multiple-selected" | undefined
+type dayItem = {
+  date: dayjs.Dayjs;
+  type?: dayType;
+  text: number;
+  topInfo?: string;
+  className?: string;
+  bottomInfo?: string
+};
 export type VanCalMonthProps = {
   date: dayjs.Dayjs;
   type: "single" | "multiple" | "range";
@@ -14,36 +23,23 @@ export type VanCalMonthProps = {
   showMark?: boolean;
   rowHeight: number;
 
-  formatter?: (date: {
-    date: dayjs.Dayjs;
-    type?: string;
-    text: number;
-    topInfo?: string;
-    className?: string;
-    bottomInfo?: string
-  }) => {
-    date: dayjs.Dayjs;
-    type?: string;
-    text: number;
-    topInfo?: string;
-    className?: string;
-    bottomInfo?: string
-  };
+  formatter?: (date: dayItem) => dayItem;
   currentDate: dayjs.Dayjs | dayjs.Dayjs[];
   allowSameDay?: boolean;
   showSubtitle?: boolean;
   showMonthTitle?: boolean;
 
-  onClick: VoidFunction;
+  onClick: (day: dayjs.Dayjs) => unknown;
 }
 const VanCalMonth = (props: VanCalMonthProps) => {
-  const [visible, setvisible] = useState(true);
+  const visible = true;
 
   const classnames = useMemoClassNames();
   const bem = useMemoBem();
 
   const getDayType = useCallback((day: dayjs.Dayjs) => {
     if (day.isAfter(props.maxDate) || day.isBefore(props.minDate)) {
+
       return "disabled"
     }
 
@@ -78,6 +74,7 @@ const VanCalMonth = (props: VanCalMonthProps) => {
         return 'middle'
       }
     } else {
+
       if (!Array.isArray(currentDate)) {
         return '';
       }
@@ -121,23 +118,17 @@ const VanCalMonth = (props: VanCalMonthProps) => {
 
   const days = useMemo(() => {
     const startDate = props.date;
+
     const year = startDate.get("year");
     const month = startDate.get("month");
-
     const totalDay = startDate.daysInMonth();
 
     return Array.from({ length: totalDay }).map((_, day) => {
+      day = day + 1
       const date = dayjs(new Date(year, month, day, 0, 0, 0, 0));
       const type = getDayType(date);
 
-      let config: {
-        date: dayjs.Dayjs;
-        type?: string;
-        text: number;
-        topInfo?: string;
-        className?: string;
-        bottomInfo?: string
-      } = {
+      let config: dayItem = {
         date,
         type,
         text: day,
@@ -146,7 +137,7 @@ const VanCalMonth = (props: VanCalMonthProps) => {
       return props.formatter ? props.formatter(config) : config
     })
   }, [
-    props.date, getDayType, getBottomInfo, props.formatter
+    props.date, getDayType, getBottomInfo, props.formatter, props.currentDate
   ])
 
   const getMonthStyle = useMemo(() => {
@@ -154,19 +145,28 @@ const VanCalMonth = (props: VanCalMonthProps) => {
       return {
         paddingBottom: Math.ceil(
           (props.date.daysInMonth() + props.date.get("day")) / 7
-        ) * props.rowHeight
+        ) * props.rowHeight,
+
       } as React.CSSProperties
     }
   }, [visible, props.rowHeight, props.date])
 
   const getMark = useMemo(() => {
-    return props.date.get("month")
+    return props.date.get("month") + 1
   }, [props.date])
 
 
+  const onMonthClick = useCallback((item: dayItem) => {
+    if (item.type === "disabled") {
+      return ;
+    }
+
+    props.onClick(item.date)
+  }, [props.onClick]);
+
   return <View className="van-calendar__month" style={getMonthStyle}>
     {props.showMonthTitle && <View className="van-calendar__month-title">
-      "{props.date.format('YYYY年MM月')}"
+      {props.date.format('YYYY年MM月')}
     </View>}
     {visible && <View className="van-calendar__days">
       {props.showMark && <View className="van-calendar__month-mark">
@@ -174,6 +174,7 @@ const VanCalMonth = (props: VanCalMonthProps) => {
       </View>}
       {days.map((item, index) => {
         return <View
+          key={item.date.format("YYYY_MM_DD")}
           style={getDayStyle(
             item.type, index, item.date, props.rowHeight, props.color
           )}
@@ -183,7 +184,7 @@ const VanCalMonth = (props: VanCalMonthProps) => {
               item.className
             )
           }
-          onClick={props.onClick}
+          onClick={()=>onMonthClick(item)}
         >
           {
             <View

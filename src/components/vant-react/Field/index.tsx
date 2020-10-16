@@ -90,7 +90,7 @@ type VanFieldCommonProps = {
   customStyle?: React.CSSProperties;
   errorMessage?: string;
   arrowDirection?: "left" | "up" | "down";
-  shwoWordLimit?: boolean;
+  showWordLimit?: boolean;
   errorMessageAlign?: "center" | "right" | "left";
   readonly?: boolean;
   clearable?: boolean;
@@ -150,14 +150,10 @@ export default function VanField<Key extends string>(props: VanFieldProps<Key>) 
   const format = useCallback((val: string | number | undefined) => {
     if (val === undefined) return '';
     switch (type) {
-      case "text":
-      case "textarea":
-      case "number":
-      case "digit":
-      case "idcard":
-        return String(val);
       case "password":
         return String(val).split("").map(() => "*").join("");
+      default:
+        return String(val);
     }
   }, [type]);
 
@@ -408,7 +404,7 @@ export default function VanField<Key extends string>(props: VanFieldProps<Key>) 
         {props.renderButton}
       </View>
     </View>
-    {(props.shwoWordLimit && props.maxLength) && <View className="van-field__word-limit">
+    {(props.showWordLimit && props.maxLength) && <View className="van-field__word-limit">
       <View className={
         bem('field__word-num', { full: (value ? String(value).length : 0) >= props.maxLength })
       }>

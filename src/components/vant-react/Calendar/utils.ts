@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { VanPopupProps } from "../Popup";
-import { useRef, useScope, useCallback, useState } from "@tarojs/taro";
+import Taro, { useRef, useScope, useCallback, useState } from "@tarojs/taro";
 import { VanCalMonthProps } from "./components/month";
 
 export type inputDate = dayjs.ConfigType;
@@ -27,7 +27,9 @@ export type VanCalendarCommonProps = {
   closeOnClickOverlay?: VanPopupProps['closeOnClickOverlay'];
   maxRange?: number;
   // ======================================
+  useSlotTitle?: boolean;
   renderTitle?: React.ReactNode;
+  useSlotFooter?: boolean;
   renderFooter?: React.ReactNode;
 
   onClose?: VanPopupProps['onClose']
@@ -40,7 +42,7 @@ export const getMonths = (minDate: inputDate, maxDate: inputDate) => {
     months.push([cursor, cursor.daysInMonth()])
     cursor = cursor.clone().add(1, "month")
   } while (
-    cursor.isAfter(maxDate)
+    cursor.isBefore(maxDate)
   )
   return months
 }
@@ -61,9 +63,10 @@ export function useInitRect(showSubtitle: boolean) {
     if (self.current.contentObserver !== null) {
       self.current.contentObserver.disconnect()
     }
+
     if (!showSubtitle) return ; // 这就不用处理了
     // TODO
-    if (process.env.TARO_ENV === "weapp") {
+    // if (process.env.TARO_ENV === "weapp") {
       const contentObserver = Taro.createIntersectionObserver(scope, {
         thresholds: [0, 0.1, 0.9, 1],
         observeAll: true,
@@ -73,13 +76,13 @@ export function useInitRect(showSubtitle: boolean) {
       contentObserver.observe('.month', (res) => {
         if (res.boundingClientRect.top <= res.relativeRect.top) {
           // @ts-ignore
-          const date = (res as any).dataset.date as dayjs.Dayjs;
+          const date = (res as any).dataset.subtitle as string;
           setsubtitle(
-            (date.format('YYYY年MM月'))
+            date
           )
         }
       });
-    }
+    // }
   }, [setsubtitle, showSubtitle]);
 
   return [
@@ -88,7 +91,7 @@ export function useInitRect(showSubtitle: boolean) {
 }
 export const ROW_HEIGHT = 64;
 
-export const getDayStyle = (type: string, index: number, date: VanCalMonthProps['date'], rowHeight: VanCalMonthProps['rowHeight'], color?: string) => {
+export const getDayStyle = (type: string | undefined, index: number, date: VanCalMonthProps['date'], rowHeight: VanCalMonthProps['rowHeight'], color?: string) => {
   const style: React.CSSProperties = {};
   const offset = date.get('day');
 

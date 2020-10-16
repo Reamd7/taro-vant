@@ -28,10 +28,11 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/checkbox/index',
+      'pages/calendar/index',
 
       'pages/index/index',
 
+      'pages/checkbox/index',
       // 基础组件
       'pages/button/index',
       'pages/cell/index',

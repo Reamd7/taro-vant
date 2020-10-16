@@ -2,14 +2,16 @@ import Taro, { useMemo, useCallback, useState, useEffect } from "@tarojs/taro";
 
 import { VanCalendarCommonProps, inputDate, getMonths, useInitRect, ROW_HEIGHT } from "./utils";
 import dayjs from "dayjs";
-import "./index.less";
-import { useMemoClassNames } from "../common/utils";
+import { useMemoClassNames, requestAnimationFrame } from "../common/utils";
 import VanCalHeader from "./components/header";
 import { View, ScrollView, Block } from "@tarojs/components";
 import VanCalMonth from "./components/month";
 import VanButton from "../Button";
 import VanPopup from "../Popup";
 import VanToast from "../Toast";
+
+import "./index.less";
+import usePersistFn from "src/common/hooks/usePersistFn";
 
 export type VanCalendarSingleProps = VanCalendarCommonProps & {
   type?: "single"
@@ -49,15 +51,15 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
   const getInitialDate = useMemo(() => props.defaultDate ? dayjs(props.defaultDate) : minDay, [props.defaultDate, minDay]);
   // 可用 月份list
   const monthslist = useMemo(() => getMonths(minDay, maxDay), [minDay, maxDay])
-
+  // 当前日期
   const [currentDate, setcurrentDate] = useState<dayjs.Dayjs>(getInitialDate);
-
-  const confirmButtonDisable = useMemo(() => currentDate !== null, [currentDate]);
-
+  // 确认按钮的禁用状态
+  const confirmButtonDisable = useMemo(() => currentDate === null, [currentDate]);
+  // subtitle
   const [subtitle, initRect] = useInitRect(!!props.showSubtitle);
-
+  // 滚动到某个月份
   const [scrollIntoView, setscrollIntoView] = useState('');
-  const onScrollIntoView = useCallback(() => {
+  const onScrollIntoView = usePersistFn(() => {
     requestAnimationFrame(() => {
       let targetDate = currentDate
       const displayed = props.show || !poppable;
@@ -65,7 +67,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
         monthslist.some((month) => {
           if (targetDate && month[0].isSame(targetDate, "month")) {
             setscrollIntoView(
-              `month${month[0].format('DD/MM/YYYY')}`
+              `month${month[0].format('DD_MM_YYYY')}`
             )
             return true;
           }
@@ -75,19 +77,25 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
       }
     })
   }, [currentDate, props.show, poppable, monthslist]);
-
   useEffect(() => {
-    if (props.show || !poppable) {
+    // setcurrentDate(getInitialDate);
+    onScrollIntoView()
+  }, [currentDate, onScrollIntoView]);
+
+  // 初始化
+  useEffect(() => {
+    if (props.show) {
       initRect();
       onScrollIntoView();
     }
-  }, [props.show, poppable, initRect, onScrollIntoView])
-  useEffect(() => {
-    setcurrentDate(getInitialDate);
-    onScrollIntoView()
-  }, [getInitialDate, onScrollIntoView])
+    // if (props.show || !poppable) {
+    //   initRect();
+    //   onScrollIntoView();
+    // }
+  }, [props.show])
 
-  const onConfirm = useCallback(() => {
+  // 确认事件
+  const onConfirm = usePersistFn(() => {
     if (props.onConfirm && currentDate) {
       Taro.nextTick(() => {
         if (props.onConfirm && currentDate) {
@@ -112,73 +120,67 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
     }
   }, [emit, showConfirm, onConfirm])
 
-  const onClickDay = useCallback((date: dayjs.Dayjs) => {
+  // 点击日期事件
+  const onClickDay = usePersistFn((date: dayjs.Dayjs) => {
     select(date, true);
   }, [select]);
 
-  const renderCalendar = () => {
-    // renderTitle 每次都能获取到当前作用域 `name` 的值
-    return <View className="van-calendar">
-      <VanCalHeader
-        title={title}
-        showTitle={showTitle}
-        subtitle={subtitle}
-        showSubtitle={showSubtitle}
-        renderTitle={props.renderTitle}
-      />
-      <ScrollView className="van-calendar__body" scrollY scrollIntoView={scrollIntoView}>
-        {monthslist.map((item, index) => {
-          return <View
-            id={`month${item[0].format('DD/MM/YYYY')}`}
-            className="month"
-          >
-            <VanCalMonth
-              date={item[0]}
-              type={"single"}
-              color={props.color}
-              minDate={minDay}
-              maxDate={maxDay}
-              showMark={showMark}
-              formatter={props.formatter}
-              rowHeight={rowHeight}
-              currentDate={currentDate}
-              showSubtitle={showSubtitle}
-              allowSameDay={props.allowSameDay}
-              showMonthTitle={index !== 0 || !showSubtitle}
-              onClick={() => onClickDay(item[0])}
-            />
-          </View>
-        })}
-      </ScrollView>
-      <View className={
-        classnames(
-          "van-calendar__footer",
-          safeAreaInsetBottom ? 'van-calendar__footer--safe-area-inset-bottom' : ''
-        )
-      }>
-        {props.renderFooter}
-      </View>
-      <View className={
-        classnames(
-          "van-calendar__footer",
-          safeAreaInsetBottom ? 'van-calendar__footer--safe-area-inset-bottom' : ''
-        )
-      }>
-        {showConfirm && <VanButton
-          round
-          block
-          type="danger"
-          color={props.color}
-          className="van-calendar__confirm"
-          custom-class="van-calendar__confirm"
-          disabled={confirmButtonDisable}
-          onClick={onConfirm}
+  const renderTemp = <View className="van-calendar">
+    <VanCalHeader
+      title={title}
+      showTitle={showTitle}
+      subtitle={subtitle}
+      showSubtitle={showSubtitle}
+      useSlotTitle={props.useSlotTitle}
+      renderTitle={props.renderTitle}
+    />
+    <ScrollView className="van-calendar__body" scrollY scrollIntoView={scrollIntoView}>
+      {monthslist.map((item, index) => {
+        return <View
+          key={`month${item[0].format('DD_MM_YYYY')}`}
+          id={`month${item[0].format('DD_MM_YYYY')}`}
+          className="month"
+          data-subtitle={item[0].format('YYYY年MM月')} // initRect 使用
         >
-          {confirmButtonDisable ? props.confirmDisabledText : confirmText}
-        </VanButton>}
-      </View>
-    </View >
-  }
+          <VanCalMonth
+            date={item[0]}
+            type={"single"}
+            color={props.color}
+            minDate={minDay}
+            maxDate={maxDay}
+            showMark={showMark}
+            formatter={props.formatter}
+            rowHeight={rowHeight}
+            currentDate={currentDate}
+            showSubtitle={showSubtitle}
+            allowSameDay={props.allowSameDay}
+            showMonthTitle={index !== 0 || !showSubtitle}
+            onClick={onClickDay}
+          />
+        </View>
+      })}
+    </ScrollView>
+    <View className={
+      classnames(
+        "van-calendar__footer",
+        safeAreaInsetBottom ? 'van-calendar__footer--safe-area-inset-bottom' : ''
+      )
+    }>
+      {props.useSlotFooter ? props.renderFooter : showConfirm && <VanButton
+        round
+        block
+        type="danger"
+        color={props.color}
+        className="van-calendar__confirm"
+        custom-class="van-calendar__confirm"
+        disabled={confirmButtonDisable}
+        onClick={onConfirm}
+      >
+        {confirmButtonDisable ? props.confirmDisabledText : confirmText}
+      </VanButton>}
+    </View>
+  </View>
+
   return <Block>
     {poppable ?
       <VanPopup
@@ -191,15 +193,16 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
         closeable={showTitle || showSubtitle}
         closeOnClickOverlay={props.closeOnClickOverlay}
         onClose={props.onClose}
+        style={{ overflow: 'hidden' }}
       // bind:enter="onOpen"
       // bind:close="onClose"
       // bind:after-enter="onOpened"
       // bind:after-leave="onClosed"
       >
-        {renderCalendar()}
+        {renderTemp}
       </VanPopup> :
       <Block>
-        {renderCalendar()}
+        {renderTemp}
         <VanToast id="van-toast" />
       </Block>
     }
