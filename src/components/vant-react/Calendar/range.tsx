@@ -45,16 +45,16 @@ const VanCalendarRange: Taro.FunctionComponent<VanCalendarSingleProps> = (props)
     // closeOnClickOutside = true,
   } = props;
 
-  const minDay = useMemo(() => dayjs(minDate), [minDate]);
-  const maxDay = useMemo(() => dayjs(maxDate), [maxDate]);
+  const minDay = useMemo(() => dayjs(minDate).set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0), [minDate]);
+  const maxDay = useMemo(() => dayjs(maxDate).set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0), [maxDate]);
 
   // 获取初始值
   const getInitialDate = useMemo(() => {
     if (props.defaultDate) {
       const [startDay, endDay] = props.defaultDate
       return [
-        dayjs(startDay),
-        dayjs(endDay)
+        dayjs(startDay).set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0),
+        dayjs(endDay).set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0)
       ] as [dayjs.Dayjs, dayjs.Dayjs]
     } else {
       return [

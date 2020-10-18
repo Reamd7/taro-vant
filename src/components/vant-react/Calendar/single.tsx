@@ -48,7 +48,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
   const maxDay = useMemo(() => dayjs(maxDate), [maxDate]);
 
   // 获取初始值
-  const getInitialDate = useMemo(() => props.defaultDate ? dayjs(props.defaultDate) : minDay, [props.defaultDate, minDay]);
+  const getInitialDate = useMemo(() => props.defaultDate ? dayjs(props.defaultDate).set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0) : minDay, [props.defaultDate, minDay]);
   // 可用 月份list
   const monthslist = useMemo(() => getMonths(minDay, maxDay), [minDay, maxDay])
   // 当前日期

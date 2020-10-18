@@ -1,4 +1,4 @@
-import Taro from "@tarojs/taro";
+import Taro, { useMemo } from "@tarojs/taro";
 
 import "./index.less";
 import dayjs from "dayjs";
@@ -17,9 +17,9 @@ export type VanCalendarProps = VanCalendarCommonProps & (
   } | {
     type: "range"
     defaultDate?: [inputDate, inputDate]
-    onUnSelect?: (date: [dayjs.Dayjs, dayjs.Dayjs | null]) => unknown;
-    onSelect?: (date: [dayjs.Dayjs, dayjs.Dayjs | null]) => unknown;
-    onConfirm?: (date: [dayjs.Dayjs, dayjs.Dayjs | null]) => unknown
+    onUnSelect?: (date: [dayjs.Dayjs, dayjs.Dayjs] | [dayjs.Dayjs]) => unknown;
+    onSelect?: (date: [dayjs.Dayjs, dayjs.Dayjs] | [dayjs.Dayjs]) => unknown;
+    onConfirm?: (date: [dayjs.Dayjs, dayjs.Dayjs] | [dayjs.Dayjs]) => unknown
   } | {
     type: "multiple"
     defaultDate?: inputDate[]

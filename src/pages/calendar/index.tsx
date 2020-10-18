@@ -3,11 +3,13 @@ import { Block, View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
 import VanCell from "src/components/vant-react/Cell";
 import VanCalendar, { VanCalendarProps } from "src/components/vant-react/Calendar";
+import dayjs from "dayjs";
 
 export default function CalendarDemo () {
-  const [selectSingle, setselectSingle] = useState(null)
+  const [selectSingle, setselectSingle] = useState<dayjs.Dayjs | null>(null)
   const [show, setShow] = useState(false);
-  const [type, setType] = useState<VanCalendarProps['type']>("range");
+  const [type, setType] = useState<VanCalendarProps['type']>("single");
+
   return <Block>
     <DemoBlock title="基础用法" />
     <VanCell
@@ -16,12 +18,15 @@ export default function CalendarDemo () {
       onClick={()=>{
         setShow(true)
       }}
+      value={selectSingle ? selectSingle.format("YYYY/MM/DD") : undefined}
     />
     <VanCalendar
       type={type}
       show={show}
       onConfirm={(date)=>{
+        setselectSingle(date);
         console.log(date)
+        setShow(false)
       }}
       onClose={()=>{
         setShow(false)
