@@ -72,7 +72,7 @@ const VanSteps: Taro.FunctionComponent<VanStepsProp> = props => {
         {steps.map((item, index) => {
           return (
             <View
-              key={index}
+              key={item.text || index}
               onClick={event => {
                 onClickStep(index, event);
               }}

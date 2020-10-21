@@ -87,10 +87,6 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
       _setValueList(value);
     }
   }, [value]);
-  /** colums  更新的时候更新 initialValue */
-  // useUpdateEffect(() => {
-  //   _setValueList(initialValue);
-  // }, [columns]);
 
   const confirmVal = useRef<number[]>(initialValue);
 

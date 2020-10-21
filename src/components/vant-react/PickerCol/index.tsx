@@ -17,9 +17,9 @@ export type VanPickerColProps<Key extends string> = {
   visibleItemCount: number;
   // =================================
   valueKey?: Key;
-  initialOptions?: Array<{
+  initialOptions?: Array<({
     disabled?: boolean;
-  } & Record<Key, string>> | string[];
+  } & Record<Key, string>) | string>;
   // =================================
   defaultValue?: number;
   value?: number;
@@ -64,6 +64,7 @@ const VanPickerCol = <Key extends string>(props: VanPickerColProps<Key>) => {
     valuePropName: "value",
     trigger: "onChange"
   });
+
   const [offset, setOffset] = useState(-currentIndex * itemHeight);
   useUpdateEffect(()=>{
     setOffset(-currentIndex * itemHeight);
@@ -85,6 +86,15 @@ const VanPickerCol = <Key extends string>(props: VanPickerColProps<Key>) => {
       setOffset(offset)
     }
   }, [adjustIndex, itemHeight, currentIndex, setcurrentIndex])
+
+  const updateWhenOptionsChange = usePersistFn(()=>{
+    if (options.length && currentIndex >= options.length) {
+      setIndex(options.length - 1)
+    }
+  }, [options, currentIndex])
+  useUpdateEffect(()=>{
+    updateWhenOptionsChange()
+  }, [options])
 
   const onTouchStart = usePersistFn((event:
     Parameters<
@@ -147,9 +157,9 @@ const VanPickerCol = <Key extends string>(props: VanPickerColProps<Key>) => {
       lineHeight: addUnit(itemHeight),
       transform: `translate3d(0, ${offset + (itemHeight * (visibleItemCount - 1)) / 2}px, 0)`
     }}>
-      {(options as any).map((option, index) => {
+      {(options).map((option, index) => {
         return <View
-          key={index}
+          key={typeof option === "string" ? option : option[valueKey!]}
           style={{
             height: addUnit(itemHeight)
           }}
