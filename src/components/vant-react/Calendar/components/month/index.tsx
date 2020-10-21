@@ -32,6 +32,7 @@ export type VanCalMonthProps = {
   onClick: (day: dayjs.Dayjs) => unknown;
 }
 const VanCalMonth = (props: VanCalMonthProps) => {
+  const date = props.date || dayjs();
   const visible = true;
 
   const classnames = useMemoClassNames();
@@ -117,8 +118,8 @@ const VanCalMonth = (props: VanCalMonthProps) => {
   }, [props.type])
 
   const days = useMemo(() => {
-    const startDate = props.date;
-
+    const startDate = date;
+    if (!startDate) return [];
     const year = startDate.get("year");
     const month = startDate.get("month");
     const totalDay = startDate.daysInMonth();
@@ -137,23 +138,23 @@ const VanCalMonth = (props: VanCalMonthProps) => {
       return props.formatter ? props.formatter(config) : config
     })
   }, [
-    props.date, getDayType, getBottomInfo, props.formatter, props.currentDate
+    date, getDayType, getBottomInfo, props.formatter, props.currentDate
   ])
 
   const getMonthStyle = useMemo(() => {
     if (!visible) {
       return {
         paddingBottom: Math.ceil(
-          (props.date.daysInMonth() + props.date.get("day")) / 7
+          (date.daysInMonth() + date.get("day")) / 7
         ) * props.rowHeight,
 
       } as React.CSSProperties
     }
-  }, [visible, props.rowHeight, props.date])
+  }, [visible, props.rowHeight, date])
 
   const getMark = useMemo(() => {
-    return props.date.get("month") + 1
-  }, [props.date])
+    return date.get("month") + 1
+  }, [date])
 
 
   const onMonthClick = useCallback((item: dayItem) => {
@@ -166,7 +167,7 @@ const VanCalMonth = (props: VanCalMonthProps) => {
 
   return <View className="van-calendar__month" style={getMonthStyle}>
     {props.showMonthTitle && <View className="van-calendar__month-title">
-      {props.date.format('YYYY年MM月')}
+      {date.format('YYYY年MM月')}
     </View>}
     {visible && <View className="van-calendar__days">
       {props.showMark && <View className="van-calendar__month-mark">

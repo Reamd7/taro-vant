@@ -151,8 +151,6 @@ const VanCalendarMultiple: Taro.FunctionComponent<VanCalendarSingleProps> = (pro
     }
   }, [select, currentDate, unselect]);
 
-  console.log(currentDate)
-
   const renderTemp = <View className="van-calendar">
     <VanCalHeader
       title={title}
