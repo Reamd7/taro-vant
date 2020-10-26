@@ -24,6 +24,8 @@ export type VanPickerColProps<Key extends string> = {
   defaultValue?: number;
   value?: number;
   onChange: (index: number, value: string) => void;
+
+  textFormatter?: (value: string) => string;
 }
 const DEFAULT_DURATION = 100;
 
@@ -73,10 +75,10 @@ const VanPickerCol = <Key extends string>(props: VanPickerColProps<Key>) => {
   const [duration, setDuration] = useState(0);
   const [startOffset, setStartOffset] = useState(0);
 
-
   const getOptionText = useCallback((option: ArrayValue<NonNullable<typeof props['initialOptions']>>) => {
-    return typeof option === "string" ? option : valueKey ? option[valueKey] : ''
-  }, [valueKey]);
+    const val = typeof option === 'object' ? valueKey ? option[valueKey] : '' : option;
+    return props.textFormatter ? props.textFormatter(val) : val;
+  }, [valueKey, props.textFormatter]);
   const setIndex = useCallback((index: number) => {
     index = adjustIndex(index) || 0;
     const offset = -index * itemHeight;
@@ -159,14 +161,14 @@ const VanPickerCol = <Key extends string>(props: VanPickerColProps<Key>) => {
     }}>
       {(options).map((option, index) => {
         return <View
-          key={typeof option === "string" ? option : option[valueKey!]}
+          key={typeof option === 'object' ? option[valueKey!]: option}
           style={{
             height: addUnit(itemHeight)
           }}
           className={
             classnames(
               "van-ellipsis van-picker-column__item",
-              (typeof option !== "string" && option.disabled) && 'van-picker-column__item--disabled',
+              ((typeof option === 'object') && option.disabled) && 'van-picker-column__item--disabled',
               index === currentIndex && 'van-picker-column__item--selected active-class'
             )
           }

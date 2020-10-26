@@ -34,6 +34,7 @@ export type VanPickerProps<Key extends string> = {
     values: NonNullable<VanPickerColProps<Key>['initialOptions']>;
     defaultIndex?: number;
   }>
+  textFormatter?: (key: string, value: string) => string;
   value?: number[];
   onConfirm?: (val: number[]) => void;
   onChange?: (val: number[]) => void;
@@ -66,7 +67,7 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
     return columns.map(item => {
       return item.defaultIndex || defaultIndex
     })
-  }, [columns]);
+  }, []);
 
   const [valueList, _setValueList] = useState(initialValue);
 
@@ -170,6 +171,11 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
               newList[index] = itemIndex;
               setValueList(newList)
             }}
+            textFormatter={
+              props.textFormatter ? (val: string) => {
+                return props.textFormatter ? props.textFormatter(item.key, val) : val
+              } : undefined
+            }
           />
         </View>
       })}
@@ -190,7 +196,23 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
 }
 
 VanPicker.options = {
-  addGlobalClass: true
-}
+  addGlobalClass: true,
 
+}
+VanPicker.externalClasses = [
+  'custom-class',
+  'active-class',
+  'toolbar-class',
+  'column-class'
+]
+VanPicker.defaultProps = {
+  cancelButtonText: "取消",
+  confirmButtonText: "确认",
+  visibleItemCount: 6,
+  itemHeight: 44,
+  toolbarPosition: "top",
+  defaultIndex: 0,
+  columns: [],
+  showToolbar: false
+}
 export default VanPicker;

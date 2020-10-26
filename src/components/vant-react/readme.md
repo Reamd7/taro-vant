@@ -12,7 +12,7 @@
 - [x] Checkbox 复选框
 - [ ] DatetimePicker 时间选择
 - [-] Field 输入框
-- [-] Picker 选择器
+- [x] Picker 选择器
 - [ ] Radio 单选框
 - [x] Rate 评分
 - [-] Search 搜索
