@@ -4,7 +4,6 @@ import "./index.less";
 import { View } from "@tarojs/components";
 import { useMemoClassNames, isH5, isWeapp, useMemoAddUnit, range } from "../common/utils";
 import usePersistFn from "src/common/hooks/usePersistFn";
-import useControllableValue from "src/common/hooks/useControllableValue";
 import useUpdateEffect from "src/common/hooks/useUpdateEffect";
 
 export type VanPickerColProps<Key extends string> = {
@@ -23,7 +22,7 @@ export type VanPickerColProps<Key extends string> = {
   // =================================
   defaultValue?: number;
   value?: number;
-  onChange: (index: number, value: string) => void;
+  onChange: ((index: number) => void | false);
 
   textFormatter?: (value: string) => string;
 }
@@ -59,18 +58,44 @@ const VanPickerCol = <Key extends string>(props: VanPickerColProps<Key>) => {
     }
   }, [options, getCount, isDisabled])
 
+  const value = props.value;
+  const initialValue = useMemo(() => {
+    if ('value' in props && value !== undefined) {
+      return value // 受控组件
+    }
+    if ('defaultValue' in props && props.defaultValue !== undefined) {
+      return props.defaultValue // 默认值
+    }
+    return defaultValue // options 的 默认值
+  }, []);
+  const [currentIndex, _setcurrentIndex] = useState(initialValue);
+  useUpdateEffect(() => {
+    if ('value' in props && value !== undefined) {
+      _setcurrentIndex(value);
+    }
+  }, [value]);
 
-  let [currentIndex, setcurrentIndex] = useControllableValue(props, {
-    defaultValue,
-    defaultValuePropName: "defaultValue",
-    valuePropName: "value",
-    trigger: "onChange"
-  });
 
   const [offset, setOffset] = useState(-currentIndex * itemHeight);
   useUpdateEffect(()=>{
     setOffset(-currentIndex * itemHeight);
   }, [currentIndex, itemHeight]) // 联动更新
+
+  const setcurrentIndex = usePersistFn(
+    (v: number) => {
+      if (!('value' in props)) {
+        _setcurrentIndex(v);
+      }
+      const index = currentIndex;
+      const res = props.onChange(v);
+      if (res === false && ('value' in props)) {
+        setOffset(-index * itemHeight)
+        _setcurrentIndex(index)
+      }
+    },
+    [props.value, props.onChange, currentIndex, itemHeight],
+  );
+
   const [startY, setStartY] = useState(0);
   const [duration, setDuration] = useState(0);
   const [startOffset, setStartOffset] = useState(0);

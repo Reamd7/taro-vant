@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from '@tarojs/taro';
+import { useMemo, useState } from '@tarojs/taro';
 import useUpdateEffect from './useUpdateEffect';
 import usePersistFn from './usePersistFn';
 

@@ -65,8 +65,6 @@ const DDMap = {
   29: DD29,
   28: DD28,
 }
-const List24 = Array.from({ length: 24 }).map((_, i) => String(i))
-const List60 = Array.from({ length: 60 }).map((_, i) => String(i))
 /**
  * 受控组件：
  * 1、props.value => updateValueByDayjs
@@ -82,9 +80,12 @@ const List60 = Array.from({ length: 60 }).map((_, i) => String(i))
  * @param props
  */
 const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props: ActiceProps) => {
+  // 日期限制
   const today = useMemo(() => dayjs(), []);
-  const minDate = useMemo(() => props.minDate ? dayjs(props.minDate) : today.clone().subtract(10, "year").set("month", 0).set("day", 1), [props.minDate]);
-  const maxDate = useMemo(() => props.maxDate ? dayjs(props.maxDate) : today.clone().add(10, "year").set("month", 11).set("day", 31), [props.maxDate]);
+  const minDate = useMemo(() => props.minDate ?
+    dayjs(props.minDate).hour(0).minute(0).second(0) :
+    today.clone().subtract(10, "year").hour(0).minute(0).second(0), [props.minDate]);
+  const maxDate = useMemo(() => props.maxDate ? dayjs(props.maxDate).hour(23).minute(59).second(59) : today.clone().add(10, "year").hour(23).minute(59).second(59), [props.maxDate]);
 
   const filter = useCallback((type: "YYYY" | "MM" | "DD" | "HH" | "mm" | "ss", Val: string[]) => {
     if (props.filter) {
@@ -94,12 +95,18 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
     }
     return Val
   }, [props.filter]);
-  const normalList = useCallback((type: "YYYY" | "MM" | "DD" | "HH" | "mm" | "ss", Val: string[]) => {
-    if (props.type.includes(type)) {
-      return filter(type, Val)
-    }
-    return [];
-  }, [props.type, filter])
+  const HourList24 = useMemo(() => {
+    const diff = props.maxHour - props.minHour + 1;
+    return filter("HH", Array.from({ length: diff }).map((_, i) => String(i)))
+  }, [props.maxHour, props.minHour, filter])
+  const MinuteList60 = useMemo(() => {
+    const diff = props.maxMinute - props.minMinute + 1;
+    return filter("mm", Array.from({ length: diff }).map((_, i) => String(i)))
+  }, [props.maxMinute, props.maxMinute, filter])
+  const SecondList60 = useMemo(() => {
+    const diff = props.maxSecond - props.minSecond + 1;
+    return filter("ss", Array.from({ length: diff }).map((_, i) => String(i)))
+  }, [props.maxMinute, props.maxMinute, filter])
 
   const illegalValue = useCallback((val: dayjs.Dayjs | undefined) => {
     const value = val ? val : today;
@@ -119,62 +126,69 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
   });
 
   // ================================================
-  const updateDayList = useCallback((val: dayjs.Dayjs = value) => {
-    if (props.type.includes("DD")) {
-      // const currentYear = val.get("year");
-      // const currentMonth = val.get("month");
-      const daysINMonth = val.daysInMonth() as 31 | 30 | 29 | 28;
+  const CreateListMap = useCallback((val: dayjs.Dayjs) => {
+    const minYear = minDate.get("year");
+    const minMonth = minDate.get("month");
+    const minDay = minDate.get("day");
 
-      return filter("DD", DDMap[daysINMonth])
-    }
-    return []
-  }, [props.type, value, filter]);
-  const YearList = useMemo(() => {
-    if (props.type.includes("YYYY")) {
-      const minYear = minDate.get("year");
-      const yearDiff = Math.ceil(
-        maxDate.diff(minDate, 'year', true)
-      );
-      if (yearDiff < 0) throw Error("Error Maxdate");
-      const YYYY = Array.from<string>({ length: yearDiff })
+    const maxYear = maxDate.get("year");
+    const maxMonth = maxDate.get("month");
+    const maxDay = maxDate.get("day");
+
+    const valYear = value.get("year");
+    const valMonth = value.get("month");
+    // const valDay = value.get("day");
+
+    //// YearList
+
+    const yearDiff = Math.ceil(
+      maxDate.diff(minDate, 'year', true)
+    );
+    if (yearDiff < 0) throw Error("Error Maxdate");
+    const YearList = filter("YYYY",
+      Array.from<string>({ length: yearDiff })
         .reduce((res, _, index) => {
           res.push(
             res[index] + 1
           )
           return res;
         }, [minYear]).map(String)
-      return filter("YYYY", YYYY)
-    }
-    return []
-  }, [props.type, minDate, maxDate, filter])
-  const MonthList = useMemo(() => normalList("MM", MM), [normalList]);
+    );
 
-  // const [DayList, setDayList] = useState(() => updateDayList())
-  // useEffect(()=>{
-  //   setDayList(updateDayList())
-  // }, [props.type, filter])
-  const DayList = useMemo(() => updateDayList(), [props.type, value, filter]);
-  const HourList = useMemo(() => normalList("HH", List24), [normalList]);
-  const MinuteList = useMemo(() => normalList("mm", List60), [normalList]);
-  const SecondList = useMemo(() => normalList("ss", List60), [normalList]);
+    //// MonthList
+    const MonthList = (valYear === minYear) ? (
+      filter("MM", Array.from({ length: 12 - minMonth }).map((_, i) => String(i + minMonth + 1)))
+    ) :
+      (valYear === maxYear) ? (
+        filter("MM", Array.from({ length: maxMonth + 1 }).map((_, i) => String(i + 1)))
+      ) : (
+          filter("MM", MM)
+        );
 
-  ///////
-  const ListMap = useMemo(() => {
+    const DayList = (() => {
+      const daysINMonth = val.daysInMonth() as 31 | 30 | 29 | 28;
+      if (valYear === minYear && valMonth === minMonth) {
+        return filter("DD", Array.from({ length: daysINMonth - minDay + 1 }).map((_, i) => String(i + minDay)))
+      }
+      if (valYear === maxYear && valMonth === maxMonth) {
+        return filter("DD", Array.from({ length: maxDay }).map((_, i) => String(i + 1)))
+      }
+
+      return filter("DD", DDMap[daysINMonth])
+    })();
+
     return {
       "YYYY": props.type.includes("YYYY") ? YearList : null,
       "MM": props.type.includes("MM") ? MonthList : null,
       "DD": props.type.includes("DD") ? DayList : null,
-      "HH": props.type.includes("HH") ? HourList : null,
-      "mm": props.type.includes("mm") ? MinuteList : null,
-      "ss": props.type.includes("ss") ? SecondList : null,
+      "HH": props.type.includes("HH") ? HourList24 : null,
+      "mm": props.type.includes("mm") ? MinuteList60 : null,
+      "ss": props.type.includes("ss") ? SecondList60 : null,
     } as const
-  }, [props.type, YearList, MonthList, DayList, HourList, MinuteList, SecondList])
-  // ================================================
+  }, [props.type, minDate, maxDate, filter, HourList24, MinuteList60, SecondList60])
 
-  /**
-   * 列 columns
-   */
-  const columns = useMemo(() => {
+  /** 列 columns */
+  const CreateColumns = useCallback((value: dayjs.Dayjs, ListMap: ReturnType<typeof CreateListMap>) => {
     const valList = value.toArray();
     return ["YYYY", "MM", "DD", "HH", "mm", "ss"].reduce((res, key, index) => {
       if (ListMap[key]) {
@@ -188,30 +202,20 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
     }, [] as Array<{
       key: string;
       values: string[];
-      defaultIndex?: number
+      defaultIndex: number
     }>)
-  }, [value, ListMap])
+  }, []);
+
+  const [columns, setCol] = useState(() =>
+    CreateColumns(value, CreateListMap(value))
+  );
 
   /**
    * 已选择的列
    */
-  const [pickerIndex, setPickerIndex] = useState<number[]>(() => {
-    const valList = value.toArray();
-    return ["YYYY", "MM", "DD", "HH", "mm", "ss"].reduce((res, key, index) => {
-      if (ListMap[key]) {
-        if (key === "MM") {
-          res.push(
-            ListMap[key]!.indexOf(String(valList[index] + 1))
-          )
-        } else {
-          res.push(
-            ListMap[key]!.indexOf(String(valList[index]))
-          )
-        }
-      }
-      return res;
-    }, [] as Array<number>)
-  });
+  const [pickerIndex, setPickerIndex] = useState<number[]>(() =>
+    columns.map(value => value.defaultIndex) // 这才是初始值。
+  );
   // ===============================================
 
   // 根据日期值更新。
@@ -219,7 +223,6 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
   const updateValueByDayjs = useCallback((val: dayjs.Dayjs) => {
     // 确定合法值 value
     val = illegalValue(val); // 根据最大最小值过滤一层
-
     if (val.isSame(value)) {
       _setValue(val)
       setPickerIndex(pickerIndex.slice())
@@ -227,31 +230,19 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
     }
 
     // ========= 更新DayList ==========
-
     const valList = val.toArray()
-    // if (valYear !== valueYear || valMonth !== valueMonth) {
-    //   DayList.current = updateDayList(val);
-    // }
     // -----------------------------------------------
     // 根据传入的 val 进行解构取值。
     // 因为 filter 的原因，可能 val 的值取不到 filter 过的 array，这里用报错提示出去吧，
     // TODO 以后考虑怎么处理
     const dateString = val.toISOString()
+    const ListMap = CreateListMap(val);
     const indexList = ["YYYY", "MM", "DD", "HH", "mm", "ss"].reduce((res, key, index) => {
       if (ListMap[key]) {
         if (key === 'MM') {
           const newIndex = ListMap[key]!.indexOf(String(valList[index] + 1))
           if (newIndex < 0) {
             throw new Error(`After filter MM not include ${valList[index]}, active value is ${dateString}`);
-          }
-          res.push(newIndex)
-        } else if (key === "DD") {
-          const DayList = updateDayList(dayjs(new Date(
-            valList[0], valList[1]
-          )))
-          const newIndex = DayList.indexOf(String(valList[index]));
-          if (newIndex < 0) {
-            throw new Error(`After filter DD not include ${valList[index]}, active value is ${dateString}`);
           }
           res.push(newIndex)
         } else {
@@ -267,7 +258,10 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
     // -----------------------------------------------
     setPickerIndex(indexList.slice())
     _setValue(val.clone())
-  }, [props.type, ListMap, value, illegalValue, pickerIndex]);
+    setCol(
+      CreateColumns(val, ListMap)
+    )
+  }, [props.type, CreateColumns, value, illegalValue, pickerIndex]);
 
   // 1. 受控组件
   useUpdateEffect(() => {
@@ -307,7 +301,7 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
       if (valYear !== valueYear || (valMonth - 1) !== valueMonth) {
         const day = dayjs().set("year", valYear).set("month", valMonth - 1);
         const daysInMonth = day.daysInMonth();
-        const oldday = Number(DayList[
+        const oldday = Number(columns[cur].values[
           index[cur]
         ])
         valDay = oldday > daysInMonth ? daysInMonth : oldday;
@@ -337,17 +331,11 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
       cur += 1;
     }
     // console.log([valYear, valMonth - 1, valDay, valHour, valMinute, valSecond])
-    return dayjs(
+    return illegalValue(dayjs(
       new Date(
         valYear, valMonth - 1, valDay, valHour, valMinute, valSecond
       )
-    )
-    // .set("year", valYear)
-    // .set("month", valMonth - 1)
-    // .set("day", valDay)
-    // .set("hour", valHour)
-    // .set("minute", valMinute)
-    // .set("second", valSecond)
+    ))
   }, [columns, value]);
 
   return <VanPicker
@@ -370,15 +358,12 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
     value={pickerIndex}
     columns={columns}
     onChange={(val) => {
-      // if (val.some(value => isNaN(value))) return;
       const valueDay = pickerIndex2Dayjs(val)
-      if (valueDay.isSame(value)) return ; // 其实，这里有两次渲染，因为DayList的重新渲染。
-      console.log(val)
+      if (valueDay.isSame(value)) return false; // 其实，这里有两次渲染，因为DayList的重新渲染。
       if (props.onChange) {
         props.onChange(valueDay)
       }
       if (!('value' in props)) {
-        console.log(valueDay)
         updateValueByDayjs(valueDay)
         // onChange(val)
       }
@@ -392,13 +377,11 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
     }}
     onCancel={(val) => {
       const valueDay = pickerIndex2Dayjs(val)
-      if (valueDay.isSame(value)) return ; // 其实，这里有两次渲染，因为DayList的重新渲染。
-      console.log(val)
+      if (valueDay.isSame(value)) return; // 其实，这里有两次渲染，因为DayList的重新渲染。
       if (props.onCancel) {
         props.onCancel(valueDay)
       }
       if (!('value' in props)) {
-        console.log(valueDay)
         updateValueByDayjs(valueDay)
       }
     }}

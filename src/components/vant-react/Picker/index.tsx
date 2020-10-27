@@ -37,7 +37,7 @@ export type VanPickerProps<Key extends string> = {
   textFormatter?: (key: string, value: string) => string;
   value?: number[];
   onConfirm?: (val: number[]) => void;
-  onChange?: (val: number[]) => void;
+  onChange?: ((val: number[]) => void | false);
   onCancel?: (val: number[]) => void;
 }
 
@@ -77,7 +77,7 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
         _setValueList(v);
       }
       if (props.onChange) {
-        props.onChange(v);
+        return props.onChange(v);
       }
     },
     [props.onChange, props.value],
@@ -167,9 +167,12 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
               isWeapp && 'active-class'
             )}
             onChange={(itemIndex) => {
-              const newList = valueList.slice();
-              newList[index] = itemIndex;
-              setValueList(newList)
+              if (valueList[index] !== itemIndex) {
+                const newList = valueList.slice();
+                newList[index] = itemIndex;
+                return setValueList(newList)
+              }
+              return false
             }}
             textFormatter={
               props.textFormatter ? (val: string) => {
