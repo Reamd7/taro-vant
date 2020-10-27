@@ -14,7 +14,7 @@ export type VanDateTimePickerProps = {
   cancelButtonText?: string;
   loading?: boolean;
 
-  type: "YYYY" | "YYYY-MM-DD" | "MM-DD" | "HH:mm" | "HH:mm:ss" | "YYYY-MM-DD HH:mm:ss" | "YYYY-MM-DD HH:mm"
+  type: "YYYY" | "YYYY-MM" | "YYYY-MM-DD" | "MM-DD" | "HH:mm" | "HH:mm:ss" | "YYYY-MM-DD HH:mm:ss" | "YYYY-MM-DD HH:mm"
   minDate?: inputDate;
   maxDate?: inputDate;
   minHour?: number;
@@ -30,7 +30,7 @@ export type VanDateTimePickerProps = {
   onConfirm?: (val: dayjs.Dayjs) => void;
   onCancel?: (val: dayjs.Dayjs) => void;
 
-  formatter?: (type: string, value: string) => string
+  formatter?: (type: "YYYY" | "MM" | "DD" | "HH" | "mm" | "ss", value: string) => string
   filter?: (type: "YYYY" | "MM" | "DD" | "HH" | "mm" | "ss", value: string) => boolean
 }
 
@@ -42,14 +42,21 @@ const DefaultProps = {
   itemHeight: 44,
   type: "YYYY-MM-DD",
   loading: false,
-  // minDate: today.clone().subtract(10, "year").set("month", 1).set("day", 1),
-  // maxDate: today.clone().add(10, "year").set("month", 12).set("day", 31)
+  // minDate: today.clone().subtract(10, "year").set("month", 1).set("date", 1),
+  // maxDate: today.clone().add(10, "year").set("month", 12).set("date", 31)
   minHour: 0,
   maxHour: 23,
   minMinute: 0,
   maxMinute: 59,
   minSecond: 0,
-  maxSecond: 59
+  maxSecond: 59,
+  formatter: (type: "YYYY" | "MM" | "DD" | "HH" | "mm" | "ss", value: string) => {
+    if (type === "YYYY") {
+      return value
+    } else {
+      return Number(value) < 10 ? "0" + value : value
+    }
+  }
 } as const
 type DefaultKey = keyof typeof DefaultProps
 type ActiceProps = Omit<VanDateTimePickerProps, DefaultKey> & Required<Pick<VanDateTimePickerProps, DefaultKey>>
@@ -65,6 +72,7 @@ const DDMap = {
   29: DD29,
   28: DD28,
 }
+
 /**
  * 受控组件：
  * 1、props.value => updateValueByDayjs
@@ -129,19 +137,19 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
   const CreateListMap = useCallback((val: dayjs.Dayjs) => {
     const minYear = minDate.get("year");
     const minMonth = minDate.get("month");
-    const minDay = minDate.get("day");
+    const minDay = minDate.get("date");
 
     const maxYear = maxDate.get("year");
     const maxMonth = maxDate.get("month");
-    const maxDay = maxDate.get("day");
+    const maxDay = maxDate.get("date");
 
-    const valYear = value.get("year");
-    const valMonth = value.get("month");
-    // const valDay = value.get("day");
+    const valYear = val.get("year");
+    const valMonth = val.get("month");
+    // const valDay = value.get("date");
 
     //// YearList
 
-    const yearDiff = Math.ceil(
+    const yearDiff = Math.floor(
       maxDate.diff(minDate, 'year', true)
     );
     if (yearDiff < 0) throw Error("Error Maxdate");
@@ -385,6 +393,7 @@ const VanDateTimePicker: Taro.FunctionComponent<VanDateTimePickerProps> = (props
         updateValueByDayjs(valueDay)
       }
     }}
+    textFormatter={props.formatter}
   />
 }
 
