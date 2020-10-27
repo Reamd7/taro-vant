@@ -7,6 +7,7 @@ export interface Options<T> {
   defaultValuePropName?: string;
   valuePropName?: string;
   trigger?: string;
+  onRevert?: VoidFunction
 }
 
 export type Props = Record<string, any>;
@@ -16,6 +17,7 @@ function useControllableValue<T>(props: Props, options: {
   defaultValuePropName?: string;
   valuePropName?: string;
   trigger?: string;
+  onRevert?: VoidFunction;
 }): [T, (v: T) => void]
 function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
   const {
@@ -23,6 +25,7 @@ function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
     defaultValuePropName = 'defaultValue',
     valuePropName = 'value',
     trigger = 'onChange',
+    onRevert
   } = options;
 
   const value = props[valuePropName];
@@ -52,7 +55,10 @@ function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
         setState(v);
       }
       if (props[trigger]) {
-        props[trigger](v);
+        const res = props[trigger](v);
+        if ((valuePropName in props) && res === false && onRevert) {
+          onRevert()
+        }
       }
     },
     [props, valuePropName, trigger],
