@@ -28,6 +28,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/field/index',
       'pages/datetime-picker/index',
       'pages/picker/index',
       'pages/calendar/index',

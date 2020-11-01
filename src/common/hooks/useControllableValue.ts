@@ -12,14 +12,59 @@ export interface Options<T> {
 
 export type Props = Record<string, any>;
 
-function useControllableValue<T>(props: Props, options: {
+export type ControllerValueProps<
+  T,
+  defaultValuePropName extends string = "defaultValue",
+  valuePropName extends string = "value",
+  TriggerName extends string = "onChange"
+  > =
+  {
+    [defaultValueProp in defaultValuePropName]?: T;
+  } & {
+    [valueProp in valuePropName]?: T
+  } & {
+    [onChangeProps in TriggerName]?: (v: T, onRevert: VoidFunction) => void;
+  }
+
+function useControllableValue<
+  T,
+  P extends ControllerValueProps<T, defaultValuePropName, valuePropName, TriggerName>,
+  defaultValuePropName extends string = "defaultValue",
+  valuePropName extends string = "value",
+  TriggerName extends string = "onChange"
+>(props: P, options: {
   defaultValue: T;
-  defaultValuePropName?: string;
-  valuePropName?: string;
-  trigger?: string;
+  defaultValuePropName?: defaultValuePropName;
+  valuePropName?: valuePropName;
+  trigger?: TriggerName;
   onRevert?: VoidFunction;
 }): [T, (v: T) => void]
-function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
+function useControllableValue<
+  T,
+  P extends ControllerValueProps<T, defaultValuePropName, valuePropName, TriggerName>,
+  defaultValuePropName extends string = "defaultValue",
+  valuePropName extends string = "value",
+  TriggerName extends string = "onChange",
+  >(props: P
+    , options: {
+      defaultValue?: T;
+      defaultValuePropName?: defaultValuePropName;
+      valuePropName?: valuePropName;
+      trigger?: TriggerName;
+      onRevert?: VoidFunction;
+    }): [T | undefined, (v: T) => void]
+function useControllableValue<
+  T,
+  defaultValuePropName extends string = "defaultValue",
+  valuePropName extends string = "value",
+  TriggerName extends string = "onChange"
+>(props: Props = {}, options: {
+  defaultValue?: T;
+  defaultValuePropName?: defaultValuePropName;
+  valuePropName?: valuePropName;
+  trigger?: TriggerName;
+  onRevert?: VoidFunction;
+} = {}) {
   const {
     defaultValue,
     defaultValuePropName = 'defaultValue',
@@ -55,7 +100,7 @@ function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
         setState(v);
       }
       if (props[trigger]) {
-        const res = props[trigger](v);
+        const res = props[trigger](v, onRevert);
         if ((valuePropName in props) && res === false && onRevert) {
           onRevert()
         }

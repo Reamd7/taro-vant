@@ -35,8 +35,7 @@ export type VanCellProps = {
   required?: boolean;
   clickable?: boolean;
   titleWidth?: string;
-  arrowDirection?: string;
-  useLabelSlot?: boolean;
+  arrowDirection?: "left" | "up" | "down";
   border?: boolean;
 
   customStyle?: React.CSSProperties;
@@ -44,8 +43,12 @@ export type VanCellProps = {
 } & {
   onClick?: React.ComponentProps<typeof View>["onClick"];
 } & {
+  useTitleSlot?: boolean;
   renderTitle?: React.ReactNode;
+
   renderIcon?: React.ReactNode;
+
+  useLabelSlot?: boolean;
   renderLabel?: React.ReactNode;
   renderRightIcon?: React.ReactNode;
   renderExtra?: React.ReactNode;
@@ -109,8 +112,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
           <VanIcon name={icon} className="van-cell__left-icon" />
         </View>
       ) : (
-        props.renderIcon
-      )}
+          props.renderIcon
+        )}
 
       <View
         className={classNames(
@@ -122,15 +125,16 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
           ...css(
             titleWidth
               ? ({
-                  maxWidth: titleWidth,
-                  minWidth: titleWidth
-                } as React.CSSProperties)
+                maxWidth: titleWidth,
+                minWidth: titleWidth
+              } as React.CSSProperties)
               : undefined
           ),
           ...props.titleStyle
         }}
       >
-        {props.title ? <Text>{props.title}</Text> : props.renderTitle}
+        {props.title ? <Text>{props.title}</Text> :
+          (props.useTitleSlot && props.renderTitle)}
         {(props.label || props.useLabelSlot) && (
           <View
             className={classNames(
@@ -154,8 +158,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
         {props.value || props.value === 0 ? (
           <Text>{props.value}</Text>
         ) : (
-          props.children
-        )}
+            props.children
+          )}
       </View>
       {props.isLink ? (
         <View className="van-cell__right-icon-wrap">
@@ -176,8 +180,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
           />
         </View>
       ) : (
-        props.renderRightIcon
-      )}
+          props.renderRightIcon
+        )}
       {props.renderExtra}
     </View>
   );

@@ -3,7 +3,7 @@ import Taro, { useCallback, useEffect, useMemo, useState } from "@tarojs/taro";
 import VanCell, { VanCellProps } from "../Cell";
 import { FormField, useFormItem } from "../common/formitem";
 import { addUnit, isH5, isWeapp, noop, useMemoBem, useMemoClassNames } from "../common/utils";
-import VanIcon from "../icon";
+import VanIcon, { VanIconProps } from "../icon";
 import "./index.less";
 
 function inputStyle(autoSize: VanFieldProps<any>['autoSize']) {
@@ -23,7 +23,6 @@ type VanFieldPropsEvt<T> = {
   onInput?: (val: T) => unknown;
   onChange?: (val: T) => unknown;
   onConfirm?: (val: T) => unknown;
-  onClickIcon?: React.ComponentProps<typeof View>['onClick'];
   onFocus?: (data: {
     value: T; height: number;
   }) => unknown;
@@ -39,70 +38,87 @@ type VanFieldPropsEvt<T> = {
 
 type VanFieldStringProps<Key extends string> = {
   type?: "text" | "idcard" | "textarea" | 'password' | 'search'
-
 } & FormField<Key, string> & VanFieldPropsEvt<string>;
-
 type VanFieldNumberProps<Key extends string> = {
   type: "number" | "digit"
 } & FormField<Key, number> & VanFieldPropsEvt<number>;
 
 type VanFieldCommonProps = {
-  // ============= commonProps ==============
-  placeholder?: string;
-  placeholderStyle?: string;
-  placeholderClass?: string;
-  disabled?: boolean;
-  maxLength?: number;
-  cursorSpacing?: number;
-  autoFocus?: boolean;
-  focus?: boolean;
-  cursor?: number;
-  selectionStart?: number;
-  selectionEnd?: number;
-  adjustPosition?: boolean;
-  holdKeyboard?: boolean;
   // ================== inputProps =================
-  password?: boolean;
+  focus?: React.ComponentProps<typeof Input>['focus'];
+  cursor?: React.ComponentProps<typeof Input>['cursor'];
+  autoFocus?: React.ComponentProps<typeof Input>['autoFocus'];
   confirmType?: React.ComponentProps<typeof Input>['confirmType'];
   confirmHold?: React.ComponentProps<typeof Input>['confirmHold'];
+  placeholder?: React.ComponentProps<typeof Input>['placeholder'];
+  placeholderStyle?: React.ComponentProps<typeof Input>['placeholderStyle'];
+  placeholderClass?: React.ComponentProps<typeof Input>['placeholderClass'];
+  disabled?: React.ComponentProps<typeof Input>['disabled'];
+  readonly?: React.ComponentProps<typeof Input>['disabled'];
+  holdKeyboard?: React.ComponentProps<typeof Input>['holdKeyboard']
+  cursorSpacing?: React.ComponentProps<typeof Input>['cursorSpacing'];
+  selectionStart?: React.ComponentProps<typeof Input>['selectionStart']
+  selectionEnd?: React.ComponentProps<typeof Input>['selectionEnd']
+  password?: React.ComponentProps<typeof Input>['password']
+  onKeyboardHeightChange?: React.ComponentProps<typeof Input>['onKeyboardHeightChange']
   // ================= textareaProps ==================
-  autoHeight?: boolean;
-  fixed?: boolean;
-  showConfirmbar?: boolean;
-  disableDefaultPadding?: boolean;
-  // ===================================
-  size?: VanCellProps['size'];
-  icon?: VanCellProps['icon'];
-  label?: string;
-  error?: boolean;
-  center?: boolean;
-  isLink?: boolean;
-  leftIcon?: VanCellProps['icon'];
-  rightIcon?: VanCellProps['icon'];
+  fixed?: React.ComponentProps<typeof Textarea>['fixed'];
+  // focus?: React.ComponentProps<typeof Textarea>['focus'];
+  // cursor?: React.ComponentProps<typeof Textarea>['cursor'];
+  // autoFocus?: React.ComponentProps<typeof Textarea>['autoFocus'];
+  autoHeight?: React.ComponentProps<typeof Textarea>['autoHeight'];
+  showConfirmbar?: React.ComponentProps<typeof Textarea>['showConfirmBar'];
+  // placeholder?: React.ComponentProps<typeof Textarea>['placeholder'];
+  // placeholderStyle?: React.ComponentProps<typeof Textarea>['placeholderStyle'];
+  // placeholderClass?: React.ComponentProps<typeof Textarea>['placeholderClass'];
+  // disabled?: React.ComponentProps<typeof Textarea>['disabled'];
+  // readonly?: React.ComponentProps<typeof Textarea>['disabled'];
+  // cursorSpacing?: React.ComponentProps<typeof Textarea>['cursorSpacing'];
+  adjustPosition?: React.ComponentProps<typeof Textarea>['adjustPosition']
+  // holdKeyboard?: React.ComponentProps<typeof Textarea>['holdKeyboard']
+  // selectionStart?: React.ComponentProps<typeof Textarea>['selectionStart']
+  // selectionEnd?: React.ComponentProps<typeof Textarea>['selectionEnd']
+  disableDefaultPadding?: React.ComponentProps<typeof Textarea>['disableDefaultPadding'];
+  onLineChange?: React.ComponentProps<typeof Textarea>['onLineChange']
+  // onKeyboardHeightChange?: React.ComponentProps<typeof Textarea>['onKeyboardHeightChange']
+  // ========================= common ============================
+  inputAlign?: "center" | "right" | "left";
+  maxLength?: number; // word limit
+  showWordLimit?: boolean; // word limit
   autoSize?: false | {
     maxHeight: number;
     minHeight: number;
   }
-  required?: boolean;
-  iconClass?: string;
-  clickable?: boolean;
-  inputAlign?: "center" | "right" | "left";
-  customStyle?: React.CSSProperties;
-  errorMessage?: string;
-  arrowDirection?: "left" | "up" | "down";
-  showWordLimit?: boolean;
-  errorMessageAlign?: "center" | "right" | "left";
-  readonly?: boolean;
-  clearable?: boolean;
-  border?: boolean;
+  // ========================= cell Props ========================
+  size?: VanCellProps['size'];
+  leftIcon?: VanCellProps['icon'];
+  isLink?: VanCellProps['isLink'];
+  required?: VanCellProps['required']
+  clickable?: VanCellProps['clickable']
   titleWidth?: VanCellProps['titleWidth'];
-
+  customStyle?: VanCellProps['customStyle'];
+  arrowDirection?: VanCellProps['arrowDirection'];
+  border?: VanCellProps['border'];
+  label?: string;
   renderLabel?: React.ReactNode;
-  renderIcon?: React.ReactNode;
   renderLeftIcon?: React.ReactNode;
+  center?: VanCellProps['center'];
+  // ========================= clearIcon =========================
+  clearable?: boolean;
+  // ========================= RightIcon =========================
+  rightIcon?: VanIconProps['name'];
+  icon?: VanIconProps['name'];
+  onClickIcon?: React.ComponentProps<typeof View>['onClick']
   renderRightIcon?: React.ReactNode;
+  renderIcon?: React.ReactNode;
+  // ========================= renderButton ======================
   renderButton?: React.ReactNode;
-
+  // ========================= error =============================
+  errorMessage?: string;
+  errorMessageAlign?: "center" | "right" | "left";
+  error?: boolean;
+  // ========================= classNames ========================
+  iconClass?: string;
   labelClass?: string
   inputClass?: string
   rightIconClass?: string
@@ -112,6 +128,19 @@ type VanFieldCommonProps = {
   ['right-icon-class']?: string;
   ['custom-class']?: string;
 }
+const DefaultProps = {
+  maxLength: -1,
+  cursorSpacing: 50,
+  cursor: -1,
+  selectionStart: -1,
+  selectionEnd: -1,
+  adjustPosition: true,
+  type: "text",
+  showConfirmbar: true,
+  disableDefaultPadding: true,
+  border: true,
+  titleWidth: "6.2em",
+} as const
 
 export type VanFieldProps<Key extends string> = (VanFieldStringProps<Key> | VanFieldNumberProps<Key>) & VanFieldCommonProps
 
@@ -119,7 +148,7 @@ const isVanFieldStringProps = <Key extends string>(props: VanFieldProps<Key>): p
   return props.type === "number" || props.type === "digit"
 }
 
-export default function VanField<Key extends string>(props: VanFieldProps<Key>) {
+const VanField = <Key extends string>(props: VanFieldProps<Key>) => {
   const {
     maxLength = -1,
     cursorSpacing = 50,
@@ -423,3 +452,13 @@ VanField.options = {
   addGlobalClass: true
 }
 
+VanField.externalClasses = [
+  'label-class',
+  'input-class',
+  'right-icon-class',
+  'custom-class'
+]
+
+VanField.defaultProps = DefaultProps
+
+export default VanField

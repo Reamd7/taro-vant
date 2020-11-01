@@ -10,7 +10,7 @@
 ## 表单组件
 - [*] Calendar 日历
 - [x] Checkbox 复选框
-- [ ] DatetimePicker 时间选择
+- [x] DatetimePicker 时间选择
 - [-] Field 输入框
 - [x] Picker 选择器
 - [ ] Radio 单选框
