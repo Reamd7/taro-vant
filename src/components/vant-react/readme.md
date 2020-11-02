@@ -15,10 +15,10 @@
 - [x] Picker 选择器
 - [ ] Radio 单选框
 - [x] Rate 评分
-- [-] Search 搜索
+- [x] Search 搜索
 - [-] Slider 滑块
 - [x] Stepper 步进器
-- [-] Switch 开关
+- [x] Switch 开关
 - [] Uploader 文件上传
 ## 反馈组件
 - [x] ActionSheet 上拉菜单

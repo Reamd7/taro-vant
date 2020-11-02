@@ -44,7 +44,7 @@ const VanSkeleton: Taro.FunctionComponent<VanSkeletonPops> = props => {
     rowWidth = "100%"
   } = props;
   const isArray = useMemo(() => rowWidth instanceof Array, [rowWidth]);
-  const rowArray = useMemo(() => Array.from({ length: row }), [row]);
+  const rowArray = useMemo(() => Array.from({ length: row }).map((_, i) => i), [row]);
   const classname = useMemoClassNames();
   const bem = useMemoBem();
   const css = useMemoCssProperties();
@@ -83,7 +83,7 @@ const VanSkeleton: Taro.FunctionComponent<VanSkeletonPops> = props => {
             })}
           />
         )}
-        {rowArray.map((_, key) => {
+        {rowArray.map((key) => {
           return (
             <View
               key={key}
@@ -101,8 +101,8 @@ const VanSkeleton: Taro.FunctionComponent<VanSkeletonPops> = props => {
       </View>
     </View>
   ) : (
-    <View className={bem("skeleton__content")}>{props.children}</View>
-  );
+      <View className={bem("skeleton__content")}>{props.children}</View>
+    );
 };
 
 VanSkeleton.options = {

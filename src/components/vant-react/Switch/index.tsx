@@ -1,11 +1,21 @@
-import Taro from "@tarojs/taro";
+import Taro, { useMemo } from "@tarojs/taro";
 
 import "./index.less";
 import { useMemoBem, useMemoClassNames, isH5, isWeapp, addUnit, useMemoCssProperties } from "../common/utils";
 import { View } from "@tarojs/components";
 import VanLoading from "../loading";
+import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
+import { BLUE, GRAY_DARK } from "../common/color";
 
-export type VanSwitchProps<ActiveVal, INActiveVal> = {
+const DefaultProps = {
+  size: 30,
+  activeValue: true,
+  inactiveValue: false,
+  activeColor: "#1989fa",
+  inactiveColor: "#fff"
+}
+
+export type VanSwitchProps<ActiveVal = true, INActiveVal = false> = {
   loading?: boolean;
   disabled?: boolean;
   size?: number;
@@ -18,25 +28,39 @@ export type VanSwitchProps<ActiveVal, INActiveVal> = {
   'custom-class'?: string;
   nodeClass?: string;
   'node-class'?: string;
-}
 
-const VanSwitch = <ActiveVal, INActiveVal>(props: VanSwitchProps<ActiveVal, INActiveVal>) => {
+} & ControllerValueProps<ActiveVal | INActiveVal, "defaultChecked", "checked", "onChange">
+
+function VanSwitch<ActiveVal = true, INActiveVal = false>(props: VanSwitchProps<ActiveVal, INActiveVal>) {
   const bem = useMemoBem();
   const classname = useMemoClassNames();
   const css = useMemoCssProperties();
 
   const {
     size = 30,
-    activeValue = true,
-    inactiveValue = false,
     activeColor = "#1989fa",
     inactiveColor = "#fff"
   } = props;
 
+  const inactiveValue = (props.inactiveValue || false) as INActiveVal;
+  const activeValue = (props.activeValue || true) as ActiveVal;
+
+  const [value, setValue] = useControllableValue<ActiveVal | INActiveVal, VanSwitchProps<ActiveVal, INActiveVal>, "defaultChecked", "checked", "onChange">(props, {
+    defaultValue: inactiveValue,
+    defaultValuePropName: "defaultChecked",
+    valuePropName: "checked",
+  })
+
+  const checked = useMemo(() => value === activeValue, [value, activeValue]);
+
+  const loadingColor = useMemo(() => {
+    return checked ? activeColor || BLUE : inactiveColor || GRAY_DARK;
+  }, [checked, activeColor, inactiveColor])
+
   return <View
     className={
       classname(
-        bem('switch', { on: value === activeValue, disabled: props.disabled }),
+        bem('switch', { on: checked, disabled: props.disabled }),
         isH5 && props.className,
         isWeapp && 'custom-class'
       )
@@ -45,7 +69,12 @@ const VanSwitch = <ActiveVal, INActiveVal>(props: VanSwitchProps<ActiveVal, INAc
       fontSize: addUnit(size),
       backgroundColor: (checked ? activeColor : inactiveColor)
     })}
-    onClick={onClick}
+    onClick={() => {
+      if (!props.disabled && !props.loading) {
+        const value = checked ? inactiveValue : activeValue;
+        setValue(value)
+      }
+    }}
   >
     <View
       className={classname(
@@ -54,7 +83,7 @@ const VanSwitch = <ActiveVal, INActiveVal>(props: VanSwitchProps<ActiveVal, INAc
         isH5 && props.nodeClass
       )}
     >
-      {loading && <VanLoading
+      {props.loading && <VanLoading
         color={loadingColor}
         custom-class="van-switch__loading"
         className="van-switch__loading"
@@ -62,3 +91,16 @@ const VanSwitch = <ActiveVal, INActiveVal>(props: VanSwitchProps<ActiveVal, INAc
     </View>
   </View>
 }
+
+VanSwitch.defaultProps = DefaultProps
+
+VanSwitch.externalClasses = [
+  'custom-class',
+  'node-class'
+]
+
+VanSwitch.options = {
+  addGlobalClass: true
+}
+
+export default VanSwitch;
