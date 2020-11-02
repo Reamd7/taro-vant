@@ -76,7 +76,7 @@ type VanFieldCellContainerProps = Pick<
   "size" | "isLink" | "required" | "clickable" | "titleWidth" |
   "customStyle" | "arrowDirection" | "border" | "center"
 > & {
-  lefeIcon?: VanCellProps['icon'];
+  leftIcon?: VanCellProps['icon'];
   label?: string;
 }
 /**

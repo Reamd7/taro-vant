@@ -71,7 +71,7 @@ export default function FieldPage() {
           type="text"
           value="输入框已禁用"
           label="用户名"
-          // leftIcon="contact"
+          leftIcon="contact"
           disabled
           border={false}
         />
@@ -103,7 +103,7 @@ export default function FieldPage() {
         <VanFieldText
           type="text"
           value={username2}
-          lefeIcon="contact"
+          leftIcon="contact"
           label="用户名"
           placeholder="请输入用户名"
           inputAlign="right"

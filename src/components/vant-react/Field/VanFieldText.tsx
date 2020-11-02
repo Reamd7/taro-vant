@@ -38,7 +38,7 @@ const VanFieldText: Taro.FunctionComponent<
 
   return <VanCell
     size={props.size}
-    icon={props.lefeIcon}
+    icon={props.leftIcon}
     center={props.center}
     border={props.border}
     isLink={props.isLink}

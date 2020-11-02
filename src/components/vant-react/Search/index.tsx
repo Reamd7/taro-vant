@@ -1,12 +1,27 @@
 import Taro from "@tarojs/taro";
 
 import "./index.less";
-import { useMemoBem, useMemoAddUnit, useMemoClassNames, isH5, isWeapp } from "../common/utils";
+import { useMemoBem, useMemoAddUnit, useMemoClassNames, isH5, isWeapp, noop } from "../common/utils";
 import { View } from "@tarojs/components";
-import VanField, { VanFieldProps } from "../Field";
 import { VanCellProps } from "../Cell";
+import VanFieldText from "../Field/VanFieldText";
+import { VanFieldInputTextProps } from "../Field/common";
+import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
+const DefaultProps = {
+  leftIcon: "search",
+  actionText: "取消",
+  background: "#ffffff",
+  maxLength: -1,
+  shape: "square",
+  clearable: true,
+  onSearch: noop,
+  onBlur: noop,
+  onFocus: noop,
+  onClear: noop,
 
-export type VanSearchProps = {
+  onCancel: noop,
+}
+type VanSearchClassNames = {
   'custom-class'?: string;
   className?: string;
   'field-class'?: string;
@@ -15,17 +30,16 @@ export type VanSearchProps = {
   inputClass?: string;
   'cancel-class'?: string;
   cancelClass?: string;
+}
 
+export type VanSearchProps = {
   label?: string;
   focus?: boolean;
   error?: boolean;
   disabled?: boolean;
   readonly?: boolean;
-  inputAlign?: VanFieldProps<any>['inputAlign'];
+  inputAlign?: VanFieldInputTextProps['inputAlign']
   showAction?: boolean;
-  useActionSlot?: boolean;
-  useLeftIconSlot?: boolean;
-  useRightIconSlot?: boolean;
   leftIcon?: VanCellProps['icon'];
   rightIcon?: VanCellProps['icon'];
   placeholder?: string;
@@ -37,25 +51,33 @@ export type VanSearchProps = {
   clearable?: boolean;
 
   renderLabel?: React.ReactNode
-  renderLeftIcon?: React.ReactNode;
-  renderRightIcon?: React.ReactNode;
-  renderAction?: React.ReactNode;
-}
 
-const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props) => {
-  const {
-    leftIcon = "search",
-    actionText = "取消",
-    background = "#ffffff",
-    maxLength = -1,
-    shape = "square",
-    clearable = true
-  } = props
+  useLeftIconSlot?: boolean;
+  renderLeftIcon?: React.ReactNode;
+
+  useRightIconSlot?: boolean;
+  renderRightIcon?: React.ReactNode;
+
+  useActionSlot?: boolean;
+  renderAction?: React.ReactNode;
+
+  onSearch?: VanFieldInputTextProps['onConfirm'];
+  onFocus?: VanFieldInputTextProps['onFocus'];
+  onBlur?: VanFieldInputTextProps['onBlur'];
+  onClear?: VanFieldInputTextProps['onClear'];
+  onCancel?: VoidFunction;
+
+} & VanSearchClassNames & ControllerValueProps<string, "defaultValue", "value", "onChange">
+export type ActiveVanSearchProps = Omit<VanSearchProps, keyof typeof DefaultProps> & Required<Pick<VanSearchProps, keyof typeof DefaultProps>>;
+const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props: ActiveVanSearchProps) => {
 
   const bem = useMemoBem();
   const addUnit = useMemoAddUnit();
   const classname = useMemoClassNames();
 
+  const [value, setValue] = useControllableValue(props, {
+    defaultValue: "",
+  })
   return <View
     className={
       classname(
@@ -64,9 +86,9 @@ const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props) => {
         isWeapp && 'custom-class'
       )
     }
-    style={{ background }}
+    style={{ background: props.background }}
   >
-    <View className={bem('search__content', [shape])}>
+    <View className={bem('search__content', [props.shape])}>
       {props.label ?
         <View className="van-search__label">{props.label}</View> :
         props.renderLabel}
@@ -77,19 +99,22 @@ const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props) => {
           isWeapp && 'field-class'
         )
       }>
-        <VanField
-          type="search"
-          leftIcon={!props.useLeftIconSlot ? leftIcon : ''}
+        <VanFieldText
+          type="text"
+          leftIcon={!props.useLeftIconSlot ? props.leftIcon : ''}
           rightIcon={!props.useRightIconSlot ? props.rightIcon : ''}
           focus={props.focus}
           error={props.error}
           border={false}
           confirmType="search"
 
+          value={value}
+          onChange={setValue}
+
           disabled={props.disabled}
           readonly={props.readonly}
-          clearable={clearable}
-          maxLength={maxLength}
+          clearable={props.clearable}
+          maxLength={props.maxLength}
           inputAlign={props.inputAlign}
           inputClass="input-class"
           input-class="input-class"
@@ -99,11 +124,11 @@ const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props) => {
             padding: `${addUnit(5)} ${addUnit(10)} ${addUnit(5)} 0`,
             backgroundColor: 'transparent'
           }}
-          // bind:blur="onBlur"
-          // bind:focus="onFocus"
-          // bind:change="onChange"
-          // bind:confirm="onSearch"
-          // bind:clear="onClear"
+
+          onConfirm={props.onSearch}
+          onBlur={props.onBlur}
+          onFocus={props.onFocus}
+          onClear={props.onClear}
 
           renderLeftIcon={
             props.useLeftIconSlot ? props.renderLeftIcon : null
@@ -121,18 +146,25 @@ const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props) => {
         >
           {
             props.useActionSlot ? props.renderAction :
-              <View onClick="onCancel" className="cancel-class">
-                {actionText}
+              <View onClick={() => {
+                props.onCancel()
+                setValue('')
+              }} className="cancel-class">
+                {props.actionText}
               </View>
           }
-
         </View>}
     </View>
   </View >
 }
-
+VanSearch.defaultProps = DefaultProps
 VanSearch.options = {
   addGlobalClass: true
 }
-
+VanSearch.externalClasses = [
+  'custom-class',
+  'field-class',
+  'input-class',
+  'cancel-class'
+]
 export default VanSearch;
