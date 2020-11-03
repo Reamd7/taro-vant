@@ -96,11 +96,11 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
           }
         ])
       )}
-      hoverClass={classNames(
+      hoverClass={(isLink || clickable) ? classNames(
         "van-cell--hover",
         isWeapp && "hover-class",
         isH5 && props.hoverClass
-      )}
+      ) : ''}
       hoverStayTime={70}
       style={props.customStyle}
       onClick={onClick}

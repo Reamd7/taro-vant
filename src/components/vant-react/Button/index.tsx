@@ -1,5 +1,5 @@
 import { Block, Button, View, Text } from "@tarojs/components";
-import Taro, { useEffect, useState } from "@tarojs/taro";
+import Taro, { useMemo } from "@tarojs/taro";
 import {
   noop,
   useMemoBem,
@@ -96,16 +96,15 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
     dataset = null
   } = props;
 
-  const [baseStyle, setBaseStyle] = useState({});
-
-  useEffect(()=>{
+  const baseStyle = useMemo(() => {
     const BaseStyle: React.CSSProperties = {};
 
     if (color) {
       BaseStyle.color = plain ? color : "white"
-      if (plain) {
-        BaseStyle.background = color
-      }
+      BaseStyle.background = plain ? "white" : color
+      // if (plain) {
+      //   BaseStyle.background = color
+      // }
 
       if (color.indexOf('gradient') !== -1) {
         BaseStyle.border = 0
@@ -113,8 +112,9 @@ const VanButton: Taro.FunctionComponent<ButtonProps &
         BaseStyle.borderColor = color
       }
     }
-    setBaseStyle(BaseStyle)
+    return BaseStyle;
   }, [color, plain])
+
 
   return (
     <Button
