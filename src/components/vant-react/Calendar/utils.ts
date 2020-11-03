@@ -68,13 +68,15 @@ export function useInitRect(showSubtitle: boolean) {
     // TODO
     // if (process.env.TARO_ENV === "weapp") {
       const contentObserver = Taro.createIntersectionObserver(scope, {
-        thresholds: [0, 0.1, 0.9, 1],
+        thresholds: [ 0.5, 0.8],
         observeAll: true,
       });
 
-      contentObserver.relativeTo('.van-calendar__body');
-      contentObserver.observe('.month', (res) => {
-        if (res.boundingClientRect.top <= res.relativeRect.top) {
+      contentObserver
+      .relativeTo('.van-calendar__body')
+      .observe('.month', (res) => {
+        if (res.intersectionRatio > 0.5) {
+        // if (res.boundingClientRect.top <= res.relativeRect.top) {
           // @ts-ignore
           const date = (res as any).dataset.subtitle as string;
           setsubtitle(
@@ -86,7 +88,7 @@ export function useInitRect(showSubtitle: boolean) {
   }, [setsubtitle, showSubtitle]);
 
   return [
-    subtitle, initRect
+    subtitle, initRect, setsubtitle
   ] as const
 }
 export const ROW_HEIGHT = 64;

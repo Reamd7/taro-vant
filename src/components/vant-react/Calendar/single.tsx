@@ -56,7 +56,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
   // 确认按钮的禁用状态
   const confirmButtonDisable = useMemo(() => currentDate === null, [currentDate]);
   // subtitle
-  const [subtitle, initRect] = useInitRect(!!props.showSubtitle);
+  const [subtitle, initRect, setsubtitle] = useInitRect(!!props.showSubtitle);
   // 滚动到某个月份
   const [scrollIntoView, setscrollIntoView] = useState('');
   const onScrollIntoView = usePersistFn(() => {
@@ -66,6 +66,8 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
       if (targetDate && displayed) {
         monthslist.some((month) => {
           if (targetDate && month[0].isSame(targetDate, "month")) {
+          console.log(`month${month[0].format('DD_MM_YYYY')}`)
+
             setscrollIntoView(
               `month${month[0].format('DD_MM_YYYY')}`
             )
@@ -123,6 +125,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
   // 点击日期事件
   const onClickDay = usePersistFn((date: dayjs.Dayjs) => {
     select(date, true);
+    setsubtitle(date.format('YYYY年MM月'))
   }, [select]);
 
   const renderTemp = <View className="van-calendar">
@@ -134,7 +137,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
       useSlotTitle={props.useSlotTitle}
       renderTitle={props.renderTitle}
     />
-    <ScrollView className="van-calendar__body" scrollY scrollIntoView={scrollIntoView}>
+    <ScrollView className="van-calendar__body" scrollY scrollIntoView={scrollIntoView} scrollWithAnimation>
       {monthslist.map((item, index) => {
         return <View
           key={`month${item[0].format('DD_MM_YYYY')}`}
