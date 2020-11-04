@@ -47,6 +47,7 @@
     "@tarojs/taro-tt": "2.2.15",
     "@tarojs/taro-weapp": "2.2.15",
     "@types/big.js": "^4.0.5",
+    "@types/throttle-debounce": "^2.1.0",
     "babel-runtime": "^6.26.0",
     "big.js": "^6.0.1",
     "classnames": "^2.2.6",
@@ -58,6 +59,7 @@
     "regenerator-runtime": "0.11.1",
     "rxjs": "^6.6.3",
     "taro-axios": "^1.1.1",
+    "throttle-debounce": "^3.0.1",
     "utility-types": "^3.10.0"
   },
   "devDependencies": {

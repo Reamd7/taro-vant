@@ -1,12 +1,20 @@
-import Taro, { useMemo, useCallback, useState, useEffect, useScope, useRef } from "@tarojs/taro";
+import Taro, { useMemo, useCallback, useScope, useRef } from "@tarojs/taro";
 import "./index.less";
-import { useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, useMemoAddUnit, getRect, requestAnimationFrame } from "../common/utils";
+import { useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, useMemoAddUnit, getRect, requestAnimationFrame, noop } from "../common/utils";
 import { View } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "../../../common/hooks/useControllableValue";
-import { useTouch } from "../common/mixins/touch";
-import { ITouchEvent } from "@tarojs/components/types/common";
+
 // import { throttle } from 'throttle-debounce';
 // import { useThrottleFn } from "src/common/hooks/useThrottleFn";
+
+declare namespace JSX {
+  interface IntrinsicElements {
+    wxs: React.ReactElement<{
+      module: string;
+      src: string;
+    }>
+  }
+}
 
 export type VanSliderProps = {
   disabled?: boolean
@@ -52,12 +60,6 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
   const [value, setValue] = useControllableValue(props, {
     defaultValue: 0
   })
-  const [dragValue, setDragValue] = useState(value);
-
-  useEffect(() => setDragValue(value), [value]);
-
-  const { touchRef, touchStart, touchMove } = useTouch();
-  const [dragStatus, setdragStatus] = useState('drag-end');
 
   const getRange = useMemo(() => props.max - props.min, [props.min, props.max]);
   const format = useCallback((value: number) => {
@@ -66,27 +68,6 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
     const step = props.step;
     return Math.round(Math.max(min, Math.min(value, max)) / step) * step;
   }, [props.max, props.min, props.step]);
-
-
-  // const setDragValueThrottleFn = useThrottleFn(setDragValue, {
-  //   delay: 1000 / 60
-  // });
-
-
-  // const barStyle = useMemo(() => {
-
-  //   const width = `${((dragValue - props.min) * 100) / getRange}%`;
-  //   const style: React.CSSProperties = {
-  //     width,
-  //     height: addUnit(props.barHeight),
-  //     background: props.activeColor
-  //   }
-
-  //   if (dragStatus !== 'drag-end') {
-  //     style.transition = "none"
-  //   }
-  //   return style
-  // }, [props.min, getRange, dragValue, dragStatus, props.barHeight, addUnit, props.activeColor]);
 
   const scope = useScope();
 
@@ -117,25 +98,18 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
       setValue(newValue);
     })
 
-  }, [props.disabled, scope, getRange, props.min, setDragValue, format])
+  }, [props.disabled, scope, getRange, props.min, format])
 
-  const onTouchStart = useCallback((e: ITouchEvent) => {
-    if (props.disabled) return;
-    touchStart.current(e)
-    setdragStatus('start')
-  }, [props.disabled, touchStart, setdragStatus])
+  const onTouchEnd = useCallback((newValue: number) => {
+    setValue(newValue);
+    props.onDragEnd && props.onDragEnd()
+  }, [props.onDragEnd])
 
-  const onTouchEnd = useCallback(() => {
-    if (props.disabled) return;
-
-    if (dragStatus === 'draging') {
-      const newValue = format(dragValue);
-      setValue(newValue);
-      props.onDragEnd && props.onDragEnd()
-      setdragStatus('drag-end')
-    }
-  }, [props.disabled, dragStatus, format, dragValue, props.onDragEnd, setdragStatus])
-
+  if (scope) {
+    scope.onDragStart = (props.onDragStart || noop);
+    scope.onDrag = (props.onDrag || noop);
+    scope.onTouchend = onTouchEnd;
+  }
 
   return <View className={classname(
     isH5 && props.className,
@@ -146,55 +120,31 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
       background: props.inactiveColor
     })}
     onClick={onClick}
+
+    data-disabled={props.disabled}
+    data-value={value}
+    data-min={props.min}
+    data-max={props.max}
+    data-step={props.step}
   >
+    <wxs module="slider" src="./slider.wxs"/>
     <View
       className="van-slider__bar"
       style={(() => {
-        const width = `${((dragValue - props.min) * 100) / getRange}%`;
         const style: React.CSSProperties = {
-          width,
+          width: `${((value - props.min) * 100) / getRange}%`,
           height: addUnit(props.barHeight),
-          background: props.activeColor
-        }
-
-        if (dragStatus !== 'drag-end') {
-          style.transition = "none"
+          background: props.activeColor,
         }
         return style
       })()}
     >
       <View
         className="van-slider__button-wrapper"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-        onTouchCancel={onTouchEnd}
-        onTouchMove={e => {
-          e.stopPropagation()
-
-          if (props.disabled) return;
-
-
-          if (dragStatus === 'start') {
-            props.onDragStart && props.onDragStart()
-          }
-          touchMove.current(e);
-          if (dragStatus !== 'draging') {
-            setdragStatus('draging')
-          }
-
-          getRectContainer((rect) => {
-            const diff = (touchRef.current.deltaX / rect.width) * 100;
-            const newValue = format(value + diff);
-
-            // =========================================
-            props.onDrag && props.onDrag(newValue);
-
-            // setDragValueThrottleFn.run(newValue)
-            requestAnimationFrame(()=>{
-              setDragValue(newValue);
-            })
-          })
-        }}
+        onTouchStart="{{slider.touchstart}}"
+        onTouchEnd="{{slider.touchend}}"
+        onTouchCancel="{{slider.touchend}}"
+        onTouchMove="{{slider.touchmove}}"
       >
         {props.useButtonSlot ? props.renderButton : <View
           className="van-slider__button"
@@ -214,3 +164,4 @@ VanSlider.externalClasses = [
 VanSlider.defaultProps = DefaultProps;
 
 export default VanSlider;
+

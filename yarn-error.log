@@ -1,30 +1,20 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add src/components/vant-react/Button --silent --no-progress
+  C:\Program Files\nodejs\node.exe C:\Users\Gemini\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add throttle-debounce
 
 PATH: 
-  /usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/gemini/Desktop/myshop/node_modules/.bin:/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/gemini/Desktop/myshop/node_modules/.bin:/Users/gemini/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands
+  C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Users\Gemini\AppData\Roaming\npm;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\jdk-10.0.2\bin;C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64;C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64\Scripts;C:\flutter\bin;C:\Users\Gemini\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\TortoiseGit\bin;C:\MinGW\bin;C:\Users\Gemini\.cargo\bin;C:\Users\Gemini\AppData\Local\Microsoft\WindowsApps;C:\Users\Gemini\AppData\Roaming\npm;C:\Program Files\JetBrains\CLion 2020.2\bin;;C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.2\bin;
 
 Yarn version: 
-  1.22.0
+  1.22.10
 
 Node version: 
-  12.16.1
+  14.8.0
 
 Platform: 
-  darwin x64
+  win32 x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/src%2fcomponents/vant-react/Button: [not_found] document not found
-      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66975:18)
-      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140727:22)
-      at Request.emit (events.js:311:20)
-      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141699:10)
-      at Request.emit (events.js:311:20)
-      at Gunzip.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141621:12)
-      at Object.onceWrapper (events.js:417:28)
-      at Gunzip.emit (events.js:323:22)
-      at endReadableNT (_stream_readable.js:1204:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\Gemini\AppData\Local\Yarn\Cache\v6\npm-globals-12.4.0-a18813576a41b00a24a97e7f815918c2e19925f8-integrity\node_modules\globals\index.d.ts' -> 'C:\Users\Gemini\Desktop\taro-vant-weapp\node_modules\@eslint\eslintrc\node_modules\globals\index.d.ts'
 
 npm manifest: 
   {
@@ -61,21 +51,27 @@ npm manifest:
     "author": "",
     "license": "MIT",
     "dependencies": {
-      "@tarojs/components": "2.2.13",
-      "@tarojs/components-qa": "2.2.13",
-      "@tarojs/router": "2.2.13",
-      "@tarojs/taro": "2.2.13",
-      "@tarojs/taro-alipay": "2.2.13",
-      "@tarojs/taro-h5": "2.2.13",
-      "@tarojs/taro-qq": "2.2.13",
-      "@tarojs/taro-quickapp": "2.2.13",
-      "@tarojs/taro-rn": "2.2.13",
-      "@tarojs/taro-swan": "2.2.13",
-      "@tarojs/taro-tt": "2.2.13",
-      "@tarojs/taro-weapp": "2.2.13",
+      "@tarojs/cli": "2",
+      "@tarojs/components": "2.2.15",
+      "@tarojs/components-qa": "2.2.15",
+      "@tarojs/router": "2.2.15",
+      "@tarojs/service": "2",
+      "@tarojs/taro": "2.2.15",
+      "@tarojs/taro-alipay": "2.2.15",
+      "@tarojs/taro-h5": "2.2.15",
+      "@tarojs/taro-qq": "2.2.15",
+      "@tarojs/taro-quickapp": "2.2.15",
+      "@tarojs/taro-rn": "2.2.15",
+      "@tarojs/taro-swan": "2.2.15",
+      "@tarojs/taro-tt": "2.2.15",
+      "@tarojs/taro-weapp": "2.2.15",
+      "@types/big.js": "^4.0.5",
       "babel-runtime": "^6.26.0",
+      "big.js": "^6.0.1",
       "classnames": "^2.2.6",
+      "dayjs": "^1.9.1",
       "fast-memoize": "^2.5.2",
+      "immer": "^7.0.9",
       "nerv-devtools": "^1.5.5",
       "nervjs": "^1.5.5",
       "regenerator-runtime": "0.11.1",
@@ -84,10 +80,12 @@ npm manifest:
       "utility-types": "^3.10.0"
     },
     "devDependencies": {
-      "@tarojs/mini-runner": "2.2.13",
-      "@tarojs/plugin-less": "2.2.13",
-      "@tarojs/plugin-terser": "2.2.13",
-      "@tarojs/webpack-runner": "2.2.13",
+      "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
+      "@babel/plugin-proposal-optional-chaining": "^7.11.0",
+      "@tarojs/mini-runner": "2.2.15",
+      "@tarojs/plugin-less": "2.2.15",
+      "@tarojs/plugin-terser": "2.2.15",
+      "@tarojs/webpack-runner": "2.2.15",
       "@types/classnames": "^2.2.10",
       "@types/react": "^16.4.6",
       "@types/webpack-env": "^1.13.6",
@@ -101,16 +99,16 @@ npm manifest:
       "babel-plugin-transform-runtime": "^6.23.0",
       "babel-preset-env": "^1.6.1",
       "eslint": "^7.9.0",
-      "eslint-config-taro": "2.2.13",
+      "eslint-config-taro": "2.2.15",
       "eslint-plugin-import": "^2.12.0",
       "eslint-plugin-react": "^7.8.2",
       "eslint-plugin-react-hooks": "^1.6.1",
-      "eslint-plugin-taro": "2.2.13",
+      "eslint-plugin-taro": "2.2.15",
       "eslint-plugin-typescript": "^0.14.0",
       "oas-typegen": "^0.2.1",
       "stylelint": "9.3.0",
-      "stylelint-config-taro-rn": "2.2.13",
-      "stylelint-taro-rn": "2.2.13",
+      "stylelint-config-taro-rn": "2.2.15",
+      "stylelint-taro-rn": "2.2.15",
       "typescript": "^3.0.1"
     }
   }

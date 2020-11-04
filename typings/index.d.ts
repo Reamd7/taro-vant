@@ -6,3 +6,15 @@ interface IAppOption {
   }
   userInfoReadyCallback?: WechatMiniprogram.GetUserInfoSuccessCallback,
 }
+
+interface WxsProps<T> extends React.HTMLAttributes<T> {
+  module: string;
+  src: string;
+}
+
+declare namespace JSX {
+  interface IntrinsicElements {
+    wxs: React.DetailedHTMLProps<WxsProps<HTMLScriptElement>, HTMLScriptElement>;
+  }
+}
+

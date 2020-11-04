@@ -28,6 +28,8 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/slider/index', // TODO
+
       'pages/index/index',
 
       // ================= ## 基础组件 =================
