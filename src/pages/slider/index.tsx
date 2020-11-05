@@ -28,12 +28,12 @@ export default function VanSilder() {
   return <Block>
     <DemoBlock title="基础用法">
       <VanSlider
-        value={currentValue}
+        defaultValue={currentValue}
         className="slider"
         custom-class="slider"
         onChange={onChange}
-        onDragStart={() => console.log("onDragStart")}
-        onDragEnd={() => console.log("onDragEnd")}
+        // onDragStart={() => console.log("onDragStart")}
+        // onDragEnd={() => console.log("onDragEnd")}
         // onDrag={(val) => console.log("onDrag" + val)}
       />
     </DemoBlock>
@@ -68,16 +68,7 @@ export default function VanSilder() {
       />
     </DemoBlock>
 
-    <DemoBlock title="自定义样式">
-      <VanSlider
-        value={currentValue}
-        className="slider"
-        custom-class="slider"
-        barHeight={4}
-        onChange={onChange}
-        activeColor="#ee0a24"
-      />
-    </DemoBlock>
+
 
     <DemoBlock title="自定义按钮">
       <VanSlider
@@ -86,10 +77,7 @@ export default function VanSilder() {
         className="slider"
         useButtonSlot
         activeColor="#ee0a24"
-        onDrag={(v) => {
-          setDisValue(v);
-          console.log(v)
-        }}
+        onDrag={setDisValue}
         onChange={onChange}
         renderButton={
           <View className="custom-button">

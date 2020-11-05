@@ -1,8 +1,10 @@
-import Taro, { useMemo, useCallback, useScope, useRef } from "@tarojs/taro";
+import Taro, { useMemo, useCallback, useScope, useRef, useState, useEffect } from "@tarojs/taro";
 import "./index.less";
 import { useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, useMemoAddUnit, getRect, requestAnimationFrame, noop } from "../common/utils";
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "../../../common/hooks/useControllableValue";
+import { useTouch } from "../common/mixins/touch";
+import { ITouchEvent } from "@tarojs/components/types/common";
 
 // import { throttle } from 'throttle-debounce';
 // import { useThrottleFn } from "src/common/hooks/useThrottleFn";
@@ -61,6 +63,9 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
     defaultValue: 0
   })
 
+  const [dragValue, setDragValue] = useState(value);
+  useEffect(() => setDragValue(value), [value]);
+
   const getRange = useMemo(() => props.max - props.min, [props.min, props.max]);
   const format = useCallback((value: number) => {
     const max = props.max;
@@ -95,21 +100,35 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
       const newValue = format(
         ((event.detail.x - rect.left) / rect.width) * getRange + props.min
       );
+      setDragValue(newValue);
       setValue(newValue);
     })
 
-  }, [props.disabled, scope, getRange, props.min, format])
+  }, [props.disabled, scope, getRange, props.min, format, setValue])
 
-  const onTouchEnd = useCallback((newValue: number) => {
+  const onTouchEnd = useCallback(([newValue]: [number]) => {
+    setDragValue(newValue);
+
     setValue(newValue);
     props.onDragEnd && props.onDragEnd()
   }, [props.onDragEnd])
 
+  const click = useCallback(([newValue]: [number]) => {
+    setDragValue(newValue);
+    setValue(newValue);
+  }, [setValue, setDragValue])
+
   if (scope) {
     scope.onDragStart = (props.onDragStart || noop);
-    scope.onDrag = (props.onDrag || noop);
+    scope.onDrag = ([v]: [number]) => {
+      setDragValue(v)
+      props.onDrag && props.onDrag(v)
+    };
     scope.onTouchend = onTouchEnd;
+    scope.onClick = click;
   }
+
+  const controllcomponent=!!('value' in props);
 
   return <View className={classname(
     isH5 && props.className,
@@ -119,20 +138,22 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
     style={css({
       background: props.inactiveColor
     })}
+    // onClick="{{slider.click}}"
     onClick={onClick}
-
     data-disabled={props.disabled}
     data-value={value}
     data-min={props.min}
     data-max={props.max}
     data-step={props.step}
+    data-controllcomponent={controllcomponent}
   >
-    <wxs module="slider" src="./slider.wxs"/>
+    <Text>{dragValue}</Text>
+    <wxs module="slider" src="./slider.wxs" />
     <View
       className="van-slider__bar"
       style={(() => {
         const style: React.CSSProperties = {
-          width: `${((value - props.min) * 100) / getRange}%`,
+          width: `${((dragValue - props.min) * 100) / getRange}%`,
           height: addUnit(props.barHeight),
           background: props.activeColor,
         }
@@ -146,12 +167,13 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
         onTouchCancel="{{slider.touchend}}"
         onTouchMove="{{slider.touchmove}}"
       >
-        {props.useButtonSlot ? props.renderButton : <View
-          className="van-slider__button"
-        />}
+        {props.useButtonSlot && props.renderButton}
+        <View
+          className={props.useButtonSlot ? "" : "van-slider__button"}
+        ></View>
       </View>
     </View>
-  </View >
+  </View>
 }
 
 VanSlider.options = {
