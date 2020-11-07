@@ -28,8 +28,6 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/slider/index', // TODO
-
       'pages/index/index',
 
       // ================= ## 基础组件 =================
@@ -50,10 +48,13 @@ class App extends Component {
       // 'pages/radio/index', // TODO
       'pages/rate/index',
       'pages/search/index',
-      // 'pages/slider/index', // TODO
+        // 最后优化是，直接将用taro写的组件用原生重新实现。
+        // 然后taro来mock一层。这个方案没试过，可以试试看看性能，
+        // vant原生的实现能够用这种方式做到跟手动画、
+      'pages/slider/index', // TODO
       'pages/stepper/index',
       'pages/switch/index', // TODO 异步
-      // 'pages/uploader/index', // TODO
+      'pages/uploader/index',
 
       // ================= ## 反馈组件 =================
       'pages/action-sheet/index',

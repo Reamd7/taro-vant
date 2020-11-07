@@ -19,10 +19,12 @@
     "jsxFactory": "Taro.createElement",
     "allowJs": true,
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types", "global.d.ts", "typings"],
     "paths": {
       "src/*": ["./src/*"]
-    }
+    },
+    "types": [
+      "miniprogram-api-typings"
+    ]
   },
   "exclude": ["node_modules", "dist"],
   "compileOnSave": false
