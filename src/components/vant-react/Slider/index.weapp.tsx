@@ -147,7 +147,6 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
     data-step={props.step}
     data-controllcomponent={controllcomponent}
   >
-    <Text>{dragValue}</Text>
     <wxs module="slider" src="./slider.wxs" />
     <View
       className="van-slider__bar"
