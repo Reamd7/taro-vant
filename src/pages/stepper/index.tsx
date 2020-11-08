@@ -12,7 +12,7 @@ export default function StepperPage() {
 
   return <Block>
     <VanCell center title="基础用法">
-      <VanStepper value={1} />
+      <VanStepper value={value} onChange={setValue}/>
     </VanCell>
 
     <VanCell center title="步长设置">
@@ -24,45 +24,38 @@ export default function StepperPage() {
     </VanCell>
 
     <VanCell center title="限制输入整数">
-      <VanStepper value={1} integer />
+      <VanStepper defaultValue={1} integer />
     </VanCell>
 
     <VanCell center title="禁用状态">
-      <VanStepper value={1} disabled />
+      <VanStepper defaultValue={1} disabled />
     </VanCell>
 
     <VanCell center title="禁用长按">
-      <VanStepper value={1} longPress={false} />
+      <VanStepper defaultValue={1} longPress={false} />
     </VanCell>
 
     <VanCell center title="固定小数位数">
-      <VanStepper value={1} step={0.2} decimalLength={1} />
+      <VanStepper defaultValue={1} step={0.2} decimalLength={1} />
     </VanCell>
 
     <VanCell center title="异步变更">
       <VanStepper
         value={value}
-        manualChange
-        onChange={({
-          // previousValue,
-          // value,
-          updateValue,
-          // revertValue
-        }) => {
+        onChange={(value) => {
           const id = Toast.loading({
             forbidClick: true
           });
           setTimeout(() => {
             id && id.clear();
-            updateValue()
-            // setValue(value)
+            setValue(value)
           }, 500);
         }}
       />
     </VanCell>
 
     <VanCell center title="自定义大小">
-      <VanStepper value={1} inputWidth={40} buttonSize={64} />
+      <VanStepper defaultValue={1} inputWidth={40} buttonSize={64} />
     </VanCell>
 
     <VanToast id="van-toast" />

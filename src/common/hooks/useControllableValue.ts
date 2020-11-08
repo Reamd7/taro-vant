@@ -106,7 +106,7 @@ function useControllableValue<
         }
       }
     },
-    [props, valuePropName, trigger],
+    [props, valuePropName, trigger, onRevert],
   );
 
   return [state, handleSetState] as const;
