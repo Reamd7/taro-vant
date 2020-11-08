@@ -28,7 +28,6 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/checkbox/index',
 
       'pages/index/index',
 
@@ -43,6 +42,7 @@ class App extends Component {
 
       // ================= ## 表单组件 =================
       'pages/calendar/index',
+      'pages/checkbox/index',
       'pages/datetime-picker/index',
       'pages/field/index',
       'pages/picker/index',

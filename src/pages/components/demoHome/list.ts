@@ -43,7 +43,7 @@ export default [
         },
         {
           path: '/checkbox',
-          title: 'Checkbox 复选框',
+          title: 'Checkbox 单选 / 复选框',
         },
         {
           path: '/datetime-picker',
@@ -57,10 +57,10 @@ export default [
           path: '/picker',
           title: 'Picker 选择器',
         },
-        {
-          path: '/radio',
-          title: 'Radio 单选框',
-        },
+        // {
+        //   path: '/radio',
+        //   title: 'Radio 单选框',
+        // },
         {
           path: '/rate',
           title: 'Rate 评分',
@@ -240,4 +240,3 @@ export default [
       ],
     },
   ];
-  
