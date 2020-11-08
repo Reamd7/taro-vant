@@ -17,6 +17,8 @@ export function CheckBoxPage() {
 
   const [checkboxRed3, setcheckboxRed3] = useState<string[]>(['a']);
 
+  const [checkboxRed4, setcheckboxRed4] = useState<string[]>(['a']);
+
   return <Block>
     <DemoBlock title="基本用法">
       <VanCheckBox
@@ -104,7 +106,7 @@ export function CheckBoxPage() {
           return <VanCheckBox
             gid="result"
             key={item}
-            fieldName={item}
+            name={item}
             custom-class="demo-checkbox"
             className="demo-checkbox"
           >复选框 {item}</VanCheckBox>
@@ -117,7 +119,7 @@ export function CheckBoxPage() {
           return <VanCheckBox
             gid="result2"
             key={item}
-            fieldName={item}
+            name={item}
             inline
             custom-class="demo-checkbox"
             className="demo-checkbox"
@@ -126,37 +128,60 @@ export function CheckBoxPage() {
       </VanCheckBoxGroup>
     </DemoBlock>
     <DemoBlock title={`搭配单元格组件使用 ${checkboxRed3.join(",")}`}>
-        <VanCheckBoxGroup value={checkboxRed3} gid="result3" onChange={setcheckboxRed3}>
-          <VanCellGroup>
-            {['a', 'b', 'c'].map(item => {
-              return <VanCell
-                key={item}
-                title={`复选框 ${ item }`}
-                value-class="value-class"
-                valueClass="value-class"
-                onClick={()=>{
-                  if (checkboxRed3.includes(item)) {
-                    setcheckboxRed3(
-                      checkboxRed3.filter(val=> val !== item)
-                    )
-                  } else {
-                    setcheckboxRed3(
-                      [...checkboxRed3, item]
-                    )
-                  }
-                }}
-              >
-                <View style={{
-                  display: 'flex',
-                  height: "100%",
-                  alignItems: "center"
-                }}>
-                  <VanCheckBox gid="result3" fieldName={item} />
-                </View>
-              </VanCell>
-            })}
-          </VanCellGroup>
-        </VanCheckBoxGroup>
+      <VanCheckBoxGroup value={checkboxRed3} gid="result3" onChange={setcheckboxRed3}>
+        <VanCellGroup>
+          {['a', 'b', 'c'].map(item => {
+            return <VanCell
+              key={item}
+              title={`复选框 ${item}`}
+              value-class="value-class"
+              valueClass="value-class"
+              onClick={() => {
+                if (checkboxRed3.includes(item)) {
+                  setcheckboxRed3(
+                    checkboxRed3.filter(val => val !== item)
+                  )
+                } else {
+                  setcheckboxRed3(
+                    [...checkboxRed3, item]
+                  )
+                }
+              }}
+            >
+              <View style={{
+                display: 'flex',
+                height: "100%",
+                alignItems: "center"
+              }}>
+                <VanCheckBox gid="result3" name={item} />
+              </View>
+            </VanCell>
+          })}
+        </VanCellGroup>
+      </VanCheckBoxGroup>
+    </DemoBlock>
+    <DemoBlock title={`单选demo + 搭配单元格组件使用 ${checkboxRed4.join(",")}`}>
+      <VanCheckBoxGroup value={checkboxRed4} gid="result4" onChange={setcheckboxRed4}>
+        <VanCellGroup>
+          {['a', 'b', 'c'].map(item => {
+            return <VanCell
+              key={item}
+              title={`单选框 ${item}`}
+              value-class="value-class"
+              valueClass="value-class"
+              onClick={() => setcheckboxRed4(checkboxRed4.includes(item) ? [] : [item])}
+            >
+              <View style={{
+                display: 'flex',
+                height: "100%",
+                alignItems: "center"
+              }}>
+                <VanCheckBox gid="result4" name={item} />
+              </View>
+            </VanCell>
+          })}
+        </VanCellGroup>
+      </VanCheckBoxGroup>
     </DemoBlock>
   </Block>
 }

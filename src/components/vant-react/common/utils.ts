@@ -109,6 +109,7 @@ export function getCurrentPage() {
 
 export function getContext() {
   const page = getCurrentPage();
+  debugger;
   if (page) {
     return page.route
   } else {
@@ -116,12 +117,14 @@ export function getContext() {
   }
 }
 
+const NullContext = Taro.createContext(null);
+
 export function GroupContextCreator<T>(ComponentName: string) {
   const RelationMap = new Map<string, Taro.Context<T>>();
 
   const useGroupContainerContext = function (id: string, defaultValue: T) {
     const page = getContext()
-    const key = page ? `${id}${page}` : null;
+    const key = page ? `${id}${ComponentName}${page}` : null;
 
     const Context = useMemo(() => {
       if (key) {
@@ -150,25 +153,30 @@ export function GroupContextCreator<T>(ComponentName: string) {
     return Context;
   }
 
-  const useGroupItemContext = function (id: string) {
+  function useGroupItemContext(id: undefined): null
+  function useGroupItemContext(id: string): T
+  function useGroupItemContext(id: string | undefined): T | null
+  function useGroupItemContext(id: string | undefined) {
     const page = getContext()
-    const key = page ? `${id}${page}` : null;
-    const Context = useMemo(() => {
-      if (key) {
-        const val = RelationMap.get(key);
+    const key = page ? `${id}${ComponentName}${page}` : null;
+    // const Context = useMemo(() => {
+    //   if (key) {
+    //     const val = RelationMap.get(key);
 
-        if (val) {
-          return val
-        } else {
-          throw `ID = ${id} ${ComponentName} 组件未挂载`
-          // return null;
-        }
-      } else {
-        throw `ID = ${id} ${ComponentName} 组件未挂载`
-        // return null
-      }
-    }, [key]);
-    return useContext(Context)
+    //     if (val) {
+    //       return val
+    //     } else {
+    //       throw `ID = ${id} ${ComponentName} 组件未挂载？`
+    //       // return null;
+    //     }
+    //   } else {
+    //     throw `ID = ${id} ${ComponentName} 组件未挂载！`
+    //     // return null
+    //   }
+    // }, [key]);
+    return useContext(id === undefined ? NullContext :
+      key ? RelationMap.get(key) || NullContext : NullContext
+    )
   }
 
   return {
@@ -176,7 +184,6 @@ export function GroupContextCreator<T>(ComponentName: string) {
     useGroupItemContext
   } as const
 }
-
 export function getRect(
   scope: WechatMiniprogram.Component.TrivialInstance,
   selector: string
@@ -189,7 +196,6 @@ export function getRect(
       .exec((rect = []) => resolve(rect[0]));
   });
 }
-
 export function getAllRect(
   scope: WechatMiniprogram.Component.TrivialInstance,
   selector: string

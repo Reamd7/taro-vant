@@ -1,18 +1,18 @@
-import { useCallback } from '.pnpm/@tarojs/taro@2.2.15_nervjs@1.5.7/node_modules/@tarojs/taro';
 import { View } from '@tarojs/components';
-import Taro, { useMemo } from '@tarojs/taro';
-import { FormField, useFormItem } from '../common/formitem';
-import { addUnit, isH5, isWeapp, useMemoBem, useMemoClassNames } from '../common/utils';
+import Taro, { useMemo, useCallback, useEffect } from '@tarojs/taro';
+import { addUnit, isH5, isWeapp, useMemoBem, useMemoClassNames, noop } from '../common/utils';
 import VanIcon from '../icon';
 
 import "./index.less";
 import { useCheckboxGroupItemContext } from './utils';
+import useControllableValue, { ControllerValueProps } from 'src/common/hooks/useControllableValue';
+import useUpdateEffect from 'src/common/hooks/useUpdateEffect';
 
-export type VanCheckBoxProps<Key extends string> = {
+export type VanCheckBoxProps = {
   shape?: "round" | "square";
   disabled?: boolean
   labelDisabled?: boolean
-  labelPosition?: boolean
+  labelPosition?: "right" | "left"
   useIconSlot?: boolean;
   checkedColor?: string;
   iconSize?: number;
@@ -32,15 +32,15 @@ export type VanCheckBoxProps<Key extends string> = {
   gid?: string; // group 的id
   // TODO ? 如何更好支持groupData，支持任意类型，而不是用 fieldName 作为值。
 
-  onChange?: (val: boolean) => void;
-} & FormField<Key, boolean>;
+  name?: string;
+} & ControllerValueProps<boolean, "checked">
 
-function iconStyle(checkedColor: VanCheckBoxProps<any>['checkedColor'], value: VanCheckBoxProps<any>['value'], disabled: VanCheckBoxProps<any>['disabled'], parentDisabled?: boolean, iconSize?: VanCheckBoxProps<any>['iconSize']) {
+function iconStyle(checkedColor: VanCheckBoxProps['checkedColor'], checked: boolean, disabled: VanCheckBoxProps['disabled'], parentDisabled?: boolean, iconSize?: VanCheckBoxProps['iconSize']) {
 
   const Style: React.CSSProperties = {
     fontSize: addUnit(iconSize)
   }
-  if (checkedColor && value && !disabled && !parentDisabled) {
+  if (checkedColor && checked && !disabled && !parentDisabled) {
     Style.borderColor = checkedColor;
     Style.backgroundColor = checkedColor
   }
@@ -48,75 +48,118 @@ function iconStyle(checkedColor: VanCheckBoxProps<any>['checkedColor'], value: V
   return Style
 }
 
-const VanCheckBox = <Key extends string>(props: VanCheckBoxProps<Key>) => {
+const DefaultProps = {
+  shape: "round",
+  disabled: false,
+  labelDisabled: false,
+  labelPosition: "right",
+  useIconSlot: false,
+  checkedColor: "#1989fa",
+  iconSize: 20,
+} as const
+
+type KeyDefaultProps = keyof typeof DefaultProps;
+type ActiveVanCheckBoxProps = Omit<VanCheckBoxProps, KeyDefaultProps> & Required<Pick<VanCheckBoxProps, KeyDefaultProps>>;
+
+
+const VanCheckBox: Taro.FunctionComponent<VanCheckBoxProps> = (props: ActiveVanCheckBoxProps) => {
   const {
-    shape = "round",
-    defaultValue,
-    disabled = false,
-    labelDisabled = false,
-    labelPosition = "right",
-    useIconSlot = false,
-    checkedColor = "#1989fa",
-    iconSize = 20,
+    // shape = "round",
+    // disabled = false,
+    // labelDisabled = false,
+    // labelPosition = "right",
+    // useIconSlot = false,
+    // checkedColor = "#1989fa",
+    // iconSize = 20,
+    shape,
+    disabled,
+    labelDisabled,
+    labelPosition,
+    useIconSlot,
+    checkedColor,
+    iconSize,
+
     inline,
-
-    value,
-    fieldName,
-    FormData,
+    name,
+    gid,
+    checked: defaultValue
   } = props;
-  if (props.gid) {
-    if (fieldName === undefined) {
-      throw new Error("使用checkboxGroup时缺少fieldName")
-    } else if (value !== undefined) {
-      throw new Error("使用checkboxGroup时不能为受控组件")
-    } else if (FormData !== undefined) {
-      throw new Error("使用checkboxGroup 不能指定FormData，因为被Group代理了")
-    } else if (defaultValue !== undefined) {
-      throw new Error("使用checkboxGroup 不能指定defaultValue，因为被Group代理了")
-    }
-  }
-
-
 
   const bem = useMemoBem();
   const classnames = useMemoClassNames();
 
-  const Context = props.gid ? useCheckboxGroupItemContext(props.gid) : null;
-
+  const Context = useCheckboxGroupItemContext(gid);
   const parentDisabled = Context ? Context.groupdisabled : false;
-  const parentChange = Context ? Context.onChange : null;
+  const parentChange = Context ? Context.onChange : noop;
 
-  const [currentValue, setCurrentValue] = useFormItem({
-    fieldName,
-    FormData,
-    value: (Context && fieldName) ? Context.value.includes(fieldName) : value, // 把受控value值经过过滤传递到内部。
-    defaultValue,
+  const isUsingGroup = useMemo(() => !!(gid && name), [gid, name]);
+  // 元素是否被禁用
+  const elementDisabled = useMemo(() => {
+    return (isUsingGroup) ? (parentDisabled || disabled) : disabled
+  }, [isUsingGroup, parentDisabled, disabled]);
+
+  const elementChecked = (Context && name) ? Context.value.includes(name) : undefined;
+
+  // 内部 innerValue
+  const [currentValue, setCurrentValue] = useControllableValue({
+    ...props,
+    checked: (Context && name) ? elementChecked : props.checked,
+  }, {
+    defaultValue: (Context && name) ? !!elementChecked : false,
+    defaultValuePropName: "checked"
   });
 
   const iconWrapStyle = useMemo(() => iconStyle(checkedColor, currentValue, disabled, parentDisabled, iconSize), [
     checkedColor, currentValue, disabled, parentDisabled, iconSize
   ])
+
+  // 联动更新
+  useUpdateEffect(() => {
+    if (elementChecked !== undefined) {
+      setCurrentValue(elementChecked)
+    }
+  }, [elementChecked, setCurrentValue])
+
+
   // const scope = useScope();
   const toggle = useCallback((checked: boolean) => {
-    if (parentChange) {
-      if (!fieldName) return ; // 没有这个改啥改
-      const needChange = parentChange(fieldName, checked);
-      if (needChange) {
-        // setCurrentValue(checked)
-        props.onChange && Taro.nextTick(()=>{
-          props.onChange && props.onChange(checked)
-        })
-      }
-    } else {
-      if (props.gid) {
-        setCurrentValue(checked)
-      }
-      props.onChange && Taro.nextTick(()=>{
-        props.onChange && props.onChange(checked)
-      })
-    }
-  }, [fieldName, parentChange, setCurrentValue])
+    if (elementDisabled) return; // 禁用就禁止触发。
 
+    if (isUsingGroup && name) {
+      // 使用Group
+      parentChange(name, checked); // parentChange => parentValue => currentValue
+    } else {
+      // 不使用Group
+      setCurrentValue(checked)
+    }
+    // if (parentChange) {
+    //   if (!name) return; // 没有这个改啥改
+    //   const needChange = parentChange(name, checked);
+    //   if (needChange) {
+    //     // setCurrentValue(checked)
+    //     props.onChange && Taro.nextTick(() => {
+    //       props.onChange && props.onChange(checked)
+    //     })
+    //   }
+    // } else {
+    //   if (props.gid) {
+    //     setCurrentValue(checked)
+    //   }
+    //   props.onChange && Taro.nextTick(() => {
+    //     props.onChange && props.onChange(checked)
+    //   })
+    // }
+  }, [elementDisabled, isUsingGroup, name, parentChange, setCurrentValue])
+
+  if (gid) {
+    if (name === undefined) {
+      throw new Error("使用checkboxGroup时缺少fieldName")
+    } else if (props.value !== undefined) {
+      throw new Error("使用checkboxGroup时不能为受控组件")
+    } else if (defaultValue !== undefined) {
+      throw new Error("使用checkboxGroup 不能指定 defaultValue，因为被Group代理了")
+    }
+  }
   return <View className={
     classnames(
       "van-checkbox",
@@ -185,5 +228,7 @@ VanCheckBox.externalClasses = [
   'icon-class',
   'label-class'
 ]
+
+VanCheckBox.defaultProps = DefaultProps
 
 export default VanCheckBox

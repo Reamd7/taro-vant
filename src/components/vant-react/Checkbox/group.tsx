@@ -1,30 +1,33 @@
 import { useMemo, useCallback } from "@tarojs/taro";
-import { FormField, useFormItem } from "../common/formitem";
 import { useCheckboxGroupContext } from "./utils";
+import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
 
-type VanCheckBoxGroupProps<Key extends string> = {
+type VanCheckBoxGroupProps = {
   disabled?: boolean; // 是否全局禁用
   max?: number; // 设置最大可选数
   gid: string;
   onChange?: (val: string[]) => void;
-  children: React.ReactNode
-} & FormField<Key, Array<string>>
+  children: React.ReactNode;
+  radio?: boolean;
+} & ControllerValueProps<Array<string>>
 
-export default function VanCheckBoxGroup<Key extends string>(props: VanCheckBoxGroupProps<Key>) {
+const DefaultProps = {
+  disabled: false,
+  max: -1
+}
+
+type KeyDefaultProps = keyof typeof DefaultProps;
+type ActiveVanRateProps = Omit<VanCheckBoxGroupProps, KeyDefaultProps> & Required<Pick<VanCheckBoxGroupProps, KeyDefaultProps>>;
+
+const VanCheckBoxGroup: Taro.FunctionComponent<VanCheckBoxGroupProps> = (props: ActiveVanRateProps) => {
   const {
-    FormData,
-    value,
     defaultValue,
-    fieldName,
-
-    disabled = false,
-    max = -1
+    disabled,
+    max = props.radio ? 1 : props.max
   } = props;
-  const [currentValue, , setCurrentValueOnChange] = useFormItem({
-    FormData,
-    value,
-    defaultValue,
-    fieldName,
+
+  const [currentValue, setCurrentValueOnChange] = useControllableValue(props, {
+    defaultValue
   })
 
   const CheckboxChange = useCallback((key: string, checked: boolean) => {
@@ -57,7 +60,7 @@ export default function VanCheckBoxGroup<Key extends string>(props: VanCheckBoxG
         newCurrentValue = []
       }
     }
-    setCurrentValueOnChange(newCurrentValue, props.onChange)
+    setCurrentValueOnChange(newCurrentValue)
     return true; // needChange
   }, [props.onChange, disabled, currentValue, setCurrentValueOnChange])
 
@@ -77,3 +80,6 @@ export default function VanCheckBoxGroup<Key extends string>(props: VanCheckBoxG
 
   return <Context.Provider value={contextValue}>{props.children}</Context.Provider>
 }
+
+
+export default VanCheckBoxGroup
