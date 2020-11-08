@@ -1,25 +1,25 @@
-import Taro, { useState, useEffect, useMemo, useScope, useRef } from "@tarojs/taro";
+import Taro, { useState, useEffect, useMemo } from "@tarojs/taro";
 import "./index.less";
 import VanCell from "../Cell";
 import { useMemoClassNames, useMemoBem, isH5, isWeapp, addUnit } from "../common/utils";
-import { View, Textarea, Text } from "@tarojs/components";
+import { View, Textarea } from "@tarojs/components";
 import useControllableValue from "src/common/hooks/useControllableValue";
 import { VanFieldDefaultProps, VanFieldTextAreaTextProps, ActiveVanFieldTextAreaTextProps, VanCellContainerTitleStyle, externalClasses } from "./common";
 import VanIcon from "../icon";
 
-function inputStyle(autoSize: VanFieldTextAreaTextProps['autoSize']) {
-  if (typeof autoSize === "object") {
-    const style: React.CSSProperties = {}
-    if (autoSize.minHeight) {
-      style.minHeight = addUnit(autoSize.minHeight)
-    }
-    if (autoSize.maxHeight) {
-      style.maxHeight = addUnit(autoSize.maxHeight)
-    }
-    return style
-  }
-  return undefined;
-}
+// function inputStyle(autoSize: VanFieldTextAreaTextProps['autoSize']) {
+//   if (typeof autoSize === "object") {
+//     const style: React.CSSProperties = {}
+//     if (autoSize.minHeight) {
+//       style.minHeight = addUnit(autoSize.minHeight)
+//     }
+//     if (autoSize.maxHeight) {
+//       style.maxHeight = addUnit(autoSize.maxHeight)
+//     }
+//     return style
+//   }
+//   return undefined;
+// }
 const VanFieldTextarea: Taro.FunctionComponent<
   VanFieldTextAreaTextProps
 > = (props: ActiveVanFieldTextAreaTextProps) => {
