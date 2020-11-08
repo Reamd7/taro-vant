@@ -1,22 +1,19 @@
 import { View } from '@tarojs/components';
 import { ITouchEvent } from '@tarojs/components/types/common';
-import Taro, { useMemo,  useCallback } from '@tarojs/taro';
-import { FormField, useFormItem } from '../common/formitem';
+import Taro, { useMemo, useCallback } from '@tarojs/taro';
 import { useScope, getAllRect, isH5, isWeapp, useMemoAddUnit, useMemoClassNames, useMemoCssProperties } from '../common/utils';
 import VanIcon from '../icon';
 
 import "./index.less";
+import useControllableValue, { ControllerValueProps } from 'src/common/hooks/useControllableValue';
 
-
-export type VanRateProps<T extends string> = {
+export type VanRateProps = {
   className?: string;
   ['custom-class']?: string;
   ['icon-class']?: string;
   iconClass?: string;
 
   size?: number;
-  // defaultValue?: number; // 默认值
-  // value?: number; // 受控组件
   readonly?: boolean;
   disabled?: boolean;
   allowHalf?: boolean;
@@ -29,39 +26,45 @@ export type VanRateProps<T extends string> = {
   gutter?: number;
   touchable?: boolean;
 
-  // onInput?: (val: number) => void;
-  onChange?: (val: number) => void;
+} & ControllerValueProps<number>
 
-} & FormField<T, number>
+const DefaultProps = {
+  readonly: false,
+  disabled: false,
+  allowHalf: false,
+  size: 20,
+  icon: 'star',
+  voidIcon: 'star-o',
+  color: '#ffd21e',
+  voidColor: '#c7c7c7',
+  disabledColor: '#bdbdbd',
+  count: 5,
+  gutter: 4,
+  touchable: true,
+  defaultValue: 0
+}
 
-const VanRate = function <T extends string>(props: VanRateProps<T>) {
+type KeyDefaultProps = keyof typeof DefaultProps;
+type ActiveVanRateProps = Omit<VanRateProps, KeyDefaultProps> & Required<Pick<VanRateProps, KeyDefaultProps>>;
+
+const VanRate: Taro.FunctionComponent<VanRateProps> = (props: ActiveVanRateProps) => {
   const {
     readonly,
     disabled,
     allowHalf,
-    size = 20,
-    icon = "star",
-    voidIcon = 'star-o',
-    color = '#ffd21e',
-    voidColor = '#c7c7c7',
-    disabledColor = '#bdbdbd',
-    count = 5,
-    gutter = 4,
-    touchable = true,
-
-    defaultValue = 0,
-    FormData,
-    fieldName,
-    value,
-    onChange
+    size,
+    icon,
+    voidIcon,
+    color,
+    voidColor,
+    disabledColor,
+    count,
+    gutter,
+    touchable,
   } = props;
-  // 这个就有一个问题，需要这样使用表单组件，因为，需要定义当defaultValue 和 Value 都是 undefined 的情况下的值。所以这样是合理滴。就算初次 defaultValue 不是 undefined，那之后是不是undefined，要如何处理
-  const [innerValue, setInnerValue, setInnerValueAndChange] = useFormItem({
-    fieldName,
-    FormData,
-    defaultValue, // 受控组件
-    value,        // 非受控组件
-  });
+  const [Value, setValue] = useControllableValue(props, {
+    defaultValue: 0
+  })
 
   const innerCountArray = useMemo(() => Array.from({ length: count }).map((_, index) => index), [count]);
   const classnames = useMemoClassNames();
@@ -71,11 +74,10 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
   // const bem = useMemoBem();
   const onSelect = useCallback((event: ITouchEvent) => {
     const { score } = event.currentTarget.dataset;
-
     if (!disabled && !readonly) {
-      setInnerValueAndChange(Number(score) + 1, onChange)
+      setValue(Number(score) + 1)
     }
-  }, [setInnerValueAndChange, disabled, readonly, onChange])
+  }, [setValue, disabled, readonly])
   return <View
     className={classnames(
       'van-rate',
@@ -134,9 +136,9 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
           height: addUnit(size),
           fontSize: addUnit(size)
         })}>
-          <View className="van-rate__half van-rate__icon--left" data-score={index - 0.5}  onClick={onSelect}>
+          <View className="van-rate__half van-rate__icon--left" data-score={index - 0.5} onClick={onSelect}>
             <VanIcon
-              name={index + 0.5 <= innerValue ? icon : voidIcon}
+              name={index + 0.5 <= Value ? icon : voidIcon}
               className={classnames(
                 isH5 && props.iconClass,
                 isWeapp && 'icon-class',
@@ -146,14 +148,14 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
                 isWeapp && 'icon-class',
               )}
               // data-score={index - 0.5}
-              color={disabled ? disabledColor : index + 0.5 <= innerValue ? color : voidColor}
+              color={disabled ? disabledColor : index + 0.5 <= Value ? color : voidColor}
               // onClick={onSelect}
               size={size}
             />
           </View>
           <View className="van-rate__half van-rate__icon--right" data-score={index} onClick={onSelect}>
             <VanIcon
-              name={index + 1 <= innerValue ? icon : voidIcon}
+              name={index + 1 <= Value ? icon : voidIcon}
               className={classnames(
                 isH5 && props.iconClass,
                 isWeapp && 'icon-class',
@@ -163,7 +165,7 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
                 isWeapp && 'icon-class',
               )}
               // data-score={index}
-              color={disabled ? disabledColor : index + 1 <= innerValue ? color : voidColor}
+              color={disabled ? disabledColor : index + 1 <= Value ? color : voidColor}
               // onClick={onSelect}
               size={size}
             />
@@ -174,7 +176,7 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
             height: addUnit(size)
           }} onClick={onSelect}>
             <VanIcon
-              name={index + 1 <= innerValue ? icon : voidIcon}
+              name={index + 1 <= Value ? icon : voidIcon}
               className={classnames(
                 "van-rate__icon",
                 isH5 && props.iconClass,
@@ -185,7 +187,7 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
                 isH5 && props.iconClass,
                 isWeapp && 'icon-class',
               )}
-              color={disabled ? disabledColor : index + 1 <= innerValue ? color : voidColor}
+              color={disabled ? disabledColor : index + 1 <= Value ? color : voidColor}
               size={size}
             />
           </View>}
@@ -194,15 +196,13 @@ const VanRate = function <T extends string>(props: VanRateProps<T>) {
   </View>
 };
 
-(VanRate as Taro.FunctionComponent<any>).options = {
+VanRate.options = {
   addGlobalClass: true
 };
 
-(VanRate as Taro.FunctionComponent<any>).externalClasses = [
+VanRate.externalClasses = [
   'custom-class',
   'icon-class'
 ];
-
-(VanRate as any).behaviors = ['wx://form-field'];
 
 export default VanRate
