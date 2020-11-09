@@ -28,6 +28,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/circle/index', // TODO
 
       'pages/index/index',
 
@@ -69,7 +70,6 @@ class App extends Component {
       'pages/toast/index',
 
       // ================= ## 展示组件 =================
-      // 'pages/circle/index', // TODO
       // 'pages/collapse/index', // TODO
       'pages/count-down/index',
       'pages/divider/index',
