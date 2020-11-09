@@ -1,5 +1,5 @@
 import { View } from '@tarojs/components';
-import Taro, { useMemo, useCallback, useEffect } from '@tarojs/taro';
+import Taro, { useMemo, useCallback } from '@tarojs/taro';
 import { addUnit, isH5, isWeapp, useMemoBem, useMemoClassNames, noop } from '../common/utils';
 import VanIcon from '../icon';
 
@@ -229,6 +229,6 @@ VanCheckBox.externalClasses = [
   'label-class'
 ]
 
-VanCheckBox.defaultProps = DefaultProps
+VanCheckBox.defaultProps = DefaultProps;
 
 export default VanCheckBox

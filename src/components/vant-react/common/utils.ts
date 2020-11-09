@@ -109,7 +109,6 @@ export function getCurrentPage() {
 
 export function getContext() {
   const page = getCurrentPage();
-  debugger;
   if (page) {
     return page.route
   } else {
