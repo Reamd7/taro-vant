@@ -1,5 +1,5 @@
-import { useCallback } from "@tarojs/taro"
 import Taro from '@tarojs/taro';
+import usePersistFn from "src/common/hooks/usePersistFn";
 export type MixinLinkProps = {
     url?: string;
     linkType?: 'navigateTo' | 'redirectTo' | 'reLaunch' | 'switchTab' | 'navigateBack';
@@ -7,13 +7,13 @@ export type MixinLinkProps = {
 
 export function useLink<T extends MixinLinkProps>(props: T, urlKey: keyof T = 'url') {
     const url = props[urlKey];
-    const jumpLink = useCallback(() => {
+    const jumpLink = usePersistFn(() => {
         if (url && typeof url === "string") {
             Taro[props.linkType || 'navigateTo']({ url })
         }
     }, [
-        url
+        url, props.linkType
     ])
 
-    return { jumpLink }
+    return jumpLink
 }

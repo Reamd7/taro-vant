@@ -64,7 +64,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
     onClick = noop
   } = props;
 
-  const { jumpLink } = useLink(props);
+  const jumpLink = useLink(props);
 
   const _onClick = (e: ITouchEvent) => {
     onClick(e);
@@ -141,38 +141,38 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
         {props.useSlot ? (
           props.children
         ) : (
-          <Block>
-            <View
-              className={classnames(
-                "van-grid-item__icon",
-                isH5 && props.iconClass,
-                isWeapp && "icon-class"
-              )}
-            >
-              {icon ? (
-                <VanIcon
-                  name={icon}
-                  color={iconColor}
-                  dot={dot}
-                  badge={badge}
-                  info={info}
-                  size={iconSize}
-                />
-              ) : (
-                props.renderIcon
-              )}
-            </View>
-            <View
-              className={classnames(
-                isH5 && props.textClass,
-                isWeapp && "text-class",
-                "van-grid-item__text"
-              )}
-            >
-              {text ? <Text>{text}</Text> : props.renderText}
-            </View>
-          </Block>
-        )}
+            <Block>
+              <View
+                className={classnames(
+                  "van-grid-item__icon",
+                  isH5 && props.iconClass,
+                  isWeapp && "icon-class"
+                )}
+              >
+                {icon ? (
+                  <VanIcon
+                    name={icon}
+                    color={iconColor}
+                    dot={dot}
+                    badge={badge}
+                    info={info}
+                    size={iconSize}
+                  />
+                ) : (
+                    props.renderIcon
+                  )}
+              </View>
+              <View
+                className={classnames(
+                  isH5 && props.textClass,
+                  isWeapp && "text-class",
+                  "van-grid-item__text"
+                )}
+              >
+                {text ? <Text>{text}</Text> : props.renderText}
+              </View>
+            </Block>
+          )}
       </View>
     </View>
   );

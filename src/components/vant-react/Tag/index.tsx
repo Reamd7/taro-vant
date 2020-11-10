@@ -36,7 +36,7 @@ const VanTag: Taro.FunctionComponent<VanTagProps> = props => {
     plain = false,
     round = false,
     mark = false,
-    textColor = "white",
+    textColor,
     closeable = false,
     onClose = noop
   } = props;
@@ -47,11 +47,11 @@ const VanTag: Taro.FunctionComponent<VanTagProps> = props => {
 
   const ViewStyle = useMemo(() => {
     let res: React.CSSProperties = {};
-    if (color || !plain) {
+    if (color && !plain) {
       res.backgroundColor = color;
     }
     if (textColor || (color && plain)) {
-      res.color = textColor || color;
+      res.color = (textColor || color);
     }
     return css(res);
   }, []);
