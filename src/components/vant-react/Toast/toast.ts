@@ -1,4 +1,4 @@
-import Taro from "@tarojs/taro";
+import Taro, { useMemo } from "@tarojs/taro";
 import { getContext, noop } from "../common/utils";
 import type { VanToastProps } from ".";
 export const VanToastMap = new Map<
@@ -142,3 +142,7 @@ const createMethod = (type: string) => (
 Toast.loading = createMethod("loading");
 Toast.success = createMethod("success");
 Toast.fail = createMethod("fail");
+
+export function useUniToastId() {
+  return useMemo(() => Date.now().toString(), []);
+}

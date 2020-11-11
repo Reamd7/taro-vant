@@ -3,16 +3,18 @@ import Taro, { useState } from '@tarojs/taro';
 import VanCell from 'src/components/vant-react/Cell';
 import VanStepper from 'src/components/vant-react/Stepper';
 import VanToast from 'src/components/vant-react/Toast';
-import { Toast } from 'src/components/vant-react/Toast/toast';
+import { Toast, useUniToastId } from 'src/components/vant-react/Toast/toast';
 
 import "./index.less";
 
 export default function StepperPage() {
   const [value, setValue] = useState(1);
 
+  const toastid = useUniToastId();
+
   return <Block>
     <VanCell center title="基础用法">
-      <VanStepper value={value} onChange={setValue}/>
+      <VanStepper value={value} onChange={setValue} />
     </VanCell>
 
     <VanCell center title="步长设置">
@@ -44,6 +46,7 @@ export default function StepperPage() {
         value={value}
         onChange={(value) => {
           const id = Toast.loading({
+            gid: toastid,
             forbidClick: true
           });
           setTimeout(() => {
@@ -58,7 +61,7 @@ export default function StepperPage() {
       <VanStepper defaultValue={1} inputWidth={40} buttonSize={64} />
     </VanCell>
 
-    <VanToast id="van-toast" />
+    <VanToast gid={toastid} />
 
   </Block>
 }

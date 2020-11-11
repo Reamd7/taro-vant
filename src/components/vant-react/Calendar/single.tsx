@@ -8,7 +8,6 @@ import { View, ScrollView, Block } from "@tarojs/components";
 import VanCalMonth from "./components/month";
 import VanButton from "../Button";
 import VanPopup from "../Popup";
-import VanToast from "../Toast";
 
 import "./index.less";
 import usePersistFn from "src/common/hooks/usePersistFn";
@@ -206,7 +205,6 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
       </VanPopup> :
       <Block>
         {renderTemp}
-        <VanToast id="van-toast" />
       </Block>
     }
   </Block>

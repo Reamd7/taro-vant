@@ -10,7 +10,7 @@ import VanCalMonth from "./components/month";
 import VanButton from "../Button";
 import VanPopup from "../Popup";
 import VanToast from "../Toast";
-import { Toast } from "../Toast/toast";
+import { Toast, useUniToastId } from "../Toast/toast";
 import usePersistFn from "src/common/hooks/usePersistFn";
 
 export type VanCalendarSingleProps = VanCalendarCommonProps & {
@@ -23,6 +23,8 @@ export type VanCalendarSingleProps = VanCalendarCommonProps & {
 
 
 const VanCalendarRange: Taro.FunctionComponent<VanCalendarSingleProps> = (props) => {
+  const toastId = useUniToastId();
+
   const classnames = useMemoClassNames();
 
   const today = useMemo(() => dayjs().set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0), []);
@@ -117,7 +119,7 @@ const VanCalendarRange: Taro.FunctionComponent<VanCalendarSingleProps> = (props)
     }
   }, [props.onConfirm, currentDate]);
 
-  const emit = useCallback((date:[dayjs.Dayjs, dayjs.Dayjs] | [dayjs.Dayjs]) => {
+  const emit = useCallback((date: [dayjs.Dayjs, dayjs.Dayjs] | [dayjs.Dayjs]) => {
     setcurrentDate(date);
     props.onSelect && props.onSelect(date)
   }, [props.onSelect])
@@ -126,6 +128,7 @@ const VanCalendarRange: Taro.FunctionComponent<VanCalendarSingleProps> = (props)
     if (date[1] == null) return false;
     if (props.maxRange && date[0].clone().add(props.maxRange, 'day').isBefore(date[1])) {
       Toast({
+        gid: toastId,
         message: props.rangePrompt || `选择天数不能超过 ${props.maxRange} 天`,
       });
       return false
@@ -250,7 +253,7 @@ const VanCalendarRange: Taro.FunctionComponent<VanCalendarSingleProps> = (props)
       </VanPopup> :
       <Block>
         {renderTemp}
-        <VanToast id="van-toast" />
+        <VanToast gid={toastId} />
       </Block>
     }
   </Block>
