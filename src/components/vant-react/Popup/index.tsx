@@ -32,7 +32,7 @@ export type VanPopupProps = {
   closeIconPosition?: string;
   safeAreaInsetBottom?: boolean;
   safeAreaInsetTop?: boolean;
-  transition?: MixinsTransitionProps['name'] | "none";
+  transition?: string;
   className?: string;
   ['custom-class']?: string;
   onClose?: React.ComponentProps<typeof VanIcon>['onClick'];
@@ -65,18 +65,18 @@ type ActiveVanPopupProps = Omit<VanPopupProps, KeyDefaultProps> & Required<Pick<
 const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupProps) => {
   const {
     transition,
-    zIndex,
-    overlay,
-    closeIcon,
-    closeIconPosition,
-    closeOnClickOverlay,
-    position,
-    safeAreaInsetBottom,
-    safeAreaInsetTop,
+    zIndex = 100,
+    overlay = true,
+    closeIcon = "cross",
+    closeIconPosition = "top-right",
+    closeOnClickOverlay = true,
+    position = "center",
+    safeAreaInsetBottom = true,
+    safeAreaInsetTop = false,
     round,
-    noScroll,
-    onClose,
-    onClickOverlay,
+    noScroll = false,
+    onClose = noop,
+    onClickOverlay = noop,
     duration: originDuration
   } = props;
   const _ClickOverlay = useCallback((e: ITouchEvent) => {
@@ -107,6 +107,17 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
   // (props as any).name = name; // ?????
   const { data, onTransitionEnd } = useMixinsTransition(props, false, name); // NOTE：这个name支持的样式需要css中实现。
   const { currentDuration, display, classes, inited } = data;
+
+  const {
+    name, duration
+  } = useMemo(() => {
+    return {
+      name: transition || position,
+      duration: (
+        transition === "none" ? 0 : originDuration
+      )
+    };
+  }, [transition, position, originDuration])
 
   return (
     <Block>
