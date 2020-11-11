@@ -66,7 +66,7 @@ class App extends Component {
       'pages/action-sheet/index',   // ActionSheet 动作面板
       // 'pages/dialog/index',      // Dialog 弹出框 TODO
       // 'pages/dropdownmenu/index',// DropdownMenu 下拉菜单 TODO
-      // 'pages/loading/index',     // Loading 加载 TODO
+      'pages/loading/index',     // Loading 加载 TODO
       'pages/notify/index',         // Notify 消息提示
       'pages/overlay/index',        // Overlay 遮罩层
       // new v2 // PullRefresh 下拉刷新 // new v2

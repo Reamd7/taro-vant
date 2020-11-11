@@ -15,12 +15,11 @@ export type VanLoadingProps = {
   className?: string;
   ['custom-class']?: string;
 };
-
+const array12 = Array.from({
+  length: 12,
+}).map((_, i) => i);
 const VanLoading: Taro.FunctionComponent<VanLoadingProps> = (props) => {
   const { type = "circular", vertical, color, size, textSize, center } = props;
-  const array12 = Array.from({
-    length: 12,
-  });
   const addUnit = useMemoAddUnit()
   const CssProperties = useMemoCssProperties();
   return (
@@ -45,8 +44,8 @@ const VanLoading: Taro.FunctionComponent<VanLoadingProps> = (props) => {
         })}
       >
         {type === "spinner" &&
-          array12.map((_) => (
-            <View className='van-loading__dot'></View>
+          array12.map((i) => (
+            <View className='van-loading__dot' key={i}></View>
           ))}
       </View>
       <View
