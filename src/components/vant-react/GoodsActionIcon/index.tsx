@@ -5,6 +5,7 @@ import VanButton, { VanButtonProps } from "../Button";
 import VanIcon, { VanIconProps } from "../icon";
 import { MixinLinkProps, useLink } from "../common/mixins/link";
 import { View, Text } from "@tarojs/components";
+import { useMemoClassNames, isWeapp, isH5 } from "../common/utils";
 
 export type VanGoodsActionIconProps = {
   'icon-class'?: string;
@@ -21,7 +22,9 @@ export type VanGoodsActionIconProps = {
 } & MixinLinkProps
 
 const VanGoodsActionIcon: Taro.FunctionComponent<VanGoodsActionIconProps> = (props) => {
-  const jumpLink = useLink(props)
+  const jumpLink = useLink(props);
+  const classnames = useMemoClassNames();
+
   return <VanButton
     square
     id={props.id}
@@ -48,17 +51,25 @@ const VanGoodsActionIcon: Taro.FunctionComponent<VanGoodsActionIconProps> = (pro
     onGetUserInfo={props.onGetUserInfo}
     onGetPhoneNumber={props.onGetPhoneNumber}
     onLaunchapp={props.onLaunchapp}
+    renderIcon={props.icon ?
+      <VanIcon
+        name={props.icon}
+        dot={props.dot}
+        info={props.info}
+        custom-class={"icon-class van-goods-action-icon__icon"}
+        className={
+          classnames(
+            props.iconClass,
+            "van-goods-action-icon__icon"
+          )}
+      /> : props.renderIcon}
   >
-    {props.icon ?
-      <View className="van-goods-action-icon__icon">
-        <VanIcon
-          name={props.icon}
-          dot={props.dot}
-          info={props.info}
-          custom-class="icon-class"
-          className="icon-class"
-        /></View> : props.renderIcon}
-    <Text className="text-class">{props.text}</Text>
+    <Text className={
+      classnames(
+        isWeapp && "text-class",
+        isH5 && props.textClass
+      )
+    }>{props.text}</Text>
   </VanButton>
 }
 VanGoodsActionIcon.options = {

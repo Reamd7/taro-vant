@@ -59,7 +59,8 @@ export default function VanGoodsActionPage() {
         <VanGoodsActionIcon icon="chat-o" text="客服" dot />
         <VanGoodsActionIcon icon="cart-o" text="购物车" info="5" />
         <VanGoodsActionIcon icon="shop-o" text="店铺" />
-        <VanGoodsActionButton text="加入购物车" type="warning" isFirst />
+        <VanGoodsActionButton text="购物车" type="warning" isFirst />
+        <VanGoodsActionButton text="加入收藏" type="info" />
         <VanGoodsActionButton text="立即购买" isLast />
       </VanGoodsAction>
     </DemoBlock>
