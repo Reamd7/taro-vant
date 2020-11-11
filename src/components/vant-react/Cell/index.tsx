@@ -66,7 +66,7 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
     titleWidth
   } = props;
 
-  const { jumpLink } = useLink(props);
+  const jumpLink = useLink(props);
   const onClick = useCallback(
     (
       event: Parameters<
