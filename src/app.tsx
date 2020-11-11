@@ -74,7 +74,7 @@ class App extends Component {
       'pages/swipe-cell/index',     // SwipeCell 滑动单元格
 
       // ================= ## 展示组件 =================
-      // new v2 // Badge 徽标 // new v2
+      // Info(Badge) 徽标 // new v2 add demo
       'pages/circle/index',         // Circle 环形进度条
       // 'pages/collapse/index',    // Collapse 折叠面板 TODO
       'pages/count-down/index',     // CountDown 倒计时
