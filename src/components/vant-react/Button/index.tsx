@@ -54,7 +54,11 @@ export type ButtonProps = {
 export type ButtonEvents = {
   onClick?: SourceBtnProps["onClick"];
 };
-
+export type VanButtonProps = ButtonProps &
+  ButtonEvents &
+  MixinsButtonProps &
+  MixinsOpenTypeProps &
+  MixinsOpenTypeEvents
 // ==================================
 
 // ==================================
@@ -69,12 +73,7 @@ const loadingColor = (type: string, color?: string, plain?: boolean) => {
   }
   return "white";
 }
-const VanButton: Taro.FunctionComponent<ButtonProps &
-  ButtonEvents &
-  MixinsButtonProps &
-  MixinsOpenTypeProps &
-  MixinsOpenTypeEvents
-> = (props) => {
+const VanButton: Taro.FunctionComponent<VanButtonProps> = (props) => {
   const classnames = useMemoClassNames();
   const bem = useMemoBem();
   const css = useMemoCssProperties();

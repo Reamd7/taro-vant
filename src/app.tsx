@@ -102,7 +102,7 @@ class App extends Component {
       // 'pages/tree-select/index', // TreeSelect 分类选择 TODO
 
       // ================= ## 业务组件 =================
-      // 'pages/goodsAction/index', // TODO ActionBar 动作栏
+      'pages/goods-action/index', // TODO ActionBar 动作栏
       // new v2 // AddressEdit 地址编辑 // new v2
       // new v2 // AddressList 地址列表 // new v2
       // 'pages/area/index',        // Area 省市区选择 TODO
