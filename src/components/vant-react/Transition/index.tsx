@@ -15,7 +15,8 @@ export type VanTransitionProps = {
   onClick?: React.ComponentProps<typeof View>["onClick"];
   // onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];
   // useCatchTouch?: boolean;
-} & MixinsTransitionProps;
+  name?: 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | ''
+} & Omit<MixinsTransitionProps, "name">;
 
 const VanTransition: Taro.FunctionComponent<VanTransitionProps> = props => {
   const { data, onTransitionEnd } = useMixinsTransition(props, true);
@@ -36,8 +37,8 @@ const VanTransition: Taro.FunctionComponent<VanTransitionProps> = props => {
       ...(display
         ? undefined
         : {
-            display: "none"
-          }),
+          display: "none"
+        }),
       ...props.style
     } as React.CSSProperties;
   }, [currentDuration, display, props.style]);

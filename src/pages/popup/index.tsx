@@ -105,12 +105,13 @@ export default function PopUpPage() {
   return (
     <View>
       <DemoBlock title="基础用法">
-        <VanCell title="展示弹出层" isLink onClick={ref.current.showBasic} />
+        <VanCell title="展示弹出层 + transition 的能力" isLink onClick={ref.current.showBasic} />
         <VanPopup
           show={show.basic}
           style={{
             padding: "30px 50px"
           }}
+          transition={"scale"}
           onClose={ref.current.hideBasic}
         >
           内容
@@ -126,6 +127,7 @@ export default function PopUpPage() {
         <VanPopup
           show={show.top}
           position="top"
+          transition={"fade-down"}
           style={{
             height: "20%"
           }}

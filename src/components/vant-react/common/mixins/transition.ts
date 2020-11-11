@@ -7,7 +7,7 @@ export type MixinsTransitionProps = {
         enter: number;
         leave: number;
     };
-    name?: 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | ''
+    name?: 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | '' | 'scale' | 'center' | 'bottom' | 'top' | 'left' | 'right'
 } & {
     onBeforeEnter?: VoidFunction;
     onEnter?: VoidFunction;
@@ -46,8 +46,8 @@ function isObj(x?: number | {
 //     'leave-to': `van-${name}-leave-to van-${name}-leave-active leave-to-class leave-active-class`,
 // });
 
-export function useMixinsTransition(props: MixinsTransitionProps, showDefaultValue: boolean) {
-    const { show = showDefaultValue, duration = 300, name } = props;
+export function useMixinsTransition(props: MixinsTransitionProps, showDefaultValue: boolean, defaultName?: NonNullable<MixinsTransitionProps['name']>) {
+    const { show = showDefaultValue, duration = 300, name = defaultName } = props;
 
     const status = useRef<'enter' | 'leave'>();
 
@@ -209,4 +209,4 @@ export const MixinsTransitionExternalClass = [
 export const MixinsTransitionDefaultProps = {
     duration: 300,
     name: 'fade'
-} as MixinsTransitionProps
+} as const
