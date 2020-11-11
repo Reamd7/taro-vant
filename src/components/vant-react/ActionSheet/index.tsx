@@ -14,7 +14,7 @@ import {
   useMemoCssProperties
 } from "../common/utils";
 import { ITouchEvent } from "@tarojs/components/types/common";
-import VanLoading from "../loading";
+import VanLoading from "../Loading";
 import "./index.less";
 
 type SourceButtonProps = React.ComponentProps<typeof Button>;

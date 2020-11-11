@@ -3,7 +3,7 @@ import Taro, { useMemo } from "@tarojs/taro";
 import "./index.less";
 import { useMemoBem, useMemoClassNames, isH5, isWeapp, addUnit, useMemoCssProperties } from "../common/utils";
 import { View } from "@tarojs/components";
-import VanLoading from "../loading";
+import VanLoading from "../Loading";
 import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
 import { BLUE, GRAY_DARK } from "../common/color";
 

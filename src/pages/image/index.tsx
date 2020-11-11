@@ -3,7 +3,7 @@ import { View, Text } from "@tarojs/components";
 import VanRow from "src/components/vant-react/Layout/Row";
 import VanImage from "src/components/vant-react/Image";
 import VanCol from "src/components/vant-react/Layout/Col";
-import VanLoading from "src/components/vant-react/loading";
+import VanLoading from "src/components/vant-react/Loading";
 import DemoBlock from "../components/demoBlock";
 
 import "./index.less";

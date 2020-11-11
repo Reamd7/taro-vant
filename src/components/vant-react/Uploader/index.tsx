@@ -5,7 +5,7 @@ import { ImageProps } from '@tarojs/components/types/Image';
 import VanIcon, { VanIconProps } from '../icon';
 import { View, Video, Text, Block, Image } from '@tarojs/components';
 import { useMemoAddUnit, useMemoClassNames } from '../common/utils';
-import VanLoading from '../loading';
+import VanLoading from '../Loading';
 
 interface BaseType {
   // 文件名称、视频将在全屏预览时作为标题显示

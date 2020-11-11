@@ -1,7 +1,7 @@
 import Taro, { useState, useEffect, useRef } from "@tarojs/taro";
 import VanOverlay from "../Overlay";
 import VanTransition from "../Transition";
-import VanLoading, { VanLoadingProps } from "../loading";
+import VanLoading, { VanLoadingProps } from "../Loading";
 import VanIcon, { VanIconProps } from "../icon";
 import { Block, View, Text } from "@tarojs/components";
 import { useMemoClassNames, getContext } from "../common/utils";

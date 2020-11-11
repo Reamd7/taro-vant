@@ -3,7 +3,7 @@ import Taro, { useState, useRef, useMemo } from "@tarojs/taro";
 import "./index.less";
 import { View, Block } from "@tarojs/components";
 import { useMemoClassNames, isH5, isWeapp, useMemoAddUnit } from "../common/utils";
-import VanLoading from "../loading";
+import VanLoading from "../Loading";
 import VanPickerCol, { VanPickerColProps } from "../PickerCol";
 import useUpdateEffect from "src/common/hooks/useUpdateEffect";
 import usePersistFn from "src/common/hooks/usePersistFn";

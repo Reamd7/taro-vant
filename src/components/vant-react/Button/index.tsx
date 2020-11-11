@@ -9,8 +9,8 @@ import {
   isWeapp
 } from "../common/utils";
 import VanIcon from "../icon";
-import VanLoading from "../loading";
-import type { LoadingType } from '../loading'
+import VanLoading from "../Loading";
+import type { LoadingType } from '../Loading'
 import "./index.less";
 import { MixinsButtonProps } from "../common/mixins/button";
 import { MixinsOpenTypeProps, MixinsOpenTypeEvents } from "../common/mixins/open-type";
