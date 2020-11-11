@@ -111,7 +111,7 @@ class App extends Component {
       // new v2 // ContactEdit 联系人编辑 // new v2
       // new v2 // ContactList 联系人列表 // new v2
       // new v2 // Coupon 优惠券选择器 // new v2
-      // 'pages/submitBar/index',   // SubmitBar 提交订单栏 TODO
+      'pages/submit-bar/index',   // SubmitBar 提交订单栏 TODO
     ],
     window: {
       backgroundTextStyle: 'light',
