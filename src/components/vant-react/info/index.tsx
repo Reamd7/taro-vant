@@ -20,7 +20,7 @@ const VanInfo: Taro.FunctionComponent<InfoProps> = function(props: InfoProps) {
         isH5 && props.className,
         isWeapp && "custom-class",
         "van-info",
-        props.dot && "van-info-dot"
+        props.dot && "van-info--dot"
       )}
       style={props.customStyle}
     >
