@@ -1,4 +1,4 @@
-import Taro, { useCallback } from "@tarojs/taro";
+import Taro, { useCallback, useMemo } from "@tarojs/taro";
 import {
   useMixinsTransition,
   MixinsTransitionProps,
@@ -32,7 +32,7 @@ export type VanPopupProps = {
   closeIconPosition?: string;
   safeAreaInsetBottom?: boolean;
   safeAreaInsetTop?: boolean;
-  // transition?: string;
+  transition?: string;
   className?: string;
   ['custom-class']?: string;
   onClose?: React.ComponentProps<typeof VanIcon>['onClick'];
@@ -44,6 +44,7 @@ export type VanPopupProps = {
 } & MixinsTransitionProps
 const VanPopup: Taro.FunctionComponent<VanPopupProps> = props => {
   const {
+    transition,
     zIndex = 100,
     overlay = true,
     closeIcon = "cross",
@@ -55,7 +56,8 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = props => {
     round,
     noScroll = false,
     onClose = noop,
-    onClickOverlay = noop
+    onClickOverlay = noop,
+    duration: originDuration
   } = props;
   (props as any).name = position; // ?????
   const { data, onTransitionEnd } = useMixinsTransition(props, false);
@@ -69,6 +71,18 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = props => {
   const bem = useMemoBem();
   const css = useMemoCssProperties();
   const { currentDuration, display, classes, inited } = data;
+
+  const {
+    name, duration
+  } = useMemo(() => {
+    return {
+      name: transition || position,
+      duration: (
+        transition === "none" ? 0 : originDuration
+      )
+    };
+  }, [transition, position, originDuration])
+
   return (
     <Block>
       {overlay && (
@@ -76,7 +90,7 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = props => {
           show={props.show}
           zIndex={zIndex}
           style={props.overlayStyle}
-          duration={props.duration}
+          duration={duration}
           onClick={_ClickOverlay}
           noScroll={noScroll}
         />
@@ -99,8 +113,8 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = props => {
             ...(display
               ? undefined
               : {
-                  display: "none"
-                }),
+                display: "none"
+              }),
             ...props.style
           })}
           onTransitionEnd={onTransitionEnd}
