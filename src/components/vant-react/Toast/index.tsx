@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect, useRef } from "@tarojs/taro";
+import Taro, { useState, useEffect, useRef, useScope } from "@tarojs/taro";
 import VanOverlay from "../Overlay";
 import VanTransition from "../Transition";
 import VanLoading, { VanLoadingProps } from "../Loading";
@@ -7,12 +7,13 @@ import { Block, View, Text } from "@tarojs/components";
 import { useMemoClassNames, getContext } from "../common/utils";
 import { VanToastMap } from "./toast";
 import "./index.less";
+import usePersistFn from "src/common/hooks/usePersistFn";
 
 type VanOverlayProps = React.ComponentProps<typeof VanOverlay>;
 // type VanLoadingProps = React.ComponentProps<typeof VanLoading>;
 // type VanIconProps = React.ComponentProps<typeof VanIcon>;
 export type VanToastProps = {
-  id?: string | ReturnType<typeof getContext>;
+  gid?: string | ReturnType<typeof getContext>;
   show?: VanOverlayProps["show"];
   mask?: boolean;
   message?: string | number;
@@ -33,40 +34,36 @@ const VanToast: Taro.FunctionComponent<VanToastProps> = props => {
 
   const activeToastIns = useRef<() => void>();
   // ========================
-  const _setData = useRef((_data: Omit<VanToastProps, "id">) => {
-    // 设置数据对象
-    setData({
-      ...data,
-      ..._data
-    });
-  });
-  useEffect(() => {
-    _setData.current = (_data: Omit<VanToastProps, "id">) => {
-      // 设置数据对象
-      setData({
+  const _setData = usePersistFn((_data: Omit<VanToastProps, "gid">) => {
+    setData((data) => {
+      return {
         ...data,
         ..._data
-      });
-    };
-  }, [data]);
+      }
+    })
+  }, [])
+  const scope = useScope();
 
   useEffect(() => {
-    const id = data.id || getContext();
-    if (!VanToastMap.has(id)) { // 没有id
-      VanToastMap.set(id, {
-        // 暴露出组件内部接口
-        setData: _setData,
-        activeToastIns // 设置当前的运行
-      });
+    if (scope) {
+      const id = (data.gid || getContext()); // Taro2 的bug，组件不是按需加载的。
+      if (!VanToastMap.has(id)) { // 没有id
+        VanToastMap.set(id, {
+          // 暴露出组件内部接口
+          setData: _setData,
+          activeToastIns // 设置当前的运行
+        });
+      }
     }
-    return function() {
+    return function () {
+      const id = (data.gid || getContext()); // Taro2 的bug，组件不是按需加载的。
       VanToastMap.delete(id);
       if (activeToastIns.current) {
         // 如果当前有正在运行的实例
         activeToastIns.current(); // 则清除他
       }
     };
-  }, [data.id]);
+  }, [data.gid, scope]);
   return (
     <Block>
       {(mask || props.forbidClick) && (
@@ -77,8 +74,8 @@ const VanToast: Taro.FunctionComponent<VanToastProps> = props => {
             mask
               ? undefined
               : {
-                  backgroundColor: "transparent"
-                }
+                backgroundColor: "transparent"
+              }
           }
         />
       )}
@@ -94,7 +91,7 @@ const VanToast: Taro.FunctionComponent<VanToastProps> = props => {
           className={classnames(
             "van-toast",
             `van-toast--${
-              type === "text" ? "text" : "icon"
+            type === "text" ? "text" : "icon"
             } van-toast--${position}`
           )}
           onTouchMove={e => e.stopPropagation()}
@@ -102,24 +99,24 @@ const VanToast: Taro.FunctionComponent<VanToastProps> = props => {
           {type === "text" ? (
             <Text>{message}</Text>
           ) : (
-            <Block>
-              {type === "loading" ? (
-                <VanLoading
-                  color="white"
-                  type={props.loadingType}
-                  custom-class="van-toast__loading"
-                  className="van-toast__loading"
-                />
-              ) : (
-                <VanIcon
-                  custom-class="van-toast__icon"
-                  className="van-toast__icon"
-                  name={type}
-                />
-              )}
-              {message && <Text>{message}</Text>}
-            </Block>
-          )}
+              <Block>
+                {type === "loading" ? (
+                  <VanLoading
+                    color="white"
+                    type={props.loadingType}
+                    custom-class="van-toast__loading"
+                    className="van-toast__loading"
+                  />
+                ) : (
+                    <VanIcon
+                      custom-class="van-toast__icon"
+                      className="van-toast__icon"
+                      name={type}
+                    />
+                  )}
+                {message && <Text>{message}</Text>}
+              </Block>
+            )}
           {props.children}
         </View>
       </VanTransition>
@@ -128,6 +125,7 @@ const VanToast: Taro.FunctionComponent<VanToastProps> = props => {
 };
 VanToast.defaultProps = {
   zIndex: 1000,
+  show: false,
   type: "text",
   loadingType: "circular",
   position: "middle"

@@ -2,13 +2,13 @@ import Taro from "@tarojs/taro";
 import { getContext, noop } from "../common/utils";
 import type { VanToastProps } from ".";
 export const VanToastMap = new Map<
-  VanToastProps["id"] | ReturnType<typeof getContext>,
+  VanToastProps["gid"] | ReturnType<typeof getContext>,
   {
-    setData: Taro.MutableRefObject<(_data: Omit<VanToastProps, "id">) => void>;
+    setData: (_data: Omit<VanToastProps, "id">) => void;
     activeToastIns: Taro.MutableRefObject<(() => void) | undefined>;
   }
 >();
-const defaultOptions: Required<Omit<VanToastProps, "id"> & {
+const defaultOptions: Required<Omit<VanToastProps, "gid"> & {
   onClose?: VoidFunction;
   duration?: number;
 }> = {
@@ -41,12 +41,12 @@ export const Toast = (
     data = {
       ...defaultOptions,
       message: options,
-      id: getContext()
+      gid: getContext()
     };
   } else {
     data = {
       ...defaultOptions,
-      id: getContext(),
+      gid: getContext(),
       ...options
     };
   }
@@ -64,20 +64,20 @@ const ToastCore = (
 ) => {
   options.show = true;
 
-  const id = options.id || getContext();
+  const id = options.gid || getContext();
   if (id === null) return ; // 跳过初次渲染
 
   const Temp = VanToastMap.get(id);
   if (!Temp) {
-    console.warn(`未找到 van-toast 节点，请确认 id = ${id} 是否正确`);
+    console.error(`未找到 van-toast 节点，请确认 id = ${id} 是否正确`);
     return;
   }
   const { setData, activeToastIns } = Temp; // 取出id对应的组件
-  let timer: NodeJS.Timeout | undefined = void 0; // 开启定时id变量
+  let timer: number | undefined = void 0; // 开启定时id变量
 
   const clear = () => {
     // 定义回收的函数
-    setData.current({
+    setData({
       show: false
     }); // View 隐藏
     timer !== undefined && clearTimeout(timer); // 清空定时器
@@ -90,7 +90,7 @@ const ToastCore = (
     activeToastIns.current(); //
   }
   activeToastIns.current = clear; //
-  setData.current(options);
+  setData(options);
 
   if (options.duration > 0) {
     timer = setTimeout(() => {
@@ -124,13 +124,13 @@ const createMethod = (type: string) => (
     data = {
       ...defaultOptions,
       message: options,
-      id: getContext(),
+      gid: getContext(),
       type
     };
   } else {
     data = {
       ...defaultOptions,
-      id: getContext(),
+      gid: getContext(),
       ...options,
       type
     };
