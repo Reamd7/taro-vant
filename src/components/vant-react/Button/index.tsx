@@ -37,6 +37,7 @@ export type ButtonProps = {
   // iconPosition?: "left" | "right";
   icon?: string;
   IconClassPrefix?: string;
+  renderIcon?: React.ReactNode
 
   text?: string;
   dataset?: any;
@@ -191,7 +192,7 @@ const VanButton: Taro.FunctionComponent<VanButtonProps> = (props) => {
         </Block>
       ) : (
         <Block>
-          {props.icon && (
+          {props.icon ? (
             <VanIcon
               size='1.2em'
               name={props.icon}
@@ -202,7 +203,7 @@ const VanButton: Taro.FunctionComponent<VanButtonProps> = (props) => {
                 lineHeight: "inherit",
               }}
             />
-          )}
+          ) : props.renderIcon}
           <View className='van-button__text'>{props.children}</View>
         </Block>
       )}
