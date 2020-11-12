@@ -122,7 +122,7 @@ export default function PopUpPage() {
         <VanCell title="顶部弹出" isLink onClick={ref.current.showTop} />
         <VanCell title="底部弹出" isLink onClick={ref.current.showBottom} />
         <VanCell title="左侧弹出" isLink onClick={ref.current.showLeft} />
-        <VanCell title="右侧弹出" isLink onClick={ref.current.showRight} />
+        <VanCell title="右侧弹出 + overlay={false}" isLink onClick={ref.current.showRight} />
 
         <VanPopup
           show={show.top}
@@ -158,6 +158,7 @@ export default function PopUpPage() {
             height: "100%"
           }}
           onClose={ref.current.hideRight}
+          overlay={false}
         />
       </DemoBlock>
 

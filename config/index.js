@@ -85,7 +85,8 @@ const config = {
   },
   copy: {
     patterns: [
-      { from: 'src/components/vant-react/Slider/slider.wxs', to: 'dist/components/vant-react/Slider/slider.wxs' }
+      { from: 'src/components/vant-react/Slider/slider.wxs', to: 'dist/components/vant-react/Slider/slider.wxs' },
+      { from: 'src/components/vant-react/Overlay/overlay.wxs', to: 'dist/components/vant-react/Overlay/overlay.wxs' }
     ],
     options: {
       ignore: ['*.js', '*.jsx', '*.ts', "*.tsx", "*.css", "*.less", "*.scss"]

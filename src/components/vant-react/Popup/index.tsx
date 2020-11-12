@@ -39,7 +39,7 @@ export type VanPopupProps = {
   onClose?: React.ComponentProps<typeof VanIcon>['onClick'];
   onClickOverlay?: React.ComponentProps<typeof VanOverlay>['onClick'];
 
-  noScroll?: boolean; // 这个开关一开就整个遮罩层都无法滚动了。
+  // noScroll?: boolean; // 这个开关一开就整个遮罩层都无法滚动了。
   closeIconClass?: string;
   ['close-icon-class']?: string;
 
@@ -55,7 +55,7 @@ const DefaultProps = {
   position: "center",
   safeAreaInsetBottom: true,
   safeAreaInsetTop: false,
-  noScroll: false,
+  // noScroll: false,
   onClose: noop,
   onClickOverlay: noop,
 } as const
@@ -75,7 +75,7 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
     safeAreaInsetBottom,
     safeAreaInsetTop,
     round,
-    noScroll,
+    // noScroll,
     onClose,
     onClickOverlay,
     duration: originDuration
@@ -109,40 +109,76 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
   const { data, onTransitionEnd } = useMixinsTransition(props, false, name); // NOTE：这个name支持的样式需要css中实现。
   const { currentDuration, display, classes, inited } = data;
 
+  const popupClass = useMemo(() => classNames(
+    isH5 && props.className,
+    isWeapp && 'custom-class',
+    classes,
+    bem("popup", [
+      position,
+      { round, safe: safeAreaInsetBottom, safeTop: safeAreaInsetTop }
+    ])
+  ), [classNames, props.className, classes, bem, position, round, safeAreaInsetBottom, safeAreaInsetTop]);
+
+  const popStyle = useMemo(() => {
+    if (!display) return {
+      display: "none"
+    }
+    return css({
+      zIndex,
+      transitionDuration: currentDuration + "ms",
+      WebkitTransitionDuration: currentDuration + "ms",
+      // ...(display
+      //   ? undefined
+      //   : {
+      //     display: "none"
+      //   }),
+      ...props.style
+    })
+  }, [zIndex, currentDuration, display, props.style])
+
   return (
     <Block>
-      {overlay && (
+      {overlay ? (
         <VanOverlay
           show={props.show}
           zIndex={zIndex}
           style={props.overlayStyle}
           duration={duration}
           onClick={_ClickOverlay}
-          noScroll={noScroll}
-        />
-      )}
-      {inited && (
-        <View
-          className={classNames(
-            isH5 && props.className,
-            isWeapp && 'custom-class',
-            classes,
-            bem("popup", [
-              position,
-              { round, safe: safeAreaInsetBottom, safeTop: safeAreaInsetTop }
-            ])
-          )}
-          style={css({
-            zIndex: zIndex,
-            transitionDuration: currentDuration + "ms",
-            WebkitTransitionDuration: currentDuration + "ms",
-            ...(display
-              ? undefined
-              : {
-                display: "none"
-              }),
-            ...props.style
-          })}
+        // noScroll={noScroll}
+        >
+          {inited ? <View
+            className={popupClass}
+            style={popStyle}
+            onTransitionEnd={onTransitionEnd}
+          >
+            {props.children}
+            {props.closeable && (
+              <VanIcon
+                name={closeIcon}
+                className={
+                  classNames(
+                    isH5 && props.closeIconClass,
+                    isWeapp && "close-icon-class",
+                    `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
+                  )
+                }
+                custom-class={
+                  classNames(
+                    isH5 && props.closeIconClass,
+                    isWeapp && "close-icon-class",
+                    `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
+                  )
+                }
+                onClick={onClose}
+              />
+            )}
+          </View> : null}
+        </VanOverlay>
+      ) :
+        (inited ? <View
+          className={popupClass}
+          style={popStyle}
           onTransitionEnd={onTransitionEnd}
         >
           {props.children}
@@ -166,8 +202,8 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
               onClick={onClose}
             />
           )}
-        </View>
-      )}
+        </View> : null)
+      }
     </Block>
   );
 };

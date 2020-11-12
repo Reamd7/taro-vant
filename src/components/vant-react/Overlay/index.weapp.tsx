@@ -1,4 +1,4 @@
-import Taro, { useMemo } from "@tarojs/taro";
+import Taro, { useMemo, useScope } from "@tarojs/taro";
 import VanTransition, { VanTransitionProps } from "../Transition";
 import {
   useMemoCssProperties,
@@ -9,7 +9,10 @@ import {
 } from "../common/utils";
 import { View } from "@tarojs/components";
 import "./index.less";
+import usePersistFn from "src/common/hooks/usePersistFn";
 import { ITouchEvent } from "@tarojs/components/types/common";
+
+type WsxTouchEvent = Omit<ITouchEvent, "preventDefault" | "stopPropagation">
 
 export type VanOverlayProps = {
   show?: VanTransitionProps["show"];
@@ -20,10 +23,11 @@ export type VanOverlayProps = {
   style?: React.CSSProperties;
   // noScroll?: boolean; // 这个开关一开就整个遮罩层都无法滚动了。
   // onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];
+
   onTouchMove?: (e: WsxTouchEvent) => void
+
   onClick?: React.ComponentProps<typeof View>["onClick"];
 };
-type WsxTouchEvent = Omit<ITouchEvent, "preventDefault" | "stopPropagation">
 
 // JSS, 代替Css，使用这种方式动态注入属性以保证自定义组件能够覆盖自定义组件的样式。
 const VanOverlayStyle: React.CSSProperties = {
@@ -49,6 +53,16 @@ const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
         zIndex: props.zIndex || 20
       });
   }, [VanOverlayStyle, props.style, props.zIndex, props.className]);
+
+  const scope = useScope();
+  const onTouchMove = usePersistFn((e: WsxTouchEvent) => {
+    // e.stopPropagation();
+    props.onTouchMove && props.onTouchMove(e)
+  }, [props.onTouchMove])
+  if (scope) {
+    scope.onTouchMove = onTouchMove
+  }
+
   return (
     <VanTransition
       className={classnames(isH5 && props.className, isWeapp && "custom-class")}
@@ -56,28 +70,31 @@ const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
       show={props.show}
       duration={props.duration}
     >
+      <wxs module="overlay" src="./overlay.wxs" ></wxs>
       <View
         onClick={props.onClick || noop}
         className="van-overlay"
-        onTouchMove={e => {
-          e.stopPropagation();
-          e.preventDefault();
-          props.onTouchMove && props.onTouchMove(e);
-        }}
+        onTouchMove="{{overlay.touchmove}}" // 触摸overlay遮罩层的时候不会影响下面的滚动。但是好像不能隔离
       >
         {props.children}
       </View>
       {/* {props.noScroll ? (
-
-      ) : (
         <View
           onClick={props.onClick || noop}
           className="van-overlay"
-          onTouchMove={props.onTouchMove || noop}
+          onTouchMove="{{overlay.touchmove}}"
         >
           {props.children}
         </View>
-      )} */}
+      ) : (
+          <View
+            onClick={props.onClick || noop}
+            className="van-overlay"
+            onTouchMove={onTouchMove}
+          >
+            {props.children}
+          </View>
+        )} */}
     </VanTransition>
   );
 };
