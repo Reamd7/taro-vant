@@ -7,7 +7,7 @@ export type MixinsTransitionProps = {
         enter: number;
         leave: number;
     };
-    name?: 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | '' | 'scale' | 'center' | 'bottom' | 'top' | 'left' | 'right'
+    name?: string
 } & {
     onBeforeEnter?: VoidFunction;
     onEnter?: VoidFunction;
@@ -45,8 +45,13 @@ function isObj(x?: number | {
 //     leave: `van-${name}-leave van-${name}-leave-active leave-class leave-active-class`,
 //     'leave-to': `van-${name}-leave-to van-${name}-leave-active leave-to-class leave-active-class`,
 // });
-
-export function useMixinsTransition(props: MixinsTransitionProps, showDefaultValue: boolean, defaultName?: NonNullable<MixinsTransitionProps['name']>) {
+/**
+ *
+ * @param props
+ * @param showDefaultValue
+ * @param {string} defaultName 模拟过渡动画的name
+ */
+export function useMixinsTransition(props: MixinsTransitionProps, showDefaultValue: boolean, defaultName?: string) {
     const { show = showDefaultValue, duration = 300, name = defaultName } = props;
 
     const status = useRef<'enter' | 'leave'>();

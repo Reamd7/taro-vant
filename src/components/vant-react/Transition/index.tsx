@@ -8,14 +8,16 @@ import {
 } from "src/components/vant-react/common/mixins/transition";
 import "./index.less";
 import { useMemoClassNames, isWeapp, isH5 } from "../common/utils";
+/**
+ * 默认 VanTransition 支持的动画效果
+ */
+export type VanTransitionName = 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | ''
 
 export type VanTransitionProps = {
   className?: string;
   ["custom-class"]?: string;
   onClick?: React.ComponentProps<typeof View>["onClick"];
-  // onTouchMove?: React.ComponentProps<typeof View>["onTouchMove"];
-  // useCatchTouch?: boolean;
-  name?: 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | ''
+  name?: VanTransitionName
 } & Omit<MixinsTransitionProps, "name">;
 
 const VanTransition: Taro.FunctionComponent<VanTransitionProps> = props => {
