@@ -3,20 +3,8 @@ import "./index.less";
 import { useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, useMemoAddUnit, getRect, requestAnimationFrame, noop, ActiveProps } from "../common/utils";
 import { View, Text } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "../../../common/hooks/useControllableValue";
-import { useTouch } from "../common/mixins/touch";
-import { ITouchEvent } from "@tarojs/components/types/common";
-
-// import { throttle } from 'throttle-debounce';
-// import { useThrottleFn } from "src/common/hooks/useThrottleFn";
-
-declare namespace JSX {
-  interface IntrinsicElements {
-    wxs: React.ReactElement<{
-      module: string;
-      src: string;
-    }>
-  }
-}
+// import { useTouch } from "../common/mixins/touch";
+// import { ITouchEvent } from "@tarojs/components/types/common";
 
 export type VanSliderProps = {
   disabled?: boolean

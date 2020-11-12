@@ -5,8 +5,6 @@ import { View } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "../../../common/hooks/useControllableValue";
 import { useTouch } from "../common/mixins/touch";
 import { ITouchEvent } from "@tarojs/components/types/common";
-// import { throttle } from 'throttle-debounce';
-// import { useThrottleFn } from "src/common/hooks/useThrottleFn";
 
 export type VanSliderProps = {
   disabled?: boolean
