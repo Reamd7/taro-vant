@@ -1,6 +1,6 @@
 import { Input, View } from '@tarojs/components';
 import Taro, { useEffect, useMemo, useRef, useState, useCallback } from '@tarojs/taro';
-import { isH5, isWeapp, noop, useMemoAddUnit, useMemoBem, useMemoClassNames, useMemoCssProperties } from '../common/utils';
+import { isH5, isWeapp, noop, useMemoAddUnit, useMemoBem, useMemoClassNames, useMemoCssProperties, ActiveProps } from '../common/utils';
 import { InputProps } from '@tarojs/components/types/Input';
 import { BaseEventOrig, CommonEventFunction, ITouchEvent } from '@tarojs/components/types/common';
 import Big from 'big.js';
@@ -57,9 +57,9 @@ const DefaultProps = {
   longPress: true
 }
 
-type KeyDefaultProps = keyof typeof DefaultProps;
 
-type ActiveVanStepperProps = Omit<VanStepperProps, KeyDefaultProps> & Required<Pick<VanStepperProps, KeyDefaultProps>>;
+
+type ActiveVanStepperProps = ActiveProps<VanStepperProps, keyof typeof DefaultProps>
 
 const VanStepper: Taro.FunctionComponent<VanStepperProps> = (props: ActiveVanStepperProps) => {
   const {

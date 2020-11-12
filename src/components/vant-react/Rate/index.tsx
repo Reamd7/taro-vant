@@ -1,7 +1,7 @@
 import { View } from '@tarojs/components';
 import { ITouchEvent } from '@tarojs/components/types/common';
 import Taro, { useMemo, useCallback } from '@tarojs/taro';
-import { useScope, getAllRect, isH5, isWeapp, useMemoAddUnit, useMemoClassNames, useMemoCssProperties } from '../common/utils';
+import { useScope, getAllRect, isH5, isWeapp, useMemoAddUnit, useMemoClassNames, useMemoCssProperties, ActiveProps } from '../common/utils';
 import VanIcon from '../icon';
 
 import "./index.less";
@@ -44,8 +44,8 @@ const DefaultProps = {
   defaultValue: 0
 }
 
-type KeyDefaultProps = keyof typeof DefaultProps;
-type ActiveVanRateProps = Omit<VanRateProps, KeyDefaultProps> & Required<Pick<VanRateProps, KeyDefaultProps>>;
+
+type ActiveVanRateProps = ActiveProps<VanRateProps, keyof typeof DefaultProps>
 
 const VanRate: Taro.FunctionComponent<VanRateProps> = (props: ActiveVanRateProps) => {
   const {

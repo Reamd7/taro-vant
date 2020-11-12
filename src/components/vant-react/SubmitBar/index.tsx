@@ -2,7 +2,7 @@ import Taro, { useMemo } from "@tarojs/taro";
 import "./index.less";
 import VanIcon, { VanIconProps } from "../icon";
 import { View, Text } from "@tarojs/components";
-import { useMemoClassNames, isWeapp, isH5, noop } from "../common/utils";
+import { useMemoClassNames, isWeapp, isH5, noop, ActiveProps } from "../common/utils";
 import VanButton, { VanButtonProps } from "../Button";
 
 export type VanSubmitBarProps = {
@@ -49,9 +49,9 @@ const DefaultProps = {
   onSubmit: noop
 } as const
 
-type KeyDefaultProps = keyof typeof DefaultProps;
 
-type ActiveVanSubmitBarProps = Omit<VanSubmitBarProps, KeyDefaultProps> & Required<Pick<VanSubmitBarProps, KeyDefaultProps>>;
+
+type ActiveVanSubmitBarProps = ActiveProps<VanSubmitBarProps, keyof typeof DefaultProps>
 
 
 const VanSubmitBar: Taro.FunctionComponent<VanSubmitBarProps> = (props: ActiveVanSubmitBarProps) => {

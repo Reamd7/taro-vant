@@ -4,7 +4,7 @@ import "./index.less";
 import { ImageProps } from '@tarojs/components/types/Image';
 import VanIcon, { VanIconProps } from '../icon';
 import { View, Video, Text, Block, Image } from '@tarojs/components';
-import { useMemoAddUnit, useMemoClassNames } from '../common/utils';
+import { useMemoAddUnit, useMemoClassNames, ActiveProps } from '../common/utils';
 import VanLoading from '../Loading';
 
 interface BaseType {
@@ -186,9 +186,9 @@ const DefaultProps = {
   camera: 'back',
 
   FileList: []
-}
-type KeyDefaultProps = keyof typeof DefaultProps;
-type ActiveVanUploaderProps = Omit<VanUploaderProps, KeyDefaultProps> & Required<Pick<VanUploaderProps, KeyDefaultProps>>;
+} as const
+
+type ActiveVanUploaderProps = ActiveProps<VanUploaderProps, keyof typeof DefaultProps>;
 
 const IMAGE_REGEXP = /\.(jpeg|jpg|gif|png|svg|webp|jfif|bmp|dpg)/i;
 const VIDEO_REGEXP = /\.(mp4|mpg|mpeg|dat|asf|avi|rm|rmvb|mov|wmv|flv|mkv)/i;

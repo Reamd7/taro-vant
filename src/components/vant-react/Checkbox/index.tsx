@@ -1,6 +1,6 @@
 import { View } from '@tarojs/components';
 import Taro, { useMemo, useCallback } from '@tarojs/taro';
-import { addUnit, isH5, isWeapp, useMemoBem, useMemoClassNames, noop } from '../common/utils';
+import { addUnit, isH5, isWeapp, useMemoBem, useMemoClassNames, noop, ActiveProps } from '../common/utils';
 import VanIcon from '../icon';
 
 import "./index.less";
@@ -58,8 +58,8 @@ const DefaultProps = {
   iconSize: 20,
 } as const
 
-type KeyDefaultProps = keyof typeof DefaultProps;
-type ActiveVanCheckBoxProps = Omit<VanCheckBoxProps, KeyDefaultProps> & Required<Pick<VanCheckBoxProps, KeyDefaultProps>>;
+
+type ActiveVanCheckBoxProps = ActiveProps<VanCheckBoxProps, keyof typeof DefaultProps>
 
 
 const VanCheckBox: Taro.FunctionComponent<VanCheckBoxProps> = (props: ActiveVanCheckBoxProps) => {

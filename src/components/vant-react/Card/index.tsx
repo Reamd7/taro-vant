@@ -1,7 +1,7 @@
 import Taro, { useMemo } from "@tarojs/taro";
 import { Image, View, Text } from "@tarojs/components";
 import "./index.less";
-import { useMemoClassNames, isH5, isWeapp, useMemoBem } from "../common/utils";
+import { useMemoClassNames, isH5, isWeapp, useMemoBem, ActiveProps } from "../common/utils";
 import VanTag from "../Tag";
 import { useLink } from "../common/mixins/link";
 
@@ -56,8 +56,7 @@ const DefaultProps = {
   linkType: "navigateTo",
   lazyLoad: false
 } as const
-type KeyDefaultProps = keyof typeof DefaultProps;
-type ActiveVanCardProps = Omit<VanCardProps, KeyDefaultProps> & Required<Pick<VanCardProps, KeyDefaultProps>>;
+type ActiveVanCardProps = ActiveProps<VanCardProps, keyof typeof DefaultProps>
 
 const VanCard: Taro.FunctionComponent<VanCardProps> = (props: ActiveVanCardProps) => {
   const classnames = useMemoClassNames();

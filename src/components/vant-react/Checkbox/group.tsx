@@ -1,6 +1,7 @@
 import { useMemo, useCallback } from "@tarojs/taro";
 import { useCheckboxGroupContext } from "./utils";
 import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
+import { ActiveProps } from "../common/utils";
 
 type VanCheckBoxGroupProps = {
   disabled?: boolean; // 是否全局禁用
@@ -14,10 +15,9 @@ type VanCheckBoxGroupProps = {
 const DefaultProps = {
   disabled: false,
   max: -1
-}
+} as const
 
-type KeyDefaultProps = keyof typeof DefaultProps;
-type ActiveVanRateProps = Omit<VanCheckBoxGroupProps, KeyDefaultProps> & Required<Pick<VanCheckBoxGroupProps, KeyDefaultProps>>;
+type ActiveVanRateProps = ActiveProps<VanCheckBoxGroupProps, keyof typeof DefaultProps>
 
 const VanCheckBoxGroup: Taro.FunctionComponent<VanCheckBoxGroupProps> = (props: ActiveVanRateProps) => {
   const {

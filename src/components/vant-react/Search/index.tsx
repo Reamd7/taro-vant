@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 
 import "./index.less";
-import { useMemoBem, useMemoAddUnit, useMemoClassNames, isH5, isWeapp, noop } from "../common/utils";
+import { useMemoBem, useMemoAddUnit, useMemoClassNames, isH5, isWeapp, noop, ActiveProps } from "../common/utils";
 import { View } from "@tarojs/components";
 import { VanCellProps } from "../Cell";
 import VanFieldText from "../Field/VanFieldText";
@@ -68,7 +68,7 @@ export type VanSearchProps = {
   onCancel?: VoidFunction;
 
 } & VanSearchClassNames & ControllerValueProps<string, "defaultValue", "value", "onChange">
-export type ActiveVanSearchProps = Omit<VanSearchProps, keyof typeof DefaultProps> & Required<Pick<VanSearchProps, keyof typeof DefaultProps>>;
+export type ActiveVanSearchProps = ActiveProps<VanSearchProps, keyof typeof DefaultProps>
 const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props: ActiveVanSearchProps) => {
 
   const bem = useMemoBem();

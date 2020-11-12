@@ -10,7 +10,8 @@ import {
   useMemoBem,
   useMemoCssProperties,
   isWeapp,
-  isH5
+  isH5,
+  ActiveProps
 } from "../common/utils";
 import { Block, View } from "@tarojs/components";
 import VanIcon from "../icon";
@@ -59,8 +60,8 @@ const DefaultProps = {
   onClickOverlay: noop,
 } as const
 
-type KeyDefaultProps = keyof typeof DefaultProps;
-type ActiveVanPopupProps = Omit<VanPopupProps, KeyDefaultProps> & Required<Pick<VanPopupProps, KeyDefaultProps>>;
+
+type ActiveVanPopupProps = ActiveProps<VanPopupProps, keyof typeof DefaultProps>
 
 const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupProps) => {
   const {

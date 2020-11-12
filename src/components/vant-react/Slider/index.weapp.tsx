@@ -1,6 +1,6 @@
 import Taro, { useMemo, useCallback, useScope, useRef, useState, useEffect } from "@tarojs/taro";
 import "./index.less";
-import { useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, useMemoAddUnit, getRect, requestAnimationFrame, noop } from "../common/utils";
+import { useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, useMemoAddUnit, getRect, requestAnimationFrame, noop, ActiveProps } from "../common/utils";
 import { View, Text } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "../../../common/hooks/useControllableValue";
 import { useTouch } from "../common/mixins/touch";
@@ -49,9 +49,9 @@ const DefaultProps = {
   useButtonSlot: false,
   activeColor: "#1989fa",
   inactiveColor: "#e5e5e5",
-}
-type KeyDefaultProps = keyof typeof DefaultProps;
-type ActiveVanSliderProps = Omit<VanSliderProps, KeyDefaultProps> & Required<Pick<VanSliderProps, KeyDefaultProps>>;
+} as const
+
+type ActiveVanSliderProps = ActiveProps<VanSliderProps, keyof typeof DefaultProps>
 
 const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSliderProps) => {
   const css = useMemoCssProperties();

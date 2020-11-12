@@ -214,3 +214,6 @@ export function getAllRect(
 export function range(num: number, min: number, max: number) {
   return Math.min(Math.max(num, min), max);
 }
+
+
+export type ActiveProps<P , K extends keyof P> = Omit<P, K> & Required<Pick<P, K>>;

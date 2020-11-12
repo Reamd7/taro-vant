@@ -1,5 +1,4 @@
-import { VanFieldProps } from ".";
-import { addUnit, noop } from "../common/utils";
+import { addUnit, noop, ActiveProps } from "../common/utils";
 import { Input, Textarea, View } from "@tarojs/components";
 import VanCell, { VanCellProps } from "../Cell";
 import VanIcon from "../icon";
@@ -15,7 +14,7 @@ type FieldSlotType = {
   children?: React.ReactNode;
 }
 
-export function inputStyle(autoSize: VanFieldProps<any>['autoSize']) {
+export function inputStyle(autoSize: VanFieldCommonProps['autoSize']) {
   const style: React.CSSProperties = {}
   if (autoSize) {
     if (autoSize.minHeight) {
@@ -87,7 +86,7 @@ type VanFieldCommonProps = {
   inputAlign?: "center" | "right" | "left";
   maxLength?: number; // word limit
   showWordLimit?: boolean; // word limit
-  autoSize?: boolean | {
+  autoSize?: false | {
     maxHeight: number;
     minHeight: number;
   }
@@ -151,12 +150,13 @@ type VanFieldInputTextAreaDefaultPropsKeys = Exclude<keyof typeof VanFieldDefaul
 export type VanFieldInputTextProps = VanFieldCommonProps & VanFieldCellContainerProps & VanFieldInputProps & VanFieldPropsEvt<string> & ControllerValueProps<string, "defaultValue", "value", "onChange"> & {
   type: "text" | "idcard" | 'password' | "number" | "digit"
 }
-export type ActiveVanFieldInputTextProps = Omit<VanFieldInputTextProps, VanFieldInputTextDefaultPropsKeys> & Required<Pick<VanFieldInputTextProps, VanFieldInputTextDefaultPropsKeys>>;
+
+export type ActiveVanFieldInputTextProps = ActiveProps<VanFieldInputTextProps, VanFieldInputTextDefaultPropsKeys>
 
 export type VanFieldInputNumberProps = VanFieldCommonProps & VanFieldCellContainerProps & VanFieldInputProps & VanFieldPropsEvt<number> & ControllerValueProps<number, "defaultValue", "value", "onChange"> & {
   type: "number" | "digit"
 }
-export type ActiveVanFieldInputNumberProps = Omit<VanFieldInputNumberProps, VanFieldInputTextDefaultPropsKeys> & Required<Pick<VanFieldInputNumberProps, VanFieldInputTextDefaultPropsKeys>>;
+export type ActiveVanFieldInputNumberProps = ActiveProps<VanFieldInputNumberProps, VanFieldInputTextDefaultPropsKeys>
 
 export type VanFieldTextAreaTextProps = VanFieldCommonProps & VanFieldCellContainerProps & VanFieldTextareaProps & VanFieldPropsEvt<string> & ControllerValueProps<string, "defaultValue", "value", "onChange"> & {
   type: "textarea"

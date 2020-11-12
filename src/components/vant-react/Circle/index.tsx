@@ -2,7 +2,7 @@ import Taro, { useMemo, useCallback, useScope, useEffect, useRef } from "@tarojs
 
 import "./index.less";
 import { View, CoverView, Canvas } from "@tarojs/components";
-import { useMemoAddUnit, getSystemInfoSync } from "../common/utils";
+import { useMemoAddUnit, getSystemInfoSync, ActiveProps } from "../common/utils";
 import { WHITE, BLUE } from "../common/color";
 import { adaptor } from "./utils";
 import usePersistFn from "src/common/hooks/usePersistFn";
@@ -36,8 +36,8 @@ const DefaultProps = {
   clockwise: true,
 } as const
 
-type KeyDefaultProps = keyof typeof DefaultProps;
-type ActiveVanCircleProps = Omit<VanCircleProps, KeyDefaultProps> & Required<Pick<VanCircleProps, KeyDefaultProps>>;
+
+type ActiveVanCircleProps = ActiveProps<VanCircleProps, keyof typeof DefaultProps>
 
 const format = (rate: number) => {
   return Math.min(Math.max(rate, 0), 100);
