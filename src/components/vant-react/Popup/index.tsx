@@ -136,6 +136,34 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
     })
   }, [zIndex, currentDuration, display, props.style])
 
+  const renderTemp = inited ? <View
+    className={popupClass}
+    style={popStyle}
+    onTransitionEnd={onTransitionEnd}
+  >
+    {props.children}
+    {props.closeable && (
+      <VanIcon
+        name={closeIcon}
+        className={
+          classNames(
+            isH5 && props.closeIconClass,
+            isWeapp && "close-icon-class",
+            `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
+          )
+        }
+        custom-class={
+          classNames(
+            isH5 && props.closeIconClass,
+            isWeapp && "close-icon-class",
+            `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
+          )
+        }
+        onClick={onClose}
+      />
+    )}
+  </View> : null
+
   return (
     <Block>
       {overlay ? (
@@ -147,62 +175,10 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
           onClick={_ClickOverlay}
         // noScroll={noScroll}
         >
-          {inited ? <View
-            className={popupClass}
-            style={popStyle}
-            onTransitionEnd={onTransitionEnd}
-          >
-            {props.children}
-            {props.closeable && (
-              <VanIcon
-                name={closeIcon}
-                className={
-                  classNames(
-                    isH5 && props.closeIconClass,
-                    isWeapp && "close-icon-class",
-                    `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
-                  )
-                }
-                custom-class={
-                  classNames(
-                    isH5 && props.closeIconClass,
-                    isWeapp && "close-icon-class",
-                    `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
-                  )
-                }
-                onClick={onClose}
-              />
-            )}
-          </View> : null}
+          {renderTemp}
         </VanOverlay>
       ) :
-        (inited ? <View
-          className={popupClass}
-          style={popStyle}
-          onTransitionEnd={onTransitionEnd}
-        >
-          {props.children}
-          {props.closeable && (
-            <VanIcon
-              name={closeIcon}
-              className={
-                classNames(
-                  isH5 && props.closeIconClass,
-                  isWeapp && "close-icon-class",
-                  `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
-                )
-              }
-              custom-class={
-                classNames(
-                  isH5 && props.closeIconClass,
-                  isWeapp && "close-icon-class",
-                  `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
-                )
-              }
-              onClick={onClose}
-            />
-          )}
-        </View> : null)
+        renderTemp
       }
     </Block>
   );
