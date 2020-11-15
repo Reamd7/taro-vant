@@ -3,11 +3,12 @@ import Taro from "@tarojs/taro"
 import "./index.less";
 import VanButton, { VanButtonProps } from "../Button";
 import { MixinLinkProps, useLink } from "../common/mixins/link";
-import { useMemoBem } from "../common/utils";
+import { useMemoBem, useMemoClassNames } from "../common/utils";
 import { View } from "@tarojs/components";
 
 export type VanGoodsActionButtonProps = Pick<VanButtonProps,
   "id" |
+  "size" |
   "lang" |
   "type" |
   "color" |
@@ -27,17 +28,23 @@ export type VanGoodsActionButtonProps = Pick<VanButtonProps,
   "onOpenSetting" |
   "onGetUserInfo" |
   "onGetPhoneNumber" |
-  "onLaunchapp"
+  "onLaunchapp" |
+
+  "style"
 > & MixinLinkProps & {
   text?: string;
   isFirst?: boolean;
   isLast?: boolean;
+
+  className?: string;
+  ['custom-class']?: string;
 }
 
 const VanGoodsActionButton: Taro.FunctionComponent<VanGoodsActionButtonProps> = (props) => {
   const {
     isFirst, isLast, text, type, plain
   } = props;
+  const classname = useMemoClassNames();
   const bem = useMemoBem();
   const jumpLink = useLink(props);
 
@@ -51,8 +58,13 @@ const VanGoodsActionButton: Taro.FunctionComponent<VanGoodsActionButtonProps> = 
       loading={props.loading}
       disabled={props.disabled}
       openType={props.openType}
-      custom-class="van-goods-action-button__inner"
-      className="van-goods-action-button__inner"
+      custom-class="van-goods-action-button__inner custom-class"
+      className={
+        classname(
+          "van-goods-action-button__inner",
+          props.className
+        )
+      }
       // business-id={props.businessId}
       sessionFrom={props.sessionFrom}
       app-parameter={props.appParameter}
@@ -70,6 +82,8 @@ const VanGoodsActionButton: Taro.FunctionComponent<VanGoodsActionButtonProps> = 
       onGetUserInfo={props.onGetUserInfo}
       onGetPhoneNumber={props.onGetPhoneNumber}
       onLaunchapp={props.onLaunchapp}
+      size={props.size}
+      style={props.style}
     >
       {text}
     </VanButton>
@@ -84,4 +98,7 @@ VanGoodsActionButton.options = {
   addGlobalClass: true
 }
 
+VanGoodsActionButton.externalClasses = [
+  'custom-class'
+]
 export default VanGoodsActionButton
