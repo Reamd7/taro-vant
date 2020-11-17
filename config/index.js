@@ -1,5 +1,18 @@
 const path = require('path');
-console.log(path.resolve(__dirname, '..', 'src'))
+const glob = require('glob');
+
+const SRC = path.resolve(__dirname, '..', 'src')
+const DIST = path.resolve(__dirname, '..', 'dist')
+const wxsPattern = glob.sync("**/*.wxs", { cwd: SRC, mark: true }).map(file => {
+  return {
+    from: path.resolve(SRC, file), to: path.resolve(DIST, file)
+  }
+});
+
+
+console.log(wxsPattern)
+
+
 const config = {
   projectName: 'myshop',
   date: '2020-9-19',
@@ -84,10 +97,11 @@ const config = {
     'src': path.resolve(__dirname, '..', 'src'),
   },
   copy: {
-    patterns: [
-      { from: 'src/components/vant-react/Slider/slider.wxs', to: 'dist/components/vant-react/Slider/slider.wxs' },
-      { from: 'src/components/vant-react/Overlay/overlay.wxs', to: 'dist/components/vant-react/Overlay/overlay.wxs' }
-    ],
+    // patterns: [
+    //   { from: 'src/components/vant-react/Slider/slider.wxs', to: 'dist/components/vant-react/Slider/slider.wxs' },
+    //   { from: 'src/components/vant-react/Overlay/overlay.wxs', to: 'dist/components/vant-react/Overlay/overlay.wxs' }
+    // ],
+    patterns: wxsPattern,
     options: {
       ignore: ['*.js', '*.jsx', '*.ts', "*.tsx", "*.css", "*.less", "*.scss"]
     }
