@@ -1,6 +1,6 @@
-import Taro, { useState, useCallback, NodesRef, useScope, useEffect, useRef } from "@tarojs/taro";
+import Taro, { useState, useCallback, NodesRef, useEffect, useRef } from "@tarojs/taro";
 import "./index.less";
-import { ActiveProps, useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, getRect, nextTick, useMemoAddUnit } from "../common/utils";
+import { ActiveProps, useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, getRect, useScope, useMemoAddUnit } from "../common/utils";
 import { View } from "@tarojs/components";
 import usePersistFn from "src/common/hooks/usePersistFn";
 import usePageScrollMixin from "../common/mixins/page-scroll";

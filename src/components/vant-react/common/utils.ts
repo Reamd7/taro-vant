@@ -44,7 +44,7 @@ export function useMemoBem() {
 
 }
 export function useScope() {
-  return Taro.useScope ? Taro.useScope() : null
+  return Taro.useScope ? Taro.useScope() : {}
 }
 
 export const noop = () => { }

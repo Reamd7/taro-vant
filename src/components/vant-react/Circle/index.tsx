@@ -1,8 +1,8 @@
-import Taro, { useMemo, useCallback, useScope, useEffect, useRef } from "@tarojs/taro";
+import Taro, { useMemo, useCallback, useEffect, useRef } from "@tarojs/taro";
 
 import "./index.less";
 import { View, CoverView, Canvas } from "@tarojs/components";
-import { useMemoAddUnit, getSystemInfoSync, ActiveProps } from "../common/utils";
+import { useMemoAddUnit, getSystemInfoSync, ActiveProps, useScope } from "../common/utils";
 import { WHITE, BLUE } from "../common/color";
 import { adaptor } from "./utils";
 import usePersistFn from "src/common/hooks/usePersistFn";

@@ -1,6 +1,6 @@
-import Taro, { useMemo, useCallback, useState, useEffect, useScope, useRef } from "@tarojs/taro";
+import Taro, { useMemo, useCallback, useState, useEffect, useRef } from "@tarojs/taro";
 import "./index.less";
-import { useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, useMemoAddUnit, getRect, requestAnimationFrame, ActiveProps } from "../common/utils";
+import { useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, useMemoAddUnit, getRect, requestAnimationFrame, ActiveProps, useScope } from "../common/utils";
 import { View } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "../../../common/hooks/useControllableValue";
 import { useTouch } from "../common/mixins/touch";

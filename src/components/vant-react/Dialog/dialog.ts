@@ -1,6 +1,6 @@
-import { useMemo, useState, useEffect, useScope, useCallback } from "@tarojs/taro";
+import { useMemo, useState, useEffect, useCallback } from "@tarojs/taro";
 import { VanDialogProps } from ".";
-import { getContext } from "../common/utils";
+import { getContext, useScope } from "../common/utils";
 
 export function useDialogId() {
   return useMemo(() => "VanDialog" + Date.now().toString(), []);
