@@ -98,6 +98,12 @@ export const isH5 = process.env.TARO_ENV === "h5";
 export const isWeapp = (process.env.TARO_ENV !== "h5" && process.env.TARO_ENV !== "rn")
 
 
+const currentPage: Taro.Page | null = null
+export function usePage() {
+  return useScope()
+}
+
+
 export function getCurrentPage() {
   const pages = getCurrentPages(); // weapp + h5 都支持
   if (pages.length > 0) {
@@ -216,4 +222,6 @@ export function range(num: number, min: number, max: number) {
 }
 
 
-export type ActiveProps<P , K extends keyof P> = Omit<P, K> & Required<Pick<P, K>>;
+export type ActiveProps<P, K extends keyof P> = Omit<P, K> & Required<Pick<P, K>> & {
+  children?: React.ReactNode
+};

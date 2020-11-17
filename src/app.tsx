@@ -86,7 +86,7 @@ class App extends Component {
       'pages/progress/index',       // Progress 进度条
       'pages/skeleton/index',       // Skeleton 骨架屏
       'pages/steps/index',          // Steps 步骤条
-      // 'pages/sticky/index',      // Sticky 粘性布局 TODO
+      'pages/sticky/index',         // Sticky 粘性布局 TODO: 现在是单独区分开weapp版本和h5版本
       // new v2 // Swipe 轮播 // new v2
       'pages/tag/index',            // Tag 标签
 
