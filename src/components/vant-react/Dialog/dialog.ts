@@ -6,14 +6,11 @@ export function useDialogId() {
   return useMemo(() => "VanDialog" + Date.now().toString(), []);
 }
 const empty = {};
-const showFalses = {
-  show: false
-}
 const map = new Map<string, {
   close: VoidFunction;
   show: (props: Partial<VanDialogProps>) => void;
 }>();
-export function useDialogOptions(id: string) {
+export function useDialogOptions(id: string, setShow: (val: boolean) => void) {
 
   const [options, setOptions] = useState<Partial<VanDialogProps>>(empty)
 
@@ -24,7 +21,8 @@ export function useDialogOptions(id: string) {
   const _id = context ? `${context}_${id}` : null;
 
   const close = useCallback(() => {
-    setOptions(showFalses)
+    setShow(false);
+    setOptions(empty);
   }, []);
 
   useEffect(() => {
@@ -35,8 +33,9 @@ export function useDialogOptions(id: string) {
           close()
           queue.delete(close);
         },
-        show: (props: Partial<VanDialogProps>) => {
+        show: (props: Omit<Partial<VanDialogProps>, "show">) => {
           setOptions(props);
+          setShow(true);
           queue.add(close);
         }
       })
@@ -50,13 +49,15 @@ export function useDialogOptions(id: string) {
     }
   }, [_id, scope])
 
-  return options;
+  return [options, close] as const;
 }
 
 const queue: Set<VoidFunction> = new Set();
 
-const Dialog = (id: string, options: Partial<VanDialogProps>) => {
-  if (map.has(id)) {
+const Dialog = (id: string, options: Omit<Partial<VanDialogProps>, "show">) => {
+  const context = getContext();
+  id = context ? `${context}_${id}` : '';
+  if (id && map.has(id)) {
     const el = map.get(id);
     if (el) {
       el.show(options);

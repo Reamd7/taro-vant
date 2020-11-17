@@ -1,17 +1,17 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro, { useState, useCallback } from "@tarojs/taro";
 
 import "./index.less";
 import { RED, GRAY } from "../common/color";
 import VanPopup, { VanPopupProps } from "../Popup";
-import { ActiveProps, useMemoClassNames, useMemoCssProperties, useMemoAddUnit, noop } from "../common/utils";
+import { ActiveProps, useMemoClassNames, useMemoCssProperties, useMemoAddUnit } from "../common/utils";
 import VanGoodsActionButton, { VanGoodsActionButtonProps } from "../GoodsActionButton";
 import bem from "../common/bem";
 import { View, Text } from "@tarojs/components";
 import VanGoodsAction from "../GoodsAction";
 import VanButton from "../Button";
-import { useCallback } from "react";
 import useUpdateEffect from "src/common/hooks/useUpdateEffect";
 import { useDialogOptions } from "./dialog";
+import usePersistFn from "src/common/hooks/usePersistFn";
 
 export type VanDialogProps = {
   gid?: string;
@@ -61,15 +61,18 @@ export type VanDialogProps = {
   onOpenSetting?: VanGoodsActionButtonProps['onOpenSetting'];
 
   show?: boolean;
-  onClose?: () => (boolean | Promise<boolean>);
-  onConfirm?: VoidFunction;
-  onCancel?: VoidFunction;
-  onOverlay?: VoidFunction;
+  onClose?: (action: "confirm" | "cancel" | "overlay") => (boolean | Promise<boolean>);
+  onConfirm?: () => (boolean | Promise<boolean>);
+  onCancel?: () => (boolean | Promise<boolean>);
+  onOverlay?: () => (boolean | Promise<boolean>);
 };
-
+const booleanFunc = () => true;
 const DefaultProps = {
   gid: "",
+  lang: "zh_CN",
+  title: "",
   width: 320,
+  message: "",
   theme: "default",
   messageAlign: "center",
   zIndex: 2000,
@@ -80,50 +83,51 @@ const DefaultProps = {
   confirmButtonColor: RED,
   cancelButtonColor: GRAY,
   overlay: true,
+  overlayStyle: undefined,
   closeOnClickOverlay: false,
   useSlot: false,
   useTitleSlot: false,
   asyncClose: false,
   transition: "scale",
 
-  onConfirm: noop,
-  onCancel: noop,
-  onOverlay: noop
+  onClose: booleanFunc,
+  onConfirm: booleanFunc,
+  onCancel: booleanFunc,
+  onOverlay: booleanFunc
 } as const
-
-
 
 
 type ActiveVanDialogProps = ActiveProps<VanDialogProps, keyof typeof DefaultProps>
 const VanDialog: Taro.FunctionComponent<VanDialogProps> = (props: ActiveVanDialogProps) => {
   const id = props.gid;
 
-  const options = useDialogOptions(id)
+  const [innerShow, setInnerShow] = useState(() => !!props.show);
+  const [options] = useDialogOptions(id, setInnerShow)
 
   const {
     show: originalShow, theme, width,
 
     title, useTitleSlot, message, useSlot, messageAlign,
 
-    showCancelButton, showConfirmButton
+    showCancelButton, showConfirmButton,
+
+    onClose: _onClose, onConfirm: _onConfirm, onCancel: _onCancel, onOverlay: _onOverlay
   } = {
     ...props,
     ...options
   };
 
-  const [show, setShow] = useState(() => originalShow);
-
+  const show = originalShow || innerShow;
 
   const classnames = useMemoClassNames();
   const css = useMemoCssProperties();
   const addUnit = useMemoAddUnit();
 
-
   const [loading, setLoading] = useState({
     confirm: false,
     cancel: false,
   });
-  useUpdateEffect(() => { setShow(originalShow) }, [originalShow]);
+  // useUpdateEffect(() => { setInnerShow(!!originalShow) }, [originalShow]);
   useUpdateEffect(() => {
     !show && setLoading({
       confirm: false,
@@ -131,27 +135,35 @@ const VanDialog: Taro.FunctionComponent<VanDialogProps> = (props: ActiveVanDialo
     })
   }, [show]);
 
-  const onClose = useCallback(async (action: "confirm" | "cancel" | "overlay") => {
+  const onClose = usePersistFn(async (action: "confirm" | "cancel" | "overlay") => {
     switch (action) {
       case "confirm":
-        props.onConfirm();
+        const res1 = await  _onConfirm();
+        if (!res1) return ;
         break;
       case "cancel":
-        props.onCancel();
+        const res2 = await _onCancel();
+        if (!res2) return ;
+
         break;
       case "overlay":
-        props.onOverlay();
+        const res3 = await _onOverlay();
+        if (!res3) return ;
         break;
     }
-    if (props.onClose) {
-      const res = await props.onClose()
-      if (res) {
-        setShow(false);
-      }
-    } else {
-      setShow(false);
+    const res = await _onClose(action)
+    if (!!res) {
+      setInnerShow(false);
     }
-  }, [props.onConfirm, props.onCancel, props.onOverlay]);
+    // if (_onClose) {
+    //   const res = await _onClose()
+    //   if (!!res) {
+    //     setInnerShow(false);
+    //   }
+    // } else {
+    //   setInnerShow(false);
+    // }
+  }, [_onConfirm, _onCancel, _onOverlay, _onClose]);
 
   const handleAction = useCallback((action: "confirm" | "cancel") => {
     setLoading((val) => ({
@@ -161,13 +173,16 @@ const VanDialog: Taro.FunctionComponent<VanDialogProps> = (props: ActiveVanDialo
     onClose(action)
   }, [onClose])
 
-  const onConfirm = useCallback(() => {
+  const onConfirm = usePersistFn(() => {
+    if (loading.confirm) return ;
     handleAction("confirm")
-  }, [handleAction]);
+  }, [handleAction, loading]);
 
-  const onCancel = useCallback(() => {
+  const onCancel = usePersistFn(() => {
+    if (loading.cancel) return ;
+
     handleAction("cancel")
-  }, [handleAction]);
+  }, [handleAction, loading]);
 
   const onClickOverlay = useCallback(() => {
     onClose("overlay")
@@ -207,27 +222,31 @@ const VanDialog: Taro.FunctionComponent<VanDialogProps> = (props: ActiveVanDialo
         custom-class="van-dialog__footer--round-button">
         {showCancelButton && <View className="van-dialog__button van-hairline--right">
           <VanGoodsActionButton
-            size="large"
+            // size="large"
+            size="normal"
             loading={loading.cancel}
             custom-class="van-dialog__cancel"
             // className="van-dialog__cancel" !!
-            style={css({
-              color: props.cancelButtonColor
-            })}
+            // style={css({
+            //   color: props.cancelButtonColor
+            // })}
             onClick={onCancel}
-          >
-            {props.cancelButtonText}
-          </VanGoodsActionButton>
+            isFirst={showCancelButton}
+            isLast={!showConfirmButton}
+            text={props.cancelButtonText}
+            disabled={loading['cancel']}
+          />
         </View>}
         {showConfirmButton && <View className="van-dialog__button">
           <VanGoodsActionButton
-            size="large"
+            // size="large"
+            size="normal"
             loading={loading.confirm}
             custom-class="van-dialog__confirm"
             // className="van-dialog__confirm" !!
-            style={css({
-              color: props.confirmButtonColor
-            })}
+            // style={css({
+            //   color: props.confirmButtonColor
+            // })}
             openType={props.confirmButtonOpenType}
             lang={props.lang}
             // businessId={props.businessId}
@@ -241,9 +260,13 @@ const VanDialog: Taro.FunctionComponent<VanDialogProps> = (props: ActiveVanDialo
             onError={props.onError}
             onLaunchapp={props.onLaunchapp}
             onOpenSetting={props.onOpenSetting}
-          >
-            {props.confirmButtonText}
-          </VanGoodsActionButton>
+            isFirst={!showCancelButton}
+            isLast={showConfirmButton}
+            text={props.confirmButtonText}
+
+
+            disabled={loading['confirm']}
+          />
         </View>}
       </VanGoodsAction> :
       <View className="van-hairline--top van-dialog__footer">
@@ -257,6 +280,8 @@ const VanDialog: Taro.FunctionComponent<VanDialogProps> = (props: ActiveVanDialo
               color: props.cancelButtonColor
             })}
             onClick={onCancel}
+            disabled={loading['cancel']}
+
           >
             {props.cancelButtonText}
           </VanButton>
@@ -283,6 +308,7 @@ const VanDialog: Taro.FunctionComponent<VanDialogProps> = (props: ActiveVanDialo
             onError={props.onError}
             onLaunchapp={props.onLaunchapp}
             onOpenSetting={props.onOpenSetting}
+            disabled={loading['confirm']}
           >
             {props.confirmButtonText}
           </VanButton>
