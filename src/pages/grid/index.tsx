@@ -1,4 +1,4 @@
-import Taro from "@tarojs/taro";
+import Taro, { useState } from "@tarojs/taro";
 import { Block, Image } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
 import VanGrid from "src/components/vant-react/Grid";
@@ -12,6 +12,7 @@ const data = {
 };
 
 export default function GridPage() {
+  const [columnNum, setCol] = useState(3);
   return (
     <Block>
       <DemoBlock title="基本用法">
@@ -30,11 +31,11 @@ export default function GridPage() {
         </VanGrid>
       </DemoBlock>
       <DemoBlock title="基本用法">
-        <VanGrid gid="array6" columnNum={3}>
+        <VanGrid gid="array6" columnNum={columnNum}>
           {data.array6.map((val, index) => {
             return (
               <VanGridItem
-                gid="array4"
+                gid="array6"
                 index={index}
                 icon="photo-o"
                 text="文字"
@@ -46,7 +47,7 @@ export default function GridPage() {
       </DemoBlock>
 
       <DemoBlock title="自定义内容">
-        <VanGrid columnNum={3} border={false} gid="array3">
+        <VanGrid columnNum={columnNum} border={false} gid="array3">
           {data.array3.map((val, index) => {
             return (
               <VanGridItem
@@ -55,6 +56,8 @@ export default function GridPage() {
                 icon="photo-o"
                 text="文字"
                 key={val}
+                clickable
+                onClick={() => setCol(index + 3)}
                 useSlot
               >
                 <Image
@@ -138,7 +141,7 @@ export default function GridPage() {
 
       <DemoBlock title="徽标提示">
         <VanGrid columnNum={2} gid="tips">
-          <VanGridItem icon="home-o" text="文字" dot gid="tips" index={0} />
+          {/* <VanGridItem icon="home-o" text="文字" dot gid="tips" index={0} /> */}
           <VanGridItem
             icon="search"
             text="文字"

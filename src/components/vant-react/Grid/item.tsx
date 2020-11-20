@@ -10,12 +10,14 @@ import {
   noop
 } from "../common/utils";
 import { View, Block, Text } from "@tarojs/components";
-import { useGridItemContext } from "./utils";
+// import { useGridItemContext } from "./utils";
 import VanIcon, { VanIconProps } from "../icon";
 import { ITouchEvent } from "@tarojs/components/types/common";
 import { useLink } from "../common/mixins/link";
+import { useRelationPropsListener } from "../common/relation";
+import { VanGridProps } from ".";
 
-type VanGridItemProps = {
+export type VanGridItemProps = {
   gid: string;
   index: number;
 
@@ -44,7 +46,10 @@ type VanGridItemProps = {
   renderText?: React.ReactNode;
 
   onClick?: React.ComponentProps<typeof View>["onClick"];
-};
+} & Pick<VanGridProps, "columnNum" | "iconSize" | "gutter" | "border" | "center" | "square" |
+  "clickable" | "direction">;
+
+
 
 const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
   const classnames = useMemoClassNames();
@@ -70,17 +75,17 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
     onClick(e);
     jumpLink();
   };
-  const ContextData = useGridItemContext(props.gid) || {};
+  // const ContextData = useGridItemContext(props.gid) || {};
   const {
-    columnNum,
-    border,
-    square,
-    gutter,
-    clickable,
-    center,
-    direction,
-    iconSize
-  } = ContextData;
+    columnNum = 4,
+    border = true,
+    square = false,
+    gutter = 0,
+    clickable = false,
+    center = true,
+    direction = "vertical",
+    iconSize = 26
+  } = useRelationPropsListener(props.gid, props);
 
   const viewStyle = useMemo(() => {
     const width = `${100 / columnNum}%`;

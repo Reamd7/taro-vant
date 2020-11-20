@@ -44,7 +44,8 @@ export function useMemoBem() {
 
 }
 export function useScope() {
-  return Taro.useScope ? Taro.useScope() : {}
+  const self = useMemo(() => ({}), []);
+  return Taro.useScope ? Taro.useScope() : self
 }
 
 export const noop = () => { }
@@ -116,6 +117,9 @@ export function getCurrentPage() {
 export function getContext() {
   const page = getCurrentPage();
   if (page) {
+    if (process.env.TARO_ENV === "h5") {
+      return page.$router.path // TODO 坑
+    }
     return page.route
   } else {
     return null;

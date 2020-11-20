@@ -1,5 +1,5 @@
 import Taro, { useMemo } from "@tarojs/taro";
-import { useGridContext } from "./utils";
+// import { useGridContext } from "./utils";
 import { View } from "@tarojs/components";
 import {
   useMemoClassNames,
@@ -9,6 +9,8 @@ import {
 } from "../common/utils";
 import "./index.less";
 import { VanIconProps } from "../icon";
+import { useRelationPropsInject } from "../common/relation";
+import { VanGridItemProps } from "./item";
 
 export type VanGridProps = {
   gid: string;
@@ -36,8 +38,10 @@ const VanGrid: Taro.FunctionComponent<VanGridProps> = props => {
     clickable = false,
     direction = "vertical"
   } = props;
-  const Value = useMemo(() => {
+
+  useRelationPropsInject<VanGridItemProps>(props.gid, (props) => {
     return {
+      ...props,
       columnNum,
       iconSize,
       gutter,
@@ -56,9 +60,32 @@ const VanGrid: Taro.FunctionComponent<VanGridProps> = props => {
     square,
     clickable,
     direction
-  ]);
+  ])
 
-  const Context = useGridContext(props.gid, Value);
+
+  // const Value = useMemo(() => {
+  //   return {
+  //     columnNum,
+  //     iconSize,
+  //     gutter,
+  //     border,
+  //     center,
+  //     square,
+  //     clickable,
+  //     direction
+  //   };
+  // }, [
+  //   columnNum,
+  //   iconSize,
+  //   gutter,
+  //   border,
+  //   center,
+  //   square,
+  //   clickable,
+  //   direction
+  // ]);
+
+  // const Context = useGridContext(props.gid, Value);
 
   const classnames = useMemoClassNames();
   const addUnit = useMemoAddUnit();
@@ -66,15 +93,15 @@ const VanGrid: Taro.FunctionComponent<VanGridProps> = props => {
   const viewStyle = useMemo(() => {
     return gutter
       ? ({
-          paddingLeft: addUnit(gutter)
-        } as React.CSSProperties)
+        paddingLeft: addUnit(gutter)
+      } as React.CSSProperties)
       : undefined;
   }, [gutter]);
 
-  if (!Context) {
-    return null;
-    // throw "VanGrid 组件未挂载";
-  }
+  // if (!Context) {
+  //   return null;
+  //   throw "VanGrid 组件未挂载";
+  // }
   return (
     <View
       className={classnames(
@@ -85,7 +112,8 @@ const VanGrid: Taro.FunctionComponent<VanGridProps> = props => {
       )}
       style={viewStyle}
     >
-      <Context.Provider value={Value}>{props.children}</Context.Provider>
+      {props.children}
+      {/* <Context.Provider value={Value}>{props.children}</Context.Provider> */}
     </View>
   );
 };
