@@ -65,7 +65,7 @@ class App extends Component {
       // ================= ## 反馈组件 =================
       'pages/action-sheet/index',   // ActionSheet 动作面板
       'pages/dialog/index',         // Dialog 弹出框
-      // 'pages/dropdownmenu/index',// DropdownMenu 下拉菜单 TODO
+      'pages/dropdown-menu/index',// DropdownMenu 下拉菜单 TODO
       'pages/loading/index',     // Loading 加载 TODO
       'pages/notify/index',         // Notify 消息提示
       'pages/overlay/index',        // Overlay 遮罩层
