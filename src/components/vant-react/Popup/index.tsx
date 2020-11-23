@@ -25,7 +25,6 @@ export type VanPopupProps = {
   name?: "top" | "bottom" | "right" | "left" | "center";
   position?: "top" | "bottom" | "right" | "left" | "center";
   round?: boolean;
-  customStyle?: React.CSSProperties;
   overlayStyle?: React.CSSProperties;
   closeOnClickOverlay?: boolean;
   closeable?: Boolean;
