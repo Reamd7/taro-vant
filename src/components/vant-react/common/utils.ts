@@ -1,4 +1,4 @@
-import Taro, { getCurrentPages, useContext, useEffect, useMemo } from "@tarojs/taro";
+import Taro, { getCurrentPages, useContext, useEffect, useMemo, useDidShow, useState } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
@@ -43,9 +43,21 @@ export function useMemoBem() {
   return bem
 
 }
+
+/**
+ * https://github.com/fjc0k/vtils/blob/v2/packages/taro/src/hooks/useScope.ts#L18
+ */
+function _useScope() {
+  const [scope, setScope] = useState<any>(null)
+  useDidShow(function (this: any) {
+    setScope(this.$scope)
+  })
+  return scope
+}
+
+
 export function useScope() {
-  const self = useMemo(() => ({}), []);
-  return Taro.useScope ? Taro.useScope() : self
+  return Taro.useScope ? Taro.useScope() : _useScope()
 }
 
 export const noop = () => { }
