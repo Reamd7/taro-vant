@@ -8,7 +8,7 @@ import {
   isH5,
   isWeapp
 } from "../common/utils";
-import VanIcon from "../icon";
+import VanIcon, { VanIconProps } from "../icon";
 import "./index.less";
 
 export type VanCellProps = {
@@ -27,7 +27,7 @@ export type VanCellProps = {
 } & {
   title?: string;
   value?: number | string;
-  icon?: string;
+  icon?: VanIconProps['name'];
   size?: string;
   label?: string;
   center?: boolean;
