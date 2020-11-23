@@ -51,14 +51,14 @@ const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
   }, [VanOverlayStyle, props.style, props.zIndex, props.className]);
   return (
     <VanTransition
-      className={classnames(isH5 && props.className, isWeapp && "custom-class")}
+      className={classnames(isH5 && props.className, isWeapp && "custom-class", "van-overlay")}
       style={Style}
       show={props.show}
       duration={props.duration}
     >
       <View
         onClick={props.onClick || noop}
-        className="van-overlay"
+        className="van-overlay--container"
         onTouchMove={e => {
           e.stopPropagation();
           e.preventDefault();

@@ -65,7 +65,7 @@ const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
 
   return (
     <VanTransition
-      className={classnames(isH5 && props.className, isWeapp && "custom-class")}
+      className={classnames(isH5 && props.className, isWeapp && "custom-class", "van-overlay")}
       style={Style}
       show={props.show}
       duration={props.duration}
@@ -73,7 +73,7 @@ const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
       <wxs module="overlay" src="./overlay.wxs" ></wxs>
       <View
         onClick={props.onClick || noop}
-        className="van-overlay"
+        className="van-overlay--container"
         onTouchMove="{{overlay.touchmove}}" // 触摸overlay遮罩层的时候不会影响下面的滚动。但是好像不能隔离
       >
         {props.children}
