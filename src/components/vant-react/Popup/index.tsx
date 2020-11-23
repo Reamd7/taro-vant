@@ -139,6 +139,7 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
     className={popupClass}
     style={popStyle}
     onTransitionEnd={onTransitionEnd}
+    onClick={e => e.stopPropagation()} // 这里要进行拦截否则触发slot的click事件时候会冒泡到顶，触发overlay的close
   >
     {props.children}
     {props.closeable && (
