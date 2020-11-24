@@ -2,7 +2,7 @@ const path = require('path');
 const glob = require('glob');
 
 const SRC = path.resolve(__dirname, '..', 'src')
-const DIST = path.resolve(__dirname, '..', 'dist')
+const DIST = path.resolve(__dirname, '..', `dist/${process.env.TARO_ENV}`)
 const wxsPattern = glob.sync("**/*.wxs", { cwd: SRC, mark: true }).map(file => {
   return {
     from: path.resolve(SRC, file), to: path.resolve(DIST, file)
@@ -23,7 +23,7 @@ const config = {
     '828': 1.81 / 2
   },
   sourceRoot: 'src',
-  outputRoot: 'dist',
+  outputRoot: `dist/${process.env.TARO_ENV}`,
   babel: {
     sourceMap: true,
     presets: [
@@ -95,6 +95,7 @@ const config = {
   },
   alias: {
     'src': path.resolve(__dirname, '..', 'src'),
+
   },
   copy: {
     // patterns: [
