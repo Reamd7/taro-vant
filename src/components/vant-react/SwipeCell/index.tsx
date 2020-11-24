@@ -120,6 +120,7 @@ const VanSwipeCell: Taro.FunctionComponent<VanSwipeCellProps> = props => {
 
   const onStartDrag = useCallback(
     (event: ITouchEvent) => {
+      event.preventDefault()
       if (disabled) return;
       self.current.startOffset = self.current.offset;
       touchStart.current(event);
