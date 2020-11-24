@@ -99,7 +99,7 @@ class App extends Component {
       'pages/sidebar/index',        // Sidebar 侧边导航
       // 'pages/tab/index',         // Tab 标签页 TODO
       'pages/tabbar/index',         // Tabbar 标签栏
-      // 'pages/tree-select/index', // TreeSelect 分类选择 TODO
+      'pages/tree-select/index',    // TreeSelect 分类选择
 
       // ================= ## 业务组件 =================
       'pages/goods-action/index', // TODO ActionBar 动作栏
