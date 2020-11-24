@@ -96,7 +96,7 @@ class App extends Component {
       // 'pages/index-bar/index',   // IndexBar 索引栏 TODO
       'pages/nav-bar/index',        // NavBar 导航栏
       // new v2 // Pagination 分页 // new v2
-      // 'pages/slidebar/index',    // Sidebar 侧边导航 TODO
+      'pages/sidebar/index',        // Sidebar 侧边导航
       // 'pages/tab/index',         // Tab 标签页 TODO
       'pages/tabbar/index',         // Tabbar 标签栏
       // 'pages/tree-select/index', // TreeSelect 分类选择 TODO

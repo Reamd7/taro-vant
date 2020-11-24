@@ -20,6 +20,7 @@ import { VanGridProps } from ".";
 export type VanGridItemProps = {
   gid: string;
   index: number;
+  total: number;
 
   text?: string;
   icon?: VanIconProps["name"];
