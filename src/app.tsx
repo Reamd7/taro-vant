@@ -11,13 +11,13 @@ import './app.less'
 
 class App extends Component {
 
-  componentDidMount () {}
+  componentDidMount() { }
 
-  componentDidShow () {}
+  componentDidShow() { }
 
-  componentDidHide () {}
+  componentDidHide() { }
 
-  componentDidCatchError () {}
+  componentDidCatchError() { }
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -57,16 +57,16 @@ class App extends Component {
        * 然后taro来mock一层。这个方案没试过，可以试试看看性能，
        * vant原生的实现能够用这种方式做到跟手动画、
        */
-      'pages/slider/index',         // Slider 滑块 TODO
-      'pages/stepper/index',        // Stepper 步进器 TODO
+      'pages/slider/index',         // Slider 滑块
+      'pages/stepper/index',        // Stepper 步进器
       'pages/switch/index',         // Switch 开关 TODO 异步
       'pages/uploader/index',       // Uploader 文件上传
 
       // ================= ## 反馈组件 =================
       'pages/action-sheet/index',   // ActionSheet 动作面板
       'pages/dialog/index',         // Dialog 弹出框
-      'pages/dropdown-menu/index',// DropdownMenu 下拉菜单 TODO
-      'pages/loading/index',     // Loading 加载 TODO
+      'pages/dropdown-menu/index',  // DropdownMenu 下拉菜单
+      'pages/loading/index',        // Loading 加载
       'pages/notify/index',         // Notify 消息提示
       'pages/overlay/index',        // Overlay 遮罩层
       // new v2 // PullRefresh 下拉刷新 // new v2
@@ -76,7 +76,7 @@ class App extends Component {
       // ================= ## 展示组件 =================
       // Info(Badge) 徽标 // new v2 add demo
       'pages/circle/index',         // Circle 环形进度条
-      // 'pages/collapse/index',    // Collapse 折叠面板 TODO
+      'pages/collapse/index',       // Collapse 折叠面板
       'pages/count-down/index',     // CountDown 倒计时
       'pages/divider/index',        // Divider 分割线
       'pages/empty/index',          // Empty 空状态
@@ -124,7 +124,7 @@ class App extends Component {
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
-  render () {
+  render() {
     return (
       <Index />
     )
