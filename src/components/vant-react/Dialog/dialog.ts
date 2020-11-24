@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect, useCallback } from "@tarojs/taro";
 import { VanDialogProps } from ".";
-import { getContext, useScope } from "../common/utils";
+import { getContext } from "../common/utils";
 
 export function useDialogId() {
   return useMemo(() => "VanDialog" + Date.now().toString(), []);
@@ -16,8 +16,6 @@ export function useDialogOptions(id: string, setShow: (val: boolean) => void) {
 
   const context = getContext();
 
-  const scope = useScope();
-
   const _id = context ? `${context}_${id}` : null;
 
   const close = useCallback(() => {
@@ -27,7 +25,7 @@ export function useDialogOptions(id: string, setShow: (val: boolean) => void) {
 
   useEffect(() => {
     // scope exist === attached 组件被挂载。
-    if (scope && _id && !map.has(_id)) {
+    if (_id && !map.has(_id)) {
       map.set(_id, {
         close: () => {
           close()
@@ -47,7 +45,7 @@ export function useDialogOptions(id: string, setShow: (val: boolean) => void) {
       }
       queue.delete(close)
     }
-  }, [_id, scope])
+  }, [_id])
 
   return [options, close] as const;
 }

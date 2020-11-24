@@ -196,7 +196,7 @@ const VanDialog: Taro.FunctionComponent<VanDialogProps> = (props: ActiveVanDialo
     transition={props.transition}
     custom-class={classnames("van-dialog custom-class", "van-dialog--" + theme)}
     className={classnames("van-dialog", "van-dialog--" + theme, props.className)}
-    customStyle={css({
+    style={css({
       width: addUnit(width),
       ...props.customStyle
     })}
