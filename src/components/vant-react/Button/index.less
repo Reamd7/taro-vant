@@ -39,6 +39,10 @@
   &::after {
     border-width: 0;
   }
+  // NOTE active-class 在h5中无效
+  &:active:before {
+    opacity: 0.15;
+  }
 
   &--active::before {
     opacity: 0.15;
@@ -104,7 +108,7 @@
   }
 
   &--normal {
-    padding: 0 15px;
+    padding: 0 15px * @dpi;
     .theme(font-size, '@button-normal-font-size');
   }
 
@@ -123,7 +127,7 @@
     .theme(font-size, '@button-mini-font-size');
 
     & + .van-button--mini {
-      margin-left: 5px;
+      margin-left: 5px * @dpi;
     }
   }
 
