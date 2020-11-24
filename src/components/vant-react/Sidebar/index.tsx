@@ -40,5 +40,10 @@ const VanSidebar: Taro.FunctionComponent<VanSidebarProps> = (props) => {
     {props.children}
   </View>
 }
-
+VanSidebar.options = {
+  addGlobalClass: true
+}
+VanSidebar.externalClasses = [
+  "custom-class"
+]
 export default VanSidebar;
