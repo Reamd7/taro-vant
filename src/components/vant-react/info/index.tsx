@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import "./index.less";
 import { useMemoClassNames, isH5, isWeapp } from "../common/utils";
 
-export type InfoProps = {
+export type VanInfoProps = {
   dot?: boolean;
   info?: string | number;
   className?: string;
@@ -12,7 +12,7 @@ export type InfoProps = {
   // badge?: string | number;
 };
 
-const VanInfo: Taro.FunctionComponent<InfoProps> = function(props: InfoProps) {
+const VanInfo: Taro.FunctionComponent<VanInfoProps> = function(props: VanInfoProps) {
   const classnames = useMemoClassNames();
   return (props.info != null && props.info !== "") || props.dot ? (
     <View
