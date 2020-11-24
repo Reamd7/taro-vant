@@ -87,6 +87,7 @@ const VanActionSheet: Taro.FunctionComponent<ActionSheetProps & {
           {props.title}
           <VanIcon
             name="close"
+            className="van-action-sheet__close"
             custom-class="van-action-sheet__close"
             onClick={props.onClose}
           />
@@ -97,7 +98,7 @@ const VanActionSheet: Taro.FunctionComponent<ActionSheetProps & {
           {props.description}
         </View>
       )}
-      {props.actions && props.actions.length && (
+      {(props.actions && props.actions.length) ? (
         <View>
           {/* button外包一层view，防止actions动态变化，导致渲染时button被打散 */}
           {props.actions.map((item, index) => (
@@ -150,7 +151,7 @@ const VanActionSheet: Taro.FunctionComponent<ActionSheetProps & {
             </Button>
           ))}
         </View>
-      )}
+      ) : null}
       {props.children}
       {props.cancelText && (
         <View

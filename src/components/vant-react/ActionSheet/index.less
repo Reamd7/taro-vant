@@ -7,10 +7,17 @@
 
   &__item,
   &__cancel {
+    width: 100%;
+    border: none;
+
     text-align: center;
     .theme(font-size, '@action-sheet-item-font-size');
     .theme(line-height, '@action-sheet-item-height');
     .theme(background-color, '@action-sheet-item-background');
+
+    &:active {
+      .theme(background-color, '@active-color');
+    }
 
     &--hover {
       .theme(background-color, '@active-color');
