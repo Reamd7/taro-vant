@@ -204,5 +204,5 @@ VanRate.externalClasses = [
   'custom-class',
   'icon-class'
 ];
-
+VanRate.defaultProps = DefaultProps;
 export default VanRate
