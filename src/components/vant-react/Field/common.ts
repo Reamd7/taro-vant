@@ -89,6 +89,7 @@ type VanFieldCommonProps = {
   autoSize?: false | {
     maxHeight: number;
     minHeight: number;
+    lineHeight?: number;
   }
   // ========================= clearIcon =========================
   clearable?: boolean;

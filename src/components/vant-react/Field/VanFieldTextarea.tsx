@@ -1,7 +1,7 @@
 import Taro, { useState, useEffect, useMemo } from "@tarojs/taro";
 import "./index.less";
 import VanCell from "../Cell";
-import { useMemoClassNames, useMemoBem, isH5, isWeapp, addUnit } from "../common/utils";
+import { useMemoClassNames, useMemoBem, isH5, isWeapp, addUnit, getSystemInfoSync } from "../common/utils";
 import { View, Textarea } from "@tarojs/components";
 import useControllableValue from "src/common/hooks/useControllableValue";
 import { VanFieldDefaultProps, VanFieldTextAreaTextProps, ActiveVanFieldTextAreaTextProps, VanCellContainerTitleStyle, externalClasses } from "./common";
@@ -43,7 +43,14 @@ const VanFieldTextarea: Taro.FunctionComponent<
   const TextareaStyle = useMemo(() => {
     let autoSize = props.autoSize
     if (typeof autoSize === "object") {
-      const style: React.CSSProperties = {}
+      // @cell-line-height: 24px * @dpi;
+      // const dpr = getSystemInfoSync().pixelRatio;
+
+      const lineHeight = autoSize.lineHeight || 1.2
+      const style: React.CSSProperties = {
+        height: (value.length - value.replace(/\n/g, '').length + 1) * lineHeight + "em",
+        lineHeight: lineHeight
+      }
       if (autoSize.minHeight) {
         style.minHeight = addUnit(autoSize.minHeight)
       }
@@ -53,7 +60,7 @@ const VanFieldTextarea: Taro.FunctionComponent<
       return style
     }
     return undefined;
-  }, [props.autoSize]);
+  }, [props.autoSize, value]);
 
   // 奇怪的操作。
   // const TextQuery = useRef<Taro.SelectorQuery>();
