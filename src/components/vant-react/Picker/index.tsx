@@ -136,7 +136,12 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
       isH5 && props.className,
       isWeapp && "custom-class"
     )
-  }>
+  }
+    onTouchStart={e => {
+      e.preventDefault()
+      e.stopPropagation()
+    }}
+  >
     {toolbarPosition === 'top' && <Block>
       {renderToolbar}
     </Block>}
@@ -148,7 +153,9 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
       style={{
         height: addUnit(itemHeight * visibleItemCount)
       }}
-      onTouchMove={e => e.stopPropagation()}
+      onTouchMove={e => {
+        e.stopPropagation()
+      }}
     >
       {columns.map((item, index) => {
         return <View className="van-picker__column">
