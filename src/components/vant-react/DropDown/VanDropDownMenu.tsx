@@ -157,14 +157,6 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
             // console.log(index + "before update")
             return list
           })
-          // if (isWeapp) {
-          //   setTimeout(()=>{
-          //     setValueList((v) => {
-          //       return v.slice()
-          //     })
-          //     // NOTE：bug！不能理解为什么 网页端可以用，但是这里要放在setTimeout？贼烦
-          //   })
-          // }
         }
       }),
 
