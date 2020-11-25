@@ -98,7 +98,12 @@ const ToastCore = (
     }, options.duration);
   }
 
-  return { setData, clear };
+  return { setData: (option) => {
+    setData({
+      ...options,
+      ...option
+    })
+  }, clear };
 };
 
 Toast.clear = () => {

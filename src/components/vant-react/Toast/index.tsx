@@ -4,7 +4,7 @@ import VanTransition from "../Transition";
 import VanLoading, { VanLoadingProps } from "../Loading";
 import VanIcon, { VanIconProps } from "../icon";
 import { Block, View, Text } from "@tarojs/components";
-import { useMemoClassNames, getContext, useScope } from "../common/utils";
+import { useMemoClassNames, getContext, useScope, useScopeRef } from "../common/utils";
 import { VanToastMap } from "./toast";
 import "./index.less";
 import usePersistFn from "src/common/hooks/usePersistFn";
@@ -27,27 +27,20 @@ export type VanToastProps = {
 const VanToast: Taro.FunctionComponent<VanToastProps> = props => {
   const classnames = useMemoClassNames();
   const [data, setData] = useState(props); // 数据响应更新
-  useEffect(() => {
-    setData(props);
-  }, [props]);
+
   const { mask, show = false, zIndex, position, type, message } = data; // 这里有一个点，就是show不知道为什么不可以默认显示
 
   const activeToastIns = useRef<() => void>();
   // ========================
-  const _setData = usePersistFn((_data: Omit<VanToastProps, "gid">) => {
-    setData((data) => {
-      return {
-        ...data,
-        ..._data
-      }
-    })
+  const _setData = usePersistFn((_data: Omit<VanToastProps, "gid"> = props) => {
+    setData(_data)
   }, [])
-  const scope = useScope();
+  const [scope, scopeRef] = useScopeRef();
+  const id = (data.gid || getContext()); // Taro2 的bug，组件不是按需加载的。
 
   useEffect(() => {
     if (scope) {
-      const id = (data.gid || getContext()); // Taro2 的bug，组件不是按需加载的。
-      if (!VanToastMap.has(id)) { // 没有id
+      if (id && !VanToastMap.has(id)) { // 没有id
         VanToastMap.set(id, {
           // 暴露出组件内部接口
           setData: _setData,
@@ -56,16 +49,23 @@ const VanToast: Taro.FunctionComponent<VanToastProps> = props => {
       }
     }
     return function () {
-      const id = (data.gid || getContext()); // Taro2 的bug，组件不是按需加载的。
-      VanToastMap.delete(id);
       if (activeToastIns.current) {
         // 如果当前有正在运行的实例
         activeToastIns.current(); // 则清除他
       }
+      VanToastMap.delete(id);
     };
-  }, [data.gid, scope]);
+  }, [id, scope]);
+
+  useEffect(()=>{
+    if (activeToastIns.current) {
+      // 如果当前有正在运行的实例
+      activeToastIns.current(); // 则清除他
+    }
+  }, [])
+
   return (
-    <Block>
+    <View ref={scopeRef}>
       {(mask || props.forbidClick) && (
         <VanOverlay
           show={show}
@@ -120,7 +120,7 @@ const VanToast: Taro.FunctionComponent<VanToastProps> = props => {
           {props.children}
         </View>
       </VanTransition>
-    </Block>
+    </View>
   );
 };
 VanToast.defaultProps = {

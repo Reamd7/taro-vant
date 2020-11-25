@@ -79,7 +79,7 @@ export default function ToastPage() {
               const timer = setInterval(() => {
                 second--;
                 if (second) {
-                  toast.setData.current({ message: text(second) });
+                  toast.setData({ message: text(second) });
                 } else {
                   clearInterval(timer);
                   Toast.clear();
