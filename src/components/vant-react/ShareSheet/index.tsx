@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { View, Button, Block } from "@tarojs/components";
+import { View, Button, Block, ScrollView } from "@tarojs/components";
 import VanPopup from "../Popup";
 import VanShareSheetOptions, { VanShareSheetOption } from "./options";
 import { noop } from "../common/utils";
@@ -80,7 +80,7 @@ const VanShareSheet: Taro.FunctionComponent<VanShareSheetProps> = props => {
           <View className="van-share-sheet__description">{description}</View>
         )}
       </View>
-      <Block>
+      <ScrollView scrollX={true}>
         {isMulti(options) ? (
           options.map((item, index) => {
             return (
@@ -95,7 +95,7 @@ const VanShareSheet: Taro.FunctionComponent<VanShareSheetProps> = props => {
         ) : (
           <VanShareSheetOptions options={options} onSelect={props.onSelect} />
         )}
-      </Block>
+      </ScrollView>
       <Button
         type="default"
         className="van-share-sheet__cancel"
