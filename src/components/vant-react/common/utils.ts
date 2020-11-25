@@ -1,4 +1,4 @@
-import Taro, { getCurrentPages, useContext, useEffect, useMemo, useDidShow, useState } from "@tarojs/taro";
+import Taro, { getCurrentPages, useContext, useEffect, useMemo, useDidShow, useState, useCallback } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
@@ -55,6 +55,26 @@ function _useScope() {
   return scope
 }
 
+/**
+ * TODO hack
+ */
+export function useScopeRef() {
+  const [state, setState] = useState<any>(
+    Taro.useScope ? Taro.useScope() : null
+  );
+
+  const scopeRef = useCallback((ref: any) => {
+    if (ref) {
+      if (isWeapp) {
+        setState(ref._component)
+      } else if (isH5) {
+        setState(ref._parentComponent)
+      }
+    }
+  }, [])
+
+  return [state, scopeRef] as const;
+}
 
 export function useScope() {
   return Taro.useScope ? Taro.useScope() : _useScope()
