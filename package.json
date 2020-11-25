@@ -43,7 +43,7 @@
     "@tarojs/taro-h5": "2.2.15",
     "@tarojs/taro-qq": "2.2.15",
     "@tarojs/taro-quickapp": "2.2.15",
-    "@tarojs/taro-rn": "2.2.15",
+    "@tarojs/taro-rn": "^2.2.15",
     "@tarojs/taro-swan": "2.2.15",
     "@tarojs/taro-tt": "2.2.15",
     "@tarojs/taro-weapp": "2.2.15",
@@ -64,7 +64,15 @@
     "rxjs": "^6.6.3",
     "taro-axios": "^1.1.1",
     "throttle-debounce": "^3.0.1",
-    "utility-types": "^3.10.0"
+    "utility-types": "^3.10.0",
+    "@tarojs/components-rn": "^2.2.15",
+    "@tarojs/rn-runner": "^2.2.15",
+    "@tarojs/taro-router-rn": "^2.2.15",
+    "@tarojs/taro-redux-rn": "^2.2.15",
+    "react": "16.8.0",
+    "react-native": "0.59.9",
+    "redux": "^4.0.0",
+    "tslib": "^1.8.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
