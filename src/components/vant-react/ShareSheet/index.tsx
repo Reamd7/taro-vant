@@ -103,6 +103,9 @@ const VanShareSheet: Taro.FunctionComponent<VanShareSheetProps> = props => {
           onClose && onClose(e);
           props.onCancel && props.onCancel();
         }}
+        style={{
+          backgroundColor: "white"
+        }}
       >
         {cancelText}
       </Button>

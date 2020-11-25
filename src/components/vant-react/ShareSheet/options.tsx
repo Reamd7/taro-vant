@@ -56,14 +56,14 @@ const VanShareSheetOptions: Taro.FunctionComponent<{
                 className="van-share-sheet__icon"
               />
             </Button>
-            {item.name && (
+            {item.name ? (
               <View className="van-share-sheet__name">{item.name}</View>
-            )}
-            {item.description && (
-              <view className="van-share-sheet__option-description">
+            ) : null}
+            {item.description ? (
+              <View className="van-share-sheet__option-description">
                 {item.description}
-              </view>
-            )}
+              </View>
+            ) : null}
           </View>
         );
       })}
