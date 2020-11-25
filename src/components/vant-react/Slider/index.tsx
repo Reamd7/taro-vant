@@ -118,6 +118,7 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
   }, [props.disabled, scope, getRange, props.min, setDragValue, format])
 
   const onTouchStart = useCallback((e: ITouchEvent) => {
+    e.preventDefault()
     if (props.disabled) return;
     touchStart.current(e)
     setdragStatus('start')

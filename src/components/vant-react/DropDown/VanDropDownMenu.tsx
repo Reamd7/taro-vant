@@ -1,7 +1,7 @@
 import Taro, { useState, useCallback, useEffect } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import "./VanDropDownMenu.less";
-import { getSystemInfoSync, ActiveProps, useMemoBem, useMemoClassNames, useMemoCssProperties, getRect, addUnit, useScope } from "../common/utils";
+import { getSystemInfoSync, ActiveProps, useMemoBem, useMemoClassNames, useMemoCssProperties, getRect, addUnit, useScope, useScopeRef } from "../common/utils";
 import { useRelationPropsInject } from "../common/relation";
 import { VanDropDownItemProps, ActiveVanDropDownItemProps } from "./VanDropDownItem";
 import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
@@ -79,7 +79,7 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
   const classnames = useMemoClassNames();
   const css = useMemoCssProperties();
 
-  const scope = useScope();
+  const [scope, scopeRef] = useScopeRef();
   /**
    * WrapperStyle
    */
@@ -184,7 +184,7 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
   // console.log("itemListData", JSON.stringify(itemListData))
 
   return (
-    <View className="van-dropdown-menu van-dropdown-menu--top-bottom">
+    <View className="van-dropdown-menu van-dropdown-menu--top-bottom" ref={scopeRef}>
       {itemListData.map((item, index) => {
         return <View
           className={
