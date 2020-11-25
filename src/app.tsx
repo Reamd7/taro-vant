@@ -8,7 +8,9 @@ import './app.less'
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
 //   require('nerv-devtools')
 // }
-
+if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5') {
+  require('./components/vant-react/common/mocknav/mocknative')
+}
 class App extends Component {
 
   componentDidMount() { }

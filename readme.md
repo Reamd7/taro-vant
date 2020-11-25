@@ -7,3 +7,30 @@
 5. useScope在函数式组件的不支持，不能使用 这种方式进行，兼容实现了 useScopeRef，挂载在 wrapper 中ref
 6. animation api 不知道怎么使用，weapp的使用方式不能支持在h5上。（现在是使用多端组件兼容的方式来做的）
 7. 使用了touchmove的组件，注意要在 touchstart 中 preventDefault，h5中会移动页面。
+8. 获取当前路由路径, 需要进行兼容处理
+```js
+if (process.env.TARO_ENV === "h5") {
+    return page.$router.path // TODO 坑
+}
+return page.route
+```
+9. taro 图片样式错误
+```css
+.taro-img__mode-scaletofill {
+    /** object-fit: contain; */
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+}
+.taro-img__mode-aspectfit {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+```
+10. 处理h5中 navigate
+
+### TODO
+
+- toast 可能还有未知的问题。
+- h5 图片的问题，

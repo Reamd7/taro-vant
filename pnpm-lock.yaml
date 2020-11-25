@@ -11,7 +11,7 @@ dependencies:
   '@tarojs/taro-h5': 2.2.15
   '@tarojs/taro-qq': 2.2.15_nervjs@1.5.7
   '@tarojs/taro-quickapp': 2.2.15_nervjs@1.5.7
-  '@tarojs/taro-redux-rn': 2.2.15_react@16.8.0+redux@4.0.5
+  '@tarojs/taro-redux-rn': 2.2.15_8125a46adda2c30028177d6bdd9b85db
   '@tarojs/taro-rn': 2.2.15_97c7bd0c20f09860b189d5542ec70ff4
   '@tarojs/taro-router-rn': 2.2.15_react-native@0.59.9+react@16.8.0
   '@tarojs/taro-swan': 2.2.15_nervjs@1.5.7
@@ -3772,12 +3772,13 @@ packages:
     resolution:
       integrity: sha1-MYoWKCuRAi3cb2/y1ub8My7xGoI=
       tarball: 'https://registry.npm.taobao.org/@tarojs/taro-quickapp/download/@tarojs/taro-quickapp-2.2.15.tgz'
-  /@tarojs/taro-redux-rn/2.2.15_react@16.8.0+redux@4.0.5:
+  /@tarojs/taro-redux-rn/2.2.15_8125a46adda2c30028177d6bdd9b85db:
     dependencies:
-      react-redux: 7.2.2_react@16.8.0+redux@4.0.5
+      react-redux: 7.2.2_8125a46adda2c30028177d6bdd9b85db
     dev: false
     peerDependencies:
       react: '*'
+      react-native: '*'
       redux: '*'
     resolution:
       integrity: sha1-BsP/APa65bSzDGkr8QOQLBKadpk=
@@ -4340,6 +4341,13 @@ packages:
     resolution:
       integrity: sha1-DlqwoJVSkD7eriBZguhSHhdjWuA=
       tarball: 'https://registry.npm.taobao.org/@typescript-eslint/visitor-keys/download/@typescript-eslint/visitor-keys-4.3.0.tgz'
+  /@unimodules/core/3.0.2:
+    dependencies:
+      compare-versions: 3.6.0
+    dev: false
+    resolution:
+      integrity: sha1-orFD+x50OAm6F8YK4YSPgrhjeQE=
+      tarball: 'https://registry.npm.taobao.org/@unimodules/core/download/@unimodules/core-3.0.2.tgz'
   /@unimodules/react-native-adapter/3.0.0_react-native@0.59.9:
     dependencies:
       invariant: 2.2.4
@@ -5438,9 +5446,9 @@ packages:
       tarball: 'https://registry.npm.taobao.org/babel-plugin-dynamic-import-node/download/babel-plugin-dynamic-import-node-2.3.3.tgz'
   /babel-plugin-macros/2.8.0:
     dependencies:
-      '@babel/runtime': 7.11.2
+      '@babel/runtime': 7.12.5
       cosmiconfig: 6.0.0
-      resolve: 1.17.0
+      resolve: 1.19.0
     dev: false
     resolution:
       integrity: sha1-D5WKfMZVax5lNERl2ZERoeXhATg=
@@ -6146,6 +6154,11 @@ packages:
     resolution:
       integrity: sha1-nyKcFb4nJFT/qXOs4NvueaGww28=
       tarball: 'https://registry.npm.taobao.org/bluebird/download/bluebird-3.7.2.tgz'
+  /blueimp-md5/2.18.0:
+    dev: false
+    resolution:
+      integrity: sha1-EVK+EzXwxrORHtnjbbVPPmrFKTU=
+      tarball: 'https://registry.npm.taobao.org/blueimp-md5/download/blueimp-md5-2.18.0.tgz'
   /bn.js/4.11.9:
     resolution:
       integrity: sha1-JtVWgpRY+dHoH8SJUkk9C6NQeCg=
@@ -7091,6 +7104,11 @@ packages:
     resolution:
       integrity: sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
       tarball: 'https://registry.npm.taobao.org/commondir/download/commondir-1.0.1.tgz'
+  /compare-versions/3.6.0:
+    dev: false
+    resolution:
+      integrity: sha1-GlaJkTaF5ah2N7jT/8p1UU7EHWI=
+      tarball: 'https://registry.npm.taobao.org/compare-versions/download/compare-versions-3.6.0.tgz'
   /component-emitter/1.3.0:
     resolution:
       integrity: sha1-FuQHD7qK4ptnnyIVhT7hgasuq8A=
@@ -7323,7 +7341,7 @@ packages:
   /cosmiconfig/6.0.0:
     dependencies:
       '@types/parse-json': 4.0.0
-      import-fresh: 3.2.1
+      import-fresh: 3.2.2
       parse-json: 5.1.0
       path-type: 4.0.0
       yaml: 1.10.0
@@ -7693,6 +7711,11 @@ packages:
     dev: false
     engines:
       node: '>=6.0'
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     resolution:
       integrity: sha1-8NIpxQXgxtjEmsVT0bE9wYP2su4=
       tarball: 'https://registry.npm.taobao.org/debug/download/debug-4.3.1.tgz'
@@ -9135,6 +9158,20 @@ packages:
     resolution:
       integrity: sha1-l+gBqgUt8CRU3kawK/YhZCzchQI=
       tarball: 'https://registry.npm.taobao.org/expand-tilde/download/expand-tilde-2.0.2.tgz'
+  /expo-app-loader-provider/6.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-wYejmUKsJ8+uw7OUpcmFHT85Z4s=
+      tarball: 'https://registry.npm.taobao.org/expo-app-loader-provider/download/expo-app-loader-provider-6.0.0.tgz'
+  /expo-asset/6.0.0:
+    dependencies:
+      blueimp-md5: 2.18.0
+      path-browserify: 1.0.1
+      url-parse: 1.4.7
+    dev: false
+    resolution:
+      integrity: sha1-yqP0Xnon2Xj4BV/FjfbjOk5mGTc=
+      tarball: 'https://registry.npm.taobao.org/expo-asset/download/expo-asset-6.0.0.tgz'
   /expo-av/6.0.0:
     dependencies:
       lodash: 4.17.20
@@ -9148,6 +9185,13 @@ packages:
     resolution:
       integrity: sha1-+W85LxXH1izQrgRP+obsRf0J8Pk=
       tarball: 'https://registry.npm.taobao.org/expo-brightness/download/expo-brightness-6.0.0.tgz'
+  /expo-constants/6.0.0:
+    dependencies:
+      ua-parser-js: 0.7.22
+    dev: false
+    resolution:
+      integrity: sha1-/0WYmFugBuJJSb4/Bb50KeW+2s8=
+      tarball: 'https://registry.npm.taobao.org/expo-constants/download/expo-constants-6.0.0.tgz'
   /expo-file-system/6.0.2:
     dependencies:
       uuid-js: 0.7.5
@@ -9172,6 +9216,11 @@ packages:
     resolution:
       integrity: sha1-2k4i7lqpUdLGXZT5kWMj60s/igE=
       tarball: 'https://registry.npm.taobao.org/expo-location/download/expo-location-6.0.0.tgz'
+  /expo-permissions/6.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-KUPxqpjegzuIzqc88D0Y0IlXy2g=
+      tarball: 'https://registry.npm.taobao.org/expo-permissions/download/expo-permissions-6.0.0.tgz'
   /expo-sensors/6.0.0:
     dependencies:
       invariant: 2.2.4
@@ -10829,6 +10878,16 @@ packages:
     resolution:
       integrity: sha1-Yz/2GFBueTr1rJG/SLcmd+FcvmY=
       tarball: 'https://registry.npm.taobao.org/import-fresh/download/import-fresh-3.2.1.tgz'
+  /import-fresh/3.2.2:
+    dependencies:
+      parent-module: 1.0.1
+      resolve-from: 4.0.0
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha1-/BKcFgxdaCNVB/QzGmuq0Ya9vD4=
+      tarball: 'https://registry.npm.taobao.org/import-fresh/download/import-fresh-3.2.2.tgz'
   /import-from/2.1.0:
     dependencies:
       resolve-from: 3.0.0
@@ -14413,6 +14472,11 @@ packages:
     resolution:
       integrity: sha1-5sTd1+06onxoogzE5Q4aTug7vEo=
       tarball: 'https://registry.npm.taobao.org/path-browserify/download/path-browserify-0.0.1.tgz'
+  /path-browserify/1.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-2YRUqcN1PVeQhg8W9ohnueRr4f0=
+      tarball: 'https://registry.npm.taobao.org/path-browserify/download/path-browserify-1.0.1.tgz'
   /path-dirname/1.0.2:
     resolution:
       integrity: sha1-zDPSTVJeCZpTiMAzbG4yuRYGCeA=
@@ -15227,7 +15291,6 @@ packages:
       integrity: sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
       tarball: 'https://registry.npm.taobao.org/querystring/download/querystring-0.2.0.tgz'
   /querystringify/2.2.0:
-    dev: true
     resolution:
       integrity: sha1-M0WUG0FTy50ILY7uTNogFqmu9/Y=
       tarball: 'https://registry.npm.taobao.org/querystringify/download/querystringify-2.2.0.tgz'
@@ -15553,7 +15616,24 @@ packages:
       tarball: 'https://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-1.4.1.tgz'
   /react-native-unimodules/0.5.4_react-native@0.59.9:
     dependencies:
+      '@unimodules/core': 3.0.2
       '@unimodules/react-native-adapter': 3.0.0_react-native@0.59.9
+      chalk: 2.4.2
+      expo-app-loader-provider: 6.0.0
+      expo-asset: 6.0.0
+      expo-constants: 6.0.0
+      expo-file-system: 6.0.2
+      expo-permissions: 6.0.0
+      unimodules-barcode-scanner-interface: 3.0.0
+      unimodules-camera-interface: 3.0.0
+      unimodules-constants-interface: 3.0.0
+      unimodules-face-detector-interface: 3.0.0
+      unimodules-file-system-interface: 3.0.0
+      unimodules-font-interface: 3.0.0
+      unimodules-image-loader-interface: 3.0.0
+      unimodules-permissions-interface: 3.0.0
+      unimodules-sensors-interface: 3.0.0
+      unimodules-task-manager-interface: 3.0.0
     dev: false
     peerDependencies:
       react-native: '*'
@@ -15731,7 +15811,7 @@ packages:
     resolution:
       integrity: sha1-nb/Z2SdSjDqp9ETkVYw3gwq4wmo=
       tarball: 'https://registry.npm.taobao.org/react-proxy/download/react-proxy-1.1.8.tgz'
-  /react-redux/7.2.2_react@16.8.0+redux@4.0.5:
+  /react-redux/7.2.2_8125a46adda2c30028177d6bdd9b85db:
     dependencies:
       '@babel/runtime': 7.12.5
       hoist-non-react-statics: 3.3.2
@@ -15739,11 +15819,19 @@ packages:
       prop-types: 15.7.2
       react: 16.8.0
       react-is: 16.13.1
+      react-native: 0.59.9_react@16.8.0
       redux: 4.0.5
     dev: false
     peerDependencies:
       react: ^16.8.3 || ^17
+      react-dom: '*'
+      react-native: '*'
       redux: ^2.0.0 || ^3.0.0 || ^4.0.0-0
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
     resolution:
       integrity: sha1-A4YugDowtrnvhYLa3MgQlH90tzY=
       tarball: 'https://registry.npm.taobao.org/react-redux/download/react-redux-7.2.2.tgz'
@@ -16249,7 +16337,6 @@ packages:
       integrity: sha1-5UBLgVV+91225JxacgBIk/4D4WI=
       tarball: 'https://registry.npm.taobao.org/requireindex/download/requireindex-1.1.0.tgz'
   /requires-port/1.0.0:
-    dev: true
     resolution:
       integrity: sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
       tarball: 'https://registry.npm.taobao.org/requires-port/download/requires-port-1.0.0.tgz'
@@ -18301,6 +18388,56 @@ packages:
     resolution:
       integrity: sha1-f71jD3GRJtZ9QMZEt+P2FwNfbbo=
       tarball: 'https://registry.npm.taobao.org/unified/download/unified-6.2.0.tgz'
+  /unimodules-barcode-scanner-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-LsUiAe4fDhCvOwPtSYYta2k3zxA=
+      tarball: 'https://registry.npm.taobao.org/unimodules-barcode-scanner-interface/download/unimodules-barcode-scanner-interface-3.0.0.tgz'
+  /unimodules-camera-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-KGnwhoqeLGW9I0bwpn2TvJZQlnY=
+      tarball: 'https://registry.npm.taobao.org/unimodules-camera-interface/download/unimodules-camera-interface-3.0.0.tgz'
+  /unimodules-constants-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-mR+CM2naJzYuhjOn2saA+1MOVWk=
+      tarball: 'https://registry.npm.taobao.org/unimodules-constants-interface/download/unimodules-constants-interface-3.0.0.tgz'
+  /unimodules-face-detector-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-V1KgAVam3kcJRBYQQLhFofGuhLA=
+      tarball: 'https://registry.npm.taobao.org/unimodules-face-detector-interface/download/unimodules-face-detector-interface-3.0.0.tgz'
+  /unimodules-file-system-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-Ctp6ieMEbS+k3RhTuGf+iuOZRWE=
+      tarball: 'https://registry.npm.taobao.org/unimodules-file-system-interface/download/unimodules-file-system-interface-3.0.0.tgz'
+  /unimodules-font-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-4438CTLpqExbgJHutnNRcPqG2F4=
+      tarball: 'https://registry.npm.taobao.org/unimodules-font-interface/download/unimodules-font-interface-3.0.0.tgz'
+  /unimodules-image-loader-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-SeNx/fP8Ss84L3Js+sZD1cCLBR8=
+      tarball: 'https://registry.npm.taobao.org/unimodules-image-loader-interface/download/unimodules-image-loader-interface-3.0.0.tgz'
+  /unimodules-permissions-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-yDlqG2l7EWgBz8s7UkZrhzgKW3g=
+      tarball: 'https://registry.npm.taobao.org/unimodules-permissions-interface/download/unimodules-permissions-interface-3.0.0.tgz'
+  /unimodules-sensors-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-lZG3AV+uXCdSZSpM3ClPdzRInqE=
+      tarball: 'https://registry.npm.taobao.org/unimodules-sensors-interface/download/unimodules-sensors-interface-3.0.0.tgz'
+  /unimodules-task-manager-interface/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-JvMXhutU36WDnKcb+ad7nCtM9Ms=
+      tarball: 'https://registry.npm.taobao.org/unimodules-task-manager-interface/download/unimodules-task-manager-interface-3.0.0.tgz'
   /union-value/1.0.1:
     dependencies:
       arr-union: 3.1.0
@@ -18491,7 +18628,6 @@ packages:
     dependencies:
       querystringify: 2.2.0
       requires-port: 1.0.0
-    dev: true
     resolution:
       integrity: sha1-qKg1NejACjFuQDpdtKwbm4U64ng=
       tarball: 'https://registry.npm.taobao.org/url-parse/download/url-parse-1.4.7.tgz'
