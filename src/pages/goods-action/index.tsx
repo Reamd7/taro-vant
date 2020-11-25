@@ -13,7 +13,7 @@ export default function VanGoodsActionPage() {
   return <Block>
 
     <DemoBlock title="基础用法">
-      <VanGoodsAction custom-class="goods-action-position" safeAreaInsetBottom={false}>
+      <VanGoodsAction custom-class="goods-action-position" className="goods-action-position" safeAreaInsetBottom={false}>
         <VanGoodsActionIcon
           icon="chat-o"
           text="客服"
