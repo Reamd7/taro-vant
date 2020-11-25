@@ -11,6 +11,7 @@
   .theme(background-color, '@submit-bar-background-color');
 
   &__tip {
+    display: flex;
     .theme(padding, '@submit-bar-tip-padding');
     .theme(color, '@submit-bar-tip-color');
     .theme(font-size, '@submit-bar-tip-font-size');
@@ -23,9 +24,9 @@
   }
 
   &__tip-icon {
-    width: 12px;
-    height: 12px;
-    margin-right: 4px;
+    width: 12px * @dpi !important;
+    height: 12px * @dpi !important;
+    margin-right: 4px * @dpi;
     vertical-align: middle;
     .theme(font-size, '@submit-bar-tip-icon-size');
     .theme(min-width, 'calc(@submit-bar-tip-icon-size * 1.5)');
@@ -75,7 +76,7 @@
   }
 
   &__suffix-label {
-    margin-left: 5px;
+    margin-left: 5px * @dpi;
   }
 
   &__button {

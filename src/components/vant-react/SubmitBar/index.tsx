@@ -2,7 +2,7 @@ import Taro, { useMemo } from "@tarojs/taro";
 import "./index.less";
 import VanIcon, { VanIconProps } from "../icon";
 import { View, Text } from "@tarojs/components";
-import { useMemoClassNames, isWeapp, isH5, noop, ActiveProps } from "../common/utils";
+import { useMemoClassNames, isWeapp, isH5, noop, ActiveProps, getSystemInfoSync } from "../common/utils";
 import VanButton, { VanButtonProps } from "../Button";
 
 export type VanSubmitBarProps = {
@@ -73,7 +73,7 @@ const VanSubmitBar: Taro.FunctionComponent<VanSubmitBarProps> = (props: ActiveVa
   } = props;
 
   const classnames = useMemoClassNames();
-
+  const dpr = getSystemInfoSync().pixelRatio;
   const hasTip = useMemo(() => typeof tip === "string", [tip]);
   const {
     integerStr, decimalStr,
@@ -99,7 +99,6 @@ const VanSubmitBar: Taro.FunctionComponent<VanSubmitBarProps> = (props: ActiveVa
     {props.renderTop}
     <View className="van-submit-bar__tip">
       {tipIcon && <VanIcon
-        size={12}
         name={tipIcon}
         custom-class="van-submit-bar__tip-icon"
         className="van-submit-bar__tip-icon"
