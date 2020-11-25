@@ -28,12 +28,12 @@ export default function VanStickyPage() {
       .exec();
   }, [])
 
-  const container = useRef(() => wx.createSelectorQuery().select('#container'))
+  const container = useRef(() => Taro.createSelectorQuery().select('#container'))
   return <Block>
     <DemoBlock title="基础用法">
       <VanSticky>
         <VanButton type="primary" style={{
-          marginLeft: 30 + "rpx"
+          marginLeft: 15 + "px"
         }}>
           基础用法
         </VanButton>
@@ -42,7 +42,7 @@ export default function VanStickyPage() {
     <DemoBlock title="吸顶距离">
       <VanSticky offsetTop={100}>
         <VanButton type="info" style={{
-          marginLeft: 230 + "rpx"
+          marginLeft: 115 + "px"
         }}>
           吸顶距离
         </VanButton>
@@ -52,7 +52,7 @@ export default function VanStickyPage() {
       <View id="container" style="height: 150px; background-color: #fff;">
         <VanSticky container={container.current}>
           <VanButton type="warning" style={{
-            marginLeft: 430 + "rpx"
+            marginLeft: 215 + "px"
           }}>
             指定容器
           </VanButton>

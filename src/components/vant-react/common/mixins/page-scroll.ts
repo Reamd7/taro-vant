@@ -1,4 +1,4 @@
-import { getCurrentPage } from "../utils";
+import { getCurrentPage, isH5 } from "../utils";
 import { PageScrollObject, useEffect } from "@tarojs/taro";
 
 export type ScrollerFunc = (obj: PageScrollObject) => any
@@ -30,6 +30,13 @@ const usePageScrollMixin = (scroller: ScrollerFunc) => {
           : [scroller];
       }
       page.onPageScroll = onPageScroll;
+
+
+      if (isH5) {
+        document.querySelectorAll(".taro_page").forEach((v: HTMLDivElement)=> {
+          v.style.display !== "none" && (v.onscroll = page.onPageScroll)
+        })
+      }
     }
 
     return function () {
@@ -38,6 +45,11 @@ const usePageScrollMixin = (scroller: ScrollerFunc) => {
         page.vanPageScroller = (page.vanPageScroller || []).filter(
           (item) => item !== scroller
         );
+      }
+      if (isH5) {
+        document.querySelectorAll(".taro_page").forEach((v: HTMLDivElement)=> {
+          v.style.display === "none" && (v.onscroll = null)
+        })
       }
     }
   }, [page])

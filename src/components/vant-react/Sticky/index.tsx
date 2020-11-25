@@ -1,6 +1,6 @@
 import Taro, { useState, useCallback, NodesRef, useEffect, useRef } from "@tarojs/taro";
 import "./index.less";
-import { ActiveProps, useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, getRect, useScope, useMemoAddUnit } from "../common/utils";
+import { ActiveProps, useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, getRect, useMemoAddUnit, useScopeRef } from "../common/utils";
 import { View } from "@tarojs/components";
 import usePersistFn from "src/common/hooks/usePersistFn";
 import usePageScrollMixin from "../common/mixins/page-scroll";
@@ -69,7 +69,7 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
   //   return Promise.resolve<NodesRef.BoundingClientRectCallbackResult | null>(null);
   // }, [container]);
 
-  const scope = useScope();
+  const [scope, scopeRef] = useScopeRef();
 
   const onScroll = usePersistFn(({ scrollTop }: Taro.PageScrollObject = { scrollTop: 0 }) => {
     if (!scope) return;
@@ -140,7 +140,7 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
   } style={css({
     height: __data__.fixed ? addUnit(__data__.height) : undefined,
     zIndex: props.zIndex
-  })}>
+  })} ref={scopeRef}>
     <View className={bem('sticky-wrap', { fixed: __data__.fixed })}
       style={css({
         transform: 'translate3d(0, ' + __data__.transform + 'px, 0);',
