@@ -86,7 +86,9 @@ const VanSteps: Taro.FunctionComponent<VanStepsProp> = props => {
                   ? {
                       color: inactiveColor
                     }
-                  : undefined
+                  : {
+                    // nervjs BUG ISSUSE 这里不能为undefined
+                  }
               }
             >
               <View
@@ -96,7 +98,7 @@ const VanSteps: Taro.FunctionComponent<VanStepsProp> = props => {
                     ? {
                         color: activeColor
                       }
-                    : undefined
+                    : {}
                 }
               >
                 <View>{item.text}</View>
