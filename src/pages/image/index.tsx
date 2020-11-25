@@ -11,20 +11,18 @@ const fits = [
   "contain",
   "cover",
   "fill",
-  "none",
-  // "scale-down",
   "widthFix",
   "heightFix",
 ] as const;
+
 const src = "https://img.yzcdn.cn/vant/cat.jpeg";
 const ImagePage: Taro.FunctionComponent<{}> = () => {
   return (
-    <View>
+    <View style={{ backgroundColor: "white" }}>
       <DemoBlock title="基础用法" padding>
         <VanRow>
-          <VanImage width="100" height="100" src={src} />
+          <VanImage width="100%" height="100%" src={src} bgColor="red" />
         </VanRow>
-        F
       </DemoBlock>
 
       <DemoBlock title="填充模式" padding>
@@ -37,7 +35,6 @@ const ImagePage: Taro.FunctionComponent<{}> = () => {
           ))}
         </VanRow>
       </DemoBlock>
-
       <DemoBlock title="圆形图片" padding>
         <VanRow gutter={20}>
           {fits.map((fit) => (

@@ -13,7 +13,7 @@ import VanIcon from "../icon";
 import "./index.less";
 
 const FIT_MODE_MAP = {
-  none: "center",
+  none: undefined,
   fill: "scaleToFill",
   cover: "aspectFill",
   contain: "aspectFit",
@@ -39,6 +39,8 @@ type VanImageProps = {
   height?: number | string;
   radius?: number | string;
   round?: boolean;
+  bgColor?: string
+
   lazyLoad?: boolean;
   showError?: boolean;
   showLoading?: boolean;
@@ -50,12 +52,15 @@ type VanImageProps = {
   renderError?: React.ReactNode;
 } & Pick<sourceProps, "onClick" | "onLoad" | "onError"> & {
   fit?: keyof typeof FIT_MODE_MAP;
-} & Pick<sourceProps, "mode">;
+
+  clip?: [number, number]
+}
+//  & Pick<sourceProps, "mode">;
 
 const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
   const {
-    width,
-    height,
+    width = 320,
+    height = 240,
     radius,
     round,
     fit = "fill",
@@ -67,24 +72,24 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
   const classnames = useMemoClassNames();
   const bem = useMemoBem();
 
-  const mode = useMemo(() => {
-    return props.mode ? props.mode : FIT_MODE_MAP[fit];
-  }, [props.mode, fit]);
-  const viewStyle = useMemo(() => {
+  const mode = useMemo(() => FIT_MODE_MAP[fit], [fit]);
+
+  const containerStyle = useMemo(() => {
     return css(
       radius
         ? {
-            width: addUnit(width),
-            height: addUnit(height),
-            overflow: "hidden",
-            borderRadius: addUnit(radius),
-          }
+          width: addUnit(width),
+          height: addUnit(height),
+          borderRadius: addUnit(radius),
+          backgroundColor: props.bgColor
+        }
         : {
-            width: addUnit(width),
-            height: addUnit(height),
-          }
+          width: addUnit(width),
+          height: addUnit(height),
+          backgroundColor: props.bgColor
+        }
     );
-  }, [width, height, radius]);
+  }, [width, height, radius, props.bgColor]);
   const [data, setData] = useState({ loading: true, error: false });
   const onLoad = useCallback(
     (event: Parameters<NonNullable<sourceProps["onLoad"]>>[0]) => {
@@ -113,7 +118,7 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
         isWeapp && 'custom-class',
         bem("image", { round })
       )}
-      style={viewStyle}
+      style={containerStyle}
       onClick={props.onClick || noop}
     >
       {!data.error && (
@@ -124,7 +129,10 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
           className={classnames(
             isH5 && props.imageClass,
             isWeapp && "image-class",
-            "van-image__img"
+            "van-image__img",
+            props.fit && (
+              FIT_MODE_MAP[props.fit] && `van-image__img--${FIT_MODE_MAP[props.fit]}`
+            )
           )}
           showMenuByLongpress={props.showMenuByLongpress}
           onLoad={onLoad}
@@ -140,8 +148,8 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
           {props.useLoadingSlot ? (
             props.renderLoading
           ) : (
-            <VanIcon name="photo-o" size="22" />
-          )}
+              <VanIcon name="photo-o" size="22" />
+            )}
         </View>
       )}
       {showError && data.error && (
@@ -153,8 +161,8 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
           {props.useErrorSlot ? (
             props.renderError
           ) : (
-            <VanIcon name="warning-o" size="22" />
-          )}
+              <VanIcon name="warning-o" size="22" />
+            )}
         </View>
       )}
     </View>

@@ -9,7 +9,6 @@ import {
 } from "../../common/utils";
 import { View } from "@tarojs/components";
 import "./index.less";
-import VanCell from "../../Cell";
 
 const VanCol: Taro.FunctionComponent<{
   span?: number | string;
