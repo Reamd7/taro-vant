@@ -2,7 +2,7 @@ import Taro, { useEffect, useState, useRef } from "@tarojs/taro";
 
 import "./VanCollapseItem.less";
 import { VanIconProps } from "../icon";
-import { ActiveProps, useMemoBem, useMemoClassNames, isWeapp, isH5, getRect, useScopeRef } from "../common/utils";
+import { ActiveProps, useMemoBem, useMemoClassNames, isWeapp, isH5, getRect, useScope, useScopeRef } from "../common/utils";
 import { View } from "@tarojs/components";
 import VanCell, { VanCellProps } from "../Cell";
 import { useRelationPropsListener } from "../common/relation";
@@ -72,8 +72,8 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
       timingFunction: 'ease-in-out',
     })
   )
-  const [animationList, setAnimationList] = useState(
-    animation.current.export()
+  const [animationStyle, setAnimationStyle] = useState(
+    {}
   )
 
   const inited = useRef(false);
@@ -84,35 +84,25 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
       ({ height }) => {
         if (expanded) {
           if (height === 0) {
-            setAnimationList(
-              animation.current
-                .height('auto').top(1).step().export()
-            );
+            setAnimationStyle({
+              transition: "all 300ms ease-in-out",
+              height: "auto",
+              top: "1px"
+            })
           } else {
-            setAnimationList(
-              animation.current
-                .height(height)
-                .top(1)
-                .step({
-                  duration: inited.current ? 300 : 1,
-                })
-                .height('auto')
-                .step().export()
-            );
+            setAnimationStyle({
+              transition: "all 300ms ease-in-out",
+              height: height,
+              top: "1px"
+            })
           }
           return;
         } else {
-          setAnimationList(
-            animation.current
-              .height(height)
-              .top(0)
-              .step({ duration: 1 })
-              .height(0)
-              .step({
-                duration: 300,
-              })
-              .export()
-          )
+          setAnimationStyle({
+            transition: "all 300ms ease-in-out",
+            height: 0,
+            top: "0px"
+          })
         }
       }
     )
@@ -175,8 +165,9 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
     </View>
     <View
       className={bem('collapse-item__wrapper')}
-      animation={animationList}
-      style={expanded ? {} : { height: 0 }}
+      style={expanded ? {
+        ...animationStyle
+      } : { height: 0, ...animationStyle }}
     >
       <View
         className={classnames(

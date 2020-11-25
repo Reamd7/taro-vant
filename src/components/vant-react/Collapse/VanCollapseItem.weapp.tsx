@@ -2,7 +2,7 @@ import Taro, { useEffect, useState, useRef } from "@tarojs/taro";
 
 import "./VanCollapseItem.less";
 import { VanIconProps } from "../icon";
-import { ActiveProps, useMemoBem, useMemoClassNames, isWeapp, isH5, getRect, useScopeRef } from "../common/utils";
+import { ActiveProps, useMemoBem, useMemoClassNames, isWeapp, isH5, getRect, useScope, useScopeRef } from "../common/utils";
 import { View } from "@tarojs/components";
 import VanCell, { VanCellProps } from "../Cell";
 import { useRelationPropsListener } from "../common/relation";
