@@ -22,6 +22,7 @@ export default function GridPage() {
               <VanGridItem
                 gid="array4"
                 index={index}
+                total={data.array4.length}
                 icon="photo-o"
                 text="文字"
                 key={val}
@@ -37,6 +38,7 @@ export default function GridPage() {
               <VanGridItem
                 gid="array6"
                 index={index}
+                total={data.array6.length}
                 icon="photo-o"
                 text="文字"
                 key={val}
@@ -53,6 +55,7 @@ export default function GridPage() {
               <VanGridItem
                 gid="array3"
                 index={index}
+                total={data.array3.length}
                 icon="photo-o"
                 text="文字"
                 key={val}
@@ -62,7 +65,7 @@ export default function GridPage() {
               >
                 <Image
                   style="width: 100%; height: 90px;"
-                  src="https://img.yzcdn.cn/vant/apple-{{ index + 1 }}.jpg"
+                  src={`https://img.yzcdn.cn/vant/apple-${ index + 1 }.jpg`}
                 />
               </VanGridItem>
             );
@@ -77,6 +80,7 @@ export default function GridPage() {
               <VanGridItem
                 gid="array8"
                 index={index}
+                total={data.array8.length}
                 icon="photo-o"
                 text="文字"
                 key={val}
@@ -93,6 +97,7 @@ export default function GridPage() {
               <VanGridItem
                 gid="array8-gutter"
                 index={index}
+                total={data.array8.length}
                 icon="photo-o"
                 text="文字"
                 key={val}
@@ -109,6 +114,7 @@ export default function GridPage() {
               <VanGridItem
                 gid="array3-colunmNum"
                 index={index}
+                total={data.array8.length}
                 icon="photo-o"
                 text="文字"
                 key={val}
@@ -127,6 +133,8 @@ export default function GridPage() {
             text="Navigate 跳转"
             gid="jump"
             index={0}
+            total={2}
+
           />
           <VanGridItem
             icon="search"
@@ -135,19 +143,23 @@ export default function GridPage() {
             text="ReLaunch 跳转"
             gid="jump"
             index={1}
+            total={2}
+
           />
         </VanGrid>
       </DemoBlock>
 
       <DemoBlock title="徽标提示">
         <VanGrid columnNum={2} gid="tips">
-          {/* <VanGridItem icon="home-o" text="文字" dot gid="tips" index={0} /> */}
+          <VanGridItem icon="home-o" text="文字" dot gid="tips" index={0} total={2} />
           <VanGridItem
             icon="search"
             text="文字"
-            badge="99+"
+            info="99+"
             gid="tips"
             index={1}
+            total={2}
+
           />
         </VanGrid>
       </DemoBlock>

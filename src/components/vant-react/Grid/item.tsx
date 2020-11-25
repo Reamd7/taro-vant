@@ -27,7 +27,7 @@ export type VanGridItemProps = {
   iconColor?: VanIconProps["color"];
 
   dot?: VanIconProps["dot"];
-  badge?: VanIconProps["badge"];
+  // badge?: VanIconProps["badge"];
   info?: VanIconProps["info"];
 
   url?: string;
@@ -63,7 +63,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
     icon,
     iconColor,
     dot = false,
-    badge,
+    // badge,
     info,
     // url,
     // linkType,
@@ -160,7 +160,7 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
                     name={icon}
                     color={iconColor}
                     dot={dot}
-                    badge={badge}
+                    // badge={badge}
                     info={info}
                     size={iconSize}
                   />
