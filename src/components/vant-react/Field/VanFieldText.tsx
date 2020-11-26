@@ -1,7 +1,7 @@
 import Taro, { useState, useEffect, useMemo, useCallback } from "@tarojs/taro";
 import "./index.less";
 import VanCell from "../Cell";
-import { useMemoClassNames, useMemoBem, isH5, isWeapp } from "../common/utils";
+import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass } from "../common/utils";
 import { View, Input, Text } from "@tarojs/components";
 import useControllableValue from "src/common/hooks/useControllableValue";
 import { VanFieldDefaultProps, VanFieldInputTextProps, ActiveVanFieldInputTextProps, VanCellContainerTitleStyle, externalClasses } from "./common";
@@ -67,8 +67,8 @@ const VanFieldText: Taro.FunctionComponent<
     }>
       <Input
         className={classnames(
-          isH5 && props.inputClass,
-          isWeapp && 'input-class',
+          isNormalClass && props.inputClass,
+          isExternalClass && 'input-class',
           bem('field__input', [props.inputAlign, {
             disabled: props.disabled, error: props.error
           }])
@@ -153,8 +153,8 @@ const VanFieldText: Taro.FunctionComponent<
           <View className={
             classnames(
               "van-field__icon-root",
-              isH5 && props.iconClass,
-              isWeapp && "icon-class"
+              isNormalClass && props.iconClass,
+              isExternalClass && "icon-class"
             )
           }>
             <VanIcon

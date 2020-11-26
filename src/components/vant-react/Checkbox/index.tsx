@@ -1,6 +1,6 @@
 import { View } from '@tarojs/components';
 import Taro, { useMemo, useCallback } from '@tarojs/taro';
-import { addUnit, isH5, isWeapp, useMemoBem, useMemoClassNames, noop, ActiveProps } from '../common/utils';
+import { addUnit, useMemoBem, useMemoClassNames, noop, ActiveProps, isExternalClass, isNormalClass } from '../common/utils';
 import VanIcon from '../icon';
 
 import "./index.less";
@@ -164,8 +164,8 @@ const VanCheckBox: Taro.FunctionComponent<VanCheckBoxProps> = (props: ActiveVanC
     classnames(
       "van-checkbox",
       inline && 'van-checkbox__inline',
-      isWeapp && "custom-class",
-      isH5 && props.className
+      isExternalClass && "custom-class",
+      isNormalClass && props.className
     )
   }>
     <View className="van-checkbox__icon-wrap" onClick={() => {
@@ -184,14 +184,14 @@ const VanCheckBox: Taro.FunctionComponent<VanCheckBoxProps> = (props: ActiveVanC
             size="0.8em"
             className={
               classnames(
-                isWeapp && "icon-class",
-                isH5 && props.iconClass
+                isExternalClass && "icon-class",
+                isNormalClass && props.iconClass
               )
             }
             custom-class={
               classnames(
-                isWeapp && "icon-class",
-                isH5 && props.iconClass
+                isExternalClass && "icon-class",
+                isNormalClass && props.iconClass
               )
             }
             customStyle={{
@@ -203,8 +203,8 @@ const VanCheckBox: Taro.FunctionComponent<VanCheckBoxProps> = (props: ActiveVanC
     </View>
     <View className={
       classnames(
-        isWeapp && "label-class",
-        isH5 && props.labelClass,
+        isExternalClass && "label-class",
+        isNormalClass && props.labelClass,
         bem('checkbox__label', [labelPosition, { disabled: disabled || parentDisabled }])
       )
     }

@@ -1,7 +1,7 @@
 import Taro, { useState, useEffect, useMemo } from "@tarojs/taro";
 import "./index.less";
 import VanCell from "../Cell";
-import { useMemoClassNames, useMemoBem, isH5, isWeapp, addUnit, getSystemInfoSync } from "../common/utils";
+import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, addUnit, getSystemInfoSync } from "../common/utils";
 import { View, Textarea } from "@tarojs/components";
 import useControllableValue from "src/common/hooks/useControllableValue";
 import { VanFieldDefaultProps, VanFieldTextAreaTextProps, ActiveVanFieldTextAreaTextProps, VanCellContainerTitleStyle, externalClasses } from "./common";
@@ -105,8 +105,8 @@ const VanFieldTextarea: Taro.FunctionComponent<
     }>
       {/* {focused ? null : <View
         className={classnames(
-          isH5 && props.inputClass,
-          isWeapp && 'input-class',
+          isNormalClass && props.inputClass,
+          isExternalClass && 'input-class',
           bem('field__input', [props.inputAlign, {
             disabled: props.disabled, error: props.error
           }])
@@ -140,8 +140,8 @@ const VanFieldTextarea: Taro.FunctionComponent<
         //   TextQuery.current.exec()
         // }}
         className={classnames(
-          isH5 && props.inputClass,
-          isWeapp && 'input-class',
+          isNormalClass && props.inputClass,
+          isExternalClass && 'input-class',
           bem('field__input', [props.inputAlign, {
             disabled: props.disabled, error: props.error
           }])
@@ -210,8 +210,8 @@ const VanFieldTextarea: Taro.FunctionComponent<
           <View className={
             classnames(
               "van-field__icon-root",
-              isH5 && props.iconClass,
-              isWeapp && "icon-class"
+              isNormalClass && props.iconClass,
+              isExternalClass && "icon-class"
             )
           }>
             <VanIcon

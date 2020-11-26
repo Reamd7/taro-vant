@@ -128,7 +128,9 @@ export function requestAnimationFrame(cb: Function) {
 
 
 export const isH5 = process.env.TARO_ENV === "h5";
-export const isWeapp = (process.env.TARO_ENV !== "h5" && process.env.TARO_ENV !== "rn")
+export const isWeapp = process.env.TARO_ENV === "weapp"
+export const isExternalClass = isWeapp;
+export const isNormalClass = isH5 || process.env.TARO_ENV === "alipay";
 
 
 const currentPage: Taro.Page | null = null

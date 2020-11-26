@@ -2,7 +2,7 @@ import Taro, { useMemo } from "@tarojs/taro";
 import "./index.less";
 import VanIcon, { VanIconProps } from "../icon";
 import { View, Text } from "@tarojs/components";
-import { useMemoClassNames, isWeapp, isH5, noop, ActiveProps, getSystemInfoSync } from "../common/utils";
+import { useMemoClassNames, isExternalClass, isNormalClass, noop, ActiveProps, getSystemInfoSync } from "../common/utils";
 import VanButton, { VanButtonProps } from "../Button";
 
 export type VanSubmitBarProps = {
@@ -92,8 +92,8 @@ const VanSubmitBar: Taro.FunctionComponent<VanSubmitBarProps> = (props: ActiveVa
   return <View
     className={classnames(
       "van-submit-bar",
-      isWeapp && "custom-class",
-      isH5 && props.className
+      isExternalClass && "custom-class",
+      isNormalClass && props.className
     )}
   >
     {props.renderTop}
@@ -110,8 +110,8 @@ const VanSubmitBar: Taro.FunctionComponent<VanSubmitBarProps> = (props: ActiveVa
     <View className={
       classnames(
         "van-submit-bar__bar",
-        isH5 && props.barClass,
-        isWeapp && "bar-class"
+        isNormalClass && props.barClass,
+        isExternalClass && "bar-class"
       )
     }>
       {props.children}
@@ -122,8 +122,8 @@ const VanSubmitBar: Taro.FunctionComponent<VanSubmitBarProps> = (props: ActiveVa
         <Text className={
           classnames(
             "van-submit-bar__price",
-            isWeapp && "price-class",
-            isH5 && props.priceClass
+            isExternalClass && "price-class",
+            isNormalClass && props.priceClass
           )
         }>
           <Text className="van-submit-bar__currency">{currency} </Text>

@@ -1,7 +1,7 @@
 import Taro, { useMemo } from "@tarojs/taro";
 
 import "./index.less";
-import { useMemoBem, useMemoClassNames, isH5, isWeapp, addUnit, useMemoCssProperties } from "../common/utils";
+import { useMemoBem, useMemoClassNames, isExternalClass, isNormalClass, addUnit, useMemoCssProperties } from "../common/utils";
 import { View } from "@tarojs/components";
 import VanLoading from "../Loading";
 import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
@@ -61,8 +61,8 @@ function VanSwitch<ActiveVal = true, INActiveVal = false>(props: VanSwitchProps<
     className={
       classname(
         bem('switch', { on: checked, disabled: props.disabled }),
-        isH5 && props.className,
-        isWeapp && 'custom-class'
+        isNormalClass && props.className,
+        isExternalClass && 'custom-class'
       )
     }
     style={css({
@@ -79,8 +79,8 @@ function VanSwitch<ActiveVal = true, INActiveVal = false>(props: VanSwitchProps<
     <View
       className={classname(
         "van-switch__node",
-        isWeapp && "node-class",
-        isH5 && props.nodeClass
+        isExternalClass && "node-class",
+        isNormalClass && props.nodeClass
       )}
     >
       {props.loading && <VanLoading

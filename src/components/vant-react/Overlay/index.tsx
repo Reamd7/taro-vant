@@ -4,8 +4,8 @@ import {
   useMemoCssProperties,
   noop,
   useMemoClassNames,
-  isH5,
-  isWeapp
+  isNormalClass,
+  isExternalClass
 } from "../common/utils";
 import { View } from "@tarojs/components";
 import "./index.less";
@@ -51,7 +51,7 @@ const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
   }, [VanOverlayStyle, props.style, props.zIndex, props.className]);
   return (
     <VanTransition
-      className={classnames(isH5 && props.className, isWeapp && "custom-class", "van-overlay")}
+      className={classnames(isNormalClass && props.className, isExternalClass && "custom-class", "van-overlay")}
       style={Style}
       show={props.show}
       duration={props.duration}

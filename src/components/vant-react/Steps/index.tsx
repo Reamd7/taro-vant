@@ -7,8 +7,8 @@ import {
   noop,
   useMemoClassNames,
   useMemoBem,
-  isWeapp,
-  isH5
+  isExternalClass,
+  isNormalClass
 } from "../common/utils";
 import "./index.less";
 
@@ -63,8 +63,8 @@ const VanSteps: Taro.FunctionComponent<VanStepsProp> = props => {
   return (
     <View
       className={classname(
-        isWeapp && "custom-class",
-        isH5 && props.className,
+        isExternalClass && "custom-class",
+        isNormalClass && props.className,
         bem("steps", [direction])
       )}
     >

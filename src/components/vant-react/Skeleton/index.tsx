@@ -5,10 +5,10 @@ import { View } from "@tarojs/components";
 import {
   useMemoClassNames,
   useMemoBem,
-  isWeapp,
-  isH5,
   useMemoCssProperties,
-  useMemoAddUnit
+  useMemoAddUnit,
+  isExternalClass,
+  isNormalClass
 } from "../common/utils";
 
 export type VanSkeletonPops = {
@@ -52,16 +52,16 @@ const VanSkeleton: Taro.FunctionComponent<VanSkeletonPops> = props => {
   return loading ? (
     <View
       className={classname(
-        isWeapp && "custom-class",
-        isH5 && props.className,
+        isExternalClass && "custom-class",
+        isNormalClass && props.className,
         bem("skeleton", [{ animate }])
       )}
     >
       {avatar && (
         <View
           className={classname(
-            isH5 && props.avatarClass,
-            isWeapp && "avatar-class",
+            isNormalClass && props.avatarClass,
+            isExternalClass && "avatar-class",
             bem("skeleton__avatar", [avatarShape])
           )}
           style={css({
@@ -74,8 +74,8 @@ const VanSkeleton: Taro.FunctionComponent<VanSkeletonPops> = props => {
         {title && (
           <View
             className={classname(
-              isH5 && props.titleClass,
-              isWeapp && "title-class",
+              isNormalClass && props.titleClass,
+              isExternalClass && "title-class",
               bem("skeleton__title")
             )}
             style={css({
@@ -88,8 +88,8 @@ const VanSkeleton: Taro.FunctionComponent<VanSkeletonPops> = props => {
             <View
               key={key}
               className={classname(
-                isWeapp && "row-class",
-                isH5 && props.rowClass,
+                isExternalClass && "row-class",
+                isNormalClass && props.rowClass,
                 bem("skeleton__row")
               )}
               style={css({

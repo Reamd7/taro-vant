@@ -1,6 +1,6 @@
 import Taro, { useState, useCallback, NodesRef, useEffect, useRef } from "@tarojs/taro";
 import "./index.less";
-import { ActiveProps, useMemoClassNames, useMemoBem, isH5, isWeapp, useMemoCssProperties, getRect, useMemoAddUnit, useScopeRef } from "../common/utils";
+import { ActiveProps, useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, useMemoCssProperties, getRect, useMemoAddUnit, useScopeRef } from "../common/utils";
 import { View } from "@tarojs/components";
 import usePersistFn from "src/common/hooks/usePersistFn";
 import usePageScrollMixin from "../common/mixins/page-scroll";
@@ -133,8 +133,8 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
 
   return <View className={
     classnames(
-      isH5 && props.className,
-      isWeapp && 'custom-class',
+      isNormalClass && props.className,
+      isExternalClass && 'custom-class',
       'van-sticky'
     )
   } style={css({

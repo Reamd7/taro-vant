@@ -5,8 +5,8 @@ import {
   useMemoBem,
   useMemoClassNames,
   useMemoCssProperties,
-  isH5,
-  isWeapp
+  isNormalClass,
+  isExternalClass
 } from "../common/utils";
 import VanIcon from "../icon";
 import VanLoading from "../Loading";
@@ -121,8 +121,8 @@ const VanButton: Taro.FunctionComponent<VanButtonProps> = (props) => {
       id={props.id}
       data-detail={dataset}
       className={classnames(
-        isH5 && props.className,
-        isWeapp && 'custom-class',
+        isNormalClass && props.className,
+        isExternalClass && 'custom-class',
         bem("button", [
           type,
           size,
@@ -141,8 +141,8 @@ const VanButton: Taro.FunctionComponent<VanButtonProps> = (props) => {
       )}
       hoverClass={classnames(
         "van-button--active",
-        isWeapp && "hover-class",
-        isH5 && props.hoverClass
+        isExternalClass && "hover-class",
+        isNormalClass && props.hoverClass
       )}
       lang={props.lang}
       formType={props.formType}
@@ -170,14 +170,14 @@ const VanButton: Taro.FunctionComponent<VanButtonProps> = (props) => {
           <VanLoading
             className={
               classnames(
-                isH5 && props.loadingClass,
-                isWeapp && 'loading-class'
+                isNormalClass && props.loadingClass,
+                isExternalClass && 'loading-class'
               )
             }
             custom-class={
               classnames(
-                isH5 && props.loadingClass,
-                isWeapp && 'loading-class'
+                isNormalClass && props.loadingClass,
+                isExternalClass && 'loading-class'
               )
             }
             size={loadingSize}

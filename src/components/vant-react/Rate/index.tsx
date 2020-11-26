@@ -1,7 +1,7 @@
 import { View } from '@tarojs/components';
 import { ITouchEvent } from '@tarojs/components/types/common';
 import Taro, { useMemo, useCallback } from '@tarojs/taro';
-import { useScope, getAllRect, isH5, isWeapp, useMemoAddUnit, useMemoClassNames, useMemoCssProperties, ActiveProps } from '../common/utils';
+import { useScope, getAllRect, isExternalClass, isNormalClass, useMemoAddUnit, useMemoClassNames, useMemoCssProperties, ActiveProps } from '../common/utils';
 import VanIcon from '../icon';
 
 import "./index.less";
@@ -81,8 +81,8 @@ const VanRate: Taro.FunctionComponent<VanRateProps> = (props: ActiveVanRateProps
   return <View
     className={classnames(
       'van-rate',
-      isWeapp && 'custom-class',
-      isH5 && props.className
+      isExternalClass && 'custom-class',
+      isNormalClass && props.className
     )}
     onTouchMove={(event) => {
       if (!touchable) return;
@@ -140,12 +140,12 @@ const VanRate: Taro.FunctionComponent<VanRateProps> = (props: ActiveVanRateProps
             <VanIcon
               name={index + 0.5 <= Value ? icon : voidIcon}
               className={classnames(
-                isH5 && props.iconClass,
-                isWeapp && 'icon-class',
+                isNormalClass && props.iconClass,
+                isExternalClass && 'icon-class',
               )}
               custom-class={classnames(
-                isH5 && props.iconClass,
-                isWeapp && 'icon-class',
+                isNormalClass && props.iconClass,
+                isExternalClass && 'icon-class',
               )}
               // data-score={index - 0.5}
               color={disabled ? disabledColor : index + 0.5 <= Value ? color : voidColor}
@@ -157,12 +157,12 @@ const VanRate: Taro.FunctionComponent<VanRateProps> = (props: ActiveVanRateProps
             <VanIcon
               name={index + 1 <= Value ? icon : voidIcon}
               className={classnames(
-                isH5 && props.iconClass,
-                isWeapp && 'icon-class',
+                isNormalClass && props.iconClass,
+                isExternalClass && 'icon-class',
               )}
               custom-class={classnames(
-                isH5 && props.iconClass,
-                isWeapp && 'icon-class',
+                isNormalClass && props.iconClass,
+                isExternalClass && 'icon-class',
               )}
               // data-score={index}
               color={disabled ? disabledColor : index + 1 <= Value ? color : voidColor}
@@ -179,13 +179,13 @@ const VanRate: Taro.FunctionComponent<VanRateProps> = (props: ActiveVanRateProps
               name={index + 1 <= Value ? icon : voidIcon}
               className={classnames(
                 "van-rate__icon",
-                isH5 && props.iconClass,
-                isWeapp && 'icon-class',
+                isNormalClass && props.iconClass,
+                isExternalClass && 'icon-class',
               )}
               custom-class={classnames(
                 "van-rate__icon",
-                isH5 && props.iconClass,
-                isWeapp && 'icon-class',
+                isNormalClass && props.iconClass,
+                isExternalClass && 'icon-class',
               )}
               color={disabled ? disabledColor : index + 1 <= Value ? color : voidColor}
               size={size}

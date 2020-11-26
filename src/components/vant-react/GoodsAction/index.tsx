@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import "./index.less";
-import { useMemoBem, isWeapp, isH5, useMemoClassNames } from "../common/utils";
+import { useMemoBem, isExternalClass, isNormalClass, useMemoClassNames } from "../common/utils";
 import { View } from "@tarojs/components";
 
 export type VanGoodsActionProps = {
@@ -25,8 +25,8 @@ const VanGoodsAction: Taro.FunctionComponent<VanGoodsActionProps> = (props: Acti
 
   return <View className={
     classnames(
-      isWeapp && "custom-class",
-      isH5 && props.className,
+      isExternalClass && "custom-class",
+      isNormalClass && props.className,
       bem('goods-action', { safe: safeAreaInsetBottom })
     )
   }>

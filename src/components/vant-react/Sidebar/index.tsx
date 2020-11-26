@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import "./index.less";
 import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
 import { View } from "@tarojs/components";
-import { isWeapp, isH5, useMemoClassNames } from "../common/utils";
+import { isExternalClass, isNormalClass, useMemoClassNames } from "../common/utils";
 import { useRelationPropsInject } from "../common/relation";
 import { ActiveRelationVanSidebarItemProps, VanSidebarItemProps } from "./item";
 
@@ -33,8 +33,8 @@ const VanSidebar: Taro.FunctionComponent<VanSidebarProps> = (props) => {
   return <View className={
     classnames(
       "van-sidebar",
-      isWeapp && "custom-class",
-      isH5 && props.className
+      isExternalClass && "custom-class",
+      isNormalClass && props.className
     )
   }>
     {props.children}

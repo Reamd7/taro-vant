@@ -1,7 +1,6 @@
 import Taro, {
   useState,
   useRef,
-  
   useEffect,
   useCallback
 } from "@tarojs/taro";
@@ -13,12 +12,10 @@ import { ITouchEvent } from "@tarojs/components/types/common";
 import {
   useMemoClassNames,
   useMemoBem,
-  isWeapp,
-  isH5,
   useMemoCssProperties,
   noop,
   getRect,
-  requestAnimationFrame, useScope
+  requestAnimationFrame, useScope, isExternalClass, isNormalClass
 } from "../common/utils";
 
 export type VanNoticeBarProps = {
@@ -176,8 +173,8 @@ const VanNoticeBar: Taro.FunctionComponent<VanNoticeBarProps> = props => {
   return show ? (
     <View
       className={classnames(
-        isWeapp && "custom-class",
-        isH5 && props.className,
+        isExternalClass && "custom-class",
+        isNormalClass && props.className,
         bem("notice-bar", { withicon: mode, wrapable })
       )}
       style={css({

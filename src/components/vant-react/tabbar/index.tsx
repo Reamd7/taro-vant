@@ -1,6 +1,6 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { useMemoClassNames, ActiveProps, isH5, isWeapp, useMemoBem } from "../common/utils";
+import { useMemoClassNames, ActiveProps, isExternalClass, isNormalClass, useMemoBem } from "../common/utils";
 import "./index.less";
 import { useRelationPropsInject } from "../common/relation";
 import { VanTabbarItemProps, ActiveRelationVanTabbarItemProps } from "./item";
@@ -76,8 +76,8 @@ const VanTabbar: Taro.FunctionComponent<VanTabbarProps> = (props: ActiveVanTabba
 
   return <View
     className={classnames(
-      isH5 && props.className,
-      isWeapp && "custom-class",
+      isNormalClass && props.className,
+      isExternalClass && "custom-class",
       border && 'van-hairline--top-bottom', // hairline.less
       bem('tabbar', { fixed, safe: safeAreaInsetBottom })
     )}

@@ -9,9 +9,9 @@ import {
   useMemoClassNames,
   useMemoBem,
   useMemoCssProperties,
-  isWeapp,
-  isH5,
-  ActiveProps
+  ActiveProps,
+  isNormalClass,
+  isExternalClass
 } from "../common/utils";
 import { Block, View } from "@tarojs/components";
 import VanIcon from "../icon";
@@ -109,8 +109,8 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
   const { currentDuration, display, classes, inited } = data;
 
   const popupClass = useMemo(() => classNames(
-    isH5 && props.className,
-    isWeapp && 'custom-class',
+    isNormalClass && props.className,
+    isExternalClass && 'custom-class',
     classes,
     bem("popup", [
       position,
@@ -147,15 +147,15 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
         name={closeIcon}
         className={
           classNames(
-            isH5 && props.closeIconClass,
-            isWeapp && "close-icon-class",
+            isNormalClass && props.closeIconClass,
+            isExternalClass && "close-icon-class",
             `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
           )
         }
         custom-class={
           classNames(
-            isH5 && props.closeIconClass,
-            isWeapp && "close-icon-class",
+            isNormalClass && props.closeIconClass,
+            isExternalClass && "close-icon-class",
             `van-popup__close-icon van-popup__close-icon--${closeIconPosition}`
           )
         }

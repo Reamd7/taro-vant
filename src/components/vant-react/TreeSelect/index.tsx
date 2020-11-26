@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import "./index.less";
 import VanIcon, { VanIconProps } from "../icon";
-import { ActiveProps, noop, useMemoAddUnit, useMemoClassNames, useMemoBem, isWeapp, isH5 } from "../common/utils";
+import { ActiveProps, noop, useMemoAddUnit, useMemoClassNames, useMemoBem, isExternalClass, isNormalClass } from "../common/utils";
 import VanSidebarItem, { VanSidebarItemProps } from "../Sidebar/item";
 import { View, ScrollView } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
@@ -153,19 +153,19 @@ const VanTreeSelect: Taro.FunctionComponent<VanTreeSelectProps> = (props: Active
           className={
             classnames(
               "van-ellipsis",
-              isWeapp && "content-item-class",
-              isH5 && props.contentItemClass,
+              isExternalClass && "content-item-class",
+              isNormalClass && props.contentItemClass,
               bem('tree-select__item', {
                 active: activeId.includes(item.id),
                 disabled: item.disabled
               }),
               activeId.includes(item.id) && (
-                (isWeapp && 'content-active-class') ||
-                (isH5 && props.contentActiveClass)
+                (isExternalClass && 'content-active-class') ||
+                (isNormalClass && props.contentActiveClass)
               ),
               item.disabled && (
-                (isWeapp && 'content-disabled-class') ||
-                (isH5 && props.contentDisabledClass)
+                (isExternalClass && 'content-disabled-class') ||
+                (isNormalClass && props.contentDisabledClass)
               )
             )
           }

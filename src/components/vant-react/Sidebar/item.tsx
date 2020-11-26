@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import "./item.less";
-import { useMemoBem, useMemoClassNames, isWeapp, isH5 } from "../common/utils";
+import { useMemoBem, useMemoClassNames, isExternalClass, isNormalClass } from "../common/utils";
 import { useRelationPropsListener } from "../common/relation";
 import { View } from "@tarojs/components";
 import VanInfo, { VanInfoProps } from "../info";
@@ -48,19 +48,19 @@ const VanSidebarItem: Taro.FC<VanSidebarItemProps> = (props) => {
   return <View
     className={
       classnames(
-        isWeapp && 'custom-class',
-        isH5 && props.className,
+        isExternalClass && 'custom-class',
+        isNormalClass && props.className,
         disabled && (
-          isWeapp && 'disabled-class'
+          isExternalClass && 'disabled-class'
         ),
         disabled && (
-          isH5 && props.disabledClass
+          isNormalClass && props.disabledClass
         ),
         selected && (
-          isWeapp && 'active-class'
+          isExternalClass && 'active-class'
         ),
         selected && (
-          isH5 && props.activeClass
+          isNormalClass && props.activeClass
         ),
         bem('sidebar-item', { selected, disabled })
       )

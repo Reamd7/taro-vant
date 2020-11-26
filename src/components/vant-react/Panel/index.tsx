@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 
 import "./index.less";
-import { useMemoClassNames, isH5, isWeapp } from "../common/utils";
+import { useMemoClassNames, isExternalClass, isNormalClass } from "../common/utils";
 import { View } from "@tarojs/components";
 import VanCell from "../Cell";
 
@@ -31,8 +31,8 @@ const VanPanel: Taro.FunctionComponent<VanPanelProps> = props => {
     <View
       className={classnames(
         "van-panel van-hairline--top-bottom",
-        isH5 && props.className,
-        isWeapp && props["custom-class"]
+        isNormalClass && props.className,
+        isExternalClass && props["custom-class"]
       )}
     >
       {title || desc || status ? (
@@ -53,8 +53,8 @@ const VanPanel: Taro.FunctionComponent<VanPanelProps> = props => {
         <View
           className={classnames(
             "van-panel__footer van-hairline--top",
-            isWeapp && "footer-class",
-            isH5 && props.footerClass
+            isExternalClass && "footer-class",
+            isNormalClass && props.footerClass
           )}
         >
           {props.renderFooter}

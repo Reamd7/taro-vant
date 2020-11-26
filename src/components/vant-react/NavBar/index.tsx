@@ -7,9 +7,9 @@ import {
   useMemoBem,
   getSystemInfoSync,
   useMemoAddUnit,
-  isWeapp,
-  isH5,
-  useScope
+  useScope,
+  isExternalClass,
+  isNormalClass
 } from "src/components/vant-react/common/utils";
 import VanIcon from "src/components/vant-react/icon";
 import "./index.less"
@@ -97,8 +97,8 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
       <View
         className={classnames(
           bem("nav-bar", { fixed }),
-          isWeapp && "custom-class",
-          isH5 && props.className,
+          isExternalClass && "custom-class",
+          isNormalClass && props.className,
           border && "van-hairline--bottom"
         )}
         style={{

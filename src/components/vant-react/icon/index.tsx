@@ -4,9 +4,9 @@ import classNames from "classnames";
 import {
   useMemoAddUnit,
   useMemoCssProperties,
-  isWeapp,
-  isH5,
-  noop
+  noop,
+  isExternalClass,
+  isNormalClass
 } from "../common/utils";
 import VanInfo from "../info";
 import "./icon.less";
@@ -41,8 +41,8 @@ const VanIcon: Taro.FunctionComponent<VanIconProps & IconEvents> = props => {
       className={classNames(
         classPrefix,
         isImageName ? "van-icon--image" : `${classPrefix}-${name}`,
-        isWeapp && "custom-class",
-        isH5 && props.className
+        isExternalClass && "custom-class",
+        isNormalClass && props.className
       )}
       style={CssProperties({
         color,

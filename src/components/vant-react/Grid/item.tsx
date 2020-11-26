@@ -4,10 +4,10 @@ import "./item.less";
 import {
   useMemoClassNames,
   useMemoBem,
-  isH5,
-  isWeapp,
   useMemoAddUnit,
-  noop
+  noop,
+  isNormalClass,
+  isExternalClass
 } from "../common/utils";
 import { View, Block, Text } from "@tarojs/components";
 // import { useGridItemContext } from "./utils";
@@ -125,8 +125,8 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
   return (
     <View
       className={classnames(
-        isH5 && props.className,
-        isWeapp && "custom-class",
+        isNormalClass && props.className,
+        isExternalClass && "custom-class",
         bem("grid-item", { square })
       )}
       style={viewStyle}
@@ -134,8 +134,8 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
     >
       <View
         className={classnames(
-          isWeapp && "content-class",
-          isH5 && props.className,
+          isExternalClass && "content-class",
+          isNormalClass && props.className,
           bem("grid-item__content", [
             direction,
             { center, square, clickable, surround: border && gutter }
@@ -151,8 +151,8 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
               <View
                 className={classnames(
                   "van-grid-item__icon",
-                  isH5 && props.iconClass,
-                  isWeapp && "icon-class"
+                  isNormalClass && props.iconClass,
+                  isExternalClass && "icon-class"
                 )}
               >
                 {icon ? (
@@ -170,8 +170,8 @@ const VanGridItem: Taro.FunctionComponent<VanGridItemProps> = props => {
               </View>
               <View
                 className={classnames(
-                  isH5 && props.textClass,
-                  isWeapp && "text-class",
+                  isNormalClass && props.textClass,
+                  isExternalClass && "text-class",
                   "van-grid-item__text"
                 )}
               >

@@ -1,6 +1,6 @@
 import { Input, View } from '@tarojs/components';
 import Taro, { useEffect, useMemo, useRef, useState, useCallback } from '@tarojs/taro';
-import { isH5, isWeapp, noop, useMemoAddUnit, useMemoBem, useMemoClassNames, useMemoCssProperties, ActiveProps } from '../common/utils';
+import { isExternalClass, isNormalClass, noop, useMemoAddUnit, useMemoBem, useMemoClassNames, useMemoCssProperties, ActiveProps } from '../common/utils';
 import { InputProps } from '@tarojs/components/types/Input';
 import { BaseEventOrig, CommonEventFunction, ITouchEvent } from '@tarojs/components/types/common';
 import Big from 'big.js';
@@ -219,8 +219,8 @@ const VanStepper: Taro.FunctionComponent<VanStepperProps> = (props: ActiveVanSte
   const size = useMemo(() => addUnit(buttonSize), [buttonSize]);
   return <View className={classnames(
     'van-stepper',
-    isH5 && props.className,
-    isWeapp && 'custom-class'
+    isNormalClass && props.className,
+    isExternalClass && 'custom-class'
   )}>
     {showMinus && <View
       style={css({
@@ -228,8 +228,8 @@ const VanStepper: Taro.FunctionComponent<VanStepperProps> = (props: ActiveVanSte
         height: size
       })}
       className={classnames(
-        isH5 && props.minusClass,
-        isWeapp && 'minus-class',
+        isNormalClass && props.minusClass,
+        isExternalClass && 'minus-class',
         bem('stepper__minus', { disabled: disabled || disableMinus || currentValue <= min })
       )}
       hoverClass="van-stepper__minus--hover"
@@ -244,8 +244,8 @@ const VanStepper: Taro.FunctionComponent<VanStepperProps> = (props: ActiveVanSte
     <Input
       type={integer ? 'number' : 'digit'}
       className={classnames(
-        isH5 && props.inputClass,
-        isWeapp && 'input-class',
+        isNormalClass && props.inputClass,
+        isExternalClass && 'input-class',
         bem('stepper__input', { disabled: disabled || disableInput })
       )}
       style={css({
@@ -266,8 +266,8 @@ const VanStepper: Taro.FunctionComponent<VanStepperProps> = (props: ActiveVanSte
         height: size
       })}
       className={classnames(
-        isH5 && props.minusClass,
-        isWeapp && 'plus-class',
+        isNormalClass && props.minusClass,
+        isExternalClass && 'plus-class',
         bem('stepper__plus', { disabled: disabled || disablePlus || currentValue >= max })
       )}
       hoverClass="van-stepper__plus--hover"

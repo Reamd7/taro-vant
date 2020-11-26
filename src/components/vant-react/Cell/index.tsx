@@ -5,8 +5,8 @@ import {
   useMemoClassNames,
   useMemoBem,
   useMemoCssProperties,
-  isH5,
-  isWeapp
+  isNormalClass,
+  isExternalClass
 } from "../common/utils";
 import VanIcon, { VanIconProps } from "../icon";
 import "./index.less";
@@ -84,8 +84,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
   return (
     <View
       className={classNames(
-        isH5 && props.className,
-        isWeapp && "custom-class",
+        isNormalClass && props.className,
+        isExternalClass && "custom-class",
         bem("cell", [
           size,
           {
@@ -98,8 +98,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
       )}
       hoverClass={(isLink || clickable) ? classNames(
         "van-cell--hover",
-        isWeapp && "hover-class",
-        isH5 && props.hoverClass
+        isExternalClass && "hover-class",
+        isNormalClass && props.hoverClass
       ) : ''}
       hoverStayTime={70}
       style={props.customStyle}
@@ -117,8 +117,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
 
       <View
         className={classNames(
-          isH5 && props.titleClass,
-          isWeapp && "title-class",
+          isNormalClass && props.titleClass,
+          isExternalClass && "title-class",
           "van-cell__title"
         )}
         style={{
@@ -139,8 +139,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
           <View
             className={classNames(
               "van-cell__label",
-              isWeapp && "label-class",
-              isH5 && props.labelClass
+              isExternalClass && "label-class",
+              isNormalClass && props.labelClass
             )}
           >
             {props.useLabelSlot && props.renderLabel}
@@ -151,8 +151,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
       <View
         className={classNames(
           "van-cell__value",
-          isWeapp && "value-class",
-          isH5 && props.valueClass
+          isExternalClass && "value-class",
+          isNormalClass && props.valueClass
         )}
       >
         {props.value || props.value === 0 ? (
@@ -168,13 +168,13 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
               props.arrowDirection ? `arrow-${props.arrowDirection}` : "arrow"
             }
             custom-class={classNames(
-              isH5 && props.rightIconClass,
-              isWeapp && "right-icon-class",
+              isNormalClass && props.rightIconClass,
+              isExternalClass && "right-icon-class",
               "van-cell__right-icon"
             )}
             className={classNames(
-              isH5 && props.rightIconClass,
-              isWeapp && "right-icon-class",
+              isNormalClass && props.rightIconClass,
+              isExternalClass && "right-icon-class",
               "van-cell__right-icon"
             )}
           />

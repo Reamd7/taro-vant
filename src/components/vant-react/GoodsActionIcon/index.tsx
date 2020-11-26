@@ -4,8 +4,8 @@ import "./index.less";
 import VanButton, { VanButtonProps } from "../Button";
 import VanIcon, { VanIconProps } from "../icon";
 import { MixinLinkProps, useLink } from "../common/mixins/link";
-import { View, Text } from "@tarojs/components";
-import { useMemoClassNames, isWeapp, isH5 } from "../common/utils";
+import { Text } from "@tarojs/components";
+import { useMemoClassNames, isExternalClass, isNormalClass } from "../common/utils";
 
 export type VanGoodsActionIconProps = {
   'icon-class'?: string;
@@ -66,8 +66,8 @@ const VanGoodsActionIcon: Taro.FunctionComponent<VanGoodsActionIconProps> = (pro
   >
     <Text className={
       classnames(
-        isWeapp && "text-class",
-        isH5 && props.textClass
+        isExternalClass && "text-class",
+        isNormalClass && props.textClass
       )
     }>{props.text}</Text>
   </VanButton>

@@ -4,8 +4,8 @@ import {
   useMemoBem,
   useMemoAddUnit,
   useMemoCssProperties,
-  isH5,
-  isWeapp
+  isNormalClass,
+  isExternalClass
 } from "../../common/utils";
 import { View } from "@tarojs/components";
 import "./index.less";
@@ -34,8 +34,8 @@ const VanCol: Taro.FunctionComponent<{
   return (
     <View
       className={classname(
-        isH5 && props.classNames,
-        isWeapp && 'custom-class',
+        isNormalClass && props.classNames,
+        isExternalClass && 'custom-class',
         bem("col", [span]),
         offset && `van-col--offset-${offset}`
       )}

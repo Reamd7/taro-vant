@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import "./item.less";
 import { useRelationPropsListener } from "../common/relation";
-import { useMemoBem, useMemoClassNames, isH5, isWeapp } from "../common/utils";
+import { useMemoBem, useMemoClassNames, isExternalClass, isNormalClass } from "../common/utils";
 import { View } from "@tarojs/components";
 import VanIcon, { VanIconProps } from "../icon";
 import VanInfo, { VanInfoProps } from "../info";
@@ -50,8 +50,8 @@ const VanTabbarItem: Taro.FunctionComponent<VanTabbarItemProps> = (props) => {
     className={
       classnames(
         bem('tabbar-item', { active }),
-        isH5 && props.className,
-        isWeapp && 'custom-class'
+        isNormalClass && props.className,
+        isExternalClass && 'custom-class'
       )
     }
     style={{

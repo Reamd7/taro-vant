@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 
 import "./index.less";
-import { useMemoBem, useMemoAddUnit, useMemoClassNames, isH5, isWeapp, noop, ActiveProps } from "../common/utils";
+import { useMemoBem, useMemoAddUnit, useMemoClassNames, isExternalClass, isNormalClass, noop, ActiveProps } from "../common/utils";
 import { View } from "@tarojs/components";
 import { VanCellProps } from "../Cell";
 import VanFieldText from "../Field/VanFieldText";
@@ -82,8 +82,8 @@ const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props: ActiveVanSearc
     className={
       classname(
         bem('search', { withaction: props.showAction || props.useActionSlot }),
-        isH5 && props.className,
-        isWeapp && 'custom-class'
+        isNormalClass && props.className,
+        isExternalClass && 'custom-class'
       )
     }
     style={{ background: props.background }}
@@ -95,8 +95,8 @@ const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props: ActiveVanSearc
       <View className={
         classname(
           "van-search__field",
-          isH5 && props.fieldClass,
-          isWeapp && 'field-class'
+          isNormalClass && props.fieldClass,
+          isExternalClass && 'field-class'
         )
       }>
         <VanFieldText

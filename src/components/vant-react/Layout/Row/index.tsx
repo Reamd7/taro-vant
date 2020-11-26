@@ -3,8 +3,8 @@ import {
   useMemoClassNames,
   useMemoAddUnit,
   useMemoCssProperties,
-  isH5,
-  isWeapp
+  isExternalClass,
+  isNormalClass
 } from "../../common/utils";
 import { View } from "@tarojs/components";
 import "./index.less";
@@ -31,8 +31,8 @@ const VanRow: Taro.FunctionComponent<{
   return (
     <View
       className={classname(
-        isH5 && props.classNames,
-        isWeapp && "custom-class",
+        isNormalClass && props.classNames,
+        isExternalClass && "custom-class",
         "van-row"
       )}
       style={viewStyle}

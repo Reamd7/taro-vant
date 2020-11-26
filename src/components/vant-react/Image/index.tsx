@@ -6,8 +6,8 @@ import {
   useMemoClassNames,
   useMemoBem,
   noop,
-  isH5,
-  isWeapp,
+  isNormalClass,
+  isExternalClass,
 } from "../common/utils";
 import VanIcon from "../icon";
 import "./index.less";
@@ -114,8 +114,8 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
   return (
     <View
       className={classnames(
-        isH5 && props.className,
-        isWeapp && 'custom-class',
+        isNormalClass && props.className,
+        isExternalClass && 'custom-class',
         bem("image", { round })
       )}
       style={containerStyle}
@@ -127,8 +127,8 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
           mode={mode}
           lazyLoad={props.lazyLoad}
           className={classnames(
-            isH5 && props.imageClass,
-            isWeapp && "image-class",
+            isNormalClass && props.imageClass,
+            isExternalClass && "image-class",
             "van-image__img",
             props.fit && (
               FIT_MODE_MAP[props.fit] && `van-image__img--${FIT_MODE_MAP[props.fit]}`
@@ -141,8 +141,8 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
       )}
       {showLoading && data.loading && (
         <View className={classnames(
-          isH5 && props.loadingClass,
-          isWeapp && "loading-class",
+          isNormalClass && props.loadingClass,
+          isExternalClass && "loading-class",
           "van-image__loading")
         }>
           {props.useLoadingSlot ? (
@@ -154,8 +154,8 @@ const VanImage: Taro.FunctionComponent<VanImageProps> = (props) => {
       )}
       {showError && data.error && (
         <View className={classnames(
-          isH5 && props.errorClass,
-          isWeapp && "error-class",
+          isNormalClass && props.errorClass,
+          isExternalClass && "error-class",
           "van-image__error"
         )}>
           {props.useErrorSlot ? (

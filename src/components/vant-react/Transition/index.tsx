@@ -7,7 +7,7 @@ import {
   MixinsTransitionDefaultProps
 } from "src/components/vant-react/common/mixins/transition";
 import "./index.less";
-import { useMemoClassNames, isWeapp, isH5 } from "../common/utils";
+import { useMemoClassNames, isExternalClass, isNormalClass } from "../common/utils";
 /**
  * 默认 VanTransition 支持的动画效果
  */
@@ -28,10 +28,10 @@ const VanTransition: Taro.FunctionComponent<VanTransitionProps> = props => {
     return classname(
       "van-transition",
       classes,
-      isH5 && props.className,
-      isWeapp && "custom-class"
+      isNormalClass && props.className,
+      isExternalClass && "custom-class"
     );
-  }, [classes, isH5 && props.className]);
+  }, [classes, isNormalClass && props.className]);
   const ViewStyle = useMemo(() => {
     return {
       transitionDuration: currentDuration + "ms",

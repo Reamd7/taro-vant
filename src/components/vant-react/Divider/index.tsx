@@ -5,9 +5,9 @@ import {
   useMemoBem,
   useMemoClassNames,
   useMemoCssProperties,
-  isWeapp,
   useMemoAddUnit,
-  isH5
+  isExternalClass,
+  isNormalClass
 } from "../common/utils";
 import { View } from "@tarojs/components";
 
@@ -33,8 +33,8 @@ const VanDivider: Taro.FunctionComponent<VanDividerProps> = props => {
   return (
     <View
       className={classnames(
-        isWeapp && "custom-class",
-        isH5 && props.className,
+        isExternalClass && "custom-class",
+        isNormalClass && props.className,
         bem("divider", [{ dashed, hairline }, contentPosition])
       )}
       style={css({

@@ -4,8 +4,8 @@ import { View } from "@tarojs/components";
 import {
   useMemoClassNames,
   useMemoAddUnit,
-  isWeapp,
-  isH5
+  isExternalClass,
+  isNormalClass
 } from "../common/utils";
 import "./index.less";
 import { VanIconProps } from "../icon";
@@ -106,8 +106,8 @@ const VanGrid: Taro.FunctionComponent<VanGridProps> = props => {
     <View
       className={classnames(
         "van-grid",
-        isWeapp && "custom-class",
-        isH5 && props.className,
+        isExternalClass && "custom-class",
+        isNormalClass && props.className,
         border && !gutter ? "van-hairline--top" : ""
       )}
       style={viewStyle}

@@ -4,11 +4,11 @@ import "./index.less";
 import { View } from "@tarojs/components";
 import {
   useMemoClassNames,
-  isWeapp,
-  isH5,
   useMemoBem,
   noop,
-  useMemoCssProperties
+  useMemoCssProperties,
+  isExternalClass,
+  isNormalClass
 } from "../common/utils";
 import VanIcon from "../icon";
 
@@ -59,8 +59,8 @@ const VanTag: Taro.FunctionComponent<VanTagProps> = props => {
   return (
     <View
       className={classnames(
-        isWeapp && "custom-class",
-        isH5 && props.className,
+        isExternalClass && "custom-class",
+        isNormalClass && props.className,
         bem("tag", [type, size, { mark, plain, round }])
       )}
       style={ViewStyle}

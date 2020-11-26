@@ -2,7 +2,7 @@ import Taro, { useState, useRef, useMemo } from "@tarojs/taro";
 
 import "./index.less";
 import { View, Block } from "@tarojs/components";
-import { useMemoClassNames, isH5, isWeapp, useMemoAddUnit } from "../common/utils";
+import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit } from "../common/utils";
 import VanLoading from "../Loading";
 import VanPickerCol, { VanPickerColProps } from "../PickerCol";
 import useUpdateEffect from "src/common/hooks/useUpdateEffect";
@@ -104,8 +104,8 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
   const renderToolbar = showToolbar && <View className={
     classnames(
       "van-picker__toolbar",
-      isH5 && props.toolbarClass,
-      isWeapp && "toolbar-class"
+      isNormalClass && props.toolbarClass,
+      isExternalClass && "toolbar-class"
     )
   }>
     <View
@@ -133,8 +133,8 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
   return <View className={
     classnames(
       "van-picker",
-      isH5 && props.className,
-      isWeapp && "custom-class"
+      isNormalClass && props.className,
+      isExternalClass && "custom-class"
     )
   }
     onTouchStart={e => {
@@ -170,8 +170,8 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
             value={valueList[index]}
             visibleItemCount={visibleItemCount}
             activeClass={classnames(
-              isH5 && props.activeClass,
-              isWeapp && 'active-class'
+              isNormalClass && props.activeClass,
+              isExternalClass && 'active-class'
             )}
             onChange={(itemIndex) => {
               if (valueList[index] !== itemIndex) {

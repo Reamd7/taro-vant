@@ -2,7 +2,7 @@ import Taro, { useEffect, useState, useRef } from "@tarojs/taro";
 
 import "./VanCollapseItem.less";
 import { VanIconProps } from "../icon";
-import { ActiveProps, useMemoBem, useMemoClassNames, isWeapp, isH5, getRect, useScope, useScopeRef } from "../common/utils";
+import { ActiveProps, useMemoBem, useMemoClassNames, getRect, useScopeRef, isNormalClass, isExternalClass } from "../common/utils";
 import { View } from "@tarojs/components";
 import VanCell, { VanCellProps } from "../Cell";
 import { useRelationPropsListener } from "../common/relation";
@@ -118,8 +118,8 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
   return <View className={
     classnames(
       "van-collapse-item van-cell",
-      isWeapp && 'custom-class',
-      isH5 && props.className,
+      isExternalClass && 'custom-class',
+      isNormalClass && props.className,
       props.index !== 0 ? 'van-hairline--top' : ''
     )
   } ref={scopeRef}>
@@ -172,8 +172,8 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
       <View
         className={classnames(
           "van-collapse-item__content",
-          isWeapp && "content-class",
-          isH5 && props.contentClass
+          isExternalClass && "content-class",
+          isNormalClass && props.contentClass
         )}
       >
         {props.children}

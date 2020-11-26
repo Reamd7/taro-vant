@@ -2,7 +2,7 @@ import Taro, { useState, useMemo, useCallback } from "@tarojs/taro";
 
 import "./index.less";
 import { View } from "@tarojs/components";
-import { useMemoClassNames, isH5, isWeapp, useMemoAddUnit, range } from "../common/utils";
+import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, range } from "../common/utils";
 import usePersistFn from "src/common/hooks/usePersistFn";
 import useUpdateEffect from "src/common/hooks/useUpdateEffect";
 
@@ -164,8 +164,8 @@ const VanPickerCol = <Key extends string>(props: VanPickerColProps<Key>) => {
     className={
       classnames(
         "van-picker-column",
-        isH5 && props.className,
-        isWeapp && 'custom-class'
+        isNormalClass && props.className,
+        isExternalClass && 'custom-class'
       )
     }
     style={{

@@ -5,10 +5,10 @@ import { BLUE } from "../common/color";
 import { View } from "@tarojs/components";
 import {
   useMemoClassNames,
-  isWeapp,
-  isH5,
   useMemoAddUnit,
-  useMemoCssProperties
+  useMemoCssProperties,
+  isExternalClass,
+  isNormalClass
 } from "../common/utils";
 
 export type VanProgressProps = {
@@ -49,8 +49,8 @@ const VanProgress: Taro.FunctionComponent<VanProgressProps> = props => {
     <View
       className={classname(
         "van-progress",
-        isWeapp && "custom-class",
-        isH5 && props.className
+        isExternalClass && "custom-class",
+        isNormalClass && props.className
       )}
       style={css({
         height: addUnit(strokeWidth),

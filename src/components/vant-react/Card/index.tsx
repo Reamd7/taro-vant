@@ -1,7 +1,7 @@
 import Taro, { useMemo } from "@tarojs/taro";
 import { Image, View, Text } from "@tarojs/components";
 import "./index.less";
-import { useMemoClassNames, isH5, isWeapp, useMemoBem, ActiveProps } from "../common/utils";
+import { useMemoClassNames, useMemoBem, ActiveProps, isExternalClass, isNormalClass } from "../common/utils";
 import VanTag from "../Tag";
 import { useLink } from "../common/mixins/link";
 
@@ -82,8 +82,8 @@ const VanCard: Taro.FunctionComponent<VanCardProps> = (props: ActiveVanCardProps
   const jumpLink = useLink(props, "thumbLink")
 
   return <View className={classnames(
-    isH5 && props.className,
-    isWeapp && "custom-class",
+    isNormalClass && props.className,
+    isExternalClass && "custom-class",
     "van-card"
   )}>
     <View className={
@@ -104,14 +104,14 @@ const VanCard: Taro.FunctionComponent<VanCardProps> = (props: ActiveVanCardProps
         <View>
           {title ? <View className={classnames(
             "van-card__title",
-            isH5 && props.titleClass,
-            isWeapp && "title-class"
+            isNormalClass && props.titleClass,
+            isExternalClass && "title-class"
           )}>{title}</View> : props.renderTitle}
           {
             desc ? <View className={classnames(
               "van-card__desc",
-              isH5 && props.descClass,
-              isWeapp && "desc-class"
+              isNormalClass && props.descClass,
+              isExternalClass && "desc-class"
             )}>{desc}</View> : props.renderDesc
           }
           {props.renderTags}
@@ -123,8 +123,8 @@ const VanCard: Taro.FunctionComponent<VanCardProps> = (props: ActiveVanCardProps
               <View className={
                 classnames(
                   "van-card__price",
-                  isH5 && props.priceClass,
-                  isWeapp && "price-class"
+                  isNormalClass && props.priceClass,
+                  isExternalClass && "price-class"
                 )
               }>
                 <Text>{currency}</Text>
@@ -137,8 +137,8 @@ const VanCard: Taro.FunctionComponent<VanCardProps> = (props: ActiveVanCardProps
               <View className={
                 classnames(
                   "van-card__origin-price",
-                  isH5 && props.originPriceClass,
-                  isWeapp && "origin-price-class"
+                  isNormalClass && props.originPriceClass,
+                  isExternalClass && "origin-price-class"
                 )
               }>
                 {currency}{originPrice}
@@ -147,8 +147,8 @@ const VanCard: Taro.FunctionComponent<VanCardProps> = (props: ActiveVanCardProps
           {num ? <View className={
             classnames(
               "van-card__num",
-              isWeapp && "num-class",
-              isH5 && props.numClass
+              isExternalClass && "num-class",
+              isNormalClass && props.numClass
             )
           }>x {num}</View> : props.renderNum}
           {props.renderBottom}

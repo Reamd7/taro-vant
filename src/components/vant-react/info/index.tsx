@@ -1,7 +1,7 @@
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.less";
-import { useMemoClassNames, isH5, isWeapp } from "../common/utils";
+import { useMemoClassNames, isExternalClass, isNormalClass } from "../common/utils";
 
 export type VanInfoProps = {
   dot?: boolean;
@@ -17,8 +17,8 @@ const VanInfo: Taro.FunctionComponent<VanInfoProps> = function(props: VanInfoPro
   return (props.info != null && props.info !== "") || props.dot ? (
     <View
       className={classnames(
-        isH5 && props.className,
-        isWeapp && "custom-class",
+        isNormalClass && props.className,
+        isExternalClass && "custom-class",
         "van-info",
         props.dot && "van-info--dot"
       )}

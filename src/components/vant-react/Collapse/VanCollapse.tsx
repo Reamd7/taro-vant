@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 
 import "./VanCollapse.less";
 import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
-import { ActiveProps, useMemoClassNames, isWeapp, isH5, noop } from "../common/utils";
+import { ActiveProps, useMemoClassNames, noop, isExternalClass, isNormalClass } from "../common/utils";
 import { View } from "@tarojs/components";
 import { useRelationPropsInject } from "../common/relation";
 import { ActiveVanCollapseItemProps, ActiveRelationVanCollapseItemProps } from "./VanCollapseItem";
@@ -78,8 +78,8 @@ const VanCollapse: Taro.FunctionComponent<VanCollapseProps> = (props: ActiveVanC
   return <View
     className={
       classnames(
-        isWeapp && 'custom-class',
-        isH5 && props.className,
+        isExternalClass && 'custom-class',
+        isNormalClass && props.className,
         'van-collapse',
         props.border && 'van-hairline--top-bottom'
       )
