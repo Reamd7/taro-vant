@@ -6,6 +6,7 @@ import VanIcon, { VanIconProps } from '../icon';
 import { View, Video, Text, Block, Image } from '@tarojs/components';
 import { useMemoAddUnit, useMemoClassNames, ActiveProps } from '../common/utils';
 import VanLoading from '../Loading';
+import { chooseFile } from './utils';
 
 interface BaseType {
   // 文件名称、视频将在全屏预览时作为标题显示
@@ -188,95 +189,7 @@ const DefaultProps = {
   FileList: []
 } as const
 
-type ActiveVanUploaderProps = ActiveProps<VanUploaderProps, keyof typeof DefaultProps>;
-
-const IMAGE_REGEXP = /\.(jpeg|jpg|gif|png|svg|webp|jfif|bmp|dpg)/i;
-const VIDEO_REGEXP = /\.(mp4|mpg|mpeg|dat|asf|avi|rm|rmvb|mov|wmv|flv|mkv)/i;
-export function isImageUrl(url: string): boolean {
-  return IMAGE_REGEXP.test(url);
-}
-export function isVideoUrl(url: string): boolean {
-  return VIDEO_REGEXP.test(url);
-}
-
-export function chooseFile({
-  accept, multiple, capture, compressed, maxDuration, sizeType, camera, maxCount
-}: {
-  accept: ActiveVanUploaderProps['accept'],
-  multiple: ActiveVanUploaderProps['multiple'],
-  capture: ActiveVanUploaderProps['capture'],
-  compressed: ActiveVanUploaderProps['compressed'],
-  maxDuration: ActiveVanUploaderProps['maxDuration'],
-  sizeType: ActiveVanUploaderProps['sizeType'],
-  camera: ActiveVanUploaderProps['camera'],
-  maxCount: ActiveVanUploaderProps['maxCount'],
-}): Promise<VanUploaderFile[]> {
-  switch (accept) {
-    case "image":
-      return Taro.chooseImage({
-        count: multiple ? Math.min(maxCount, 0) : 1,
-        sourceType: capture,
-        sizeType,
-      }).then(res => {
-        // console.log(res)
-        return res.tempFiles.filter(item=>{
-          return IMAGE_REGEXP.test(item.path)
-        }).map(item => ({
-          url: item.path,
-          type: "image",
-          thumb: item.path,
-          name: item.originalFileObj ? item.originalFileObj.name : undefined,
-          size: item.size,
-        }))
-      })
-    case 'media':
-      return Taro.chooseMedia({
-        count: multiple ? Math.min(maxCount, 9) : 1,
-        sourceType: capture,
-        maxDuration,
-        sizeType,
-        camera,
-      }).then(res => {
-        // console.log(res)
-        return res.tempFiles.map((item) => ({
-          url: item.tempFilePath,
-          type: res.type as ("image" | "video"),
-          thumb: res.type === 'video' ? item.thumbTempFilePath : item.tempFilePath,
-          // name: item. ??
-          size: item.size,
-        }))
-      })
-    case "video":
-      return Taro.chooseVideo({
-        sourceType: capture,
-        compressed,
-        maxDuration,
-        camera,
-      }).then((res) => {
-        // console.log(res)
-        return VIDEO_REGEXP.test(res.tempFilePath) ? [{
-          type: "video",
-          url: res.tempFilePath,
-          thumb: (res as any).thumbTempFilePath,
-          // thumb: res.tempFilePath,
-          size: res.size,
-        }] : []
-      })
-    default:
-      return Taro.chooseMessageFile({
-        count: multiple ? maxCount : 1,
-        type: accept,
-      }).then(res => {
-        // console.log(res)
-        return res.tempFiles.map((item) => ({
-          url: item.path,
-          type: "file",
-          name: item.name,
-          size: item.size,
-        }))
-      })
-  }
-}
+export type ActiveVanUploaderProps = ActiveProps<VanUploaderProps, keyof typeof DefaultProps>;
 
 const VanUploader: Taro.FunctionComponent<VanUploaderProps> = (props: ActiveVanUploaderProps) => {
   const lists = useMemo(() => {
@@ -309,7 +222,6 @@ const VanUploader: Taro.FunctionComponent<VanUploaderProps> = (props: ActiveVanU
       camera: props.camera,
       maxCount: maxCount - lists.length,
     }).then(async file => {
-
       const { onBeforeRead } = props;
       if (
         onBeforeRead !== undefined
@@ -349,10 +261,14 @@ const VanUploader: Taro.FunctionComponent<VanUploaderProps> = (props: ActiveVanU
     Taro.previewImage({
       urls: lists.filter((item) => item.type === "image").map((item) => item.url || ''),
       current: lists[index].url,
-    }).catch(() => {
-      Taro.showToast({
-        title: '预览图片失败', icon: 'none'
-      })
+      // success: (res) => {
+      //   console.log(res)
+      // },
+      fail: () => {
+        Taro.showToast({
+          title: '预览图片失败', icon: 'none'
+        })
+      }
     })
   }, [props.previewFullImage, lists])
 

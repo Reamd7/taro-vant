@@ -38,6 +38,7 @@ export default function VanUploaderPage() {
     <DemoBlock title="基础用法" padding>
       <VanUploader
         name="1"
+        accept="image"
         FileList={fileList1}
         onAfterRead={(file) => {
           setfileList1(
@@ -51,11 +52,31 @@ export default function VanUploaderPage() {
         }}
       />
     </DemoBlock>
-    <DemoBlock title="上传视频" padding>
+    <DemoBlock title="上传视频 video" padding>
       <VanUploader
+      multiple
         accept="video"
         FileList={fileList7}
         onAfterRead={(file) => {
+          setfileList7(
+            fileList7.concat(file)
+          )
+        }}
+        onDelete={({ index }) => {
+          const fileList = fileList7;
+          fileList.splice(index, 1);
+          setfileList7(fileList.slice())
+        }}
+      />
+    </DemoBlock>
+    <DemoBlock title="媒体选择 media" padding>
+      <VanUploader
+        accept="media"
+        multiple
+        maxCount={9}
+        FileList={fileList7}
+        onAfterRead={(file) => {
+          console.log(file)
           setfileList7(
             fileList7.concat(file)
           )
@@ -110,6 +131,7 @@ export default function VanUploaderPage() {
     <DemoBlock title="限制上传数量" padding>
       <VanUploader
         multiple
+        accept="all"
         FileList={fileList8}
         onAfterRead={(file) => {
           setfileList8(

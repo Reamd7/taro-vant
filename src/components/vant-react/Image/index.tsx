@@ -21,7 +21,7 @@ const FIT_MODE_MAP = {
   heightFix: "heightFix",
 } as const;
 type sourceProps = React.ComponentProps<typeof Image>;
-type VanImageProps = {
+export type VanImageProps = {
   ['custom-class']?: string;
   className?: string;
   ['loading-class']?: string;
