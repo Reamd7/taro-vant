@@ -30,6 +30,7 @@ return page.route
 ```
 
 10. 处理h5中 navigate
+- 绕过了修改代理taro navigate的能力，直接hack，用MutationObserver监听taro_router的变动。
 11. 处理文件上传控件（这个肯定需要单独出来制作一个组件，需要注意的是，不同小程序平台对于文件选择都有不同的情况）
 
 ### TODO
