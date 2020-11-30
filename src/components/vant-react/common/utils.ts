@@ -263,3 +263,12 @@ export function range(num: number, min: number, max: number) {
 export type ActiveProps<P, K extends keyof P> = Omit<P, K> & Required<Pick<P, K>> & {
   children?: React.ReactNode
 };
+
+export function ExtClass<P extends any>(props: P, classNames: keyof P): string | undefined {
+  if (isNormalClass) return props[classNames as any];
+  if (classNames === "className") {
+    return props['custom-class']
+  } else {
+    return props[(classNames as any).replace(/[A-Z]/g, (v) => "-" + v.toLowerCase())]
+  }
+}

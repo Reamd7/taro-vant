@@ -1,12 +1,24 @@
-import Taro, { useState, useRef, useMemo } from "@tarojs/taro";
+import Taro, { useState, useRef, useMemo, useCallback } from "@tarojs/taro";
 
 import "./index.less";
-import { View, Block } from "@tarojs/components";
-import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit } from "../common/utils";
+import "../PickerCol/index.less";
+import { View, Block, PickerView, PickerViewColumn } from "@tarojs/components";
+import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, ActiveProps, noop, nextTick } from "../common/utils";
 import VanLoading from "../Loading";
-import VanPickerCol, { VanPickerColProps } from "../PickerCol";
+// import VanPickerCol, { VanPickerColProps } from "../PickerCol";
 import useUpdateEffect from "src/common/hooks/useUpdateEffect";
 import usePersistFn from "src/common/hooks/usePersistFn";
+import VanPickerCol, { VanPickerColProps } from "../PickerCol";
+
+const arrayDiff = (arr: number[], arr2: number[]) => {
+  if (arr.length !== arr2.length) return false;
+  return arr.reduce((res, val, index) => {
+    if (res) {
+      return val === arr2[index]
+    }
+    return false;
+  }, true)
+}
 
 export type VanPickerProps<Key extends string> = {
   ['custom-class']?: string;
@@ -29,39 +41,92 @@ export type VanPickerProps<Key extends string> = {
 
   valueKey: Key;
   defaultIndex?: number;
+  value?: number[];
   columns: Array<{
     key: string;
     values: NonNullable<VanPickerColProps<Key>['initialOptions']>;
     defaultIndex?: number;
   }>
   textFormatter?: (key: string, value: string) => string;
-  value?: number[];
   onConfirm?: (val: number[]) => void;
   onChange?: ((val: number[]) => void | false);
   onCancel?: (val: number[]) => void;
 }
+const DefaultProps = {
+  cancelButtonText: "取消",
+  confirmButtonText: "确认",
+  visibleItemCount: 6,
+  itemHeight: 44,
+  toolbarPosition: "top",
+  defaultIndex: 0,
+  columns: [],
+  showToolbar: false,
+  onChange: noop
+}
 
+export type ActiveVanPickerProps<Key extends string> = ActiveProps<VanPickerProps<Key>, keyof typeof DefaultProps>
+type ArrayValue<E extends Array<unknown>> = E extends Array<infer R> ? R : never
 
-const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
+// 这里默认value 和 defaultIndex 都不包含 disabled
+//
+const VanPicker = <Key extends string>(_props: VanPickerProps<Key>) => {
+  const props = _props as ActiveVanPickerProps<Key>
   const {
-    cancelButtonText = "取消",
-    confirmButtonText = "确认",
-    visibleItemCount = 6,
-    itemHeight = 44,
+    cancelButtonText,
+    confirmButtonText,
+    visibleItemCount,
+    itemHeight,
     valueKey,
-    toolbarPosition = "top",
-    defaultIndex = 0,
-    columns = [],
-    showToolbar = false
+    toolbarPosition,
+    defaultIndex,
+    columns,
+    showToolbar,
+
+    value,
+    onChange
   } = props;
+
+  const handleValue = useCallback((v2: number[]) =>
+    v2.map((v, i, arr) => {
+      const val = columns[i].values[v];
+      const length = arr.length;
+      if (val) {
+        if (typeof val !== "string" && val.disabled) {
+          if (v === 0) {
+            return 1
+          } else if (v === (length - 1)) {
+            return length - 2 // BUG 这里可能有bug，假如这个list只有一个disabled，是有问题的。
+          } else {
+            return v + 1
+          }
+        } else {
+          return v
+        }
+      } else {
+        // undefined 找到最后一个 非 disabled
+        return columns[i].values.reduceRight<number>(function(res, value, index) {
+          if (res === undefined) {
+            if (typeof value === "string") {
+              return index
+            } else if (value.disabled){
+              return undefined as any
+            } else {
+              return index
+            }
+          } else {
+            return res;
+          }
+        }, undefined as any)
+      }
+    }), [columns]);
 
   const classnames = useMemoClassNames();
   const addUnit = useMemoAddUnit();
 
-  const value = props.value;
+  const ControlledComponent = 'value' in props
 
   const initialValue = useMemo(() => {
-    if ('value' in props) {
+    if (ControlledComponent) {
       return value || [] // 受控组件
     }
     return columns.map(item => {
@@ -69,43 +134,84 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
     })
   }, []);
 
-  const [valueList, _setValueList] = useState(initialValue);
-
+  const [valueList, _setValueList] = useState(() => {
+    return handleValue(initialValue)
+  });
   const setValueList = usePersistFn(
     (v: number[]) => {
-      if (!('value' in props)) {
+      const newValue = handleValue(v);
+      const reval = arrayDiff(newValue, valueList)
+
+      if (reval) {
         _setValueList(v);
-      }
-      if (props.onChange) {
-        return props.onChange(v);
+        setTimeout(() => {
+          if (!ControlledComponent) { // 非受控组件直接进行修改。
+            _setValueList(newValue);
+          }
+          onChange(newValue); // 受控组件调用onChange进行修改
+        }, 0)
+      } else {
+        if (!ControlledComponent) { // 非受控组件直接进行修改。
+          _setValueList(newValue);
+        }
+        onChange(newValue); // 受控组件调用onChange进行修改
       }
     },
-    [props.onChange, props.value],
+    [onChange, valueList, handleValue],
   );
   /* init 的时候不用执行了 */
   useUpdateEffect(() => {
+    console.log("onValueChange")
     if (value) {
-      _setValueList(value);
+      const newValue = handleValue(value);
+      const reval = arrayDiff(newValue, valueList)
+      if (reval) {
+        _setValueList(value);
+        setTimeout(()=>{
+          _setValueList(newValue);
+        }, 0)
+      } else {
+        _setValueList(newValue);
+      }
     }
-  }, [value]);
+  }, [value, handleValue]);
+
+  useUpdateEffect(()=>{
+    // columns改变了，
+    // 抹平wechat和alipay的差异，
+    if (process.env.TARO_ENV === "alipay") {
+      if (value) {
+        const newValue = handleValue(value);
+        if (!arrayDiff(newValue, value)) {
+          setValueList(
+            newValue
+          )
+        }
+      }
+    }
+  }, [columns])
 
   const confirmVal = useRef<number[]>(initialValue);
-
   const onConfirm = usePersistFn(() => {
     confirmVal.current = valueList.slice()
     props.onConfirm && props.onConfirm(confirmVal.current)
   }, [valueList, props.onConfirm])
-
   const onCancel = usePersistFn(() => {
     _setValueList(confirmVal.current);
     props.onCancel && props.onCancel(confirmVal.current)
   }, [props.onCancel])
 
+  const getOptionText = useCallback((key: string, option: string | ({
+    disabled?: boolean | undefined;
+  } & Record<Key, string>)) => {
+    const val = typeof option === 'object' ? (valueKey ? option[valueKey!] : '') : option;
+    return props.textFormatter ? props.textFormatter(key, val) : val;
+  }, [valueKey, props.textFormatter]);
+
   const renderToolbar = showToolbar && <View className={
     classnames(
       "van-picker__toolbar",
-      isNormalClass && props.toolbarClass,
-      isExternalClass && "toolbar-class"
+      "toolbar-class",
     )
   }>
     <View
@@ -129,7 +235,6 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
     </View>
   </View>
 
-
   return <View className={
     classnames(
       "van-picker",
@@ -141,6 +246,14 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
       e.preventDefault()
       e.stopPropagation()
     }}
+    onTouchMove={e => {
+      e.preventDefault()
+      e.stopPropagation()
+    }}
+    onTouchEnd={e => {
+      e.preventDefault()
+      e.stopPropagation()
+    }}
   >
     {toolbarPosition === 'top' && <Block>
       {renderToolbar}
@@ -148,57 +261,37 @@ const VanPicker = <Key extends string>(props: VanPickerProps<Key>) => {
     {props.loading && <View className="van-picker__loading">
       <VanLoading color="#1989fa" />
     </View>}
-    <View
-      className="van-picker__columns"
-      style={{
-        height: addUnit(itemHeight * visibleItemCount)
-      }}
-      onTouchMove={e => {
-        e.stopPropagation()
-      }}
-    >
-      {columns.map((item, index) => {
-        return <View className="van-picker__column">
-          <VanPickerCol
-            key={item.key}
-            className={props.columnClass}
-            custom-class="column-class"
-            valueKey={valueKey}
-            itemHeight={itemHeight}
-            initialOptions={item.values}
-            defaultValue={item.defaultIndex || defaultIndex}
-            value={valueList[index]}
-            visibleItemCount={visibleItemCount}
-            activeClass={classnames(
-              isNormalClass && props.activeClass,
-              isExternalClass && 'active-class'
-            )}
-            onChange={(itemIndex) => {
-              if (valueList[index] !== itemIndex) {
-                const newList = valueList.slice();
-                newList[index] = itemIndex;
-                return setValueList(newList)
+    <PickerView value={valueList} style={{
+      height: addUnit(itemHeight * visibleItemCount)
+    }} onChange={(e) => {
+      console.log("onChange")
+      const newValue = e.detail.value;
+      setValueList(
+        newValue
+      )
+    }}>
+      {columns.map((item, cindex) => {
+        return <PickerViewColumn key={item.key}>
+          {(item.values).map((option, index) => {
+            return <View
+              key={typeof option === 'object' ? option[valueKey!] : option}
+              style={{
+                height: addUnit(itemHeight),
+                textAlign: 'center',
+                lineHeight: addUnit(itemHeight)
+              }}
+              className={
+                classnames(
+                  "van-ellipsis van-picker-column__item",
+                  ((typeof option === 'object') && option.disabled) && 'van-picker-column__item--disabled',
+                  index === valueList[cindex] && 'van-picker-column__item--selected active-class'
+                )
               }
-              return false
-            }}
-            textFormatter={
-              props.textFormatter ? (val: string) => {
-                return props.textFormatter ? props.textFormatter(item.key, val) : val
-              } : undefined
-            }
-          />
-        </View>
+            >{getOptionText(item.key, option)}</View>
+          })}
+        </PickerViewColumn>
       })}
-      <View className="van-picker__mask" style={{
-        backgroundSize: `100% ${addUnit((itemHeight * visibleItemCount - itemHeight) / 2)}`
-      }} />
-      <View
-        className="van-picker__frame van-hairline--top-bottom"
-        style={{
-          height: addUnit(itemHeight)
-        }}
-      />
-    </View>
+    </PickerView>
     {toolbarPosition === 'bottom' && <Block>
       {renderToolbar}
     </Block>}

@@ -88,7 +88,6 @@ export default function PickerPage() {
         value={showRelate}
         columns={column4}
         onChange={(index) => {
-          setshowRelate(index)
           if (showRelate[0] !== index[0]) {
             const newcolumn4 = column4.slice();
             switch (index[0]) {
@@ -100,6 +99,11 @@ export default function PickerPage() {
                 break;
             }
             setCol4(newcolumn4)
+            setshowRelate(index)
+
+          } else {
+            setshowRelate(index)
+
           }
           console.log(index)
           console.log(index.map((v, i) => column4[i].values[v]))

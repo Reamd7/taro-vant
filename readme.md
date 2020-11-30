@@ -33,6 +33,10 @@ return page.route
 - 绕过了修改代理taro navigate的能力，直接hack，用MutationObserver监听taro_router的变动。
 11. 处理文件上传控件（这个肯定需要单独出来制作一个组件，需要注意的是，不同小程序平台对于文件选择都有不同的情况）
 
+12. picker 组件的问题：
+    - 支付宝小程序和微信小程序的实现是不一样的。
+    支付宝小程序修改columns的时候，是不会触发onChange
+    微信小程序修改columns时候，会触发onChange
 ### TODO
 
 - toast 可能还有未知的问题。
