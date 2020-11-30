@@ -39,3 +39,10 @@ export default function NavBarPpage() {
     </Block>
   );
 }
+
+NavBarPpage.options = {
+  addGlobalClass: true
+}
+NavBarPpage.config = {
+  "navigationBarTitleText": "NavBar 导航栏"
+}

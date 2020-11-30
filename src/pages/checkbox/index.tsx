@@ -189,3 +189,7 @@ export function CheckBoxPage() {
 CheckBoxPage.options = {
   addGlobalClass: true
 }
+
+CheckBoxPage.config = {
+  "navigationBarTitleText": "Checkbox 复选框"
+}

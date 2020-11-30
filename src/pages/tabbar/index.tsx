@@ -119,5 +119,11 @@ const VanTabbarPage: Taro.FunctionComponent<{}> = () => {
     </DemoBlock>
   </Block>
 }
+VanTabbarPage.options = {
+  addGlobalClass: true
+}
+VanTabbarPage.config = {
+  "navigationBarTitleText": "Tabbar 标签栏"
+}
 
 export default VanTabbarPage;

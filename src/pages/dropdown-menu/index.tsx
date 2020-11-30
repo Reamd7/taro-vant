@@ -119,5 +119,8 @@ const VanDropDownMenuPage: Taro.FunctionComponent<{}> = () => {
   </Block>
 
 }
+VanDropDownMenuPage.config = {
+  "navigationBarTitleText": "Dropdown Menu"
+}
 
 export default VanDropDownMenuPage;

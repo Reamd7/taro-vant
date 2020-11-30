@@ -100,3 +100,7 @@ export default function RatePage() {
 RatePage.options = {
   addGlobalClass: true
 }
+
+RatePage.config = {
+  "navigationBarTitleText": "Rate 评分"
+}

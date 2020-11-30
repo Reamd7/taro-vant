@@ -92,3 +92,7 @@ export default function VanGoodsActionPage() {
 VanGoodsActionPage.config = {
   "navigationBarTitleText": "GoodsAction 商品导航"
 }
+
+VanGoodsActionPage.options = {
+  addGlobalClass: true
+}

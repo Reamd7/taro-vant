@@ -96,3 +96,7 @@ export default function ToastPage() {
     </Block>
   );
 }
+
+ToastPage.config = {
+  "navigationBarTitleText": "Toast 轻提示"
+}

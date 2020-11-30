@@ -128,3 +128,7 @@ export default function NotifyPage() {
   );
 }
 
+
+NotifyPage.config = {
+  "navigationBarTitleText": "Notify 消息通知"
+}

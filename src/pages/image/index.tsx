@@ -89,7 +89,7 @@ const ImagePage: Taro.FunctionComponent<{}> = () => {
 };
 
 ImagePage.config = {
-  navigationBarTitleText: "ImagePage 图片",
+  navigationBarTitleText: "Image 图片",
 };
 
 ImagePage.options = {

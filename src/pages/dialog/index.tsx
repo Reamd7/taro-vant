@@ -122,4 +122,8 @@ const VanDialogPage: Taro.FunctionComponent<{}> = () => {
 VanDialogPage.options = {
   addGlobalClass: true
 }
+VanDialogPage.config = {
+  "navigationBarTitleText": "Dialog 弹出框"
+}
+
 export default VanDialogPage;

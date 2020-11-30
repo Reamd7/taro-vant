@@ -246,3 +246,7 @@ export default function VanTagPage() {
 VanTagPage.options = {
   addGlobalClass: true
 };
+
+VanTagPage.config = {
+  "navigationBarTitleText": "Tag 标记"
+}

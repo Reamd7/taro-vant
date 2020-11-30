@@ -65,3 +65,7 @@ export default function ProgressPage() {
 ProgressPage.options = {
   addGlobalClass: true
 };
+
+ProgressPage.config = {
+  addGlobalClass: true
+}

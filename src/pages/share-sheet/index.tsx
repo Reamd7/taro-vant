@@ -141,3 +141,11 @@ export default function ShareSheetPage() {
     </View>
   );
 }
+
+ShareSheetPage.options = {
+  addGlobalClass: true
+}
+
+ShareSheetPage.config = {
+  "navigationBarTitleText": "Card 商品卡片"
+}

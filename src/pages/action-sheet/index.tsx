@@ -152,4 +152,8 @@ const ActionSheetPage: Taro.FunctionComponent<void> = () => {
 ActionSheetPage.options = {
   addGlobalClass: true
 };
+
+ActionSheetPage.config = {
+  "navigationBarTitleText": "ActionSheet 上拉菜单"
+}
 export default ActionSheetPage;

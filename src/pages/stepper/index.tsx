@@ -69,3 +69,7 @@ export default function StepperPage() {
 StepperPage.options = {
   addGlobalClass: true
 }
+
+StepperPage.config = {
+  "navigationBarTitleText": "Stepper 步进器"
+}

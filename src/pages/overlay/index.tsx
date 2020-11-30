@@ -114,4 +114,8 @@ const OverLayPage: Taro.FunctionComponent = () => {
 OverLayPage.options = {
   addGlobalClass: true
 };
+OverLayPage.config = {
+  "navigationBarTitleText": "Overlay 遮罩层"
+}
+
 export default OverLayPage;

@@ -58,3 +58,10 @@ export default function EmptyPage() {
     </View>
   );
 }
+
+EmptyPage.config = {
+  "navigationBarTitleText": "Empty 空状态"
+}
+EmptyPage.options = {
+  addGlobalClass: true
+}

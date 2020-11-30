@@ -55,3 +55,11 @@ export default function NoticeBarPage() {
     </Block>
   );
 }
+
+NoticeBarPage.options = {
+  addGlobalClass: true
+}
+
+NoticeBarPage.config = {
+  "navigationBarTitleText": "NoticeBar 通告栏"
+}

@@ -93,6 +93,9 @@ export default function SearchPage() {
 }
 
 SearchPage.options = {
-  "navigationBarTitleText": "Search 搜索",
   addGlobalClass: true
+}
+
+SearchPage.config = {
+  "navigationBarTitleText": "Search 搜索"
 }

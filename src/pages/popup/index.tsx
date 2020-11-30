@@ -224,3 +224,11 @@ export default function PopUpPage() {
     </View>
   );
 }
+
+PopUpPage.options = {
+  addGlobalClass: true
+}
+
+PopUpPage.config = {
+  "navigationBarTitleText": "Popup 弹出层"
+}

@@ -63,5 +63,8 @@ export default function SwitchPage() {
 
 SwitchPage.options = {
   addGlobalClass: true,
+}
+
+SwitchPage.config = {
   navigationBarTitleText: "Switch 开关"
 }

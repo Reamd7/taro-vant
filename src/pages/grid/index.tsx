@@ -166,3 +166,7 @@ export default function GridPage() {
     </Block>
   );
 }
+
+GridPage.config = {
+  "navigationBarTitleText": "Grid 宫格"
+}

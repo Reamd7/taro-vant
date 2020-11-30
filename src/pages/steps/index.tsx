@@ -82,3 +82,7 @@ export default function StepsPage() {
     </View>
   );
 }
+
+StepsPage.config = {
+  "navigationBarTitleText": "Steps 步骤条"
+}

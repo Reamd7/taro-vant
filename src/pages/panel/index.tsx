@@ -38,3 +38,11 @@ export default function PanelPage() {
     </View>
   );
 }
+
+PanelPage.options = {
+  addGlobalClass: true
+}
+
+PanelPage.config = {
+  "navigationBarTitleText": "Panel 面板"
+}

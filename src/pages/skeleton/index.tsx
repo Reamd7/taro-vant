@@ -47,3 +47,7 @@ export default function SkPage() {
 SkPage.options = {
   addGlobalClass: true
 }
+
+SkPage.config = {
+  "navigationBarTitleText": "Skeleton 骨架屏"
+}

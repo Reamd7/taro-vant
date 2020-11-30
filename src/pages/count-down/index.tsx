@@ -61,6 +61,7 @@ export default function CountDownPage() {
             text="开始"
             icon="play-circle-o"
             gid="test"
+            total={3}
             index={0}
             onClick={() => {
               ref.current && ref.current.start();
@@ -70,6 +71,7 @@ export default function CountDownPage() {
             text="暂停"
             icon="pause-circle-o"
             gid="test"
+            total={3}
             index={1}
             onClick={() => {
               ref.current && ref.current.pause();
@@ -80,6 +82,7 @@ export default function CountDownPage() {
             icon="replay"
             gid="test"
             index={2}
+            total={3}
             onClick={() => {
               ref.current && ref.current.reset();
             }}
@@ -94,3 +97,7 @@ export default function CountDownPage() {
 CountDownPage.options = {
   addGlobalClass: true
 };
+
+CountDownPage.config = {
+  "navigationBarTitleText": "CountDown 倒计时"
+}

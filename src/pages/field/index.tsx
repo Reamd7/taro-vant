@@ -158,3 +158,10 @@ export default function FieldPage() {
     </DemoBlock>
   </View>
 }
+
+FieldPage.options = {
+  addGlobalClass: true
+}
+FieldPage.config = {
+  "navigationBarTitleText": "Field 输入框"
+}

@@ -70,3 +70,10 @@ export default function SwipeCellPage() {
     </View>
   );
 }
+
+SwipeCellPage.options = {
+  addGlobalClass: true
+}
+SwipeCellPage.config = {
+  "navigationBarTitleText": "SwipeCell 滑动单元格"
+}

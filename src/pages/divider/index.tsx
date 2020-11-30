@@ -33,3 +33,10 @@ export default function DivPage() {
     </View>
   );
 }
+
+DivPage.options = {
+  addGlobalClass: true
+}
+DivPage.config = {
+  "navigationBarTitleText": "Divider 分割线"
+}

@@ -62,3 +62,7 @@ export default function DateTimePicker() {
     </DemoBlock>
   </View>
 }
+
+DateTimePicker.config = {
+  "navigationBarTitleText": "DatetimePicker 时间选择"
+}

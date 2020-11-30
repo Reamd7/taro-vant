@@ -136,3 +136,10 @@ export default function TransitionPage() {
     </DemoBlock>
   );
 }
+
+TransitionPage.options = {
+  addGlobalClass: true
+}
+TransitionPage.config = {
+  "navigationBarTitleText": "Transition 动画"
+}

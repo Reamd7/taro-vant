@@ -56,5 +56,7 @@ const Layout: Taro.FunctionComponent<{}> = () => {
 Layout.config = {
   navigationBarTitleText: "Layout 布局",
 };
-
+Layout.options = {
+  addGlobalClass: true
+}
 export default Layout;
