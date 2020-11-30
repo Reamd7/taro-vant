@@ -3,12 +3,12 @@ import Taro, { useState, useRef, useMemo, useCallback } from "@tarojs/taro";
 import "./index.less";
 import "../PickerCol/index.less";
 import { View, Block, PickerView, PickerViewColumn } from "@tarojs/components";
-import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, ActiveProps, noop, nextTick } from "../common/utils";
+import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, ActiveProps, noop, pxUnit, isH5 } from "../common/utils";
 import VanLoading from "../Loading";
 // import VanPickerCol, { VanPickerColProps } from "../PickerCol";
 import useUpdateEffect from "src/common/hooks/useUpdateEffect";
 import usePersistFn from "src/common/hooks/usePersistFn";
-import VanPickerCol, { VanPickerColProps } from "../PickerCol";
+import { VanPickerColProps } from "../PickerCol";
 
 const arrayDiff = (arr: number[], arr2: number[]) => {
   if (arr.length !== arr2.length) return false;
@@ -161,7 +161,7 @@ const VanPicker = <Key extends string>(_props: VanPickerProps<Key>) => {
   );
   /* init 的时候不用执行了 */
   useUpdateEffect(() => {
-    console.log("onValueChange")
+    // console.log("onValueChange")
     if (value) {
       const newValue = handleValue(value);
       const reval = arrayDiff(newValue, valueList)
@@ -243,15 +243,12 @@ const VanPicker = <Key extends string>(_props: VanPickerProps<Key>) => {
     )
   }
     onTouchStart={e => {
-      e.preventDefault()
       e.stopPropagation()
     }}
     onTouchMove={e => {
-      e.preventDefault()
       e.stopPropagation()
     }}
     onTouchEnd={e => {
-      e.preventDefault()
       e.stopPropagation()
     }}
   >
@@ -261,30 +258,40 @@ const VanPicker = <Key extends string>(_props: VanPickerProps<Key>) => {
     {props.loading && <View className="van-picker__loading">
       <VanLoading color="#1989fa" />
     </View>}
-    <PickerView value={valueList} style={{
-      height: addUnit(itemHeight * visibleItemCount)
-    }} onChange={(e) => {
-      console.log("onChange")
-      const newValue = e.detail.value;
-      setValueList(
-        newValue
-      )
-    }}>
+    <PickerView
+      value={valueList}
+      style={{
+        height: addUnit(itemHeight * visibleItemCount)
+      }}
+      onChange={(e) => {
+        // console.log("onChange")
+        const newValue = e.detail.value;
+        setValueList(
+          newValue
+        )
+      }}
+      maskClass="van-picker__mask"
+      maskStyle={`background-size: ${`100% ${addUnit((itemHeight * visibleItemCount - itemHeight) / 2)}`}`}
+      indicatorStyle={`height: ${pxUnit(itemHeight)};`}
+    >
+      {/* {{
+        backgroundSize: `100% ${addUnit((itemHeight * visibleItemCount - itemHeight) / 2)}`
+      }} */}
       {columns.map((item, cindex) => {
         return <PickerViewColumn key={item.key}>
           {(item.values).map((option, index) => {
             return <View
               key={typeof option === 'object' ? option[valueKey!] : option}
-              style={{
-                height: addUnit(itemHeight),
-                textAlign: 'center',
-                lineHeight: addUnit(itemHeight)
-              }}
               className={
                 classnames(
                   "van-ellipsis van-picker-column__item",
                   ((typeof option === 'object') && option.disabled) && 'van-picker-column__item--disabled',
-                  index === valueList[cindex] && 'van-picker-column__item--selected active-class'
+                  index === valueList[cindex] && `van-picker-column__item--selected ${
+                    classnames(
+                      isNormalClass && props.activeClass,
+                      isExternalClass && 'active-class'
+                    )
+                  }`,
                 )
               }
             >{getOptionText(item.key, option)}</View>

@@ -10,9 +10,6 @@ const wxsPattern = glob.sync("**/*.wxs", { cwd: SRC, mark: true }).map(file => {
 });
 
 
-console.log(wxsPattern)
-
-
 const config = {
   projectName: 'myshop',
   date: '2020-9-19',
@@ -106,6 +103,15 @@ const config = {
     options: {
       ignore: ['*.js', '*.jsx', '*.ts', "*.tsx", "*.css", "*.less", "*.scss"]
     }
+  },
+  terser: {
+    enable: process.env.TARO_ENV !== "h5",
+    config: {
+      ecma: 2015
+    }
+  },
+  csso: {
+    enable: process.env.TARO_ENV !== "h5",
   }
 }
 

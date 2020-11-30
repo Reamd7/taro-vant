@@ -17,6 +17,7 @@ export function addUnit(value?: string | number | null) {
     return value
   }
 }
+
 function CssProperties<T extends CSSProperties>(dict?: T | null | undefined) {
   if (!dict) return {} as T;
   return Object.keys(dict).reduce<T>((res, key) => {
@@ -94,7 +95,9 @@ export function getSystemInfoSync() {
   }
   return systemInfo;
 }
-
+export function pxUnit(value: number) {
+  return (value * getSystemInfoSync().pixelRatio  / dpi) + "px"
+}
 // let lastTime = 0;
 // export const requestAnimationFrame = function (callback) {
 //   var currTime = Date.now();

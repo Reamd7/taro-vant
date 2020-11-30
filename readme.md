@@ -37,6 +37,10 @@ return page.route
     - 支付宝小程序和微信小程序的实现是不一样的。
     支付宝小程序修改columns的时候，是不会触发onChange
     微信小程序修改columns时候，会触发onChange
+
+    - 微信小程序 indicatorStyle 这个组件不支持rpx
+
+    - 支付宝小程序 模拟器中切换了机型，dpr不变 my.getSystemInfoSync().pixelRatio 总是 2
 ### TODO
 
 - toast 可能还有未知的问题。
