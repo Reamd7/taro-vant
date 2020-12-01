@@ -51,7 +51,7 @@ class App extends Component {
       // new v2 // NumberKeyboard 数字键盘 // new v2
       // new v2 // PasswordInput 密码输入框 // new v2
       'pages/picker/index',         // Picker 选择器
-      // 'pages/radio/index',       // Radio 单选框 TODO
+      'pages/radio/index',          // Radio 单选框
       'pages/rate/index',           // Rate 评分
       'pages/search/index',         // Search 搜索
       /**

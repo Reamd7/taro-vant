@@ -14,7 +14,7 @@ type VanCheckBoxGroupProps = {
 
 const DefaultProps = {
   disabled: false,
-  max: -1
+  max: Infinity
 } as const
 
 type ActiveVanRateProps = ActiveProps<VanCheckBoxGroupProps, keyof typeof DefaultProps>
@@ -33,13 +33,47 @@ const VanCheckBoxGroup: Taro.FunctionComponent<VanCheckBoxGroupProps> = (props: 
   const CheckboxChange = useCallback((key: string, checked: boolean) => {
     let newCurrentValue: string[] = currentValue || [];
     if (disabled) return false; // 禁用就全局禁用不允许修改
+    const acticeKeyStatus = currentValue && currentValue.includes(key)
+
+    if (checked !== acticeKeyStatus) {
+      // 改变状态
+      if (checked) {
+        if (max === 1 || !currentValue) {
+          newCurrentValue = [key]
+        } else if (currentValue.length < max) {
+          newCurrentValue = [...currentValue, key];
+        } else {
+          return false;
+        }
+      } else {
+        if (max === 1 || !currentValue) {
+          newCurrentValue = []
+        } else if (acticeKeyStatus) {
+          newCurrentValue = currentValue.filter(val => val !== key)
+        } else {
+          return false;
+        }
+      }
+      setCurrentValueOnChange(newCurrentValue)
+      return true
+    } else {
+      return false
+    }
+
+
     if (checked) {
       // add
       if (currentValue) {
         if (currentValue.includes(key)) {
+          if (max === 1) {
+            setCurrentValueOnChange([])
+          }
           return false;
         } else {
-          if (max === -1 || currentValue.length < max) {
+          if (max === 1) {
+            setCurrentValueOnChange([])
+          }
+          if (currentValue.length < max) {
             newCurrentValue = [...currentValue, key];
           } else {
             return false;
