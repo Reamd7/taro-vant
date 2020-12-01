@@ -54,49 +54,37 @@ function MockNav() {
 }
 
 // const navigateBack = Taro.navigateBack.bind({}) as typeof Taro.navigateBack;
-// const navigateTo = Taro.navigateTo.bind({}) as typeof Taro.navigateTo;
+const navigateTo = Taro.navigateTo.bind({}) as typeof Taro.navigateTo;
 // const reLaunch = Taro.reLaunch.bind({}) as typeof Taro.reLaunch;
 // const redirectTo = Taro.redirectTo.bind({}) as typeof Taro.redirectTo;
 // Taro.navigateBack = function (options) {
 //   console.log(options)
-//   return navigateBack(options).then(value => {
-//     setTimeout(() => {
-//       console.log(Taro.getCurrentPages())
-//       routerListener.next(getCurrentPage())
-//     }, 0)
-//     return value
-//   })
-// }
-// Taro.navigateTo = function (options) {
-//   console.log(options)
-//   return navigateTo(options).then(value => {
+//   console.log(getCurrentPage())
 
-//     setTimeout(() => {
-//       console.log(Taro.getCurrentPages())
-//       routerListener.next(getCurrentPage())
-//     }, 0)
+//   return navigateBack(options).then(value => {
 //     return value
 //   })
 // }
+let scrollTop = 0;
+Taro.navigateTo = function (options) {
+  console.log(options)
+  const page = getCurrentPage();
+  if (page) {
+    scrollTop = ((page as any)._rendered.dom as HTMLElement).parentElement!.parentElement!.scrollTop
+  }
+  return navigateTo(options).then(value => {
+    return value
+  })
+}
 // Taro.reLaunch = function (options) {
 //   console.log(options)
 //   return reLaunch(options).then(value => {
-
-//     setTimeout(() => {
-//       console.log(Taro.getCurrentPages())
-//       routerListener.next(getCurrentPage())
-//     }, 0)
 //     return value
 //   })
 // }
 // Taro.redirectTo = function (options) {
 //   console.log(options)
 //   return redirectTo(options).then(value => {
-
-//     setTimeout(() => {
-//       console.log(Taro.getCurrentPages())
-//       routerListener.next(getCurrentPage())
-//     }, 0)
 //     return value
 //   })
 // }
@@ -139,6 +127,7 @@ window.addEventListener("load", function () {
           //     v.style.display = "block"; // 先回显。再隐藏
           //   }
           // });
+          val.dataset.prevOffestTop = "" + scrollTop
 
           // 模拟背景色
           let cs = window.getComputedStyle(val.firstElementChild!, null);
@@ -206,8 +195,13 @@ window.addEventListener("load", function () {
           val.style.touchAction = "none";
           val.style.pointerEvents = "none"
 
+          scrollTop = val.dataset.prevOffestTop ? Number(val.dataset.prevOffestTop) : 0
+          target.scrollTo({
+            top: scrollTop
+          })
+
           val = document.body.appendChild(val) as HTMLDivElement;
-          setTimeout(()=>{
+          setTimeout(() => {
             val.style.opacity = "0"
             val.style.transform = "translate(100%, 0)";
 
