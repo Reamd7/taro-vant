@@ -120,7 +120,7 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
 
   }, [scope, setDataAfterDiff, container, offsetTop]);
 
-  usePageScrollMixin(onScroll)
+  usePageScrollMixin(onScroll, !!props.disabled)
 
   useEffect(() => {
     if (scope) {

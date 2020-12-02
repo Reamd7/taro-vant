@@ -84,8 +84,8 @@ export function useScope() {
 export const noop = () => { }
 
 let systemInfo: Taro.getSystemInfoSync.Result | null = null;
-export function nextTick(fn: Function) {
-  return setTimeout(() => {
+export function nextTick(fn: (...args: any[]) => any) {
+  return Taro.nextTick ? Taro.nextTick(fn) : setTimeout(() => {
     fn();
   }, 1000 / 30);
 }
@@ -96,7 +96,7 @@ export function getSystemInfoSync() {
   return systemInfo;
 }
 export function pxUnit(value: number) {
-  return (value * getSystemInfoSync().pixelRatio  / dpi) + "px"
+  return (value * getSystemInfoSync().pixelRatio / dpi) + "px"
 }
 // let lastTime = 0;
 // export const requestAnimationFrame = function (callback) {
@@ -268,10 +268,17 @@ export type ActiveProps<P, K extends keyof P> = Omit<P, K> & Required<Pick<P, K>
 };
 
 export function ExtClass<P extends any>(props: P, classNames: keyof P): string | undefined {
-  if (isNormalClass) return props[classNames as any];
-  if (classNames === "className") {
-    return props['custom-class']
-  } else {
-    return props[(classNames as any).replace(/[A-Z]/g, (v) => "-" + v.toLowerCase())]
-  }
+  const _class = classNames as string;
+  const isnormalclassname = !(_class).includes("-"); // _class => className（nor）
+
+  const classNamesMap = (isnormalclassname ? {
+    nor: _class,
+    ext: _class === "className" ? 'custom-class' : _class.replace(/[A-Z]/g, (v) => "-" + v.toLowerCase())
+  } : {
+      nor: _class === 'custom-class' ? 'className' : _class.replace(/-(.)/g, (v) => v[1].toUpperCase()),
+      ext: _class
+    })
+
+  if (isNormalClass) return props[classNamesMap.nor];
+  return props[classNamesMap.ext]
 }

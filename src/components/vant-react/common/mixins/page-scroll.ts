@@ -17,7 +17,7 @@ function onPageScroll(event?: Scroller) {
   }
 }
 
-const usePageScrollMixin = (scroller: ScrollerFunc) => {
+const usePageScrollMixin = (scroller: ScrollerFunc, disabled: boolean = false) => {
   const page = getCurrentPage() as any;
   useEffect(() => {
     if (page) {
@@ -52,7 +52,7 @@ const usePageScrollMixin = (scroller: ScrollerFunc) => {
         })
       }
     }
-  }, [page])
+  }, [page, disabled])
 }
 
 
