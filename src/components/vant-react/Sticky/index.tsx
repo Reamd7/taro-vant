@@ -118,7 +118,7 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
       });
     }
 
-  }, [scope, setDataAfterDiff, container, offsetTop]);
+  }, [scope, setDataAfterDiff, container, offsetTop, disabled]);
 
   usePageScrollMixin(onScroll, !!props.disabled)
 
@@ -131,16 +131,20 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
     }
   }, [scope, offsetTop, disabled, container])
 
-  return <View className={
-    classnames(
-      isNormalClass && props.className,
-      isExternalClass && 'custom-class',
-      'van-sticky'
-    )
-  } style={css({
-    height: __data__.fixed ? addUnit(__data__.height) : undefined,
-    zIndex: props.zIndex
-  })} ref={scopeRef}>
+  return <View
+    className={
+      classnames(
+        isNormalClass && props.className,
+        isExternalClass && 'custom-class',
+        'van-sticky'
+      )
+    }
+    style={css({
+      height: __data__.fixed ? addUnit(__data__.height) : undefined,
+      zIndex: props.zIndex
+    })}
+    ref={scopeRef}
+  >
     <View className={bem('sticky-wrap', { fixed: __data__.fixed })}
       style={css({
         transform: 'translate3d(0, ' + __data__.transform + 'px, 0);',

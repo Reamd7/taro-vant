@@ -1,5 +1,6 @@
 import { getCurrentPage, isH5 } from "../utils";
 import { PageScrollObject, useEffect } from "@tarojs/taro";
+// import { useCallback } from "nervjs";
 
 export type ScrollerFunc = (obj: PageScrollObject) => any
 export type Scroller = Taro.PageScrollObject;
@@ -19,8 +20,18 @@ function onPageScroll(event?: Scroller) {
 
 const usePageScrollMixin = (scroller: ScrollerFunc, disabled: boolean = false) => {
   const page = getCurrentPage() as any;
+  // const scroller = useCallback((obj: PageScrollObject)=>{
+  //   const n = document.getElementById("app_nav");
+  //   if (n) {
+  //     _scroller({
+  //       scrollTop: obj.scrollTop + n.offsetHeight
+  //     })
+  //   } else {
+  //     _scroller(obj)
+  //   }
+  // }, [])
   useEffect(() => {
-    if (page) {
+    if (!disabled && page) {
       const vanPageScroller: ScrollerFunc[] | null = page.vanPageScroller;
 
       if (Array.isArray(vanPageScroller)) {
@@ -33,23 +44,25 @@ const usePageScrollMixin = (scroller: ScrollerFunc, disabled: boolean = false) =
 
 
       if (isH5) {
-        document.querySelectorAll(".taro_page").forEach((v: HTMLDivElement)=> {
+        document.querySelectorAll(".taro_router").forEach((v: HTMLDivElement)=> {
           v.style.display !== "none" && (v.onscroll = page.onPageScroll)
         })
       }
     }
 
     return function () {
-      const page = getCurrentPage();
-      if (page) {
-        page.vanPageScroller = (page.vanPageScroller || []).filter(
-          (item) => item !== scroller
-        );
-      }
-      if (isH5) {
-        document.querySelectorAll(".taro_page").forEach((v: HTMLDivElement)=> {
-          v.style.display === "none" && (v.onscroll = null)
-        })
+      if (!disabled) {
+        const page = getCurrentPage();
+        if (page) {
+          page.vanPageScroller = (page.vanPageScroller || []).filter(
+            (item) => item !== scroller
+          );
+        }
+        if (isH5) {
+          document.querySelectorAll(".taro_router").forEach((v: HTMLDivElement)=> {
+            v.style.display === "none" && (v.onscroll = null)
+          })
+        }
       }
     }
   }, [page, disabled])
