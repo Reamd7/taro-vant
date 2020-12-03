@@ -1,6 +1,6 @@
 import Taro, { useMemo, useCallback, useState, useEffect, useRef } from "@tarojs/taro";
 import "./index.less";
-import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, useMemoCssProperties, useMemoAddUnit, getRect, requestAnimationFrame, ActiveProps, useScope } from "../common/utils";
+import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, useMemoCssProperties, useMemoAddUnit, getRect, nextTick, ActiveProps, useScope } from "../common/utils";
 import { View } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "../../../common/hooks/useControllableValue";
 import { useTouch } from "../common/mixins/touch";
@@ -189,7 +189,7 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
             props.onDrag && props.onDrag(newValue);
 
             // setDragValueThrottleFn.run(newValue)
-            requestAnimationFrame(()=>{
+            nextTick(()=>{
               setDragValue(newValue);
             })
           })

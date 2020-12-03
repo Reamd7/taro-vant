@@ -2,7 +2,7 @@ import Taro, { useMemo, useCallback, useState, useEffect } from "@tarojs/taro";
 
 import { VanCalendarCommonProps, inputDate, getMonths, useInitRect, ROW_HEIGHT } from "./utils";
 import dayjs from "dayjs";
-import { useMemoClassNames, requestAnimationFrame } from "../common/utils";
+import { useMemoClassNames, nextTick } from "../common/utils";
 import VanCalHeader from "./components/header";
 import { View, ScrollView, Block } from "@tarojs/components";
 import VanCalMonth from "./components/month";
@@ -59,7 +59,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
   // 滚动到某个月份
   const [scrollIntoView, setscrollIntoView] = useState('');
   const onScrollIntoView = usePersistFn(() => {
-    requestAnimationFrame(() => {
+    nextTick(() => {
       let targetDate = currentDate
       const displayed = props.show || !poppable;
       if (targetDate && displayed) {

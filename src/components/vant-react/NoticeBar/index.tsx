@@ -15,7 +15,7 @@ import {
   useMemoCssProperties,
   noop,
   getRect,
-  requestAnimationFrame, useScope, isExternalClass, isNormalClass
+  nextTick, useScope, isExternalClass, isNormalClass
 } from "../common/utils";
 
 export type VanNoticeBarProps = {
@@ -122,7 +122,7 @@ const VanNoticeBar: Taro.FunctionComponent<VanNoticeBarProps> = props => {
             .step()
             .export()
         );
-        requestAnimationFrame(() => {
+        nextTick(() => {
           if (ins.animation) {
             setanimationData(
               ins.animation

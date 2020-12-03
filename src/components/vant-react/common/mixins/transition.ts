@@ -1,4 +1,4 @@
-import { requestAnimationFrame, isH5 } from "../utils";
+import { nextTick, isH5 } from "../utils";
 import { useState, useEffect, useRef, useCallback } from "@tarojs/taro";
 export type MixinsTransitionProps = {
     style?: React.CSSProperties;
@@ -117,7 +117,7 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
         const currentDuration = isObj(duration) ? duration.enter : duration;
         status.current = "enter";
         onBeforeEnter && onBeforeEnter();
-        requestAnimationFrame(() => {
+        nextTick(() => {
             checkStatus('enter');
             onEnter && onEnter();
 
@@ -129,7 +129,7 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
             })
             // setDisplay(true)
 
-            requestAnimationFrame(() => {
+            nextTick(() => {
                 checkStatus('enter')
                 setData({
                     inited: true,
@@ -154,7 +154,7 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
         const currentDuration = isObj(duration) ? duration.leave : duration;
         status.current = "leave";
         onBeforeLeave && onBeforeLeave();
-        requestAnimationFrame(() => {
+        nextTick(() => {
             checkStatus('leave');
             onLeave && onLeave();
 
@@ -166,7 +166,7 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
             })
             // setDisplay(true)
 
-            requestAnimationFrame(() => {
+            nextTick(() => {
                 checkStatus('leave')
                 setData({
                     inited: true,

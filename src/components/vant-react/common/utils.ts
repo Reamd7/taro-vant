@@ -85,9 +85,15 @@ export const noop = () => { }
 
 let systemInfo: Taro.getSystemInfoSync.Result | null = null;
 export function nextTick(fn: (...args: any[]) => any) {
-  return Taro.nextTick ? Taro.nextTick(fn) : setTimeout(() => {
-    fn();
-  }, 1000 / 30);
+  if (isWeapp) {
+    return Taro.nextTick(fn)
+  } else if (isH5) {
+    return requestAnimationFrame(fn)
+  } else {
+    setTimeout(() => {
+      fn();
+    }, 1000 / 30);
+  }
 }
 export function getSystemInfoSync() {
   if (systemInfo == null) {
@@ -111,23 +117,23 @@ export function pxUnit(value: number) {
 //   return id;
 // };
 
-export const cancelAnimationFrame = function (id: ReturnType<typeof requestAnimationFrame>) {
-  clearTimeout(id);
-}
-export function requestAnimationFrame(cb: Function) {
-  // const Info = systemInfo || (systemInfo = getSystemInfoSync());
-  // const el = Taro
-  //   .createSelectorQuery()
-  //   .selectViewport()
-  //   .boundingClientRect();
-  // console.log(performance.now())
-  // if (Info.platform === 'devtools') {
-  return nextTick(cb);
-  // }
-  // return el.exec(() => {
-  //   cb();
-  // });
-}
+// export const cancelAnimationFrame = function (id: ReturnType<typeof requestAnimationFrame>) {
+//   clearTimeout(id);
+// }
+// export function requestAnimationFrame(cb: Function) {
+//   // const Info = systemInfo || (systemInfo = getSystemInfoSync());
+//   // const el = Taro
+//   //   .createSelectorQuery()
+//   //   .selectViewport()
+//   //   .boundingClientRect();
+//   // console.log(performance.now())
+//   // if (Info.platform === 'devtools') {
+//   return nextTick(cb);
+//   // }
+//   // return el.exec(() => {
+//   //   cb();
+//   // });
+// }
 
 
 export const isH5 = process.env.TARO_ENV === "h5";
@@ -242,6 +248,22 @@ export function getRect(
       .exec((rect = []) => resolve(rect[0]));
   });
 }
+// export function getAllRect(
+//   scope: WechatMiniprogram.Component.TrivialInstance,
+//   selector: string
+// ): Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]> {
+//   return new Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]>((resolve) => {
+//     Taro.createSelectorQuery()
+//       .in(scope)
+//       .selectAll(selector)
+//       .boundingClientRect((rect) => {
+//         if (Array.isArray(rect) && rect.length) {
+//           resolve(rect)
+//         }
+//       })
+//       .exec();
+//   });
+// }
 export function getAllRect(
   scope: WechatMiniprogram.Component.TrivialInstance,
   selector: string
@@ -250,12 +272,13 @@ export function getAllRect(
     Taro.createSelectorQuery()
       .in(scope)
       .selectAll(selector)
-      .boundingClientRect((rect) => {
+      .boundingClientRect()
+      .exec((rects) => {
+        const rect = rects[0] // 一定要这样写，支付宝需要这样写。。
         if (Array.isArray(rect) && rect.length) {
           resolve(rect)
         }
-      })
-      .exec();
+      });
   });
 }
 export function range(num: number, min: number, max: number) {
