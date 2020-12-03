@@ -23,7 +23,8 @@
       "src/*": ["./src/*"]
     },
     "types": [
-      "miniprogram-api-typings"
+      "miniprogram-api-typings",
+      "nervjs/dist"
     ]
   },
   "exclude": ["node_modules", "dist"],

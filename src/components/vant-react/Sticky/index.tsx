@@ -9,7 +9,7 @@ export type VanStickyProps = {
   zIndex?: number;
   offsetTop?: number;
   disabled?: boolean;
-  container?: () => Taro.NodesRef;
+  container?: null | (() => Taro.NodesRef);
   scrollTop?: number;
 
   className?: string;
