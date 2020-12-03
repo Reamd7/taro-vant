@@ -363,10 +363,23 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
 
 
   const observerCallback = usePersistFn(function (entries, observer) {
-    setTimeout(() => {
-      setLine(data.currentIndex);
-      scrollIntoView(data.currentIndex);
-    })
+    if (initRef.current) {
+      if (active != undefined) {
+        setTimeout(() => {
+          if (typeof active === "number") {
+            setCurrentIndex(active)
+          } else {
+            setCurrentIndexByName(active)
+          }
+        })
+      }
+      else {
+        setTimeout(() => {
+          setCurrentIndex(props.defaultActive)
+        })
+      }
+    }
+
   } as ResizeObserverCallback, [data.currentIndex])
   const ob = useMemo(() => new ResizeObserver(observerCallback), [])
   useEffect(() => {
@@ -386,27 +399,6 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
         })
     }
   }, [scope])
-
-
-  useEffect(() => {
-    if (initRef.current && active == undefined) {
-      setTimeout(() => {
-        setCurrentIndex(props.defaultActive)
-      })
-    }
-  }, [forceUpdate])
-
-  useLayoutEffect(() => {
-    if (initRef.current && active != undefined) {
-      setTimeout(() => {
-        if (typeof active === "number") {
-          setCurrentIndex(active)
-        } else {
-          setCurrentIndexByName(active)
-        }
-      })
-    }
-  }, [active, forceUpdate])
 
   // 如果使用自定义, 就自动注入.
   useEffect(() => {
