@@ -9,7 +9,7 @@ function onPageScroll(event?: Scroller) {
   const page = getCurrentPage() as any;
 
   if (page) {
-    page.vanPageScroller.forEach((scroller: ScrollerFunc) => {
+    page.vanPageScroller && page.vanPageScroller.forEach((scroller: ScrollerFunc) => {
       if (typeof scroller === 'function') {
         // @ts-ignore
         scroller(event);
