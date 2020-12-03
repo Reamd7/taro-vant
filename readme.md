@@ -50,3 +50,4 @@ return page.route
 支付宝小程序不支持所有api中的scope参数。
 
 - SelectQuery 但是在最新的支付宝api中已经有了in scope的支持了。scope是自定义组件。
+- index list 组件，有一个问题：h5端中移动端（chrome浏览器滚动很慢（Chrome87），QQ内置爆炸，微信爆炸，但是pc端edge（Chrome87）没问题，夸克浏览器没问题）
