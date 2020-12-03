@@ -24,6 +24,7 @@
     },
     "types": [
       "miniprogram-api-typings",
+      "mini-types",
       "nervjs/dist"
     ]
   },

@@ -45,3 +45,8 @@ return page.route
 
 - toast 可能还有未知的问题。
 - h5 图片的问题，
+
+
+支付宝小程序不支持所有api中的scope参数。
+
+- SelectQuery 但是在最新的支付宝api中已经有了in scope的支持了。scope是自定义组件。

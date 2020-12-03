@@ -1,4 +1,4 @@
-import Taro, { useState, useMemo, useEffect, useLayoutEffect, } from '@tarojs/taro';
+import Taro, { useState, useMemo, useEffect, useLayoutEffect, useRef, } from '@tarojs/taro';
 import "./index.less";
 import { ActiveProps, useMemoClassNames, useMemoBem, ExtClass, useMemoCssProperties, useScopeRef, getAllRect, getRect, noop, nextTick, addUnit } from '../common/utils';
 import { View, ScrollView, Swiper, SwiperItem } from '@tarojs/components';
@@ -182,8 +182,19 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
     skipTransition: true,
     lineOffsetLeft: 0,
   });
-
+  const initRef = useRef(false);
+  const [forceUpdate, SetForceUpdate] = useState({});
+  useEffect(()=>{
+    if (props.tabs && props.tabs.length) {
+      initRef.current = true
+      SetForceUpdate({})
+    }
+  }, [])
   const relationTabs = useRelationPropsInject<ActiveVanTabItemProps>(props.pid, (props: VanTabItemProps) => {
+    if (!initRef.current && props.index === props.total - 1) {
+      initRef.current = true
+      SetForceUpdate({})
+    }
     return {
       ...props,
       active: data.currentIndex === props.index,
@@ -212,8 +223,8 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
     if (type !== 'line') return;
 
     Promise.all([
-      getAllRect(scope, '.van-tab'),
-      getRect(scope, '.van-tabs__line')
+      getAllRect(scope, `.van-tab`),
+      getRect(scope, `.van-tabs__line`)
     ]).then(([rects = [], lineRect]) => {
       const rect = rects[currentIndex];
 
@@ -221,10 +232,10 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
         return;
       }
 
-      // let lineOffsetLeft = rects
-      //   .slice(0, currentIndex)
-      //   .reduce((prev, curr) => prev + curr.width, 0);
-      let lineOffsetLeft = rect.left;
+      let lineOffsetLeft = rects
+        .slice(0, currentIndex)
+        .reduce((prev, curr) => prev + curr.width, 0);
+      // let lineOffsetLeft = rect.left; // 微信小程序是可以这么写，但是支付宝有bug不可以，只能用上面的方式了
       lineOffsetLeft += (rect.width - lineRect.width) / 2;
 
       setData((data) => ({
@@ -245,8 +256,8 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
   const scrollIntoView = usePersistFn((currentIndex: number) => {
     if (!scrollable) return;
     Promise.all([
-      getAllRect(scope, '.van-tab'),
-      getRect(scope, '.van-tabs__nav'),
+      getAllRect(scope, `.van-tab`),
+      getRect(scope, `.van-tabs__nav`),
     ]).then(([tabRects, navRect]) => {
       const tabRect = tabRects[currentIndex];
       const offsetLeft = tabRects
@@ -354,18 +365,16 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
   //     scrollIntoView(data.currentIndex);
   //   })
   // }, [])
-
-
   useEffect(() => {
-    if (active == undefined && props.defaultActive != undefined) {
+    if (initRef.current && active == undefined) {
       setTimeout(() => {
         setCurrentIndex(props.defaultActive)
       })
     }
-  }, [])
+  }, [forceUpdate])
 
   useLayoutEffect(() => {
-    if (active != undefined) {
+    if (initRef.current && active != undefined) {
       setTimeout(() => {
         if (typeof active === "number") {
           setCurrentIndex(active)
@@ -374,7 +383,7 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
         }
       })
     }
-  }, [active, tabs])
+  }, [active, forceUpdate])
 
   // 如果使用自定义, 就自动注入.
   useEffect(() => {

@@ -3,6 +3,13 @@ import Taro, { getCurrentPages, useContext, useEffect, useMemo, useDidShow, useS
 import classNames from 'classnames';
 import bem from "./bem";
 import { CSSProperties } from "react";
+
+export const isH5 = process.env.TARO_ENV === "h5";
+export const isWeapp = process.env.TARO_ENV === "weapp"
+export const isAlipay = process.env.TARO_ENV === "alipay" // 不支持scope的能力，需要处理。
+export const isExternalClass = isWeapp;
+export const isNormalClass = isH5 || process.env.TARO_ENV === "alipay";
+
 const dpi = 2;
 export function addUnit(value?: string | number | null) {
   if (value == null) {
@@ -61,17 +68,22 @@ function _useScope() {
  */
 export function useScopeRef() {
   const [state, setState] = useState<any>(
-    Taro.useScope ? Taro.useScope() : null
+    (isH5) ? null : Taro.useScope()
   );
 
   const scopeRef = useCallback((ref: any) => {
-    if (ref) {
-      if (isWeapp) {
-        setState(ref._component)
-      } else if (isH5) {
-        setState(ref._parentComponent)
-      }
+    if (isH5) {
+      setState(ref._parentComponent)
     }
+    // if (ref) {
+    //   if (isWeapp) {
+    //     setState(ref._component)
+    //   } else if (isH5) {
+    //     setState(ref._parentComponent)
+    //   } else if (isAlipay) {
+    //     setState(ref)
+    //   }
+    // }
   }, [])
 
   return [state, scopeRef] as const;
@@ -135,14 +147,6 @@ export function pxUnit(value: number) {
 //   // });
 // }
 
-
-export const isH5 = process.env.TARO_ENV === "h5";
-export const isWeapp = process.env.TARO_ENV === "weapp"
-export const isExternalClass = isWeapp;
-export const isNormalClass = isH5 || process.env.TARO_ENV === "alipay";
-
-
-const currentPage: Taro.Page | null = null
 export function usePage() {
   return useScope()
 }
@@ -237,15 +241,24 @@ export function GroupContextCreator<T>(ComponentName: string) {
   } as const
 }
 export function getRect(
-  scope: WechatMiniprogram.Component.TrivialInstance,
+  scope: any,
   selector: string
 ): Promise<Taro.NodesRef.BoundingClientRectCallbackResult> {
   return new Promise<Taro.NodesRef.BoundingClientRectCallbackResult>((resolve) => {
-    Taro.createSelectorQuery()
-      .in(scope)
+    if (isAlipay) {
+      (
+        (my.createSelectorQuery() as any).in(scope) as Taro.SelectorQuery
+      )
       .select(selector)
-      .boundingClientRect()
-      .exec((rect = []) => resolve(rect[0]));
+        .boundingClientRect()
+        .exec((rect = []) => resolve(rect[0]));
+    } else {
+      Taro.createSelectorQuery()
+        .in(scope) // 但是在最新的支付宝api中已经有了in scope的支持了。
+        .select(selector)
+        .boundingClientRect()
+        .exec((rect = []) => resolve(rect[0]));
+    }
   });
 }
 // export function getAllRect(
@@ -265,20 +278,36 @@ export function getRect(
 //   });
 // }
 export function getAllRect(
-  scope: WechatMiniprogram.Component.TrivialInstance,
+  scope: any,
   selector: string
 ): Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]> {
   return new Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]>((resolve) => {
-    Taro.createSelectorQuery()
-      .in(scope)
-      .selectAll(selector)
-      .boundingClientRect()
-      .exec((rects) => {
-        const rect = rects[0] // 一定要这样写，支付宝需要这样写。。
-        if (Array.isArray(rect) && rect.length) {
-          resolve(rect)
-        }
-      });
+    if (isAlipay) {
+      (
+        (my.createSelectorQuery() as any).in(scope) as Taro.SelectorQuery
+      )
+      .selectAll(selector) // 一定要这样写，支付宝需要这样写。。
+        .boundingClientRect()
+        .exec((rects) => {
+          console.log(rects)
+          const rect = rects[0]
+          if (Array.isArray(rect) && rect.length) {
+            resolve(rect)
+          }
+        });
+    } else {
+      Taro.createSelectorQuery()
+        .in(scope)
+        .selectAll(selector)
+        .boundingClientRect()
+        .exec((rects) => {
+          const rect = rects[0] // 一定要这样写，支付宝需要这样写。。
+          if (Array.isArray(rect) && rect.length) {
+            resolve(rect)
+          }
+        });
+    }
+
   });
 }
 export function range(num: number, min: number, max: number) {

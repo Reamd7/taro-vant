@@ -68,7 +68,7 @@ export function useInitRect(showSubtitle: boolean) {
     if (!showSubtitle) return ; // 这就不用处理了
     // TODO
     // if (process.env.TARO_ENV === "weapp") {
-      const contentObserver = Taro.createIntersectionObserver(scope, {
+      const contentObserver = Taro.createIntersectionObserver(scope, { // TODO 支付宝小程序不支持scope
         thresholds: [ 0.5, 0.8],
         observeAll: true,
       });

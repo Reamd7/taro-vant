@@ -4,7 +4,7 @@ import { Block, View } from '@tarojs/components';
 import VanTab from 'src/components/vant-react/Tab';
 import VanTabItem from 'src/components/vant-react/Tab/item';
 import DemoBlock from '../components/demoBlock';
-import { noop, isWeapp, isH5 } from 'src/components/vant-react/common/utils';
+import { noop, isH5 } from 'src/components/vant-react/common/utils';
 import VanIcon from 'src/components/vant-react/icon';
 const data = {
   tabs2: [1, 2],

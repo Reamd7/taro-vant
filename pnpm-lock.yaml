@@ -28,6 +28,7 @@ dependencies:
   fast-memoize: 2.5.2
   glob: 7.1.6
   immer: 7.0.9
+  mini-types: 0.1.4
   miniprogram-api-typings: 3.2.0
   nerv-devtools: 1.5.7
   nervjs: 1.5.7
@@ -13265,6 +13266,11 @@ packages:
     resolution:
       integrity: sha1-W6gpD7tBeaQ90nzKREuhUL7nQ6A=
       tarball: 'https://registry.npm.taobao.org/mini-css-extract-plugin/download/mini-css-extract-plugin-0.7.0.tgz'
+  /mini-types/0.1.4:
+    dev: false
+    resolution:
+      integrity: sha1-R3EsZgaRGTlSKLiy1IOhHufPn7E=
+      tarball: 'https://registry.npm.taobao.org/mini-types/download/mini-types-0.1.4.tgz'
   /minimalistic-assert/1.0.1:
     resolution:
       integrity: sha1-LhlN4ERibUoQ5/f7wAznPoPk1cc=
@@ -19491,6 +19497,7 @@ specifiers:
   fast-memoize: ^2.5.2
   glob: ^7.1.6
   immer: ^7.0.9
+  mini-types: ^0.1.4
   miniprogram-api-typings: ^3.1.6
   nerv-devtools: ^1.5.5
   nervjs: ^1.5.7

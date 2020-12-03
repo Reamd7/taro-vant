@@ -30,6 +30,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/tab/index',         // Tab 标签页 TODO
 
       'pages/index/index',
 
@@ -99,7 +100,7 @@ class App extends Component {
       'pages/nav-bar/index',        // NavBar 导航栏
       // new v2 // Pagination 分页 // new v2
       'pages/sidebar/index',        // Sidebar 侧边导航
-      'pages/tab/index',         // Tab 标签页 TODO
+      // 'pages/tab/index',         // Tab 标签页 TODO
       'pages/tabbar/index',         // Tabbar 标签栏
       'pages/tree-select/index',    // TreeSelect 分类选择
 
