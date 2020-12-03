@@ -30,6 +30,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/index-bar/index',      // IndexBar 索引栏 TODO
 
       'pages/index/index',
 
@@ -95,7 +96,7 @@ class App extends Component {
       'pages/panel/index',
       // ================= ## 导航组件 =================
       'pages/grid/index',           // Grid 宫格
-      // 'pages/index-bar/index',   // IndexBar 索引栏 TODO
+      // 'pages/index-bar/index',      // IndexBar 索引栏 TODO
       'pages/nav-bar/index',        // NavBar 导航栏
       // new v2 // Pagination 分页 // new v2
       'pages/sidebar/index',        // Sidebar 侧边导航
