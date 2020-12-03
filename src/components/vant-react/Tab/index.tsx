@@ -491,7 +491,7 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
       {(props.noContent && props.tabs) ? null :
         ((props.useSwiper && props.tabs) ?
           <Swiper
-            className="van-tabs__content"
+            className="van-tabs__content van-tabs__swiper"
             current={data.currentIndex}
             // onTouchStart={onTouchStart}
             // onTouchMove={onTouchMove}
