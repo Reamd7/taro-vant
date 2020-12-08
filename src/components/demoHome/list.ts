@@ -239,4 +239,14 @@ export default [
         },
       ],
     },
+    {
+      groupName: '另外组件',
+      icon: 'ellipsis',
+      list: [
+        {
+          path: '/virtual-list',
+          title: 'VirtualList 虚拟列表组件',
+        }
+      ],
+    },
   ];

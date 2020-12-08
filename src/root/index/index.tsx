@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import DemoHome from "../components/demoHome";
+import DemoHome from "../../components/demoHome";
 import './index.less'
 
 export default class Index extends Component {
