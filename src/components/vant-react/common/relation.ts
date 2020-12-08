@@ -50,6 +50,7 @@ export function useRelationPropsInject<T extends {
   const [PropsList, setPropsList] = useState<Array<T>>(PropsListRef.current);
 
   const status = useRef<"update" | "mount">("mount");
+  const loopIndex = useRef(0);
 
   const Fn = useCallback((props: T) => {
     const newProps = relation(props);
@@ -65,11 +66,21 @@ export function useRelationPropsInject<T extends {
         status.current = "update"
       }
     } else {
-      if (index === (props.total - 1)) {
+      // if (index === (props.total - 1)) {
+      //   PropsListRef.current = Array(props.total);
+      // }
+      // PropsListRef.current[index] = (newProps);
+      // if (index === 0) {
+      //   setPropsList(PropsListRef.current);
+      // }
+      // 我也不知道为什么微信小程序不保证渲染顺序，但是遇见这个问题了，就这样写。
+      if (loopIndex.current === 0) {
         PropsListRef.current = Array(props.total);
       }
       PropsListRef.current[index] = (newProps);
-      if (index === 0) {
+      loopIndex.current += 1;
+      if (loopIndex.current === props.total) {
+        loopIndex.current = 0;
         setPropsList(PropsListRef.current);
       }
     }
@@ -148,3 +159,113 @@ export function useRelationPropsListener<T>(pid: string, props: T): T {
   }, [PropsFunction, props]);
 }
 
+export function RelationPropsInject<T extends {
+  index: number;
+  total: number;
+}>(self: Taro.Component<any>, {
+  pid, relation, deps, loopEnd
+}: {
+  pid: string,
+  relation: (props: T) => T,
+  deps: any[],
+  loopEnd: (status: "mount" | "update", PropsList: Array<T>) => void;
+}) {
+  const context = getContext();
+  if (!context) {
+    throw Error("no Context")
+  }
+  const _id = `${context}_${pid}`;
+
+  let status: "mount" | "update" = "mount";
+  let PropsListRef: Array<T> = [];
+  let loopIndex: number = 0;
+
+  const createFn = () => {
+    return ((props: T) => {
+      const newProps = relation(props);
+      const index = props.index;
+      // NOTE : 这个如果要迁移到react中需要进行测试。
+      if (status === "mount") {
+        if (index === 0) {
+          PropsListRef = Array(props.total);
+        }
+        PropsListRef[index] = (newProps);
+        if (index === (props.total - 1)) {
+          // console.log(status)
+          loopEnd(status, PropsListRef)
+          status = "update"
+        }
+      } else {
+        if (loopIndex === 0) {
+          PropsListRef = Array(props.total);
+        }
+        PropsListRef[index] = (newProps);
+        loopIndex += 1;
+        if (loopIndex === props.total) {
+          // console.log(status)
+          loopIndex = 0;
+          loopEnd(status, PropsListRef)
+        }
+      }
+
+      return newProps
+    })
+  }
+
+  // =============================
+  const state = new BehaviorSubject(
+    createFn()
+  )
+  if (_id) {
+    relationPropsMap.has(_id) || relationPropsMap.set(_id, state);
+  }
+  // =============================
+
+  if (self.componentWillUnmount) {
+    const source = self.componentWillUnmount.bind(self)
+    self.componentWillUnmount = function() {
+      // do something in here
+      _id && relationPropsMap.delete(_id);
+      source()
+    }.bind(self)
+  } else {
+    self.componentWillUnmount = function() {
+      _id && relationPropsMap.delete(_id);
+    }
+  }
+
+  if (self.shouldComponentUpdate) {
+    const source = self.shouldComponentUpdate.bind(self)
+    self.shouldComponentUpdate = function(nextProps, nextState, nextContext) {
+      // do something in here
+      if (deps.reduce((res, val) => {
+        if (res) {
+          return res;
+        } else {
+          return nextProps[val] !== this.props[val]
+        }
+      }, false)) {
+        state.next(
+          createFn()
+        )
+      }
+      return source(nextProps, nextState, nextContext)
+    }.bind(self)
+  } else {
+    self.shouldComponentUpdate = function(nextProps) {
+      // do something in here
+      if (deps.reduce((res, val) => {
+        if (res) {
+          return res;
+        } else {
+          return nextProps[val] !== this.props[val]
+        }
+      }, false)) {
+        state.next(
+          createFn()
+        )
+      }
+      return true
+    }
+  }
+}

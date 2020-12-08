@@ -9,6 +9,7 @@ export const isWeapp = process.env.TARO_ENV === "weapp"
 export const isAlipay = process.env.TARO_ENV === "alipay" // 不支持scope的能力，需要处理。
 export const isExternalClass = isWeapp;
 export const isNormalClass = isH5 || process.env.TARO_ENV === "alipay";
+export const noop = () => { }
 
 const dpi = 2;
 export function addUnit(value?: string | number | null) {
@@ -52,9 +53,51 @@ export function useMemoBem() {
 
 }
 
+
+
 /**
- * https://github.com/fjc0k/vtils/blob/v2/packages/taro/src/hooks/useScope.ts#L18
+ * TODO hack
  */
+export let useScopeRef = isH5 ?
+  () => {
+    const [state, setState] = useState<any>(
+      null
+    );
+    const scopeRef = useCallback((ref: any) => {
+      setState(ref._parentComponent)
+    }, [])
+
+    return [state, scopeRef] as const;
+  } :
+  () => {
+    const scope = Taro.useScope();
+    return [scope, noop] as const
+  }
+// export function useScopeRef() {
+//   const [state, setState] = useState<any>(
+//     (isH5) ? null : Taro.useScope()
+//   );
+
+//   const scopeRef = useCallback((ref: any) => {
+//     if (isH5) {
+//       setState(ref._parentComponent)
+//     }
+//     // if (ref) {
+//     //   if (isWeapp) {
+//     //     setState(ref._component)
+//     //   } else if (isH5) {
+//     //     setState(ref._parentComponent)
+//     //   } else if (isAlipay) {
+//     //     setState(ref)
+//     //   }
+//     // }
+//   }, [])
+
+//   return [state, scopeRef] as const;
+// }
+// /**
+//  * https://github.com/fjc0k/vtils/blob/v2/packages/taro/src/hooks/useScope.ts#L18
+//  */
 function _useScope() {
   const [scope, setScope] = useState<any>(null)
   useDidShow(function (this: any) {
@@ -62,38 +105,10 @@ function _useScope() {
   })
   return scope
 }
-
-/**
- * TODO hack
- */
-export function useScopeRef() {
-  const [state, setState] = useState<any>(
-    (isH5) ? null : Taro.useScope()
-  );
-
-  const scopeRef = useCallback((ref: any) => {
-    if (isH5) {
-      setState(ref._parentComponent)
-    }
-    // if (ref) {
-    //   if (isWeapp) {
-    //     setState(ref._component)
-    //   } else if (isH5) {
-    //     setState(ref._parentComponent)
-    //   } else if (isAlipay) {
-    //     setState(ref)
-    //   }
-    // }
-  }, [])
-
-  return [state, scopeRef] as const;
-}
-
 export function useScope() {
   return Taro.useScope ? Taro.useScope() : _useScope()
 }
 
-export const noop = () => { }
 
 let systemInfo: Taro.getSystemInfoSync.Result | null = null;
 export function nextTick(fn: (...args: any[]) => any) {
@@ -146,11 +161,6 @@ export function pxUnit(value: number) {
 //   //   cb();
 //   // });
 // }
-
-export function usePage() {
-  return useScope()
-}
-
 
 export function getCurrentPage() {
   const pages = getCurrentPages(); // weapp + h5 都支持
@@ -240,80 +250,44 @@ export function GroupContextCreator<T>(ComponentName: string) {
     useGroupItemContext
   } as const
 }
+
+export function createSelectorQuery(scope: any) {
+  return (isAlipay) ? (
+    (my.createSelectorQuery() as any).in(scope) as Taro.SelectorQuery
+  ) : Taro.createSelectorQuery()
+    .in(scope)
+}
+
 export function getRect(
   scope: any,
   selector: string
 ): Promise<Taro.NodesRef.BoundingClientRectCallbackResult> {
   return new Promise<Taro.NodesRef.BoundingClientRectCallbackResult>((resolve) => {
-    if (isAlipay) {
-      (
-        (my.createSelectorQuery() as any).in(scope) as Taro.SelectorQuery
-      )
+    createSelectorQuery(scope)
       .select(selector)
-        .boundingClientRect()
-        .exec((rect = []) => resolve(rect[0]));
-    } else {
-      Taro.createSelectorQuery()
-        .in(scope) // 但是在最新的支付宝api中已经有了in scope的支持了。
-        .select(selector)
-        .boundingClientRect()
-        .exec((rect = []) => resolve(rect[0]));
-    }
+      .boundingClientRect()
+      .exec((rect = []) => resolve(rect[0]));
   });
 }
-// export function getAllRect(
-//   scope: WechatMiniprogram.Component.TrivialInstance,
-//   selector: string
-// ): Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]> {
-//   return new Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]>((resolve) => {
-//     Taro.createSelectorQuery()
-//       .in(scope)
-//       .selectAll(selector)
-//       .boundingClientRect((rect) => {
-//         if (Array.isArray(rect) && rect.length) {
-//           resolve(rect)
-//         }
-//       })
-//       .exec();
-//   });
-// }
 export function getAllRect(
   scope: any,
   selector: string
 ): Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]> {
   return new Promise<Taro.NodesRef.BoundingClientRectCallbackResult[]>((resolve) => {
-    if (isAlipay) {
-      (
-        (my.createSelectorQuery() as any).in(scope) as Taro.SelectorQuery
-      )
+    createSelectorQuery(scope)
       .selectAll(selector) // 一定要这样写，支付宝需要这样写。。
-        .boundingClientRect()
-        .exec((rects) => {
-          console.log(rects)
-          const rect = rects[0]
-          if (Array.isArray(rect) && rect.length) {
-            resolve(rect)
-          }
-        });
-    } else {
-      Taro.createSelectorQuery()
-        .in(scope)
-        .selectAll(selector)
-        .boundingClientRect()
-        .exec((rects) => {
-          const rect = rects[0] // 一定要这样写，支付宝需要这样写。。
-          if (Array.isArray(rect) && rect.length) {
-            resolve(rect)
-          }
-        });
-    }
-
+      .boundingClientRect()
+      .exec((rects) => {
+        const rect = rects[0]
+        if (Array.isArray(rect) && rect.length) {
+          resolve(rect)
+        }
+      });
   });
 }
 export function range(num: number, min: number, max: number) {
   return Math.min(Math.max(num, min), max);
 }
-
 
 export type ActiveProps<P, K extends keyof P> = Omit<P, K> & Required<Pick<P, K>> & {
   children?: React.ReactNode
