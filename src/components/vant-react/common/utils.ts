@@ -1,4 +1,4 @@
-import Taro, { getCurrentPages, useDidShow, pxTransform } from "@tarojs/taro";
+import Taro, { getCurrentPages, useDidShow } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./utils/bem";
@@ -16,12 +16,11 @@ export function addUnit(value?: string | number | null) {
   if (value == null) {
     return undefined;
   } else if (typeof value === "number") {
-    return pxTransform(value * dpi)
-    // if (isWeapp) {
-    //   return (value * dpi) + "rpx"
-    // } else {
-    //   return (value) + "px"
-    // }
+    if (isH5) {
+      return pxUnit(value)
+    } else {
+      return (value) + "rpx"
+    }
   } else {
     return value
   }
