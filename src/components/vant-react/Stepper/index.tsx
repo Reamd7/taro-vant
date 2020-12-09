@@ -1,6 +1,6 @@
 import { Input, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useEffect, useMemo, useRef, useState, useCallback } from '@tarojs/taro' /** api **/;
+const { useEffect, useMemo, useRef, useState, useCallback } = Taro /** api **/;
 import { isExternalClass, isNormalClass, noop, useMemoAddUnit, useMemoBem, useMemoClassNames, useMemoCssProperties, ActiveProps } from '../common/utils';
 import { InputProps } from '@tarojs/components/types/Input';
 import { BaseEventOrig, CommonEventFunction, ITouchEvent } from '@tarojs/components/types/common';

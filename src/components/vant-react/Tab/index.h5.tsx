@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { useState, useMemo, useEffect, useRef } from '@tarojs/taro' /** api **/;
+const { useState, useMemo, useEffect, useRef } = Taro /** api **/;
 import "./index.less";
 import { ActiveProps, useMemoClassNames, useMemoBem, ExtClass, useMemoCssProperties, useScopeRef, getAllRect, getRect, noop, nextTick, addUnit } from '../common/utils';
 import { View, ScrollView, Swiper, SwiperItem } from '@tarojs/components';

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useCallback, SetStateAction } from '@tarojs/taro' /** api **/
+const { useRef, useState, useEffect, useCallback, SetStateAction } = Taro /** api **/;
 import { nextTick } from "./utils";
 export type FormField<KeyName extends string, M> = {
   fieldName?: KeyName;

@@ -1,5 +1,6 @@
+import Taro from '@tarojs/taro';
 import { nextTick, isH5 } from "../utils";
-import { useState, useEffect, useRef, useCallback } from '@tarojs/taro' /** api **/;
+const { useState, useEffect, useRef, useCallback } = Taro /** api **/;
 export type MixinsTransitionProps = {
     style?: React.CSSProperties;
     show?: boolean;

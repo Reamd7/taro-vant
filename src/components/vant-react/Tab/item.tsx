@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { useState, useMemo } from '@tarojs/taro' /** api **/;
+const { useState, useMemo } = Taro /** api **/;
 import "./item.less"
 import { Tab } from "./";
 import { useMemoClassNames, useMemoBem, ExtClass } from '../common/utils';

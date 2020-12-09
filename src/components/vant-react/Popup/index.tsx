@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useMemo, useCallback } from '@tarojs/taro' /** api **/;
+const { useMemo, useCallback } = Taro /** api **/;
 import {
   useMixinsTransition,
   MixinsTransitionProps,

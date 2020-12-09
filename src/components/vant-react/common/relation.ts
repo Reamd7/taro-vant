@@ -2,8 +2,9 @@
  * 依赖rxjs的 BehaviorSubject
  */
 // import { BehaviorSubject } from 'rxjs'
+import Taro from "@tarojs/taro";
 import BehaviorSubject from './BehaviorSubject';
-import { useEffect, useState, useMemo, useCallback, useRef } from '@tarojs/taro' /** api **/;
+const { useEffect, useState, useMemo, useCallback, useRef } = Taro /** api **/;
 import { getContext } from './utils';
 import useUpdateEffect from 'src/common/hooks/useUpdateEffect';
 

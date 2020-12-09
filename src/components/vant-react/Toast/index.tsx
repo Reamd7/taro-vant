@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useState, useEffect, useRef } from '@tarojs/taro' /** api **/;
+const { useState, useEffect, useRef } = Taro /** api **/;
 import VanOverlay from "../Overlay";
 import VanTransition from "../Transition";
 import VanLoading, { VanLoadingProps } from "../Loading";

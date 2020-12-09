@@ -1,4 +1,5 @@
-import { useState } from '@tarojs/taro' /** api **/;
+import Taro from "@tarojs/taro";
+const { useState } = Taro /** api **/;
 import useUpdateEffect from './useUpdateEffect';
 
 export type noop = (...args: any[]) => any;

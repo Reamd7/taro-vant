@@ -1,4 +1,5 @@
-import { useMemo, useState } from '@tarojs/taro' /** api **/;
+import Taro from "@tarojs/taro";
+const { useMemo, useState } = Taro /** api **/;
 import useUpdateEffect from './useUpdateEffect';
 import usePersistFn from './usePersistFn';
 

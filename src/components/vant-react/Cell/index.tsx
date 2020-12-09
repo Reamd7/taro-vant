@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useCallback } from '@tarojs/taro' /** api **/;
+const { useCallback } = Taro /** api **/;
 import { View, Text } from "@tarojs/components";
 import { MixinLinkProps, useLink } from "../common/mixins/link";
 import {

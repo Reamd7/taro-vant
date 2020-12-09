@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useState, useRef } from '@tarojs/taro' /** api **/;
+const { useState, useRef } = Taro /** api **/;
 import { TimeData } from "src/components/vant-react/CountDown/utils";
 import { Block, Text } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";

@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { useMemo, useState, useCallback } from '@tarojs/taro' /** api **/
+const { useMemo, useState, useCallback } = Taro /** api **/;
 import VanPicker from '../Picker';
 import dayjs from 'dayjs';
 import toArray from "dayjs/plugin/toArray";

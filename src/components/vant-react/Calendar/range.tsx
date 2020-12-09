@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useMemo, useCallback, useState, useEffect } from '@tarojs/taro' /** api **/
+const { useMemo, useCallback, useState, useEffect } = Taro /** api **/;
 import { VanCalendarCommonProps, inputDate, getMonths, useInitRect, ROW_HEIGHT } from "./utils";
 import dayjs from "dayjs";
 import "./index.less";

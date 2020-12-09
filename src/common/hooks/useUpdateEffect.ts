@@ -1,4 +1,5 @@
-import { useEffect, useRef } from '@tarojs/taro' /** api **/;
+import Taro from "@tarojs/taro";
+const { useEffect, useRef } = Taro /** api **/;
 
 const useUpdateEffect: typeof useEffect = (effect, deps) => {
   const isMounted = useRef(false);

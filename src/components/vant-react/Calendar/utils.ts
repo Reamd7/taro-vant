@@ -3,7 +3,7 @@ import { VanPopupProps } from "../Popup";
 import Taro from "@tarojs/taro";
 import { VanCalMonthProps } from "./components/month";
 import { useScope } from "../common/utils";
-import { useRef, useCallback, useState } from '@tarojs/taro' /** api **/;
+const { useRef, useCallback, useState } = Taro /** api **/;
 
 export type inputDate = dayjs.ConfigType;
 export type VanCalendarCommonProps = {

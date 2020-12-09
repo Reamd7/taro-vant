@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useMemo } from '@tarojs/taro' /** api **/;
+const { useMemo } = Taro /** api **/;
 import { View, Image } from "@tarojs/components";
 import { useMemoClassNames, isExternalClass, isNormalClass } from "../common/utils";
 import "./index.less";

@@ -1,6 +1,6 @@
 import { Block, ScrollView, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import { useState, useMemo, useCallback, useRef, useEffect } from '@tarojs/taro' /** api **/
+const { useState, useMemo, useCallback, useRef, useEffect } = Taro /** api **/;
 import './index.less'
 import { throttle } from "throttle-debounce"
 import { ActiveProps, getSystemInfoSync, isWeapp, useScopeRef, ExtClass, isH5, getAllRect, getRect } from '../common/utils'

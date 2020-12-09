@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useState } from '@tarojs/taro' /** api **/;
+const { useState } = Taro /** api **/;
 import config from './config';
 import { Block, View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";

@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useState, useEffect, useMemo, useCallback } from '@tarojs/taro' /** api **/;
+const { useState, useEffect, useMemo, useCallback } = Taro /** api **/;
 import "./index.less";
 import VanCell from "../Cell";
 import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass } from "../common/utils";

@@ -1,4 +1,5 @@
-import { useRef } from '@tarojs/taro' /** api **/
+import Taro from '@tarojs/taro';
+const { useRef } = Taro /** api **/;
 import { ITouchEvent } from "@tarojs/components/types/common"
 
 

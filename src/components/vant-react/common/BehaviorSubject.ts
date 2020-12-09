@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from '@tarojs/taro' /** api **/;
+import Taro from "@tarojs/taro";
+const { useState, useCallback, useEffect } = Taro /** api **/;
 
 /**
  * 模拟 rxjs 的 BehaviorSubject

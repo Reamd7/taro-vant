@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useState, useCallback } from '@tarojs/taro' /** api **/
+const { useState, useCallback } = Taro /** api **/;
 import "./index.less";
 import { RED, GRAY } from "../common/color";
 import VanPopup, { VanPopupProps } from "../Popup";

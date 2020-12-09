@@ -1,4 +1,5 @@
-import { useRef } from '@tarojs/taro' /** api **/;
+import Taro from "@tarojs/taro";
+const { useRef } = Taro /** api **/;
 
 export type compareFunction<T> = (prev: T | undefined, next: T) => boolean;
 

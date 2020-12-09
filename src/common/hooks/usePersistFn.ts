@@ -1,4 +1,5 @@
-import { useCallback, useRef, useEffect } from '@tarojs/taro' /** api **/;
+import Taro from "@tarojs/taro";
+const { useCallback, useRef, useEffect } = Taro /** api **/;
 
 export type noop = (...args: any[]) => any;
 

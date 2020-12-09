@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useState, useEffect, useMemo } from '@tarojs/taro' /** api **/
+const { useState, useEffect, useMemo } = Taro /** api **/;
 import type { ReactNode } from 'react'
 import { View, Block } from "@tarojs/components";
 import {

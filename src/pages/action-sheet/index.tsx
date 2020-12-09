@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useState, useCallback, useRef } from '@tarojs/taro' /** api **/;
+const { useState, useCallback, useRef } = Taro /** api **/;
 import { Block, View } from '@tarojs/components'
 import DemoBlock from "../components/demoBlock";
 import VanButton from "../../components/vant-react/Button";

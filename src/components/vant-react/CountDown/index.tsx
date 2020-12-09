@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useRef, useState, useEffect } from '@tarojs/taro' /** api **/
+const { useRef, useState, useEffect } = Taro /** api **/;
 import { isSameSecond, parseFormat, parseTimeData, TimeData } from "./utils";
 import "./index.less";
 import { View } from "@tarojs/components";

@@ -77,4 +77,5 @@ function rerender(isForce) {
 }
 ```
 标注：
-    '@tarojs/taro' /** api **/
+import \{(.*)\} from '@tarojs/taro' \/\*\* api \*\*\/
+const {$1} = Taro /** api **/;

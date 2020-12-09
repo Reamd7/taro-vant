@@ -1,6 +1,6 @@
 import { getCurrentPage, isH5 } from "../utils";
-import { PageScrollObject } from "@tarojs/taro";
-import { useEffect } from '@tarojs/taro' /** api **/;
+import Taro, { PageScrollObject } from "@tarojs/taro";
+const { useEffect } = Taro /** api **/;
 
 export type ScrollerFunc = (obj: PageScrollObject) => any
 export type Scroller = Taro.PageScrollObject;

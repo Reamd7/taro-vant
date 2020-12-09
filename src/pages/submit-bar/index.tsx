@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useCallback } from '@tarojs/taro' /** api **/;
+const { useCallback } = Taro /** api **/;
 import "./index.less";
 import { Block, View, Text } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";

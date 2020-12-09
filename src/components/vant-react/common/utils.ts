@@ -2,7 +2,7 @@ import Taro, { getCurrentPages, useDidShow, pxTransform } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./utils/bem";
-import { useContext, useEffect, useMemo , useState, useCallback } from '@tarojs/taro' /** api **/;
+const { useContext, useEffect, useMemo , useState, useCallback } = Taro /** api **/;
 import type { CSSProperties } from 'react';
 export const isH5 = process.env.TARO_ENV === "h5";
 export const isWeapp = process.env.TARO_ENV === "weapp"
