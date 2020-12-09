@@ -76,3 +76,5 @@ function rerender(isForce) {
     }
 }
 ```
+标注：
+    '@tarojs/taro' /** api **/
