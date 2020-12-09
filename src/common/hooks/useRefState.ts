@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from '@tarojs/taro' /** api **/;
 
 export default function useRefState<S>(initialState: S | (() => S)) {
   const [state, setState] = useState(initialState);

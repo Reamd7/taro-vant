@@ -1,6 +1,6 @@
 import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from '@tarojs/taro' /** api **/;
 import { addUnit, useMemoBem, useMemoClassNames, noop, ActiveProps, isExternalClass, isNormalClass } from '../common/utils';
 import VanIcon from '../icon';
 

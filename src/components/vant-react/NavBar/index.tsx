@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
-import { useState, useEffect, useMemo } from 'react'
-import { ReactNode } from "react";
+import { useState, useEffect, useMemo } from '@tarojs/taro' /** api **/
+import type { ReactNode } from 'react'
 import { View, Block } from "@tarojs/components";
 import {
   noop,

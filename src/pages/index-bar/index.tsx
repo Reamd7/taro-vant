@@ -1,6 +1,6 @@
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from '@tarojs/taro' /** api **/;
 import './index.less'
 import VanIndexList from 'src/components/vant-react/IndexList'
 import { isWeapp } from 'src/components/vant-react/common/utils';

@@ -1,11 +1,11 @@
 import Taro from "@tarojs/taro";
-import { useState, useCallback } from "react"
+import { useState, useCallback } from '@tarojs/taro' /** api **/
 import "./index.less";
 import { RED, GRAY } from "../common/color";
 import VanPopup, { VanPopupProps } from "../Popup";
 import { ActiveProps, useMemoClassNames, useMemoCssProperties, useMemoAddUnit } from "../common/utils";
 import VanGoodsActionButton, { VanGoodsActionButtonProps } from "../GoodsActionButton";
-import bem from "../common/bem";
+import bem from "../common/utils/bem";
 import { View, Text } from "@tarojs/components";
 import VanGoodsAction from "../GoodsAction";
 import VanButton from "../Button";

@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useMemo, useCallback } from 'react'
+import { useMemo, useCallback } from '@tarojs/taro' /** api **/
 import "./index.less";
 import { View, Text } from "@tarojs/components";
 import dayjs from "dayjs";

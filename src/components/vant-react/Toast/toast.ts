@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useMemo } from 'react';
+import { useMemo } from '@tarojs/taro' /** api **/;
 import { getContext, noop } from "../common/utils";
 import type { VanToastProps } from ".";
 export const VanToastMap = new Map<

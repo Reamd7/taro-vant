@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { Component } from 'react';
+import { Component } from '@tarojs/taro' /** api **/;
 import "./index.less";
 import { View, ScrollView } from "@tarojs/components";
 import { ActiveProps, addUnit, createSelectorQuery, ExtClass, noop, } from "../common/utils";

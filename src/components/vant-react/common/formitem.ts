@@ -1,12 +1,12 @@
-import Taro, { SetStateAction } from "@tarojs/taro";
-import { useRef, useState, useEffect, useCallback } from "react"
+import { useRef, useState, useEffect, useCallback, SetStateAction } from '@tarojs/taro' /** api **/
+import { nextTick } from "./utils";
 export type FormField<KeyName extends string, M> = {
   fieldName?: KeyName;
   FormData?: Taro.MutableRefObject<{
     [key in KeyName]?: M
   }> | [
     { [key in KeyName]?: M },
-    Taro.Dispatch<SetStateAction<{ [key in KeyName]?: M }>>
+    React.Dispatch<SetStateAction<{ [key in KeyName]?: M }>>
   ]
   defaultValue?: M;
   value?: M;
@@ -68,7 +68,7 @@ export function useFormItem<KeyName extends string, M>({
 
   const setInnerValueAndChange = useCallback((val: M, onChange?: (val: M) => void) => {
     setInnerValue(val);
-    onChange && Taro.nextTick(() => {
+    onChange && nextTick(() => {
       onChange && onChange(val)
     })
   }, [setInnerValue])

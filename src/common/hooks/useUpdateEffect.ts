@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from '@tarojs/taro' /** api **/;
 
 const useUpdateEffect: typeof useEffect = (effect, deps) => {
   const isMounted = useRef(false);

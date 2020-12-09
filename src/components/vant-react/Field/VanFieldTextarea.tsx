@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from '@tarojs/taro' /** api **/;
 import "./index.less";
 import VanCell from "../Cell";
 import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, addUnit } from "../common/utils";

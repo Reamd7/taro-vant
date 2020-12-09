@@ -1,5 +1,5 @@
 import { nextTick, isH5 } from "../utils";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from '@tarojs/taro' /** api **/;
 export type MixinsTransitionProps = {
     style?: React.CSSProperties;
     show?: boolean;

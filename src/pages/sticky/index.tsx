@@ -1,5 +1,5 @@
 import Taro, { usePageScroll } from "@tarojs/taro";
-import { useRef, useState } from 'react';
+import { useRef, useState } from '@tarojs/taro' /** api **/;
 import "./index.less";
 import { Block, View, ScrollView } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";

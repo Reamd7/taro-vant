@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef } from '@tarojs/taro' /** api **/
 import { ITouchEvent } from "@tarojs/components/types/common"
 
 

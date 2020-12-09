@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef } from '@tarojs/taro' /** api **/;
 
 export type compareFunction<T> = (prev: T | undefined, next: T) => boolean;
 

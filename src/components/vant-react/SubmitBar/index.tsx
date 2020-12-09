@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useMemo } from "react";
+import { useMemo } from '@tarojs/taro' /** api **/;
 import "./index.less";
 import VanIcon, { VanIconProps } from "../icon";
 import { View, Text } from "@tarojs/components";

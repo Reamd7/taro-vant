@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback } from '@tarojs/taro' /** api **/;
 import { useCheckboxGroupContext } from "./utils";
 import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
 import { ActiveProps } from "../common/utils";

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from '@tarojs/taro' /** api **/;
 
 /**
  * 模拟 rxjs 的 BehaviorSubject

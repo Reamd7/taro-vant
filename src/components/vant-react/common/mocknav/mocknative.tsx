@@ -1,57 +1,37 @@
 import Nerv from "nervjs";
 import Taro from "@tarojs/taro";
-import { useMemo } from "react"
+import { Component } from '@tarojs/taro' /** api **/
 import VanNavBar from "src/components/vant-react/NavBar";
 import "./mocknative.less"
 import { getCurrentPage } from "src/components/vant-react/common/utils";
-import BehaviorSubject, { useListenerBehaviorSubject } from "../BehaviorSubject";
+import BehaviorSubject from "../BehaviorSubject";
 
 const routerListener = new BehaviorSubject<Taro.Page | null>(null)
 
-function MockNav() {
-  const router = useListenerBehaviorSubject(routerListener)
-  const page = useMemo(() => {
-    return router ? {
-      ...router.$app.config.window,
-      ...router.config,
+class MockNav extends Component {
+  state = {
+    router: routerListener.getValue()
+  }
+  componentWillmount = () => {
+    routerListener.subscribe((v) => {
+      this.setState({
+        router: v
+      })
+    })
+  }
+
+  render() {
+    const page = this.state.router ? {
+      ...this.state.router.$app.config.window,
+      ...this.state.router.config,
     } : {}
-  }, [router])
+    return this.state.router ? <VanNavBar
+      title={page.navigationBarTitleText}
+      leftArrow={true}
+      onClickLeft={() => Taro.navigateBack()}
+    ></VanNavBar> : null
+  }
 
-  // useEffect(() => {
-  //   routerListener.next(getCurrentPage())
-  // }, [])
-
-  // useEffect(() => {
-  //   const page = getCurrentPage();
-  //   if (page) {
-  //     const options = {
-  //       ...page.$app.config.window,
-  //       ...page.config,
-  //     }
-  //     console.log(options.navigationBarTitleText)
-  //     setPage(options)
-  //   }
-
-  //   window.addEventListener("hashchange", function () {
-  //     console.log("location: " + document.location);
-  //     const page = getCurrentPage();
-  //     if (page) {
-  //       const options = {
-  //         ...page.$app.config.window,
-  //         ...page.config,
-  //       }
-  //       setPage(options)
-  //     }
-  //   })
-  //   window.addEventListener('popstate', (event) => {
-  //     console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
-  //   });
-  // }, [])
-  return router ? <VanNavBar
-    title={page.navigationBarTitleText}
-    leftArrow={true}
-    onClickLeft={() => Taro.navigateBack()}
-  ></VanNavBar> : null
 }
 
 // const navigateBack = Taro.navigateBack.bind({}) as typeof Taro.navigateBack;

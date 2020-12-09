@@ -1,9 +1,9 @@
-import Taro, { getCurrentPages, useDidShow } from "@tarojs/taro";
+import Taro, { getCurrentPages, useDidShow, pxTransform } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
-import bem from "./bem";
-import { CSSProperties, useContext, useEffect, useMemo , useState, useCallback } from "react";
-
+import bem from "./utils/bem";
+import { useContext, useEffect, useMemo , useState, useCallback } from '@tarojs/taro' /** api **/;
+import type { CSSProperties } from 'react';
 export const isH5 = process.env.TARO_ENV === "h5";
 export const isWeapp = process.env.TARO_ENV === "weapp"
 export const isAlipay = process.env.TARO_ENV === "alipay" // 不支持scope的能力，需要处理。
@@ -16,11 +16,12 @@ export function addUnit(value?: string | number | null) {
   if (value == null) {
     return undefined;
   } else if (typeof value === "number") {
-    if (isWeapp) {
-      return (value * dpi) + "rpx"
-    } else {
-      return (value) + "px"
-    }
+    return pxTransform(value * dpi)
+    // if (isWeapp) {
+    //   return (value * dpi) + "rpx"
+    // } else {
+    //   return (value) + "px"
+    // }
   } else {
     return value
   }
@@ -50,7 +51,6 @@ export function useMemoCssProperties() {
 
 export function useMemoBem() {
   return bem
-
 }
 
 

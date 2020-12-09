@@ -3,7 +3,7 @@
  */
 // import { BehaviorSubject } from 'rxjs'
 import BehaviorSubject from './BehaviorSubject';
-import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import { useEffect, useState, useMemo, useCallback, useRef } from '@tarojs/taro' /** api **/;
 import { getContext } from './utils';
 import useUpdateEffect from 'src/common/hooks/useUpdateEffect';
 

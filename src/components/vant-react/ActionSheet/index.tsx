@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { useCallback } from "react";
+import { useCallback } from '@tarojs/taro' /** api **/;
 import { MixinsButtonProps } from "../common/mixins/button";
 import {
   MixinsOpenTypeProps,

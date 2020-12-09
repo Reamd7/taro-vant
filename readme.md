@@ -57,4 +57,22 @@ ScrollView H5版本：
 - h5 的问题
   - document.querySelector(`#${id}`).scrollIntoView 的滚动是有问题的，不能支持 smooth（速度太慢了）
 - h5 中的实现中 scrollTop ，scrollLeft，其实是一个受控属性的实现，但是对于小程序中，这些属性都不是受控属性的实现。（逻辑上是有问题的）
--
+
+```typescript
+// nerv/src/render-queue.ts
+// 就是这个原因 pop ，所以更新的时候是逆序更新的，但是mount的时候是顺序挂载的。
+// NOTE : 这个如果要迁移到react中需要进行测试。
+function rerender(isForce) {
+    if (isForce === void 0) isForce = false;
+
+    var p;
+    var list = items;
+    items = [];
+    // tslint:disable-next-line:no-conditional-assignment
+    while (p = list.pop()) { // 因为这里的原因，所以这里更新是逆序的。
+        if (p._dirty) {
+            updateComponent(p, isForce);
+        }
+    }
+}
+```

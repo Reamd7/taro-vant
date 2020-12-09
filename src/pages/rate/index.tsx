@@ -1,6 +1,6 @@
 import { View, Text } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useState } from 'react';
+import { useState } from '@tarojs/taro' /** api **/;
 import VanRate from 'src/components/vant-react/Rate';
 import DemoBlock from '../components/demoBlock';
 
