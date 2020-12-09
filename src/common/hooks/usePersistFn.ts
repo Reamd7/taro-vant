@@ -1,4 +1,4 @@
-import { useCallback, useRef, useEffect } from '@tarojs/taro';
+import { useCallback, useRef, useEffect } from 'react';
 
 export type noop = (...args: any[]) => any;
 

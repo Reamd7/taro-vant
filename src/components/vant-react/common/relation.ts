@@ -12,77 +12,50 @@ import useUpdateEffect from 'src/common/hooks/useUpdateEffect';
 const relationPropsMap = new Map<
   string,
   BehaviorSubject<(props: any) => any>
->()
+>();
+
+const StatusMap = ["mount", "update"] as const;
+
 /**
  * 以 pid 为标识符，注入组件的 props 到外部的状态管理中。
- *
- * NOTE：
- * ```
- * nerv/src/render-queue.ts
- * // 就是这个原因 pop ，所以更新的时候是逆序更新的，但是mount的时候是顺序挂载的。
- * // NOTE : 这个如果要迁移到react中需要进行测试。
- * function rerender(isForce) {
-      if (isForce === void 0) isForce = false;
-
-      var p;
-      var list = items;
-      items = [];
-      // tslint:disable-next-line:no-conditional-assignment
-      while (p = list.pop()) { // 因为这里的原因，所以这里更新是逆序的。
-          if (p._dirty) {
-              updateComponent(p, isForce);
-          }
-      }
-  }
-  ```
- *
- * @param pid
- * @param props
  */
-export function useRelationPropsInject<T extends {
+export function useRelationPropsInject<P, AP extends P = P>(pid: string, relation: (props: P) => AP, deps: any[], total: number): AP[];
+export function useRelationPropsInject<P, AP extends P = P>(pid: string, relation: (props: P) => AP, deps: any[]): [];
+export function useRelationPropsInject<P extends {
   index: number;
   total: number;
-}>(pid: string, relation: (props: T) => T, deps: any[]) {
+}, AP extends P = P>(pid: string, relation: (props: P) => AP, deps: any[]): AP[];
+export function useRelationPropsInject<P extends {
+  index?: number;
+  total?: number;
+}, AP extends P = P>(pid: string, relation: (props: P) => AP, deps: any[], total?: number): any {
   const context = getContext();
   const _id = context ? `${context}_${pid}` : null;
 
-  const PropsListRef = useRef<Array<T>>([]);
-  const [PropsList, setPropsList] = useState<Array<T>>(PropsListRef.current);
+  const PropsListRef = useRef<Array<AP>>([]);
+  const [PropsList, setPropsList] = useState<Array<AP>>(PropsListRef.current);
 
-  const status = useRef<"update" | "mount">("mount");
+  const status = useRef<0 | 1>(0);
   const loopIndex = useRef(0);
 
-  const Fn = useCallback((props: T) => {
+  const Fn = useCallback((props: P) => {
     const newProps = relation(props);
-    const index = props.index;
     // NOTE : 这个如果要迁移到react中需要进行测试。
-    if (status.current === "mount") {
-      if (index === 0) {
-        PropsListRef.current = Array(props.total);
+    const __total__ = props.total === undefined ? total : props.total;
+    if (__total__ === undefined) return newProps; // 如果有total，就进行依赖收集
+    const index = props.index === undefined ? loopIndex.current : props.index;
+
+    if (index === 0) {
+      PropsListRef.current = Array(__total__);
+    }
+    PropsListRef.current[index] = (newProps);
+    loopIndex.current += 1;
+    if (index === __total__) {
+      loopIndex.current = 0;
+      if (status.current === 0) {
+        status.current = 1
       }
-      PropsListRef.current[index] = (newProps);
-      if (index === (props.total - 1)) {
-        setPropsList(PropsListRef.current);
-        status.current = "update"
-      }
-    } else {
-      // if (index === (props.total - 1)) {
-      //   PropsListRef.current = Array(props.total);
-      // }
-      // PropsListRef.current[index] = (newProps);
-      // if (index === 0) {
-      //   setPropsList(PropsListRef.current);
-      // }
-      // 我也不知道为什么微信小程序不保证渲染顺序，但是遇见这个问题了，就这样写。
-      if (loopIndex.current === 0) {
-        PropsListRef.current = Array(props.total);
-      }
-      PropsListRef.current[index] = (newProps);
-      loopIndex.current += 1;
-      if (loopIndex.current === props.total) {
-        loopIndex.current = 0;
-        setPropsList(PropsListRef.current);
-      }
+      setPropsList(PropsListRef.current);
     }
 
     return newProps
@@ -161,13 +134,14 @@ export function useRelationPropsListener<T>(pid: string, props: T): T {
 
 export function RelationPropsInject<T extends {
   index: number;
-  total: number;
+  total?: number;
 }>(self: React.Component<any>, {
-  pid, relation, deps, loopEnd
+  pid, relation, deps, loopEnd, total
 }: {
   pid: string,
   relation: (props: T) => T,
   deps: any[],
+  total?: number;
   loopEnd: (status: "mount" | "update", PropsList: Array<T>) => void;
 }) {
   const context = getContext();
@@ -176,38 +150,30 @@ export function RelationPropsInject<T extends {
   }
   const _id = `${context}_${pid}`;
 
-  let status: "mount" | "update" = "mount";
+  let status: 0 | 1 = 0;
   let PropsListRef: Array<T> = [];
   let loopIndex: number = 0;
 
   const createFn = () => {
     return ((props: T) => {
       const newProps = relation(props);
-      const index = props.index;
       // NOTE : 这个如果要迁移到react中需要进行测试。
-      if (status === "mount") {
-        if (index === 0) {
-          PropsListRef = Array(props.total);
-        }
-        PropsListRef[index] = (newProps);
-        if (index === (props.total - 1)) {
-          // console.log(status)
-          loopEnd(status, PropsListRef)
-          status = "update"
-        }
-      } else {
-        if (loopIndex === 0) {
-          PropsListRef = Array(props.total);
-        }
-        PropsListRef[index] = (newProps);
-        loopIndex += 1;
-        if (loopIndex === props.total) {
-          // console.log(status)
-          loopIndex = 0;
-          loopEnd(status, PropsListRef)
-        }
-      }
+      const __total__ = props.total === undefined ? total : props.total;
+      if (__total__ === undefined) return newProps; // 如果有total，就进行依赖收集
+      const index = props.index === undefined ? loopIndex : props.index;
 
+      if (index === 0) {
+        PropsListRef = Array(__total__);
+      }
+      PropsListRef[index] = (newProps);
+      loopIndex += 1;
+      if (index === __total__) {
+        loopIndex = 0;
+        if (status === 0) {
+          status = 1
+        }
+        loopEnd(StatusMap[status], PropsListRef)
+      }
       return newProps
     })
   }
@@ -223,20 +189,20 @@ export function RelationPropsInject<T extends {
 
   if (self.componentWillUnmount) {
     const source = self.componentWillUnmount.bind(self)
-    self.componentWillUnmount = function() {
+    self.componentWillUnmount = function () {
       // do something in here
       _id && relationPropsMap.delete(_id);
       source()
     }.bind(self)
   } else {
-    self.componentWillUnmount = function() {
+    self.componentWillUnmount = function () {
       _id && relationPropsMap.delete(_id);
     }
   }
 
   if (self.shouldComponentUpdate) {
     const source = self.shouldComponentUpdate.bind(self)
-    self.shouldComponentUpdate = function(nextProps, nextState, nextContext) {
+    self.shouldComponentUpdate = function (nextProps, nextState, nextContext) {
       // do something in here
       if (deps.reduce((res, val) => {
         if (res) {
@@ -252,7 +218,7 @@ export function RelationPropsInject<T extends {
       return source(nextProps, nextState, nextContext)
     }.bind(self)
   } else {
-    self.shouldComponentUpdate = function(nextProps) {
+    self.shouldComponentUpdate = function (nextProps) {
       // do something in here
       if (deps.reduce((res, val) => {
         if (res) {

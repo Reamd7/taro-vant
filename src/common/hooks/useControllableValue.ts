@@ -1,4 +1,4 @@
-import { useMemo, useState } from '@tarojs/taro';
+import { useMemo, useState } from 'react';
 import useUpdateEffect from './useUpdateEffect';
 import usePersistFn from './usePersistFn';
 

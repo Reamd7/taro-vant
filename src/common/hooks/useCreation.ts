@@ -1,4 +1,4 @@
-import { useState } from '@tarojs/taro';
+import { useState } from 'react';
 import useUpdateEffect from './useUpdateEffect';
 
 export type noop = (...args: any[]) => any;
