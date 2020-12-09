@@ -1,8 +1,8 @@
-import Taro, { getCurrentPages, useContext, useEffect, useMemo, useDidShow, useState, useCallback } from "@tarojs/taro";
+import Taro, { getCurrentPages, useDidShow } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./bem";
-import { CSSProperties } from "react";
+import { CSSProperties, useContext, useEffect, useMemo , useState, useCallback } from "react";
 
 export const isH5 = process.env.TARO_ENV === "h5";
 export const isWeapp = process.env.TARO_ENV === "weapp"

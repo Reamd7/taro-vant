@@ -1,8 +1,8 @@
-import Taro, { useEffect, useState, useRef } from "@tarojs/taro";
-
+import Taro from "@tarojs/taro";
+import { useEffect, useState, useRef } from "react";
 import "./VanCollapseItem.less";
 import { VanIconProps } from "../icon";
-import { ActiveProps, useMemoBem, useMemoClassNames, isExternalClass, isNormalClass, getRect, useScope, useScopeRef } from "../common/utils";
+import { ActiveProps, useMemoBem, useMemoClassNames, isExternalClass, isNormalClass, getRect, useScopeRef } from "../common/utils";
 import { View } from "@tarojs/components";
 import VanCell, { VanCellProps } from "../Cell";
 import { useRelationPropsListener } from "../common/relation";

@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "@tarojs/taro";
+import { useMemo, useCallback } from "react";
 import { useCheckboxGroupContext } from "./utils";
 import useControllableValue, { ControllerValueProps } from "src/common/hooks/useControllableValue";
 import { ActiveProps } from "../common/utils";
@@ -59,43 +59,41 @@ const VanCheckBoxGroup: Taro.FunctionComponent<VanCheckBoxGroupProps> = (props: 
     } else {
       return false
     }
-
-
-    if (checked) {
-      // add
-      if (currentValue) {
-        if (currentValue.includes(key)) {
-          if (max === 1) {
-            setCurrentValueOnChange([])
-          }
-          return false;
-        } else {
-          if (max === 1) {
-            setCurrentValueOnChange([])
-          }
-          if (currentValue.length < max) {
-            newCurrentValue = [...currentValue, key];
-          } else {
-            return false;
-          }
-        }
-      } else {
-        newCurrentValue = [key]
-      }
-    } else {
-      // remove
-      if (currentValue) {
-        if (currentValue.includes(key)) {
-          newCurrentValue = currentValue.filter(val => val !== key)
-        } else {
-          return false;
-        }
-      } else {
-        newCurrentValue = []
-      }
-    }
-    setCurrentValueOnChange(newCurrentValue)
-    return true; // needChange
+    // if (checked) {
+    //   // add
+    //   if (currentValue) {
+    //     if (currentValue.includes(key)) {
+    //       if (max === 1) {
+    //         setCurrentValueOnChange([])
+    //       }
+    //       return false;
+    //     } else {
+    //       if (max === 1) {
+    //         setCurrentValueOnChange([])
+    //       }
+    //       if (currentValue.length < max) {
+    //         newCurrentValue = [...currentValue, key];
+    //       } else {
+    //         return false;
+    //       }
+    //     }
+    //   } else {
+    //     newCurrentValue = [key]
+    //   }
+    // } else {
+    //   // remove
+    //   if (currentValue) {
+    //     if (currentValue.includes(key)) {
+    //       newCurrentValue = currentValue.filter(val => val !== key)
+    //     } else {
+    //       return false;
+    //     }
+    //   } else {
+    //     newCurrentValue = []
+    //   }
+    // }
+    // setCurrentValueOnChange(newCurrentValue)
+    // return true; // needChange
   }, [props.onChange, disabled, currentValue, setCurrentValueOnChange])
 
   const contextValue = useMemo(() => {

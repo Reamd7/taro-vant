@@ -1,4 +1,5 @@
-import Taro, { useState, useMemo } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
+import { useState, useMemo } from 'react';
 import "./item.less"
 import { Tab } from "./";
 import { useMemoClassNames, useMemoBem, ExtClass } from '../common/utils';

@@ -1,5 +1,5 @@
-import Taro, { useState, useCallback } from "@tarojs/taro";
-
+import Taro from "@tarojs/taro";
+import { useState, useCallback } from "react"
 import "./index.less";
 import { RED, GRAY } from "../common/color";
 import VanPopup, { VanPopupProps } from "../Popup";

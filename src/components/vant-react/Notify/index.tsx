@@ -1,4 +1,5 @@
-import Taro, { useEffect, useState, useRef } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useEffect, useState, useRef } from "react";
 import VanTransition from "../Transition";
 import {
   noop,

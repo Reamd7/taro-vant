@@ -1,11 +1,13 @@
-import Taro, { useMemo, useScope } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useMemo } from 'react'
 import VanTransition, { VanTransitionProps } from "../Transition";
 import {
   useMemoCssProperties,
   noop,
   useMemoClassNames,
   isNormalClass,
-  isExternalClass
+  isExternalClass,
+  useScopeRef
 } from "../common/utils";
 import { View } from "@tarojs/components";
 import "./index.less";
@@ -54,7 +56,7 @@ const VanOverlay: Taro.FunctionComponent<VanOverlayProps> = props => {
       });
   }, [VanOverlayStyle, props.style, props.zIndex, props.className]);
 
-  const scope = useScope();
+  const [scope] = useScopeRef();
   const onTouchMove = usePersistFn((e: WsxTouchEvent) => {
     // e.stopPropagation();
     props.onTouchMove && props.onTouchMove(e)

@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { View, Button, Block, ScrollView } from "@tarojs/components";
+import { View, Button, ScrollView } from "@tarojs/components";
 import VanPopup from "../Popup";
 import VanShareSheetOptions, { VanShareSheetOption } from "./options";
 import { noop } from "../common/utils";

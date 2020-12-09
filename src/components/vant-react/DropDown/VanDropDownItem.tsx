@@ -1,5 +1,5 @@
-import Taro, { useState, useEffect, useRef } from "@tarojs/taro";
-
+import Taro from "@tarojs/taro";
+import { useState, useEffect, useRef } from "react"
 import "./VanDropDownItem.less";
 import { View, Text } from "@tarojs/components";
 import { useMemoBem, ActiveProps, useMemoCssProperties } from "../common/utils";

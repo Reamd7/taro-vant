@@ -1,5 +1,6 @@
 import { Block, Image, View } from '@tarojs/components';
-import Taro, { useState } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
+import { useState } from 'react';
 import VanCell from 'src/components/vant-react/Cell';
 import VanCellGroup from 'src/components/vant-react/CellGroup';
 import VanCheckBox from 'src/components/vant-react/Checkbox';

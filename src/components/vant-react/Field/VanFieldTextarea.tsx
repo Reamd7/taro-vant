@@ -1,7 +1,8 @@
-import Taro, { useState, useEffect, useMemo } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useState, useEffect, useMemo } from "react";
 import "./index.less";
 import VanCell from "../Cell";
-import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, addUnit, getSystemInfoSync } from "../common/utils";
+import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, addUnit } from "../common/utils";
 import { View, Textarea } from "@tarojs/components";
 import useControllableValue from "src/common/hooks/useControllableValue";
 import { VanFieldDefaultProps, VanFieldTextAreaTextProps, ActiveVanFieldTextAreaTextProps, VanCellContainerTitleStyle, externalClasses } from "./common";

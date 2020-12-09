@@ -1,5 +1,5 @@
-import Taro, { useState } from "@tarojs/taro";
-
+import Taro from "@tarojs/taro";
+import { useState } from 'react';
 import "./index.less";
 import { Block, View, Text } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";

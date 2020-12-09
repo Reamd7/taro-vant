@@ -1,5 +1,5 @@
-import Taro, { useState, useRef, useMemo, useCallback } from "@tarojs/taro";
-
+import Taro from "@tarojs/taro";
+import { useState, useRef, useMemo, useCallback } from "react";
 import "./index.less";
 import "../PickerCol/index.less";
 import { View, Block, PickerView, PickerViewColumn } from "@tarojs/components";

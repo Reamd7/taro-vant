@@ -1,4 +1,5 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useState } from 'react';
 import { Block, Image } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
 import VanGrid from "src/components/vant-react/Grid";

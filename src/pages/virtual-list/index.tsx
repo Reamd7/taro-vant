@@ -1,4 +1,5 @@
-import Taro, { useRef, useState, useCallback, useEffect } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { Block, View } from "@tarojs/components";
 import VanVirtualList, { VanVirtualListIns } from "src/components/vant-react/VirtualList";
 import VanVirtualListItem from "src/components/vant-react/VirtualList/item";

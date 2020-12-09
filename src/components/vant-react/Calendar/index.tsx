@@ -1,4 +1,4 @@
-import Taro, { useMemo } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 
 import "./index.less";
 import dayjs from "dayjs";

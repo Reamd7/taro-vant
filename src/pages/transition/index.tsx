@@ -1,4 +1,5 @@
-import Taro, { useState, useCallback } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useState, useCallback } from "react";
 import DemoBlock from "../components/demoBlock";
 import VanCell from "../../components/vant-react/Cell";
 import VanTransition from "../../components/vant-react/Transition";

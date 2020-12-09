@@ -1,4 +1,5 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useState } from "react";
 import { View, ScrollView, Text } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
 import VanButton from "src/components/vant-react/Button";

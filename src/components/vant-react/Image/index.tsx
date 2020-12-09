@@ -1,4 +1,5 @@
-import Taro, { useState, useCallback, useMemo } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useState, useCallback, useMemo } from "react";
 import { Image, View } from "@tarojs/components";
 import {
   useMemoCssProperties,

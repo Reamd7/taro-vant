@@ -1,4 +1,5 @@
-import Taro, { useMemo } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useMemo } from "react";
 import "./item.less";
 import { View } from "@tarojs/components";
 import { useRelationPropsListener } from "../common/relation";

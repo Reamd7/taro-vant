@@ -1,5 +1,6 @@
 import { Block, Image, View } from '@tarojs/components';
-import Taro, { useState } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
+import { useState } from "react";
 import VanCell from 'src/components/vant-react/Cell';
 import VanCellGroup from 'src/components/vant-react/CellGroup';
 import VanCheckBox from 'src/components/vant-react/Checkbox';
@@ -13,9 +14,9 @@ export function CheckBoxPage() {
   const [checkbox2, setCheckbox2] = useState(true);
   const [checkboxShape, setcheckboxShape] = useState(true);
   const [checkboxRed, setcheckboxRed] = useState<string[]>(['a']);
-  const [checkboxRed2, setcheckboxRed2] = useState<string[]>([]);
+  // const [checkboxRed2, setcheckboxRed2] = useState<string[]>([]);
 
-  const [checkboxRed3, setcheckboxRed3] = useState<string[]>(['a']);
+  // const [checkboxRed3, setcheckboxRed3] = useState<string[]>(['a']);
 
   const [checkboxRed4, setcheckboxRed4] = useState<string[]>(['a']);
 

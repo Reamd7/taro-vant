@@ -1,7 +1,8 @@
-import Taro, { useMemo, useCallback, useRef, useState, useEffect } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useMemo, useCallback, useState, useEffect, useRef } from "react";
 import "./index.less";
 import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, useMemoCssProperties, useMemoAddUnit, getRect, useScope, noop, ActiveProps } from "../common/utils";
-import { View, Text } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "../../../common/hooks/useControllableValue";
 // import { useTouch } from "../common/mixins/touch";
 // import { ITouchEvent } from "@tarojs/components/types/common";

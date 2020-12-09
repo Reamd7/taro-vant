@@ -1,5 +1,6 @@
 import Nerv from "nervjs";
-import Taro, { useMemo } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useMemo } from "react"
 import VanNavBar from "src/components/vant-react/NavBar";
 import "./mocknative.less"
 import { getCurrentPage } from "src/components/vant-react/common/utils";

@@ -1,4 +1,5 @@
-import Taro, { useMemo, useState } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
+import { useMemo, useState } from "react";
 import { Block } from '@tarojs/components';
 import DemoBlock from '../components/demoBlock';
 import VanPicker from '../../components/vant-react/Picker'

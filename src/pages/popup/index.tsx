@@ -1,4 +1,5 @@
-import Taro, { useState, useCallback, useRef } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useState, useCallback, useRef } from "react";
 import { View } from "@tarojs/components";
 import "./index.less";
 import DemoBlock from "../components/demoBlock";

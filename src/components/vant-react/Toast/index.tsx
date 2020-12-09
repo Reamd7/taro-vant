@@ -1,10 +1,11 @@
-import Taro, { useState, useEffect, useRef } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useState, useEffect, useRef } from 'react';
 import VanOverlay from "../Overlay";
 import VanTransition from "../Transition";
 import VanLoading, { VanLoadingProps } from "../Loading";
 import VanIcon, { VanIconProps } from "../icon";
 import { Block, View, Text } from "@tarojs/components";
-import { useMemoClassNames, getContext, useScope, useScopeRef } from "../common/utils";
+import { useMemoClassNames, getContext, useScopeRef } from "../common/utils";
 import { VanToastMap } from "./toast";
 import "./index.less";
 import usePersistFn from "src/common/hooks/usePersistFn";

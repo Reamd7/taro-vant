@@ -1,4 +1,5 @@
-import Taro, { useState, useMemo, useEffect, useLayoutEffect, useRef, } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
+import { useState, useMemo, useEffect, useRef, useLayoutEffect } from 'react';
 import "./index.less";
 import { ActiveProps, useMemoClassNames, useMemoBem, ExtClass, useMemoCssProperties, useScopeRef, getAllRect, getRect, noop, nextTick, addUnit } from '../common/utils';
 import { View, ScrollView, Swiper, SwiperItem } from '@tarojs/components';

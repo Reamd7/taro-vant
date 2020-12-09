@@ -1,6 +1,7 @@
 import { View } from '@tarojs/components';
 import { ITouchEvent } from '@tarojs/components/types/common';
-import Taro, { useMemo, useCallback } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
+import { useMemo, useCallback } from 'react';
 import { useScope, getAllRect, isExternalClass, isNormalClass, useMemoAddUnit, useMemoClassNames, useMemoCssProperties, ActiveProps } from '../common/utils';
 import VanIcon from '../icon';
 

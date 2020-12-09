@@ -1,7 +1,8 @@
-import Taro, { useRef, useState, useEffect } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useRef, useState, useEffect } from "react"
 import { isSameSecond, parseFormat, parseTimeData, TimeData } from "./utils";
 import "./index.less";
-import { View, Block } from "@tarojs/components";
+import { View } from "@tarojs/components";
 function simpleTick(fn: Function) {
   return setTimeout(fn, 30);
 }

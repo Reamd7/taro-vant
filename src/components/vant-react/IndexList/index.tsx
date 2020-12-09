@@ -1,8 +1,9 @@
 import { Block, ScrollView, View } from '@tarojs/components'
-import Taro, { useState, useMemo, useCallback, useRef, useEffect } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 import './index.less'
 import { throttle } from "throttle-debounce"
-import { ActiveProps, getSystemInfoSync, isWeapp, useScopeRef, isAlipay, useMemoClassNames, ExtClass, isH5, getAllRect, getRect } from '../common/utils'
+import { ActiveProps, getSystemInfoSync, isWeapp, useScopeRef, ExtClass, isH5, getAllRect, getRect } from '../common/utils'
 import { ITouchEvent } from '@tarojs/components/types/common'
 import usePersistFn from 'src/common/hooks/usePersistFn'
 

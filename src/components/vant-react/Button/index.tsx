@@ -1,5 +1,6 @@
 import { Block, Button, View, Text } from "@tarojs/components";
-import Taro, { useMemo } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useMemo } from 'react';
 import {
   noop,
   useMemoBem,

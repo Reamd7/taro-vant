@@ -1,4 +1,5 @@
-import Taro, { useCallback, useMemo } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useMemo, useCallback } from "react";
 import {
   useMixinsTransition,
   MixinsTransitionProps,

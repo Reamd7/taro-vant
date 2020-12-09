@@ -1,5 +1,5 @@
-import Taro, { useMemo } from "@tarojs/taro";
-// import { useGridContext } from "./utils";
+import Taro from "@tarojs/taro";
+import { useMemo } from "react";
 import { View } from "@tarojs/components";
 import {
   useMemoClassNames,

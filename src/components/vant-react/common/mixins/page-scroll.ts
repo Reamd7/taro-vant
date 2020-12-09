@@ -1,6 +1,6 @@
 import { getCurrentPage, isH5 } from "../utils";
-import { PageScrollObject, useEffect } from "@tarojs/taro";
-// import { useCallback } from "nervjs";
+import { PageScrollObject } from "@tarojs/taro";
+import { useEffect } from 'react';
 
 export type ScrollerFunc = (obj: PageScrollObject) => any
 export type Scroller = Taro.PageScrollObject;

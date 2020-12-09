@@ -1,4 +1,5 @@
-import Taro, { useRef, useCallback, useState, useEffect } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { View } from "@tarojs/components";
 import { ITouchEvent } from "@tarojs/components/types/common";
 import { noop } from "../common/utils";

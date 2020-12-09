@@ -8,7 +8,20 @@ const wxsPattern = glob.sync("**/*.wxs", { cwd: SRC, mark: true }).map(file => {
     from: path.resolve(SRC, file), to: path.resolve(DIST, file)
   }
 });
+const node_modules = path.resolve(__dirname, "..", "node_modules")
+// console.log(path.resolve(node_modules, '@tarojs/taro'))
+// TARO_ENV: "weapp" | "swan" | "alipay" | "h5" | "rn" | "tt" | "quickapp" | "qq"
 
+const BaseUIAlias = {
+  "weapp": path.resolve(node_modules, '@tarojs/taro-weapp'),
+  "swan": path.resolve(node_modules, '@tarojs/taro-swan'),
+  "alipay": path.resolve(node_modules, '@tarojs/taro-alipay'),
+  "h5": path.resolve(node_modules, '@tarojs/taro-h5'),
+  "rn": path.resolve(node_modules, '@tarojs/taro-rn'),
+  "tt": path.resolve(node_modules, '@tarojs/taro-tt'),
+  "qq": path.resolve(node_modules, '@tarojs/taro-qq'),
+  "quickapp": path.resolve(node_modules, '@tarojs/taro-quickapp'),
+}
 
 const config = {
   projectName: 'myshop',
@@ -92,7 +105,7 @@ const config = {
   },
   alias: {
     'src': path.resolve(__dirname, '..', 'src'),
-
+    'react': BaseUIAlias[process.env.TARO_ENV]
   },
   copy: {
     // patterns: [

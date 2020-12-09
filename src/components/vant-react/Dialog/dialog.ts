@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useCallback } from "@tarojs/taro";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { VanDialogProps } from ".";
 import { getContext } from "../common/utils";
 

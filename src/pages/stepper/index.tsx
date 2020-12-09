@@ -1,5 +1,6 @@
 import { Block } from '@tarojs/components';
-import Taro, { useState } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
+import { useState } from 'react';
 import VanCell from 'src/components/vant-react/Cell';
 import VanStepper from 'src/components/vant-react/Stepper';
 import VanToast from 'src/components/vant-react/Toast';

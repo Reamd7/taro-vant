@@ -3,7 +3,7 @@
  */
 // import { BehaviorSubject } from 'rxjs'
 import BehaviorSubject from './BehaviorSubject';
-import { useEffect, useState, useMemo, useCallback, useRef } from '@tarojs/taro';
+import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { getContext } from './utils';
 import useUpdateEffect from 'src/common/hooks/useUpdateEffect';
 
@@ -162,7 +162,7 @@ export function useRelationPropsListener<T>(pid: string, props: T): T {
 export function RelationPropsInject<T extends {
   index: number;
   total: number;
-}>(self: Taro.Component<any>, {
+}>(self: React.Component<any>, {
   pid, relation, deps, loopEnd
 }: {
   pid: string,

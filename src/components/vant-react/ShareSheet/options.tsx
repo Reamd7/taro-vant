@@ -1,4 +1,5 @@
-import Taro, { useCallback } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useCallback } from 'react'
 import { View, Button, Image } from "@tarojs/components";
 import { useMemoBem } from "../common/utils";
 import { ITouchEvent } from "@tarojs/components/types/common";

@@ -1,10 +1,5 @@
-import Taro, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback
-} from "@tarojs/taro";
-
+import Taro from "@tarojs/taro";
+import { useState, useRef, useEffect, useCallback } from 'react'
 import "./index.less";
 import VanIcon, { VanIconProps } from "../icon";
 import { View, Navigator } from "@tarojs/components";
@@ -191,8 +186,8 @@ const VanNoticeBar: Taro.FunctionComponent<VanNoticeBarProps> = props => {
           custom-class="van-notice-bar__left-icon"
         />
       ) : (
-        props.renderLeftIcon
-      )}
+          props.renderLeftIcon
+        )}
       <View className="van-notice-bar__wrap">
         <View
           className={classnames(
@@ -214,8 +209,8 @@ const VanNoticeBar: Taro.FunctionComponent<VanNoticeBarProps> = props => {
       ) : mode === "link" ? (
         <Navigator url={url} openType={openType} />
       ) : (
-        props.renderRightIcon
-      )}
+            props.renderRightIcon
+          )}
     </View>
   ) : null;
 };

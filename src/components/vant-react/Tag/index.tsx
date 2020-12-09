@@ -1,5 +1,5 @@
-import Taro, { useMemo } from "@tarojs/taro";
-
+import Taro from "@tarojs/taro";
+import { useMemo } from 'react';
 import "./index.less";
 import { View } from "@tarojs/components";
 import {

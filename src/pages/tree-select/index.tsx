@@ -1,5 +1,5 @@
-import Taro, { useState } from "@tarojs/taro";
-
+import Taro from "@tarojs/taro";
+import { useState } from "react";
 import config from './config';
 import { Block, View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";

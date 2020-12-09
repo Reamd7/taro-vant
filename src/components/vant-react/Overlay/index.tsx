@@ -1,4 +1,5 @@
-import Taro, { useMemo } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useMemo } from 'react'
 import VanTransition, { VanTransitionProps } from "../Transition";
 import {
   useMemoCssProperties,

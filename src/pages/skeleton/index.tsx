@@ -1,4 +1,5 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useState } from 'react';
 import { View, Image, Switch } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
 import VanSkeleton from "../../components/vant-react/Skeleton";

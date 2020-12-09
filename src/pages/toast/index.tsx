@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { Block, View } from "@tarojs/components";
+import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
 import VanButton from "src/components/vant-react/Button";
 import VanToast from "src/components/vant-react/Toast";

@@ -1,4 +1,5 @@
-import Taro, { useMemo, useState, useCallback } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
+import { useMemo, useState, useCallback } from "react"
 import VanPicker from '../Picker';
 import dayjs from 'dayjs';
 import toArray from "dayjs/plugin/toArray";

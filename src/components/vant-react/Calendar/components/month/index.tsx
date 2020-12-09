@@ -1,4 +1,5 @@
-import Taro, { useState, useMemo, useCallback } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
+import { useMemo, useCallback } from 'react'
 import "./index.less";
 import { View, Text } from "@tarojs/components";
 import dayjs from "dayjs";
@@ -159,7 +160,7 @@ const VanCalMonth = (props: VanCalMonthProps) => {
 
   const onMonthClick = useCallback((item: dayItem) => {
     if (item.type === "disabled") {
-      return ;
+      return;
     }
 
     props.onClick(item.date)
@@ -185,7 +186,7 @@ const VanCalMonth = (props: VanCalMonthProps) => {
               item.className
             )
           }
-          onClick={()=>onMonthClick(item)}
+          onClick={() => onMonthClick(item)}
         >
           {
             <View
