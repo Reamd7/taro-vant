@@ -51,3 +51,10 @@ return page.route
 
 - SelectQuery 但是在最新的支付宝api中已经有了in scope的支持了。scope是自定义组件。
 - index list 组件，有一个问题：h5端中移动端（chrome浏览器滚动很慢（Chrome87），QQ内置爆炸，微信爆炸，但是pc端edge（Chrome87）没问题，夸克浏览器没问题）
+
+内置组件的问题：
+ScrollView H5版本：
+- h5 的问题
+  - document.querySelector(`#${id}`).scrollIntoView 的滚动是有问题的，不能支持 smooth（速度太慢了）
+- h5 中的实现中 scrollTop ，scrollLeft，其实是一个受控属性的实现，但是对于小程序中，这些属性都不是受控属性的实现。（逻辑上是有问题的）
+-

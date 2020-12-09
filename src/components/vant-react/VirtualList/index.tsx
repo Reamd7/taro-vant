@@ -437,8 +437,8 @@ class VanVirtualList extends Component<VanVirtualListProps, VanVirtualListState>
       <ScrollView
         className="van-viruallist__scroll-view"
         scrollY={!!(!this.props.enablePageScroll && !this.props.disableScroll)}
-        upperThreshold={this.props.upperThreshold}
-        lowerThreshold={this.props.lowerThreshold}
+        upperThreshold={Math.max(this.props.upperThreshold, this.props.itemHeight)}
+        lowerThreshold={Math.max(this.props.lowerThreshold, this.props.itemHeight)}
         // scrollTop={this.state.innerScrollOffset} // H5 切勿用这个
         scrollWithAnimation={this.props.scrollWithAnimation}
         enableBackToTop={this.props.enableBackToTop}
