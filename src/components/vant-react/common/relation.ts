@@ -2,9 +2,9 @@
  * 依赖rxjs的 BehaviorSubject
  */
 // import { BehaviorSubject } from 'rxjs'
-import Taro from "@tarojs/taro";
+import Taro, { useEffect, useState, useMemo, useCallback, useRef } from "@tarojs/taro";
 import BehaviorSubject from './BehaviorSubject';
-const { useEffect, useState, useMemo, useCallback, useRef } = Taro /** api **/;
+// const { useEffect, useState, useMemo, useCallback, useRef } = Taro /** api **/;
 import { getContext } from './utils';
 import useUpdateEffect from 'src/common/hooks/useUpdateEffect';
 
@@ -51,7 +51,7 @@ export function useRelationPropsInject<P extends {
     }
     PropsListRef.current[index] = (newProps);
     loopIndex.current += 1;
-    if (index === __total__) {
+    if (index === __total__ - 1) {
       loopIndex.current = 0;
       if (status.current === 0) {
         status.current = 1
@@ -168,7 +168,7 @@ export function RelationPropsInject<T extends {
       }
       PropsListRef[index] = (newProps);
       loopIndex += 1;
-      if (index === __total__) {
+      if (index === __total__ - 1) {
         loopIndex = 0;
         if (status === 0) {
           status = 1
