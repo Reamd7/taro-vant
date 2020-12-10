@@ -1,10 +1,10 @@
-import Taro  from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 const { useMemo, useCallback, useEffect, useRef } = Taro /** api **/;
 import "./index.less";
 import { View, CoverView, Canvas } from "@tarojs/components";
-import { useMemoAddUnit, getSystemInfoSync, ActiveProps, useScopeRef, isH5 } from "../common/utils";
+import { useMemoAddUnit, getSystemInfoSync, ActiveProps, useScopeRef, isH5, isWeapp } from "../common/utils";
 import { WHITE, BLUE } from "../common/color";
-import { adaptor } from "./utils";
+import { adaptor, createSelectorQuery } from "./utils";
 import usePersistFn from "src/common/hooks/usePersistFn";
 import useUpdateEffect from "src/common/hooks/useUpdateEffect";
 
@@ -53,11 +53,11 @@ const VanCircle: Taro.FunctionComponent<VanCircleProps> = (props: ActiveVanCircl
     layerColor, fill,
     color,
     value, speed } = props
-  const addUnit = useMemoAddUnit();
-  const asize = addUnit(size);
   const style = useMemo(() => ({
-    width: asize, height: asize
+    width: size + "px", height: size + "px"
   }), [size])
+
+  const canvasId = useMemo(() => `VanCircle_${Math.random().toString().split(".")[1]}`, []);
 
   const [scope, scopeRef] = useScopeRef();
   const getContext = useCallback(() => {
@@ -74,36 +74,36 @@ const VanCircle: Taro.FunctionComponent<VanCircleProps> = (props: ActiveVanCircl
       } else {
         return Promise.resolve<null | Taro.CanvasContext>(null);
       }
-    }
-    if (type === '') {
-      const ctx = Taro.createCanvasContext('van-circle', scope);
+    } else if (type === '' || !isWeapp) {
+      const ctx = Taro.createCanvasContext(canvasId);
+
       return Promise.resolve(ctx);
+    } else {
+      const dpr = getSystemInfoSync().pixelRatio;
+      return new Promise<Taro.CanvasContext>(resolve => {
+        Taro.createSelectorQuery()
+          .in(scope)
+          .select('#van-circle')
+          .node(function (res: {
+            node: Taro.Canvas & WechatMiniprogram.Canvas
+          }) {
+            const canvas = res.node;
+            const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
+            // type === "2d" ? canvas.getContext("2d") as CanvasRenderingContext2D :
+            //   type === "webgl" ? canvas.getContext("webgl") as WebGLRenderingContext : null
+            // ;
+
+            if (!inited.current) {
+              inited.current = true;
+              canvas.width = size * dpr;
+              canvas.height = size * dpr;
+              ctx.scale(dpr, dpr);
+            }
+            resolve(adaptor(ctx))
+          })
+          .exec()
+      })
     }
-
-    const dpr = getSystemInfoSync().pixelRatio;
-    return new Promise<Taro.CanvasContext>(resolve => {
-      Taro.createSelectorQuery()
-        .in(scope)
-        .select('#van-circle')
-        .node(function (res: {
-          node: Taro.Canvas & WechatMiniprogram.Canvas
-        }) {
-          const canvas = res.node;
-          const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
-          // type === "2d" ? canvas.getContext("2d") as CanvasRenderingContext2D :
-          //   type === "webgl" ? canvas.getContext("webgl") as WebGLRenderingContext : null
-          // ;
-
-          if (!inited.current) {
-            inited.current = true;
-            canvas.width = size * dpr;
-            canvas.height = size * dpr;
-            ctx.scale(dpr, dpr);
-          }
-          resolve(adaptor(ctx))
-        })
-        .exec()
-    })
   }, [type, size, scope])
 
   const hoverColor = useRef<string | Taro.CanvasGradient>(BLUE);
@@ -227,13 +227,20 @@ const VanCircle: Taro.FunctionComponent<VanCircleProps> = (props: ActiveVanCircl
     }
   }, [])
 
-  return <View className="van-circle" ref={scopeRef}>
-    <Canvas className="van-circle__canvas" type={type} style={style} id="van-circle" canvasId="van-circle"></Canvas>
-    {text ?
-      <CoverView className="van-circle__text">{text}</CoverView> :
-      <View className="van-circle__text">
-        {props.children}
-      </View>}
+  return <View className="van-circle" ref={scopeRef} style={style}>
+    <Canvas className="van-circle__canvas" type={type} style={style} id={canvasId} canvasId={canvasId} width={style.width} height={style.height}></Canvas>
+    {isH5 ?
+      text ? <View className="van-circle__text" style={style}>{text}</View> :
+        <View className="van-circle__text" style={style}>
+          {props.children}
+        </View>
+
+      : text ?
+        <CoverView className="van-circle__text" style={style}>{text}</CoverView> :
+        <CoverView className="van-circle__text" style={style}>
+          {props.children}
+        </CoverView>
+    }
   </View>
 }
 VanCircle.defaultProps = DefaultProps;
