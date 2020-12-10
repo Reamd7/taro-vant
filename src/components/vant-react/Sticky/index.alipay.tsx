@@ -32,7 +32,7 @@ type ActiveVanStickyProps = ActiveProps<VanStickyProps, keyof typeof DefaultProp
 
 const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStickyProps) => {
 
-  const id = useMemo(()=>{
+  const id = useMemo(() => {
     return `VanSticky_${(Math.random() + "").split(".")[1]}`
   }, [])
 
@@ -76,12 +76,11 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
   // }, [container]);
 
   const [scope, setRef] = useState<Taro.SelectorQuery>();
-  useEffect(()=>{
+  useEffect(() => {
     setRef(
       Taro.createSelectorQuery().select(`#${id}`).boundingClientRect()
     )
   }, [])
-  // console.log(scope)
 
   const onScroll = usePersistFn(({ scrollTop }: Taro.PageScrollObject = { scrollTop: 0 }) => {
     if (!scope) return;
@@ -127,7 +126,6 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
       return;
     } else {
       RootQuery.then((root) => {
-        console.log(offsetTop, root.top)
         if (offsetTop >= root.top) {
           setDataAfterDiff({ fixed: true, height: root.height, transform: 0 });
         } else {
@@ -150,27 +148,30 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
   }, [scope, props.scrollTop])
 
   return <View
-    className={
-      classnames(
-        isNormalClass && props.className,
-        isExternalClass && 'custom-class',
-        'van-sticky'
-      )
-    }
-    id={id}
     style={css({
       height: __data__.fixed ? addUnit(__data__.height) : undefined,
       zIndex: props.zIndex
     })}
   >
-    <View className={bem('sticky-wrap', { fixed: __data__.fixed })}
-      style={css({
-        transform: 'translate3d(0, ' + __data__.transform + 'px, 0);',
-        top: __data__.fixed ? addUnit(offsetTop) : undefined,
-        zIndex: props.zIndex
-      })}
+    <View
+      className={
+        classnames(
+          isNormalClass && props.className,
+          isExternalClass && 'custom-class',
+          'van-sticky'
+        )
+      }
+      id={id}
     >
-      {props.children}
+      <View className={bem('sticky-wrap', { fixed: __data__.fixed })}
+        style={css({
+          transform: 'translate3d(0, ' + __data__.transform + 'px, 0);',
+          top: __data__.fixed ? addUnit(offsetTop) : undefined,
+          zIndex: props.zIndex
+        })}
+      >
+        {props.children}
+      </View>
     </View>
   </View>
 }

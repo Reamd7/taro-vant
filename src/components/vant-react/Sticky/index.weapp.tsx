@@ -29,17 +29,17 @@ type ActiveVanStickyProps = ActiveProps<VanStickyProps, keyof typeof DefaultProp
 const ROOT_ELEMENT = '.van-sticky';
 
 const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStickyProps) => {
-  return <Block>
+  return <View style="{{ computed.containerStyle({ fixed, height, zIndex }) }}">
     <wxs src="../common/wxs/utils.wxs" module="utils" />
     <wxs src="./index.wxs" module="computed" />
-    <View className='van-sticky custom-class' style="{{ computed.containerStyle({ fixed, height, zIndex }) }}">
+    <View className='van-sticky custom-class'>
       <View className="{{ utils.bem('sticky-wrap', { fixed }) }}"
         style="{{ computed.wrapStyle({ fixed, offsetTop, transform, zIndex }) }}"
       >
         {props.children}
       </View>
     </View>
-  </Block>
+  </View>
 }
 
 VanSticky.externalClasses = [

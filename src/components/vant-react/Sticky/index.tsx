@@ -132,28 +132,28 @@ const VanSticky: Taro.FunctionComponent<VanStickyProps> = (props: ActiveVanStick
     }
   }, [scope, offsetTop, disabled, container])
 
-  return <View
-    className={
-      classnames(
-        isNormalClass && props.className,
-        isExternalClass && 'custom-class',
-        'van-sticky'
-      )
-    }
-    style={css({
-      height: __data__.fixed ? addUnit(__data__.height) : undefined,
-      zIndex: props.zIndex
-    })}
-    ref={scopeRef}
-  >
-    <View className={bem('sticky-wrap', { fixed: __data__.fixed })}
-      style={css({
-        transform: 'translate3d(0, ' + __data__.transform + 'px, 0);',
-        top: __data__.fixed ? addUnit(offsetTop) : undefined,
-        zIndex: props.zIndex
-      })}
+  return <View ref={scopeRef} style={css({
+    height: __data__.fixed ? addUnit(__data__.height) : undefined,
+    zIndex: props.zIndex
+  })}>
+    <View
+      className={
+        classnames(
+          isNormalClass && props.className,
+          isExternalClass && 'custom-class',
+          'van-sticky'
+        )
+      }
     >
-      {props.children}
+      <View className={bem('sticky-wrap', { fixed: __data__.fixed })}
+        style={css({
+          transform: 'translate3d(0, ' + __data__.transform + 'px, 0);',
+          top: __data__.fixed ? addUnit(offsetTop) : undefined,
+          zIndex: props.zIndex
+        })}
+      >
+        {props.children}
+      </View>
     </View>
   </View>
 }
