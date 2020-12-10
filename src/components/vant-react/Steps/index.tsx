@@ -77,10 +77,7 @@ const VanSteps: Taro.FunctionComponent<VanStepsProp> = props => {
                 onClickStep(index, event);
               }}
               data-index={index}
-              className={classname(
-                bem("step", [direction, status(index, active)]),
-                "van-hairline"
-              )}
+              className={bem("step", [direction, status(index, active)])}
               style={
                 status(index, active) === "inactive"
                   ? {

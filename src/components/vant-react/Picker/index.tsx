@@ -3,7 +3,7 @@ const { useState, useRef, useMemo, useCallback } = Taro /** api **/;
 import "./index.less";
 import "../PickerCol/index.less";
 import { View, Block, PickerView, PickerViewColumn } from "@tarojs/components";
-import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, ActiveProps, noop, pxUnit, isH5 } from "../common/utils";
+import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, ActiveProps, noop, pxUnit } from "../common/utils";
 import VanLoading from "../Loading";
 // import VanPickerCol, { VanPickerColProps } from "../PickerCol";
 import useUpdateEffect from "src/common/hooks/useUpdateEffect";

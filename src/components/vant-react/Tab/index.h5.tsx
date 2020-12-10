@@ -193,10 +193,6 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
     }
   }, [])
   const relationTabs = useRelationPropsInject<ActiveVanTabItemProps>(props.pid, (props: VanTabItemProps) => {
-    if (!initRef.current && props.index === props.total - 1) {
-      initRef.current = true
-      SetForceUpdate({})
-    }
     return {
       ...props,
       active: data.currentIndex === props.index,
@@ -204,6 +200,13 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
       animated
     };
   }, [data.currentIndex, lazyRender, animated])
+
+  useEffect(()=>{
+    if (!initRef.current && relationTabs.length) {
+      initRef.current = true
+      SetForceUpdate({})
+    }
+  }, [relationTabs])
 
   let tabs = props.tabs ? props.tabs : relationTabs;
   const {
@@ -428,7 +431,7 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
         className={
           classname(
             bem('tabs__wrap', { scrollable }),
-            type === 'line' && border ? 'van-hairline--top-bottom' : ''
+            (type === 'line' && border) ? 'van-hairline--top-bottom' : ''
           )
         }
       >

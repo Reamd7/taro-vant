@@ -16,11 +16,12 @@ export function addUnit(value?: string | number | null) {
   if (value == null) {
     return undefined;
   } else if (typeof value === "number") {
-    if (isH5) {
-      return pxUnit(value)
-    } else {
-      return (value) + "rpx"
-    }
+    return Math.floor(value * getSystemInfoSync().windowWidth / 750  * dpi) + "px"
+    // if (isH5) {
+    //   return Math.floor(value * getSystemInfoSync().windowWidth / 750  * dpi) + "px"
+    // } else {
+    //   return (value) + "rpx"
+    // }
   } else {
     return value
   }
@@ -37,7 +38,17 @@ function CssProperties<T extends CSSProperties>(dict?: T | null | undefined) {
 
 
 export function useMemoAddUnit() {
-  return addUnit
+  const memoMap = useMemo(()=> ({}), []);
+  return useCallback((value?: string | number | null | undefined) => {
+    if (value != undefined) {
+      if (memoMap[value]) {
+        return memoMap[value]
+      } else {
+        return (memoMap[value] = addUnit(value))
+      }
+    }
+    return undefined
+  }, []);
 }
 
 export function useMemoClassNames() {

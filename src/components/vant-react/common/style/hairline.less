@@ -17,26 +17,26 @@
 
 .van-hairline {
   &--top::after {
-    border-top-width: 1px * @dpi;
+    .hairline-top();
   }
 
   &--left::after {
-    border-left-width: 1px * @dpi;
+    .hairline-left();
   }
 
   &--right::after {
-    border-right-width: 1px * @dpi;
+    .hairline-right();
   }
 
   &--bottom::after {
-    border-bottom-width: 1px * @dpi;
+    .hairline-bottom();
   }
 
   &--top-bottom::after {
-    border-width: 1px * @dpi 0;
+    .hairline-top-bottom();
   }
 
   &--surround::after {
-    border-width: 1px * @dpi;
+    .hairline-surround()
   }
 }

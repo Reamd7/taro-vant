@@ -138,7 +138,7 @@ const VanButton: Taro.FunctionComponent<VanButtonProps> = (props) => {
             unclickable: disabled || loading,
           },
         ]),
-        hairline && "van-hairline--surround"
+        // hairline && "van-hairline--surround"
       )}
       hoverClass={classnames(
         "van-button--active",

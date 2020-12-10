@@ -22,7 +22,7 @@ const VanTabPage: Taro.FunctionComponent<{}> = () => {
 
   return <Block>
     <DemoBlock title="基础用法">
-      <VanTab defaultActive={1} pid={"vantab_1"}>
+      <VanTab defaultActive={1} pid={"vantab_1"} border>
         {data.tabs4.map((item, index) => {
           return <VanTabItem pid={"vantab_1"} key={item} total={data.tabs4.length} index={index} title={'标签 ' + item}>
             <View className="content">

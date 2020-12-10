@@ -414,7 +414,7 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
         className={
           classname(
             bem('tabs__wrap', { scrollable }),
-            type === 'line' && border ? 'van-hairline--top-bottom' : ''
+            (type === 'line' && border) ? 'van-hairline--top-bottom' : ''
           )
         }
       >
