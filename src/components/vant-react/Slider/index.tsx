@@ -1,11 +1,12 @@
 import Taro from "@tarojs/taro";
 const { useMemo, useCallback, useState, useEffect, useRef } = Taro /** api **/;
 import "./index.less";
-import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, useMemoCssProperties, useMemoAddUnit, getRect, nextTick, ActiveProps, useScope } from "../common/utils";
+import { useMemoClassNames, useMemoBem, isExternalClass, isNormalClass, useMemoCssProperties, useMemoAddUnit, getRect, nextTick, ActiveProps, useScopeRef } from "../common/utils";
 import { View } from "@tarojs/components";
 import useControllableValue, { ControllerValueProps } from "../../../common/hooks/useControllableValue";
 import { useTouch } from "../common/mixins/touch";
 import { ITouchEvent } from "@tarojs/components/types/common";
+import usePersistFn from "src/common/hooks/usePersistFn";
 
 export type VanSliderProps = {
   disabled?: boolean
@@ -87,10 +88,10 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
   //   return style
   // }, [props.min, getRange, dragValue, dragStatus, props.barHeight, addUnit, props.activeColor]);
 
-  const scope = useScope();
+  const [scope, ref] = useScopeRef();
 
   const refW = useRef<Taro.NodesRef.BoundingClientRectCallbackResult>()
-  const getRectContainer = useCallback((
+  const getRectContainer = usePersistFn((
     cb: (rect: Taro.NodesRef.BoundingClientRectCallbackResult) => void
   ) => {
     if (!refW.current) {
@@ -137,11 +138,12 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
   }, [props.disabled, dragStatus, format, dragValue, props.onDragEnd, setdragStatus])
 
 
-  return <View className={classname(
-    isNormalClass && props.className,
-    isExternalClass && 'custom-class',
-    bem('slider', { disabled: props.disabled })
-  )}
+  return <View ref={ref}><View
+    className={classname(
+      isNormalClass && props.className,
+      isExternalClass && 'custom-class',
+      bem('slider', { disabled: props.disabled })
+    )}
     style={css({
       background: props.inactiveColor
     })}
@@ -201,7 +203,7 @@ const VanSlider: Taro.FunctionComponent<VanSliderProps> = (props: ActiveVanSlide
         />}
       </View>
     </View>
-  </View >
+  </View></View>
 }
 
 VanSlider.options = {
