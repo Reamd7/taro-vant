@@ -6,8 +6,7 @@
 }
 
 .van-goods-action-button {
-  .theme(
-    --button-warning-background-color,
+  .theme(--button-warning-background-color,
     '@goods-action-button-warning-color'
   );
   .theme(--button-danger-background-color, '@goods-action-button-danger-color');
@@ -18,21 +17,20 @@
   // display: block;
 
   --button-border-width: 0;
-  flex: 1;
+  flex-grow            : 1;
+  flex-shrink          : 1;
 
   &--first {
     margin-left: 5px;
 
-    .theme(
-      --button-border-radius,
+    .theme(--button-border-radius,
       '@goods-action-button-border-radius 0 0 @goods-action-button-border-radius'
     );
   }
 
   &--last {
     margin-right: 5px;
-    .theme(
-      --button-border-radius,
+    .theme(--button-border-radius,
       '0 @goods-action-button-border-radius @goods-action-button-border-radius 0'
     );
   }
@@ -49,7 +47,11 @@
     width: 100%;
     .theme(font-weight, '@font-weight-bold') !important;
   }
-
+  & &__inner {
+    padding   : 0;
+    text-align: center;
+    .theme(font-weight, '@font-weight-bold');
+  }
   @media (max-width: 321px) {
     font-size: 13px;
   }
