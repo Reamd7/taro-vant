@@ -8,10 +8,10 @@ import {
   useMemoBem,
   getSystemInfoSync,
   useMemoAddUnit,
-  useScope,
-  isExternalClass,
-  isNormalClass,
-  nextTick
+  nextTick,
+  getRect,
+  useScopeRef,
+  ExtClass
 } from "src/components/vant-react/common/utils";
 import VanIcon from "src/components/vant-react/icon";
 import "./index.less"
@@ -73,14 +73,13 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
       baseStyle: React.CSSProperties;
     }
   }, [statusBarHeight, zIndex, paddingTop])
-  const scope = useScope();
+  const [scope, scoperef] = useScopeRef();
   useEffect(() => {
     if (!fixed || placeholder) {
       return;
     }
     nextTick(() => {
-      scope
-        .getRect(".van-nav-bar")
+      getRect(".van-nav-bar", scope)
         .then((res: WechatMiniprogram.BoundingClientRectCallbackResult) => {
           setHeight(res.height);
         });
@@ -88,7 +87,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
   }, [fixed, placeholder]);
 
   return (
-    <Block>
+    <View ref={scoperef}>
       {fixed && placeholder && (
         <View
           style={{
@@ -99,8 +98,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
       <View
         className={classnames(
           bem("nav-bar", { fixed }),
-          isExternalClass && "custom-class",
-          isNormalClass && props.className,
+          ExtClass(props, "custom-class"),
           border && "van-hairline--bottom"
         )}
         style={{
@@ -134,7 +132,11 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
               props.renderLeft
             )}
           </View>
-          <View className="van-nav-bar__title title-class van-ellipsis">
+          <View className={
+            classnames(
+              "van-nav-bar__title van-ellipsis",
+              ExtClass(props, "title-class")
+            )}>
             {title ? <Block>{title}</Block> : props.renderTitle}
           </View>
           <View className="van-nav-bar__right" onClick={onClickRight}>
@@ -152,7 +154,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
           </View>
         </View>
       </View>
-    </Block>
+    </View>
   );
 };
 VanNavBar.options = {
