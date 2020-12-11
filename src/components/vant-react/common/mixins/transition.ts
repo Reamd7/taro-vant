@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { nextTick, isH5 } from "../utils";
+import { requestAnimationFrame, isH5 } from "../utils";
 const { useState, useEffect, useRef, useCallback } = Taro /** api **/;
 export type MixinsTransitionProps = {
     style?: React.CSSProperties;
@@ -118,7 +118,7 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
         const currentDuration = isObj(duration) ? duration.enter : duration;
         status.current = "enter";
         onBeforeEnter && onBeforeEnter();
-        nextTick(() => {
+        requestAnimationFrame(() => {
             checkStatus('enter');
             onEnter && onEnter();
 
@@ -130,7 +130,7 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
             })
             // setDisplay(true)
 
-            nextTick(() => {
+            requestAnimationFrame(() => {
                 checkStatus('enter')
                 setData({
                     inited: true,
@@ -155,7 +155,7 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
         const currentDuration = isObj(duration) ? duration.leave : duration;
         status.current = "leave";
         onBeforeLeave && onBeforeLeave();
-        nextTick(() => {
+        requestAnimationFrame(() => {
             checkStatus('leave');
             onLeave && onLeave();
 
@@ -167,7 +167,7 @@ export function useMixinsTransition(props: MixinsTransitionProps, showDefaultVal
             })
             // setDisplay(true)
 
-            nextTick(() => {
+            requestAnimationFrame(() => {
                 checkStatus('leave')
                 setData({
                     inited: true,

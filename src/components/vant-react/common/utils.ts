@@ -143,18 +143,20 @@ export function pxUnit(value: number) {
 }
 
 const __requestAnimationFrame__ = function (fn: (...args: any[]) => any) {
-  var currTime = Date.now();
-  var timeToCall = Math.max(0, 30 - (currTime - lastTime));
-  // console.log(16 - (currTime - lastTime));
-  const id = setTimeout(function () {
-    fn(currTime + timeToCall);
-  }, timeToCall);
-  lastTime = currTime + timeToCall;
-  // console.log(lastTime);
-  return id;
+  // const el = Taro
+  //   .createSelectorQuery()
+  //   .selectViewport()
+  //   .boundingClientRect();
+  // console.log(performance.now())
+  // if (Info.platform === 'devtools') {
+  //   return nextTick(cb);
+  // }
+  // return el.exec(() => {
+  //   fn();
+  // });
+  return setTimeout(fn, 1000 / 30);
 };
 
-let lastTime = 0;
 export const requestAnimationFrame = function (fn: (...args: any[]) => any) {
   if (isH5) {
     return window.requestAnimationFrame(fn) || __requestAnimationFrame__(fn)
