@@ -2,11 +2,10 @@ import Taro from "@tarojs/taro";
 const { useMemo, useCallback, useEffect, useRef } = Taro /** api **/;
 import "./index.less";
 import { View, CoverView, Canvas } from "@tarojs/components";
-import { useMemoAddUnit, getSystemInfoSync, ActiveProps, useScopeRef, isH5, isWeapp } from "../common/utils";
+import { ActiveProps, useScopeRef, isH5, isWeapp, getSystemInfoSync } from "../common/utils";
 import { WHITE, BLUE } from "../common/color";
-import { adaptor, createSelectorQuery } from "./utils";
+import { adaptor } from "./utils";
 import usePersistFn from "src/common/hooks/usePersistFn";
-import useUpdateEffect from "src/common/hooks/useUpdateEffect";
 
 export type VanCircleProps = {
   text?: string;
@@ -17,7 +16,7 @@ export type VanCircleProps = {
   fill?: string;
   layerColor?: string;
   color?: string | Record<string, string>;
-  type?: '2d' | '';
+  type?: '2d';
   strokeWidth?: number;
   clockwise?: boolean;
 
@@ -31,7 +30,7 @@ const DefaultProps = {
   size: 100,
   layerColor: WHITE,
   color: BLUE,
-  type: '',
+  type: '2d',
   strokeWidth: 4,
   clockwise: true,
 } as const
@@ -47,7 +46,6 @@ const BEGIN_ANGLE = -Math.PI / 2;
 const STEP = 1;
 
 const VanCircle: Taro.FunctionComponent<VanCircleProps> = (props: ActiveVanCircleProps) => {
-  const inited = useRef(false)
   const { text, type, size,
     strokeWidth, lineCap, clockwise,
     layerColor, fill,
@@ -60,72 +58,61 @@ const VanCircle: Taro.FunctionComponent<VanCircleProps> = (props: ActiveVanCircl
   const canvasId = useMemo(() => `VanCircle_${Math.random().toString().split(".")[1]}`, []);
 
   const [scope, scopeRef] = useScopeRef();
-  const getContext = useCallback(() => {
-    if (!scope) return Promise.resolve<null | Taro.CanvasContext>(null);
+  const contextRef = useRef<null | Taro.CanvasContext>(null)
+  const getContext = useCallback(async () => {
+    if (contextRef.current) return contextRef.current
+    if (!scope) return null;
     if (isH5) {
       const canVasNode = (scope._rendered.dom as HTMLElement).querySelector("canvas");
       if (canVasNode) {
         const ctx = canVasNode.getContext(type || "2d");
         if (ctx) {
-          return Promise.resolve<null | Taro.CanvasContext>(adaptor(ctx));
+          return contextRef.current = adaptor(ctx);
         } else {
-          return Promise.resolve<null | Taro.CanvasContext>(null);
+          return contextRef.current = null;
         }
       } else {
-        return Promise.resolve<null | Taro.CanvasContext>(null);
+        return contextRef.current = null;
       }
-    } else if (type === '' || !isWeapp) {
-      const ctx = Taro.createCanvasContext(canvasId);
-
-      return Promise.resolve(ctx);
-    } else {
+    }
+    if (isWeapp) {
       const dpr = getSystemInfoSync().pixelRatio;
+      const query = Taro.createSelectorQuery().in(scope)
       return new Promise<Taro.CanvasContext>(resolve => {
-        Taro.createSelectorQuery()
-          .in(scope)
-          .select('#van-circle')
-          .node(function (res: {
-            node: Taro.Canvas & WechatMiniprogram.Canvas
-          }) {
-            const canvas = res.node;
-            const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
-            // type === "2d" ? canvas.getContext("2d") as CanvasRenderingContext2D :
-            //   type === "webgl" ? canvas.getContext("webgl") as WebGLRenderingContext : null
-            // ;
+        query.select('#' + canvasId)
+          .fields({ node: true, size: true })
+          .exec((res) => {
+            const canvas = res[0].node
+            const ctx = canvas.getContext('2d')
 
-            if (!inited.current) {
-              inited.current = true;
               canvas.width = size * dpr;
               canvas.height = size * dpr;
               ctx.scale(dpr, dpr);
-            }
-            resolve(adaptor(ctx))
+
+            resolve(contextRef.current = adaptor(ctx))
           })
-          .exec()
       })
+
     }
+    const ctx = Taro.createCanvasContext(canvasId, scope);
+    return contextRef.current = ctx;
   }, [type, size, scope])
 
-  const hoverColor = useRef<string | Taro.CanvasGradient>(BLUE);
-  const setHoverColor = useCallback(() => {
+  const GetHoverColor = useCallback(async (context: my.ICanvasContext) => {
     if (typeof color === "object") {
-      return getContext().then(context => {
-        if (!context) return undefined;
-        const LinearColor = context.createLinearGradient(size, 0, 0, 0);
-        Object.keys(color)
-          .sort((a, b) => parseFloat(a) - parseFloat(b))
-          .map((key) =>
-            LinearColor.addColorStop(parseFloat(key) / 100, color[key])
-          );
-        hoverColor.current = (LinearColor)
-        return LinearColor;
-      })
+      const LinearColor = context.createLinearGradient(size, 0, 0, 0);
+      Object.keys(color)
+        .sort((a, b) => parseFloat(a) - parseFloat(b))
+        .map((key) =>
+          LinearColor.addColorStop(parseFloat(key) / 100, color[key])
+        );
+      return LinearColor;
+    } else {
+      return color
     }
-    hoverColor.current = (color)
-    return Promise.resolve<string | Taro.CanvasGradient | undefined>(color);
-  }, [color, size, getContext]);
+  }, [color, getContext]);
 
-  const presetCanvas = useCallback((context: Taro.CanvasContext, strokeStyle: string | Taro.CanvasGradient, beginAngle: number, endAngle: number, fill?: string | Taro.CanvasGradient) => {
+  const presetCanvas = useCallback((context: my.ICanvasContext, strokeStyle: string | Taro.CanvasGradient, beginAngle: number, endAngle: number, fill?: string | Taro.CanvasGradient) => {
     const position = size / 2;
     const radius = position - strokeWidth / 2;
     context.setStrokeStyle(strokeStyle)
@@ -144,36 +131,33 @@ const VanCircle: Taro.FunctionComponent<VanCircleProps> = (props: ActiveVanCircl
   /**
    * 渲染背景圆圈
    */
-  const renderBackgroundCircle = useCallback((context: Taro.CanvasContext) => {
+  const renderBackgroundCircle = useCallback((context: my.ICanvasContext) => {
     presetCanvas(context, layerColor, 0, PERIMETER, fill);
   }, [layerColor, fill, presetCanvas])
   /**
    * 渲染前景圆圈
    */
-  const renderForegroundCircle = useCallback((context: Taro.CanvasContext, formatValue: number) => {
+  const renderForegroundCircle = useCallback((context: my.ICanvasContext, hoverColor: string | my.ILinearGradient, formatValue: number) => {
     // 结束角度
     const progress = PERIMETER * (formatValue / 100);
     const endAngle = clockwise
       ? BEGIN_ANGLE + progress
       : 3 * Math.PI - (BEGIN_ANGLE + progress);
 
-    presetCanvas(context, hoverColor.current, BEGIN_ANGLE, endAngle);
-  }, [clockwise, presetCanvas, hoverColor]);
+    presetCanvas(context, hoverColor, BEGIN_ANGLE, endAngle);
+  }, [clockwise, presetCanvas]);
 
-  const drawCircle = useCallback((currentValue: number) => {
-    getContext().then((context) => {
-      if (!context) return;
-      context.clearRect(0, 0, size, size);
-
-      renderBackgroundCircle(context);
-
-      const formatValue = format(currentValue);
-      if (formatValue !== 0) {
-        renderForegroundCircle(context, formatValue);
-      }
-      context.draw();
-    });
-  }, [size, getContext, renderBackgroundCircle, renderForegroundCircle])
+  const drawCircle = useCallback(async (currentValue: number) => {
+    const context = await getContext();
+    if (!context) return;
+    context.clearRect(0, 0, size, size);
+    renderBackgroundCircle(context);
+    const formatValue = format(currentValue);
+    if (formatValue !== 0) {
+      renderForegroundCircle(context, await GetHoverColor(context), formatValue);
+    }
+    context.draw();
+  }, [size, getContext, GetHoverColor, renderBackgroundCircle, renderForegroundCircle])
 
   const interval = useRef<number>();
   const currentValue = useRef(value);
@@ -188,7 +172,6 @@ const VanCircle: Taro.FunctionComponent<VanCircleProps> = (props: ActiveVanCircl
 
   // =============================================================
   const reRender = usePersistFn((value: number) => {
-
     if (speed <= 0 || speed > 1000) {
       drawCircle(value);
       return;
@@ -210,17 +193,15 @@ const VanCircle: Taro.FunctionComponent<VanCircleProps> = (props: ActiveVanCircl
     }, 1000 / speed)
   }, [speed, __clearInterval, currentValue])
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     reRender(value)
   }, [value])
 
   useEffect(() => {
     if (scope) {
-      setHoverColor().then(() => {
-        drawCircle(currentValue.current);
-      })
+      drawCircle(currentValue.current);
     }
-  }, [color, scope])
+  }, [scope])
   useEffect(() => {
     return function () {
       __clearInterval()
@@ -228,8 +209,8 @@ const VanCircle: Taro.FunctionComponent<VanCircleProps> = (props: ActiveVanCircl
   }, [])
 
   return <View className="van-circle" ref={scopeRef} style={style}>
-    <Canvas className="van-circle__canvas" type={type} style={style} id={canvasId} canvasId={canvasId} width={style.width} height={style.height}></Canvas>
-    {isH5 ?
+    <Canvas className="van-circle__canvas" type={type || "2d"} style={style} id={canvasId} canvasId={canvasId}></Canvas>
+    {(isH5 || isWeapp) ?
       text ? <View className="van-circle__text" style={style}>{text}</View> :
         <View className="van-circle__text" style={style}>
           {props.children}
