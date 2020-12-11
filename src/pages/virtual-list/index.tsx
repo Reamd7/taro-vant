@@ -1,17 +1,15 @@
 import Taro from "@tarojs/taro";
-const { useRef, useState, useCallback, useEffect } = Taro /** api **/;
-import { Block, View } from "@tarojs/components";
+const { useRef, useState, useCallback } = Taro /** api **/;
+import { View } from "@tarojs/components";
 import VanVirtualList, { VanVirtualListIns } from "src/components/vant-react/VirtualList";
 import VanVirtualListItem from "src/components/vant-react/VirtualList/item";
 import { BaseEventOrig } from "@tarojs/components/types/common";
-import { useScopeRef } from "src/components/vant-react/common/utils";
 
 let itemCount = 30
 let itemUpdateCount = 40;
 let items = [...new Array(itemCount)].map((_, i) => i)
 
 export default function VLPage() {
-  const [scope, scopeRef] = useScopeRef()
   const [data, setData] = useState({
     startIndex: -1,
     endIndex: -1,
