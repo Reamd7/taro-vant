@@ -1,8 +1,8 @@
 import Taro from "@tarojs/taro";
-const { useEffect, useState, useRef } = Taro /** api **/;
+const { useEffect, useState, useRef, useMemo } = Taro /** api **/;
 import "./VanCollapseItem.less";
 import { VanIconProps } from "../icon";
-import { ActiveProps, useMemoBem, useMemoClassNames, getRect, useScopeRef, isNormalClass, isExternalClass } from "../common/utils";
+import { ActiveProps, useMemoBem, useMemoClassNames, isExternalClass, isNormalClass, getRect, useScopeRef, ExtClass } from "../common/utils";
 import { View } from "@tarojs/components";
 import VanCell, { VanCellProps } from "../Cell";
 import { useRelationPropsListener } from "../common/relation";
@@ -29,6 +29,8 @@ export type VanCollapseItemProps = {
   'custom-class'?: string;
   contentClass?: string;
   'content-class'?: string;
+  titleClass?: string;
+  'title-class'?: string;
 
   index: number;
   total: number;
@@ -66,14 +68,14 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
 
   const disabled = props.disabled
 
-  const animation = useRef(
+  const animation = useMemo(()=>(
     Taro.createAnimation({
       duration: 0,
       timingFunction: 'ease-in-out',
-    })
-  )
-  const [animationStyle, setAnimationStyle] = useState(
-    {}
+    }).export()
+  ), [])
+  const [animationList, setAnimationList] = useState(
+    animation
   )
 
   const inited = useRef(false);
@@ -84,29 +86,47 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
       ({ height }) => {
         if (expanded) {
           if (height === 0) {
-            setAnimationStyle({
-              transition: "all 300ms ease-in-out",
-              height: "auto",
-              top: "1px"
-            })
+            setAnimationList(
+              Taro.createAnimation({
+                duration: 0,
+                timingFunction: 'ease-in-out',
+              })
+                .height('auto').top(1).step().export()
+            );
           } else {
-            setAnimationStyle({
-              transition: "all 300ms ease-in-out",
-              height: height,
-              top: "1px"
-            })
+            setAnimationList(
+              Taro.createAnimation({
+                duration: inited.current ? 300 : 1,
+                timingFunction: 'ease-in-out',
+              })
+                .height(height)
+                .top(1)
+                .step({
+                  duration: inited.current ? 300 : 1,
+                })
+                .height('auto')
+                .step().export()
+            );
           }
           return;
         } else {
-          setAnimationStyle({
-            transition: "all 300ms ease-in-out",
-            height: 0,
-            top: "0px"
-          })
+          setAnimationList(
+            Taro.createAnimation({
+              duration: 0,
+              timingFunction: 'ease-in-out',
+            })
+              .height(0)
+              .top(0)
+              .step({
+                duration: 300,
+              })
+              .export()
+          )
+
         }
       }
     )
-  }, [scope, animation])
+  }, [scope])
 
   useEffect(() => {
     if (scope) {
@@ -118,9 +138,8 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
   return <View className={
     classnames(
       "van-collapse-item van-cell",
-      isExternalClass && 'custom-class',
-      isNormalClass && props.className,
-      props.index !== 0 ? 'van-hairline--top' : ''
+      ExtClass(props, "className"),
+      // props.index !== 0 ? 'van-hairline--top' : ''
     )
   } ref={scopeRef}>
     <View
@@ -128,25 +147,16 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
     >
       <VanCell
         title={props.title}
-        titleClass={"title-class"}
-        title-class="title-classs"
+        titleClass={props.titleClass}
+        title-class="title-class"
         icon={props.icon}
         value={props.value}
         label={props.label}
         isLink={props.isLink}
         clickable={props.clickable}
         border={props.border && expanded}
-        className={
-          classnames(
-            "van-cell",
-
-          )
-        }
-        custom-class={
-          classnames(
-            "van-cell",
-          )
-        }
+        className={"van-cell"}
+        custom-class={"van-cell"}
         rightIconClass="van-cell__right-icon"
         right-icon-class="van-cell__right-icon"
         hover-class="van-cell--hover"
@@ -165,9 +175,8 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
     </View>
     <View
       className={bem('collapse-item__wrapper')}
-      style={expanded ? {
-        ...animationStyle
-      } : { height: 0, ...animationStyle }}
+      animation={animationList}
+      data-animation={animationList}
     >
       <View
         className={classnames(
