@@ -54,7 +54,7 @@ export default function VLPage() {
   }, [data.disableScroll, updated])
 
   return (
-    <View ref={scopeRef}>
+    <View>
       <VanVirtualList pid="1111"
         height={data.height}
         itemHeight={data.itemHeight}
