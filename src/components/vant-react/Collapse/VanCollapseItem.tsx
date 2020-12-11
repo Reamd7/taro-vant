@@ -87,38 +87,45 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
         if (expanded) {
           if (height === 0) {
             setAnimationList(
-              animation.current
+              Taro.createAnimation({
+                duration: 0,
+                timingFunction: 'ease-in-out',
+              })
                 .height('auto').top(1).step().export()
             );
           } else {
             setAnimationList(
-              animation.current
+              Taro.createAnimation({
+                duration: 0,
+                timingFunction: 'ease-in-out',
+              })
                 .height(height)
                 .top(1)
                 .step({
                   duration: inited.current ? 300 : 1,
                 })
-                .height('auto')
-                .step().export()
+                .export()
             );
           }
           return;
         } else {
           setAnimationList(
-            animation.current
-              .height(height)
-              .top(0)
-              .step({ duration: 1 })
+            Taro.createAnimation({
+              duration: 0,
+              timingFunction: 'ease-in-out',
+            })
               .height(0)
+              .top(0)
               .step({
                 duration: 300,
               })
               .export()
           )
+
         }
       }
     )
-  }, [scope, animation])
+  }, [scope])
 
   useEffect(() => {
     if (scope) {
@@ -129,9 +136,9 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
 
   return <View className={
     classnames(
-      "van-collapse-item van-cell",
+      "van-collapse-item",
       ExtClass(props, "className"),
-      // props.index !== 0 ? 'van-hairline--top' : ''
+      props.index !== 0 ? 'van-hairline--top' : ''
     )
   } ref={scopeRef}>
     <View
@@ -168,6 +175,7 @@ export const VanCollapseItem: Taro.FunctionComponent<VanCollapseItemProps> = (pr
     <View
       className={bem('collapse-item__wrapper')}
       animation={animationList}
+      data-animation={animationList}
     >
       <View
         className={classnames(

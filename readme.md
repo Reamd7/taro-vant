@@ -82,6 +82,11 @@ return page.route
 - h5 中的实现中 scrollTop ，scrollLeft，其实是一个受控属性的实现，但是对于小程序中，这些属性都不是受控属性的实现。（逻辑上是有问题的）
 - index list 组件，有一个问题：h5端中移动端（chrome浏览器滚动很慢（Chrome87），QQ内置爆炸，微信爆炸，但是pc端edge（Chrome87）没问题，夸克浏览器没问题）
 
+
+16. [ ] animation的问题：
+    - 支付宝小程序中，animation注入的函数不能挂载style？不能动态修改style
+    - h5中，animation属性和data-animation属性都要加（遇见step的情况，关键帧动画，就一定要加，因为 taro/h5 的实现有问题。）
+    -
 ---------------------------------------------
 标注：
 import \{(.*)\} from '@tarojs/taro' \/\*\* api \*\*\/
