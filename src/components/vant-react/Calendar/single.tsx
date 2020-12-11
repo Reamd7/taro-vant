@@ -2,9 +2,9 @@ import Taro from "@tarojs/taro";
 const { useMemo, useCallback, useState, useEffect } = Taro /** api **/;
 import { VanCalendarCommonProps, inputDate, getMonths, useInitRect, ROW_HEIGHT } from "./utils";
 import dayjs from "dayjs";
-import { useMemoClassNames, nextTick } from "../common/utils";
+import { useMemoClassNames, nextTick, ActiveProps } from "../common/utils";
 import VanCalHeader from "./components/header";
-import { View, ScrollView, Block } from "@tarojs/components";
+import { View, ScrollView } from "@tarojs/components";
 import VanCalMonth from "./components/month";
 import VanButton from "../Button";
 import VanPopup from "../Popup";
@@ -20,29 +20,44 @@ export type VanCalendarSingleProps = VanCalendarCommonProps & {
   onConfirm?: (date: dayjs.Dayjs) => unknown;
 }
 
+const DefaultProps = {
+  title: "日期选择",
+  confirmText: "确定",
+  position: "bottom",
+  rowHeight: ROW_HEIGHT,
+  round: true,
+  poppable: true,
+  showMark: true,
+  showTitle: true,
+  showConfirm: true,
+  showSubtitle: true,
+  safeAreaInsetBottom: true,
+} as const
 
-const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props) => {
+type ActiveVanCalendarSingleProps = ActiveProps<VanCalendarSingleProps, keyof typeof DefaultProps>
+
+const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props: ActiveVanCalendarSingleProps) => {
   const classnames = useMemoClassNames();
   const today = useMemo(() => dayjs().set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0), []);
   const todayAfter6Month = useMemo(() => today.clone().add(6, "month"), [today]);
 
   const {
-    title = "日期选择",
-    confirmText = "确定",
+    title,
+    confirmText,
     minDate = (today),
     maxDate = (todayAfter6Month),
-    position = "bottom",
-    rowHeight = ROW_HEIGHT,
-    round = true,
-    poppable = true,
-    showMark = true,
-    showTitle = true,
-    showConfirm = true,
-    showSubtitle = true,
-    safeAreaInsetBottom = true,
+    position,
+    rowHeight,
+    round,
+    poppable,
+    showMark,
+    showTitle,
+    showConfirm,
+    showSubtitle,
+    safeAreaInsetBottom,
     // closeOnClickOutside = true,
   } = props;
-
+  const CalendarId = useMemo(()=>  `VanCalendar_${Math.random().toString().split(".")[1]}`, [])
   const minDay = useMemo(() => dayjs(minDate), [minDate]);
   const maxDay = useMemo(() => dayjs(maxDate), [maxDate]);
 
@@ -55,7 +70,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
   // 确认按钮的禁用状态
   const confirmButtonDisable = useMemo(() => currentDate === null, [currentDate]);
   // subtitle
-  const [subtitle, initRect, setsubtitle] = useInitRect(!!props.showSubtitle);
+  const [subtitle, initRect, setsubtitle] = useInitRect(CalendarId, !!props.showSubtitle);
   // 滚动到某个月份
   const [scrollIntoView, setscrollIntoView] = useState('');
   const onScrollIntoView = usePersistFn(() => {
@@ -65,7 +80,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
       if (targetDate && displayed) {
         monthslist.some((month) => {
           if (targetDate && month[0].isSame(targetDate, "month")) {
-          console.log(`month${month[0].format('DD_MM_YYYY')}`)
+            console.log(`month${month[0].format('DD_MM_YYYY')}`)
 
             setscrollIntoView(
               `month${month[0].format('DD_MM_YYYY')}`
@@ -82,18 +97,6 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
     // setcurrentDate(getInitialDate);
     onScrollIntoView()
   }, [currentDate, onScrollIntoView]);
-
-  // 初始化
-  useEffect(() => {
-    if (props.show) {
-      initRect();
-      onScrollIntoView();
-    }
-    // if (props.show || !poppable) {
-    //   initRect();
-    //   onScrollIntoView();
-    // }
-  }, [props.show])
 
   // 确认事件
   const onConfirm = usePersistFn(() => {
@@ -140,7 +143,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
       {monthslist.map((item, index) => {
         return <View
           key={`month${item[0].format('DD_MM_YYYY')}`}
-          id={`month${item[0].format('DD_MM_YYYY')}`}
+          id={item[0].format('YYYY年MM月')}
           className="month"
           data-subtitle={item[0].format('YYYY年MM月')} // initRect 使用
         >
@@ -183,7 +186,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
     </View>
   </View>
 
-  return <Block>
+  return <View id={CalendarId}>
     {poppable ?
       <VanPopup
         custom-class={`van-calendar__popup--${position}`}
@@ -200,16 +203,19 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
       // bind:close="onClose"
       // bind:after-enter="onOpened"
       // bind:after-leave="onClosed"
+        onAfterEnter={()=>{
+          // 初始化
+          initRect();
+          onScrollIntoView();
+        }}
       >
         {renderTemp}
       </VanPopup> :
-      <Block>
-        {renderTemp}
-      </Block>
+      renderTemp
     }
-  </Block>
+  </View>
 }
-
+VanCalendarSingle.defaultProps = DefaultProps
 
 VanCalendarSingle.options = {
   addGlobalClass: true

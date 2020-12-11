@@ -3,7 +3,7 @@ const { useMemo, useCallback, useState, useEffect } = Taro /** api **/;
 import { VanCalendarCommonProps, inputDate, getMonths, useInitRect, ROW_HEIGHT } from "./utils";
 import dayjs from "dayjs";
 import "./index.less";
-import { useMemoClassNames, nextTick } from "../common/utils";
+import { useMemoClassNames, nextTick, ActiveProps } from "../common/utils";
 import VanCalHeader from "./components/header";
 import { View, ScrollView, Block } from "@tarojs/components";
 import VanCalMonth from "./components/month";
@@ -17,29 +17,43 @@ export type VanCalendarSingleProps = VanCalendarCommonProps & {
   onSelect?: (date: dayjs.Dayjs[]) => unknown
   onConfirm?: (date: dayjs.Dayjs[]) => unknown
 }
+const DefaultProps = {
+  title: "日期选择",
+  confirmText: "确定",
+  position: "bottom",
+  rowHeight: ROW_HEIGHT,
+  round: true,
+  poppable: true,
+  showMark: true,
+  showTitle: true,
+  showConfirm: true,
+  showSubtitle: true,
+  safeAreaInsetBottom: true,
+} as const
+type ActiveVanCalendarSingleProps = ActiveProps<VanCalendarSingleProps, keyof typeof DefaultProps>
 
-
-const VanCalendarMultiple: Taro.FunctionComponent<VanCalendarSingleProps> = (props) => {
+const VanCalendarMultiple: Taro.FunctionComponent<VanCalendarSingleProps> = (props: ActiveVanCalendarSingleProps) => {
   const classnames = useMemoClassNames();
   const today = useMemo(() => dayjs().set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0), []);
   const todayAfter6Month = useMemo(() => today.clone().add(6, "month"), [today]);
 
   const {
-    title = "日期选择",
-    confirmText = "确定",
+    title,
+    confirmText,
     minDate = (today),
     maxDate = (todayAfter6Month),
-    position = "bottom",
-    rowHeight = ROW_HEIGHT,
-    round = true,
-    poppable = true,
-    showMark = true,
-    showTitle = true,
-    showConfirm = true,
-    showSubtitle = true,
-    safeAreaInsetBottom = true,
+    position,
+    rowHeight,
+    round,
+    poppable,
+    showMark,
+    showTitle,
+    showConfirm,
+    showSubtitle,
+    safeAreaInsetBottom,
     // closeOnClickOutside = true,
   } = props;
+  const CalendarId = useMemo(() => `VanCalendar_${Math.random().toString().split(".")[1]}`, [])
 
   const minDay = useMemo(() => dayjs(minDate).set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0), [minDate]);
   const maxDay = useMemo(() => dayjs(maxDate).set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0), [maxDate]);
@@ -59,7 +73,7 @@ const VanCalendarMultiple: Taro.FunctionComponent<VanCalendarSingleProps> = (pro
 
   const confirmButtonDisable = useMemo(() => !currentDate.length, [currentDate]);
 
-  const [subtitle, initRect] = useInitRect(!!props.showSubtitle);
+  const [subtitle, initRect] = useInitRect(CalendarId, !!props.showSubtitle);
 
   const [scrollIntoView, setscrollIntoView] = useState('');
   const onScrollIntoView = usePersistFn(() => {
@@ -163,7 +177,7 @@ const VanCalendarMultiple: Taro.FunctionComponent<VanCalendarSingleProps> = (pro
       {monthslist.map((item, index) => {
         return <View
           key={`month${item[0].format('DD_MM_YYYY')}`}
-          id={`month${item[0].format('DD_MM_YYYY')}`}
+          id={item[0].format('YYYY年MM月')}
           className="month"
           data-subtitle={item[0].format('YYYY年MM月')} // initRect 使用
         >
@@ -206,7 +220,7 @@ const VanCalendarMultiple: Taro.FunctionComponent<VanCalendarSingleProps> = (pro
     </View>
   </View>
 
-  return <Block>
+  return <View id={CalendarId}>
     {poppable ?
       <VanPopup
         custom-class={`van-calendar__popup--${position}`}
@@ -219,23 +233,26 @@ const VanCalendarMultiple: Taro.FunctionComponent<VanCalendarSingleProps> = (pro
         closeOnClickOverlay={props.closeOnClickOverlay}
         onClose={props.onClose}
         style={{ overflow: 'hidden' }}
-      // bind:enter="onOpen"
-      // bind:close="onClose"
-      // bind:after-enter="onOpened"
-      // bind:after-leave="onClosed"
+        // bind:enter="onOpen"
+        // bind:close="onClose"
+        // bind:after-enter="onOpened"
+        // bind:after-leave="onClosed"
+        onAfterEnter={() => {
+          // 初始化
+          initRect();
+          onScrollIntoView();
+        }}
       >
         {renderTemp}
       </VanPopup> :
-      <Block>
-        {renderTemp}
-      </Block>
+      renderTemp
     }
-  </Block>
+  </View>
 }
 
 
 VanCalendarMultiple.options = {
   addGlobalClass: true
 }
-
+VanCalendarMultiple.defaultProps = DefaultProps
 export default VanCalendarMultiple

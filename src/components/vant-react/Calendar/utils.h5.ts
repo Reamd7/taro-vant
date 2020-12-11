@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import { VanPopupProps } from "../Popup";
 import Taro from "@tarojs/taro";
 import { VanCalMonthProps } from "./components/month";
-import { getRect, isAlipay, useScope } from "../common/utils";
 const { useRef, useCallback, useState } = Taro /** api **/;
 
 export type inputDate = dayjs.ConfigType;
@@ -55,58 +54,43 @@ export const getMonths = (minDate: inputDate, maxDate: inputDate) => {
  */
 export function useInitRect(id: string, showSubtitle: boolean) {
   const self = useRef<{
-    contentObserver: null | Taro.IntersectionObserver
+    contentObserver: null | IntersectionObserver
   }>({
     contentObserver: null
   });
   const [subtitle, setsubtitle] = useState('');
-  const scope = useScope();
   const initRect = useCallback(() => {
-    if (self.current.contentObserver !== null) {
-      self.current.contentObserver.disconnect()
+
+    var contentObserver = new IntersectionObserver((contentObserverArr) => {
+      contentObserverArr.forEach(res => {
+        if (res.intersectionRatio > 0.5) {
+          const date = (res.target as HTMLElement).dataset.subtitle as string;
+          setsubtitle(
+            date
+          )
+        }
+      })
+    }, {
+      threshold: [0.5, 0.8],
+      root: document.querySelector(`#${id} .van-calendar__body`)
+    });
+    self.current.contentObserver = contentObserver;
+    if (showSubtitle) {
+      document.querySelectorAll(
+        `#${id} .month`
+      ).forEach(element => {
+        contentObserver.observe(element);
+      })
     }
 
-    if (!showSubtitle) return; // 这就不用处理了
-    // TODO
-    if (isAlipay) {
-      const contentObserver = my.createIntersectionObserver({ // 支付宝小程序不支持scope
-        thresholds: [0.5, 0.8],
-        selectAll: true,
-      });
-      contentObserver
-        .relativeTo(`#${id} .van-calendar__body`)
-        .observe(`#${id} .month`, (res) => {
-          if (res.intersectionRatio > 0.5) {
-            const date = (res as any).dataset.subtitle as string;
-            if (date) {
-              setsubtitle(
-                date
-              )
-            } else {
-              setsubtitle(
-                res.id
-              )
-            }
-
-          }
-        });
-    } else {
-      const contentObserver = Taro.createIntersectionObserver(scope, {
-        thresholds: [0.5, 0.8],
-        observeAll: true,
-      });
-      contentObserver
-        .relativeTo(`#${id} .van-calendar__body`)
-        .observe(`#${id} .month`, (res) => {
-          if (res.intersectionRatio > 0.5) {
-            const date = (res as any).dataset.subtitle as string;
-            setsubtitle(
-              date
-            )
-          }
-        });
+    return function () {
+      document.querySelectorAll(
+        `#${id} .month`
+      ).forEach(element => {
+        contentObserver.unobserve(element);
+      })
+      contentObserver.disconnect()
     }
-
   }, [setsubtitle, showSubtitle]);
 
   return [
