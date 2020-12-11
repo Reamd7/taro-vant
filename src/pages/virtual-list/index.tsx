@@ -4,12 +4,14 @@ import { Block, View } from "@tarojs/components";
 import VanVirtualList, { VanVirtualListIns } from "src/components/vant-react/VirtualList";
 import VanVirtualListItem from "src/components/vant-react/VirtualList/item";
 import { BaseEventOrig } from "@tarojs/components/types/common";
+import { useScopeRef } from "src/components/vant-react/common/utils";
 
 let itemCount = 30
 let itemUpdateCount = 40;
 let items = [...new Array(itemCount)].map((_, i) => i)
 
 export default function VLPage() {
+  const [scope, scopeRef] = useScopeRef()
   const [data, setData] = useState({
     startIndex: -1,
     endIndex: -1,
@@ -53,12 +55,8 @@ export default function VLPage() {
     }, 1000)
   }, [data.disableScroll, updated])
 
-  useEffect(() => {
-    updated(items)
-  }, []);
-
   return (
-    <Block>
+    <View ref={scopeRef}>
       <VanVirtualList pid="1111"
         height={data.height}
         itemHeight={data.itemHeight}
@@ -87,7 +85,10 @@ export default function VLPage() {
           loadData(e)
         }}
         ins={(data) => {
-          ref.current = data
+          if (!ref.current) {
+            ref.current = data
+            updated(items)
+          }
         }}
       >
         {data.virtual.items.map((item, index) => {
@@ -99,10 +100,10 @@ export default function VLPage() {
           </VanVirtualListItem>
         })}
       </VanVirtualList>
-    </Block>
+    </View>
   );
 }
 
 VLPage.config = {
-  "navigationBarTitleText": "Toast 轻提示"
+  "navigationBarTitleText": "虚拟列表"
 }
