@@ -1,7 +1,7 @@
 import Taro, { NodesRef } from "@tarojs/taro";
 import "./index.less";
-import { ActiveProps, getRect } from "../common/utils";
-import { View, Block } from "@tarojs/components";
+import { ActiveProps, getRect, nextTick } from "../common/utils";
+import { View } from "@tarojs/components";
 import { pageScrollMixin } from "./common.weapp";
 
 export type VanStickyProps = {
@@ -148,7 +148,7 @@ VanSticky.defaultProps = DefaultProps;
       },
 
       setDataAfterDiff(data) {
-        Taro.nextTick(() => {
+        nextTick(() => {
           const diff = Object.keys(data).reduce((prev, key) => {
             if (data[key] !== this.data[key]) {
               prev[key] = data[key];

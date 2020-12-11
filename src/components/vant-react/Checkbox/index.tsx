@@ -138,7 +138,7 @@ const VanCheckBox: Taro.FunctionComponent<VanCheckBoxProps> = (props: ActiveVanC
     //   const needChange = parentChange(name, checked);
     //   if (needChange) {
     //     // setCurrentValue(checked)
-    //     props.onChange && Taro.nextTick(() => {
+    //     props.onChange && nextTick(() => {
     //       props.onChange && props.onChange(checked)
     //     })
     //   }
@@ -146,7 +146,7 @@ const VanCheckBox: Taro.FunctionComponent<VanCheckBoxProps> = (props: ActiveVanC
     //   if (props.gid) {
     //     setCurrentValue(checked)
     //   }
-    //   props.onChange && Taro.nextTick(() => {
+    //   props.onChange && nextTick(() => {
     //     props.onChange && props.onChange(checked)
     //   })
     // }

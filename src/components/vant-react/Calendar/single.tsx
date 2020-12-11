@@ -98,7 +98,7 @@ const VanCalendarSingle: Taro.FunctionComponent<VanCalendarSingleProps> = (props
   // 确认事件
   const onConfirm = usePersistFn(() => {
     if (props.onConfirm && currentDate) {
-      Taro.nextTick(() => {
+      nextTick(() => {
         if (props.onConfirm && currentDate) {
           props.onConfirm(
             currentDate.clone()

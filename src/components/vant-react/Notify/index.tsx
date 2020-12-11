@@ -6,7 +6,8 @@ import {
   useMemoCssProperties,
   useMemoAddUnit,
   getContext,
-  getSystemInfoSync
+  getSystemInfoSync,
+  nextTick
 } from "../common/utils";
 import { View, Text } from "@tarojs/components";
 import { VanNotifyMap, defaultOptions, NotifyProps } from "./common/utils";
@@ -25,13 +26,13 @@ const VanNotify: Taro.FunctionComponent<{}> = (props) => {
     const { onClose = noop } = data;
     clearTimeout(timer.current);
     setShow(false);
-    Taro.nextTick(onClose);
+    nextTick(onClose);
   });
   const show = useRef(() => {
     const { duration = 3000, onOpened = noop } = data;
     clearTimeout(timer.current);
     setShow(true);
-    Taro.nextTick(onOpened);
+    nextTick(onOpened);
     if (duration > 0 && duration !== Infinity) {
       timer.current = (setTimeout(() => {
         hide.current();

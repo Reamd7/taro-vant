@@ -10,7 +10,8 @@ import {
   useMemoAddUnit,
   useScope,
   isExternalClass,
-  isNormalClass
+  isNormalClass,
+  nextTick
 } from "src/components/vant-react/common/utils";
 import VanIcon from "src/components/vant-react/icon";
 import "./index.less"
@@ -77,7 +78,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
     if (!fixed || placeholder) {
       return;
     }
-    Taro.nextTick(() => {
+    nextTick(() => {
       scope
         .getRect(".van-nav-bar")
         .then((res: WechatMiniprogram.BoundingClientRectCallbackResult) => {

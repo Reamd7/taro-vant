@@ -59,7 +59,7 @@ export function useFormItem<KeyName extends string, M>({
     }
 
     // onChange &&
-    //   Taro.nextTick(() => { // NOTE 是否应该内嵌到这里
+    //   nextTick(() => { // NOTE 是否应该内嵌到这里
     //     onChange(val); // 下一Tick 响应更新，不立即进行的原因是?
     //   })
   }, [
@@ -138,7 +138,7 @@ export function useFormItemFormat<KeyName extends string, M, InnerValue>({
 
   const setValueAndChange = useCallback((val: M, onChange?: (val: M) => void) => {
     setValue(val);
-    onChange && Taro.nextTick(() => {
+    onChange && nextTick(() => {
       onChange && onChange(val) // 下一Tick 响应更新，不立即进行的原因是?
     })
   }, [setValue])

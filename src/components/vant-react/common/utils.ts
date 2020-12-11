@@ -2,7 +2,7 @@ import Taro, { getCurrentPages, useDidShow } from "@tarojs/taro";
 // import memoize from "fast-memoize";
 import classNames from 'classnames';
 import bem from "./utils/bem";
-const { useContext, useEffect, useMemo , useState, useCallback } = Taro /** api **/;
+const { useContext, useEffect, useMemo, useState, useCallback } = Taro /** api **/;
 import type { CSSProperties } from 'react';
 export const isH5 = process.env.TARO_ENV === "h5";
 export const isWeapp = process.env.TARO_ENV === "weapp"
@@ -16,7 +16,7 @@ export function addUnit(value?: string | number | null) {
   if (value == null) {
     return undefined;
   } else if (typeof value === "number") {
-    return Math.floor(value * getSystemInfoSync().windowWidth / 750  * dpi) + "px"
+    return Math.floor(value * getSystemInfoSync().windowWidth / 750 * dpi) + "px"
     // if (isH5) {
     //   return Math.floor(value * getSystemInfoSync().windowWidth / 750  * dpi) + "px"
     // } else {
@@ -38,7 +38,7 @@ function CssProperties<T extends CSSProperties>(dict?: T | null | undefined) {
 
 
 export function useMemoAddUnit() {
-  const memoMap = useMemo(()=> ({}), []);
+  const memoMap = useMemo(() => ({}), []);
   return useCallback((value?: string | number | null | undefined) => {
     if (value != undefined) {
       if (memoMap[value]) {
@@ -141,22 +141,35 @@ export function getSystemInfoSync() {
 export function pxUnit(value: number) {
   return (value * getSystemInfoSync().pixelRatio / dpi) + "px"
 }
-// let lastTime = 0;
-// export const requestAnimationFrame = function (callback) {
-//   var currTime = Date.now();
-//   var timeToCall = Math.max(0, 30 - (currTime - lastTime));
-//   // console.log(16 - (currTime - lastTime));
-//   const id = setTimeout(function () {
-//     callback(currTime + timeToCall);
-//   }, timeToCall);
-//   lastTime = currTime + timeToCall;
-//   // console.log(lastTime);
-//   return id;
-// };
 
-// export const cancelAnimationFrame = function (id: ReturnType<typeof requestAnimationFrame>) {
-//   clearTimeout(id);
-// }
+const __requestAnimationFrame__ = function (fn: (...args: any[]) => any) {
+  var currTime = Date.now();
+  var timeToCall = Math.max(0, 30 - (currTime - lastTime));
+  // console.log(16 - (currTime - lastTime));
+  const id = setTimeout(function () {
+    fn(currTime + timeToCall);
+  }, timeToCall);
+  lastTime = currTime + timeToCall;
+  // console.log(lastTime);
+  return id;
+};
+
+let lastTime = 0;
+export const requestAnimationFrame = function (fn: (...args: any[]) => any) {
+  if (isH5) {
+    return window.requestAnimationFrame(fn) || __requestAnimationFrame__(fn)
+  } else {
+    return __requestAnimationFrame__(fn)
+  }
+};
+
+export const cancelAnimationFrame = function (id: ReturnType<typeof requestAnimationFrame>) {
+  if (isH5) {
+    window.cancelAnimationFrame ? window.cancelAnimationFrame(id) : clearTimeout(id);
+  } else {
+    clearTimeout(id);
+  }
+}
 // export function requestAnimationFrame(cb: Function) {
 //   // const Info = systemInfo || (systemInfo = getSystemInfoSync());
 //   // const el = Taro

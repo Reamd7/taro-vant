@@ -99,7 +99,7 @@ const VanCalendarMultiple: Taro.FunctionComponent<VanCalendarSingleProps> = (pro
 
   const onConfirm = usePersistFn(() => {
     if (props.onConfirm) {
-      Taro.nextTick(() => {
+      nextTick(() => {
         if (props.onConfirm) {
           props.onConfirm(
             currentDate.map(val => val.clone())
