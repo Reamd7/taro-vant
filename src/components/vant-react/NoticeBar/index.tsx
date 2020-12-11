@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 const { useState, useRef, useEffect, useCallback } = Taro /** api **/;
 import "./index.less";
 import VanIcon, { VanIconProps } from "../icon";
-import { View, Navigator } from "@tarojs/components";
+import { View, Navigator, Text } from "@tarojs/components";
 import { ITouchEvent } from "@tarojs/components/types/common";
 import {
   useMemoClassNames,
@@ -10,7 +10,7 @@ import {
   useMemoCssProperties,
   noop,
   getRect,
-  nextTick, useScope, isExternalClass, isNormalClass
+  nextTick, useScopeRef, isExternalClass, isNormalClass
 } from "../common/utils";
 
 export type VanNoticeBarProps = {
@@ -52,10 +52,11 @@ const VanNoticeBar: Taro.FunctionComponent<VanNoticeBarProps> = props => {
   } = props;
 
   const [show, setShow] = useState(true);
-  const scope = useScope();
+  const [scope, scoperef] = useScopeRef();
   const [animationData, setanimationData] = useState<{
     actions: Record<string, any>[];
   }>();
+
   const self = useRef({
     props: {
       speed, scrollable, delay
@@ -112,7 +113,10 @@ const VanNoticeBar: Taro.FunctionComponent<VanNoticeBarProps> = props => {
       ins.timer = null;
       if (ins.resetAnimation && ins.animation) {
         setanimationData(
-          ins.resetAnimation
+          Taro.createAnimation({
+            duration: 0,
+            timingFunction: "linear"
+          })
             .translateX(ins.wrapWidth)
             .step()
             .export()
@@ -120,7 +124,11 @@ const VanNoticeBar: Taro.FunctionComponent<VanNoticeBarProps> = props => {
         nextTick(() => {
           if (ins.animation) {
             setanimationData(
-              ins.animation
+              Taro.createAnimation({
+                duration: ins.duration,
+                timingFunction: "linear",
+                delay: ins.props.delay
+              })
                 .translateX(-ins.contentWidth)
                 .step()
                 .export()
@@ -143,10 +151,13 @@ const VanNoticeBar: Taro.FunctionComponent<VanNoticeBarProps> = props => {
     speed, scrollable, delay
   ]);
   useEffect(() => {
-    Taro.nextTick(() => {
-      self.current.init();
-    });
-  }, [text, speed]);
+    if (scope) {
+      nextTick(() => {
+        self.current.init();
+      });
+    }
+
+  }, [scope, text, speed]);
 
   const onClickIcon = useCallback(
     (e: ITouchEvent) => {
@@ -167,6 +178,7 @@ const VanNoticeBar: Taro.FunctionComponent<VanNoticeBarProps> = props => {
 
   return show ? (
     <View
+      ref={scoperef}
       className={classnames(
         isExternalClass && "custom-class",
         isNormalClass && props.className,
