@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 const { useState, useCallback } = Taro /** api **/;
 import { Block, View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanSearch from "src/components/vant-react/Search";
+import VanSearch from "taro-vant/Search";
 
 export default function SearchPage() {
   const [value, setValue] = useState('');

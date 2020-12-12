@@ -3,8 +3,8 @@ const { useState, useCallback } = Taro /** api **/;
 import "./index.less";
 import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanCircle from "src/components/vant-react/Circle";
-import VanButton from "src/components/vant-react/Button";
+import VanCircle from "taro-vant/Circle";
+import VanButton from "taro-vant/Button";
 const format = (rate: number) => Math.min(Math.max(rate, 0), 100);
 
 export default function VanCirclePage() {

@@ -3,9 +3,9 @@ const { useRef, useState } = Taro /** api **/;
 import "./index.less";
 import { Block, View, ScrollView } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanSticky from "src/components/vant-react/Sticky";
-import VanButton from "src/components/vant-react/Button";
-import usePersistFn from "src/common/hooks/usePersistFn";
+import VanSticky from "taro-vant/Sticky";
+import VanButton from "taro-vant/Button";
+import usePersistFn from "taro-vant/hooks/usePersistFn"
 import { ITouchEvent } from "@tarojs/components/types/common";
 
 export default function VanStickyPage() {

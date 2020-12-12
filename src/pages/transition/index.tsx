@@ -1,8 +1,8 @@
 import Taro from "@tarojs/taro";
 const { useState, useCallback } = Taro /** api **/;
 import DemoBlock from "../components/demoBlock";
-import VanCell from "../../components/vant-react/Cell";
-import VanTransition from "../../components/vant-react/Transition";
+import VanCell from "taro-vant/Cell";
+import VanTransition from "taro-vant/Transition";
 import "./index.less";
 const cusDur = { enter: 300, leave: 1000 };
 const onBeforeEnter=() => console.log("before enter")

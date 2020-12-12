@@ -3,8 +3,8 @@ import Taro from "@tarojs/taro";
 import "./index.less";
 import { View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanPanel from "src/components/vant-react/Panel";
-import VanButton from "src/components/vant-react/Button";
+import VanPanel from "taro-vant/Panel";
+import VanButton from "taro-vant/Button";
 
 export default function PanelPage() {
   return (

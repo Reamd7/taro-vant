@@ -1,10 +1,10 @@
 import { Block, Image, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 const { useState } = Taro /** api **/;
-import VanCell from 'src/components/vant-react/Cell';
-import VanCellGroup from 'src/components/vant-react/CellGroup';
-import VanCheckBox from 'src/components/vant-react/Checkbox';
-import VanCheckBoxGroup from 'src/components/vant-react/Checkbox/group';
+import VanCell from 'taro-vant/Cell';
+import VanCellGroup from 'taro-vant/CellGroup';
+import VanCheckBox from 'taro-vant/Checkbox';
+import VanCheckBoxGroup from 'taro-vant/Checkbox/group';
 import DemoBlock from '../components/demoBlock';
 
 import "./index.less";

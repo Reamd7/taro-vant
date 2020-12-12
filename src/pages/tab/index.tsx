@@ -1,11 +1,11 @@
 import Taro, { usePageScroll } from '@tarojs/taro';
 import "./index.less";
 import { Block, View } from '@tarojs/components';
-import VanTab from 'src/components/vant-react/Tab';
-import VanTabItem from 'src/components/vant-react/Tab/item';
+import VanTab from 'taro-vant/Tab';
+import VanTabItem from 'taro-vant/Tab/item';
 import DemoBlock from '../components/demoBlock';
-import { noop, isH5 } from 'src/components/vant-react/common/utils';
-import VanIcon from 'src/components/vant-react/icon';
+import { noop, isH5 } from 'taro-vant/utils';
+import VanIcon from 'taro-vant/icon';
 const data = {
   tabs2: [1, 2],
   tabs3: [1, 2, 3],

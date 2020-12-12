@@ -1,9 +1,9 @@
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import "./index.less";
-import VanButton from "src/components/vant-react/Button";
+import VanButton from "taro-vant/Button";
 import DemoBlock from "../components/demoBlock";
-import VanEmpty from "src/components/vant-react/Empty";
+import VanEmpty from "taro-vant/Empty";
 
 export default function EmptyPage() {
   // const [activeTab, setactiveTab] = useState(0);

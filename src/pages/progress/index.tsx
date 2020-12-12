@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import "./index.less";
 import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanProgress from "src/components/vant-react/Progress";
+import VanProgress from "taro-vant/Progress";
 
 export default function ProgressPage() {
   return (

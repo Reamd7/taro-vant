@@ -1,8 +1,8 @@
 import Taro from "@tarojs/taro";
 import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanNavBar from "src/components/vant-react/NavBar";
-import VanIcon from "src/components/vant-react/icon";
+import VanNavBar from "taro-vant/NavBar";
+import VanIcon from "taro-vant/icon";
 import "./index.less"
 export default function NavBarPpage() {
   return (

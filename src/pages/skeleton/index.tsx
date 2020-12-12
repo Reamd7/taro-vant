@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { View, Image, Switch } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanSkeleton from "../../components/vant-react/Skeleton";
+import VanSkeleton from "taro-vant/Skeleton";
 
 import "./index.less";
 

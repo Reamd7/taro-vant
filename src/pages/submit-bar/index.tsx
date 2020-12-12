@@ -3,10 +3,10 @@ const { useCallback } = Taro /** api **/;
 import "./index.less";
 import { Block, View, Text } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanSubmitBar from "src/components/vant-react/SubmitBar";
-import VanToast from "src/components/vant-react/Toast";
-import VanTag from "src/components/vant-react/Tag";
-import { Toast } from "src/components/vant-react/Toast/toast";
+import VanSubmitBar from "taro-vant/SubmitBar";
+import VanToast from "taro-vant/Toast";
+import VanTag from "taro-vant/Tag";
+import { Toast } from "taro-vant/Toast/toast";
 
 export default function VanSubmitBarPage() {
   const onClickButton = useCallback(()=>{

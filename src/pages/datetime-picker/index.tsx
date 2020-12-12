@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanDateTimePicker from "src/components/vant-react/DateTimePicker";
+import VanDateTimePicker from "taro-vant/DateTimePicker";
 import dayjs from "dayjs";
 
 export default function DateTimePicker() {

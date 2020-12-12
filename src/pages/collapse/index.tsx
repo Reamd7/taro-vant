@@ -3,9 +3,9 @@ const { useState } = Taro /** api **/;
 import "./index.less";
 import { Block, View, Text } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanCollapse from "src/components/vant-react/Collapse/VanCollapse";
-import VanCollapseItem from "src/components/vant-react/Collapse/VanCollapseItem";
-import VanIcon from "src/components/vant-react/icon";
+import VanCollapse from "taro-vant/Collapse/VanCollapse";
+import VanCollapseItem from "taro-vant/Collapse/VanCollapseItem";
+import VanIcon from "taro-vant/icon";
 
 const d = {
   title1: '有赞微商城',

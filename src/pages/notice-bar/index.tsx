@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import "./index.less";
 import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanNoticeBar from "src/components/vant-react/NoticeBar";
+import VanNoticeBar from "taro-vant/NoticeBar";
 
 export default function NoticeBarPage() {
   const text = "在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。";

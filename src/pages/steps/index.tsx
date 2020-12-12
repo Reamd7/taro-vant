@@ -2,11 +2,11 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanSteps from "src/components/vant-react/Steps";
-import VanButton from "src/components/vant-react/Button";
-import icons from "src/components/vant-react/icon/config";
-import { Toast } from "src/components/vant-react/Toast/toast";
-import VanToast from "src/components/vant-react/Toast";
+import VanSteps from "taro-vant/Steps";
+import VanButton from "taro-vant/Button";
+import icons from "taro-vant/icon/config";
+import { Toast } from "taro-vant/Toast/toast";
+import VanToast from "taro-vant/Toast";
 
 const steps = [
   {

@@ -1,8 +1,8 @@
 import Taro from "@tarojs/taro";
 const { useRef, useState, useCallback } = Taro /** api **/;
 import { View } from "@tarojs/components";
-import VanVirtualList, { VanVirtualListIns } from "src/components/vant-react/VirtualList";
-import VanVirtualListItem from "src/components/vant-react/VirtualList/item";
+import VanVirtualList, { VanVirtualListIns } from "taro-vant/VirtualList";
+import VanVirtualListItem from "taro-vant/VirtualList/item";
 import { BaseEventOrig } from "@tarojs/components/types/common";
 
 let itemCount = 30

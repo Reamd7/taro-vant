@@ -3,9 +3,9 @@ const { useState } = Taro /** api **/;
 import "./index.less";
 import { Block, Image } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanButton from "src/components/vant-react/Button";
-import VanDialog from "src/components/vant-react/Dialog";
-import Dialog from "src/components/vant-react/Dialog/dialog";
+import VanButton from "taro-vant/Button";
+import VanDialog from "taro-vant/Dialog";
+import Dialog from "taro-vant/Dialog/dialog";
 
 const message = '代码是写出来给人看的，附带能在机器上运行';
 

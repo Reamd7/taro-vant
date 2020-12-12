@@ -2,12 +2,12 @@ import Taro from "@tarojs/taro";
 
 import "./index.less";
 import { Block, View } from "@tarojs/components";
-import VanGrid from "src/components/vant-react/Grid";
-import VanGridItem from "src/components/vant-react/Grid/item";
-import VanSidebar from "src/components/vant-react/Sidebar";
-import VanSidebarItem from "src/components/vant-react/Sidebar/item";
-import VanNotify from "src/components/vant-react/Notify";
-import Notify from "src/components/vant-react/Notify/common/notify";
+import VanGrid from "taro-vant/Grid";
+import VanGridItem from "taro-vant/Grid/item";
+import VanSidebar from "taro-vant/Sidebar";
+import VanSidebarItem from "taro-vant/Sidebar/item";
+import VanNotify from "taro-vant/Notify";
+import Notify from "taro-vant/Notify/common/notify";
 
 const VanSiderPage: Taro.FunctionComponent<{}> = () => {
   return <Block>

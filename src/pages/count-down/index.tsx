@@ -1,16 +1,16 @@
 import Taro from "@tarojs/taro";
 const { useState, useRef } = Taro /** api **/;
-import { TimeData } from "src/components/vant-react/CountDown/utils";
+import { TimeData } from "taro-vant/CountDown/utils";
 import { Block, Text } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
 import VanCountDown, {
   VanCountDownIns
-} from "src/components/vant-react/CountDown";
+} from "taro-vant/CountDown";
 import "./index.less";
-import { Toast } from "src/components/vant-react/Toast/toast";
-import VanToast from "src/components/vant-react/Toast";
-import VanGrid from "src/components/vant-react/Grid";
-import VanGridItem from "src/components/vant-react/Grid/item";
+import { Toast } from "taro-vant/Toast/toast";
+import VanToast from "taro-vant/Toast";
+import VanGrid from "taro-vant/Grid";
+import VanGridItem from "taro-vant/Grid/item";
 export default function CountDownPage() {
   const time = 30 * 60 * 60 * 1000;
   const [timeData, setTimeData] = useState<TimeData>();

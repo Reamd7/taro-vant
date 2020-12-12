@@ -3,7 +3,7 @@ const { useState, useCallback, useEffect } = Taro /** api **/;
 import "./index.less";
 import { Block, View } from '@tarojs/components';
 import DemoBlock from '../components/demoBlock';
-import VanSlider from 'src/components/vant-react/Slider';
+import VanSlider from 'taro-vant/Slider';
 
 export default function VanSilder() {
 

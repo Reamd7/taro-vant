@@ -1,9 +1,9 @@
 import Taro from "@tarojs/taro";
 import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanButton from "src/components/vant-react/Button";
-import VanToast from "src/components/vant-react/Toast";
-import { Toast } from "src/components/vant-react/Toast/toast";
+import VanButton from "taro-vant/Button";
+import VanToast from "taro-vant/Toast";
+import { Toast } from "taro-vant/Toast/toast";
 
 export default function ToastPage() {
   return (

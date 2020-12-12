@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanDivider from "src/components/vant-react/Divider";
+import VanDivider from "taro-vant/Divider";
 import "./index.less";
 export default function DivPage() {
   return (

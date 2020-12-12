@@ -1,9 +1,9 @@
 import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
-import VanRow from "src/components/vant-react/Layout/Row";
-import VanImage from "src/components/vant-react/Image";
-import VanCol from "src/components/vant-react/Layout/Col";
-import VanLoading from "src/components/vant-react/Loading";
+import VanRow from "taro-vant/Layout/Row";
+import VanImage from "taro-vant/Image";
+import VanCol from "taro-vant/Layout/Col";
+import VanLoading from "taro-vant/Loading";
 import DemoBlock from "../components/demoBlock";
 
 import "./index.less";

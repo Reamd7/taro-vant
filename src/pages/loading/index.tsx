@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import "./index.less";
 import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanLoading from "src/components/vant-react/Loading";
+import VanLoading from "taro-vant/Loading";
 
 export default function VanLoadingPage() {
   return <Block>

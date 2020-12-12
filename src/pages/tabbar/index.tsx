@@ -3,8 +3,8 @@ const { useState } = Taro /** api **/;
 import "./index.less";
 import { Block, Image } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanTabbar from "src/components/vant-react/Tabbar";
-import VanTabbarItem from "src/components/vant-react/Tabbar/item";
+import VanTabbar from "taro-vant/Tabbar";
+import VanTabbarItem from "taro-vant/Tabbar/item";
 
 const VanTabbarPage: Taro.FunctionComponent<{}> = () => {
 

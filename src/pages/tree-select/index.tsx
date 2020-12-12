@@ -3,8 +3,8 @@ const { useState } = Taro /** api **/;
 import config from './config';
 import { Block, View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanTreeSelect from "src/components/vant-react/TreeSelect";
-import VanImage from "src/components/vant-react/Image";
+import VanTreeSelect from "taro-vant/TreeSelect";
+import VanImage from "taro-vant/Image";
 
 const items = [
   {

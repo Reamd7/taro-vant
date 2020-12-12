@@ -2,9 +2,9 @@ import Taro from "@tarojs/taro";
 import "./index.less";
 import { View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanCard from "src/components/vant-react/Card";
-import VanTag from "src/components/vant-react/Tag";
-import VanButton from "src/components/vant-react/Button";
+import VanCard from "taro-vant/Card";
+import VanTag from "taro-vant/Tag";
+import VanButton from "taro-vant/Button";
 
 export default function VanCardPage() {
   const imageURL = 'https://img.yzcdn.cn/upload_files/2017/07/02/af5b9f44deaeb68000d7e4a711160c53.jpg';

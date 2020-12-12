@@ -3,11 +3,11 @@ const { useState } = Taro /** api **/;
 import "./index.less";
 import { View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanCellGroup from "src/components/vant-react/CellGroup";
-import VanFieldText from "src/components/vant-react/Field/VanFieldText";
-import VanFieldTextarea from "src/components/vant-react/Field/VanFieldTextarea";
-import VanButton from "src/components/vant-react/Button";
-import VanFieldNumber from "src/components/vant-react/Field/VanFieldNumber";
+import VanCellGroup from "taro-vant/CellGroup";
+import VanFieldText from "taro-vant/Field/VanFieldText";
+import VanFieldTextarea from "taro-vant/Field/VanFieldTextarea";
+import VanButton from "taro-vant/Button";
+import VanFieldNumber from "taro-vant/Field/VanFieldNumber";
 
 
 export default function FieldPage() {

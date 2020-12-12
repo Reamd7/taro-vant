@@ -3,8 +3,8 @@ const { useState } = Taro /** api **/;
 import "./index.less";
 import { Block, View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanUploader, { VanUploaderFile, VanImageType } from "src/components/vant-react/Uploader";
-import VanButton from "src/components/vant-react/Button";
+import VanUploader, { VanUploaderFile, VanImageType } from "taro-vant/Uploader";
+import VanButton from "taro-vant/Button";
 
 export default function VanUploaderPage() {
   const [fileList1, setfileList1] = useState<VanUploaderFile[]>([]);

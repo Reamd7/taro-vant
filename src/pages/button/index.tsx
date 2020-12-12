@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import DemoBlock from "../components/demoBlock";
 import { View } from "@tarojs/components";
-import VanButton from "src/components/vant-react/Button";
+import VanButton from "taro-vant/Button";
 import "./index.less";
 const ButtonDemoPage: Taro.FunctionComponent = () => {
   return (

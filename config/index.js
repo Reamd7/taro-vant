@@ -93,13 +93,11 @@ const config = {
     }
   },
   alias: {
-    'src': path.resolve(__dirname, '..', 'src')
+    'src': path.resolve(__dirname, '..', 'src'),
+    'taro-vant': path.resolve(__dirname, '..', 'src/components/taro-vant')
   },
   copy: {
-    // patterns: [
-    //   { from: 'src/components/vant-react/Slider/slider.wxs', to: 'dist/components/vant-react/Slider/slider.wxs' },
-    //   { from: 'src/components/vant-react/Overlay/overlay.wxs', to: 'dist/components/vant-react/Overlay/overlay.wxs' }
-    // ],
+
     patterns: wxsPattern,
     options: {
       ignore: ['*.js', '*.jsx', '*.ts', "*.tsx", "*.css", "*.less", "*.scss"]

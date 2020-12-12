@@ -2,12 +2,12 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { Block, View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanDropDownMenu from "src/components/vant-react/DropDown/VanDropDownMenu";
-import VanDropDownItem from "src/components/vant-react/DropDown/VanDropDownItem";
-import VanCell from "src/components/vant-react/Cell";
-import VanSwitch from "src/components/vant-react/Switch";
-import { useMemoAddUnit } from "src/components/vant-react/common/utils";
-import VanButton from "src/components/vant-react/Button";
+import VanDropDownMenu from "taro-vant/DropDown/VanDropDownMenu";
+import VanDropDownItem from "taro-vant/DropDown/VanDropDownItem";
+import VanCell from "taro-vant/Cell";
+import VanSwitch from "taro-vant/Switch";
+import { useMemoAddUnit } from "taro-vant/utils";
+import VanButton from "taro-vant/Button";
 const option1 = [
   { text: '全部商品', value: '0' },
   { text: '新款商品', value: '1' },

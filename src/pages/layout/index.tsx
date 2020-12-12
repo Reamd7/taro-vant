@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import DemoBlock from "../components/demoBlock";
-import VanRow from "src/components/vant-react/Layout/Row";
-import VanCol from "src/components/vant-react/Layout/Col";
+import VanRow from "taro-vant/Layout/Row";
+import VanCol from "taro-vant/Layout/Col";
 import { Block } from "@tarojs/components";
 import "./index.less"
 const Layout: Taro.FunctionComponent<{}> = () => {

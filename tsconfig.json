@@ -20,7 +20,8 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "paths": {
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "taro-vant/*": ["./src/components/taro-vant/*"]
     },
     "types": [
       "miniprogram-api-typings",

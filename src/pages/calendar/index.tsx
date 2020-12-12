@@ -2,12 +2,12 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { Block, View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanCell from "src/components/vant-react/Cell";
-import VanCalendar, { VanCalendarProps } from "src/components/vant-react/Calendar";
+import VanCell from "taro-vant/Cell";
+import VanCalendar, { VanCalendarProps } from "taro-vant/Calendar";
 import dayjs from "dayjs";
-import VanCalendarSingle from "src/components/vant-react/Calendar/single";
-import VanCalendarRange from "src/components/vant-react/Calendar/range";
-import VanCalendarMultiple from "src/components/vant-react/Calendar/multiple";
+import VanCalendarSingle from "taro-vant/Calendar/single";
+import VanCalendarRange from "taro-vant/Calendar/range";
+import VanCalendarMultiple from "taro-vant/Calendar/multiple";
 
 export default function CalendarDemo() {
   const [selectSingle, setselectSingle] = useState<dayjs.Dayjs | null>(null)

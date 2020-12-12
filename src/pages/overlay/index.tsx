@@ -2,10 +2,9 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { View, ScrollView, Text } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanButton from "src/components/vant-react/Button";
-import VanOverlay from "src/components/vant-react/Overlay";
+import VanButton from "taro-vant/Button";
+import VanOverlay from "taro-vant/Overlay";
 import Longview from "./longview";
-import "src/components/vant-react/Overlay/index.less";
 
 import "./index.less";
 

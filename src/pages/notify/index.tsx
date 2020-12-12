@@ -1,9 +1,9 @@
 import Taro from "@tarojs/taro";
 import { Block, View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanButton from "../../components/vant-react/Button";
-import VanNotify from "../../components/vant-react/Notify/index";
-import Notify from "../../components/vant-react/Notify/common/notify";
+import VanButton from "taro-vant/Button";
+import VanNotify from "taro-vant/Notify/index";
+import Notify from "taro-vant/Notify/common/notify";
 
 export default function NotifyPage() {
   return (

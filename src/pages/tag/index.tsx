@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanTag from "src/components/vant-react/Tag";
+import VanTag from "taro-vant/Tag";
 
 export default function VanTagPage() {
   const [data, setData] = useState({

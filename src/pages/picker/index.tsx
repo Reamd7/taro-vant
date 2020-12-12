@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro';
 const { useMemo, useState } = Taro /** api **/;
 import { Block } from '@tarojs/components';
 import DemoBlock from '../components/demoBlock';
-import VanPicker from '../../components/vant-react/Picker'
+import VanPicker from 'taro-vant/Picker'
 export default function PickerPage() {
   const column1 = useMemo(() => [{
     key: "single",

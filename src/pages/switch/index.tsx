@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanSwitch from "src/components/vant-react/Switch";
+import VanSwitch from "taro-vant/Switch";
 
 
 export default function SwitchPage() {

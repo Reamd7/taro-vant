@@ -3,8 +3,8 @@ const { useState, useCallback, useRef } = Taro /** api **/;
 import { View } from "@tarojs/components";
 import "./index.less";
 import DemoBlock from "../components/demoBlock";
-import VanCell from "src/components/vant-react/Cell";
-import VanPopup from "src/components/vant-react/Popup";
+import VanCell from "taro-vant/Cell";
+import VanPopup from "taro-vant/Popup";
 
 export default function PopUpPage() {
   const [show, setShow] = useState({

@@ -1,10 +1,10 @@
 import { Block } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 const { useState } = Taro /** api **/;
-import VanCell from 'src/components/vant-react/Cell';
-import VanStepper from 'src/components/vant-react/Stepper';
-import VanToast from 'src/components/vant-react/Toast';
-import { Toast, useUniToastId } from 'src/components/vant-react/Toast/toast';
+import VanCell from 'taro-vant/Cell';
+import VanStepper from 'taro-vant/Stepper';
+import VanToast from 'taro-vant/Toast';
+import { Toast, useUniToastId } from 'taro-vant/Toast/toast';
 
 import "./index.less";
 

@@ -3,9 +3,9 @@ import Taro from "@tarojs/taro";
 import "./index.less";
 import { View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanSwipeCell from "src/components/vant-react/SwipeCell";
-import VanCellGroup from "src/components/vant-react/CellGroup";
-import VanCell from "src/components/vant-react/Cell";
+import VanSwipeCell from "taro-vant/SwipeCell";
+import VanCellGroup from "taro-vant/CellGroup";
+import VanCell from "taro-vant/Cell";
 
 export default function SwipeCellPage() {
   return (

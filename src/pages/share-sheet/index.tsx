@@ -2,8 +2,8 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanCell from "src/components/vant-react/Cell";
-import VanShareSheet from "src/components/vant-react/ShareSheet";
+import VanCell from "taro-vant/Cell";
+import VanShareSheet from "taro-vant/ShareSheet";
 const onSelect = (e: any) => {
   console.log(e);
 };

@@ -1,7 +1,7 @@
 import { View, Text } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 const { useState } = Taro /** api **/;
-import VanRate from 'src/components/vant-react/Rate';
+import VanRate from 'taro-vant/Rate';
 import DemoBlock from '../components/demoBlock';
 
 import "./index.less";

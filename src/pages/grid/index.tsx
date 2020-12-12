@@ -2,8 +2,8 @@ import Taro from "@tarojs/taro";
 const { useState } = Taro /** api **/;
 import { Block, Image } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanGrid from "src/components/vant-react/Grid";
-import VanGridItem from "src/components/vant-react/Grid/item";
+import VanGrid from "taro-vant/Grid";
+import VanGridItem from "taro-vant/Grid/item";
 
 const data = {
   array3: [0, 1, 2],

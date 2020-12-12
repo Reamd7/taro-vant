@@ -1,9 +1,9 @@
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanCell from "src/components/vant-react/Cell";
-import VanCellGroup from "src/components/vant-react/CellGroup";
-import VanIcon from "src/components/vant-react/icon";
+import VanCell from "taro-vant/Cell";
+import VanCellGroup from "taro-vant/CellGroup";
+import VanIcon from "taro-vant/icon";
 import "./index.less";
 
 const Cell: Taro.FunctionComponent<{}> = () => {

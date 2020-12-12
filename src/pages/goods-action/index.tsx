@@ -3,11 +3,11 @@ import Taro from "@tarojs/taro";
 import "./index.less";
 import { Block } from "@tarojs/components";
 import DemoBlock from "../components/demoBlock";
-import VanGoodsAction from "src/components/vant-react/GoodsAction";
-import VanGoodsActionIcon from "src/components/vant-react/GoodsActionIcon";
-import VanGoodsActionButton from "src/components/vant-react/GoodsActionButton";
-import VanToast from "src/components/vant-react/Toast";
-import { Toast } from "src/components/vant-react/Toast/toast";
+import VanGoodsAction from "taro-vant/GoodsAction";
+import VanGoodsActionIcon from "taro-vant/GoodsActionIcon";
+import VanGoodsActionButton from "taro-vant/GoodsActionButton";
+import VanToast from "taro-vant/Toast";
+import { Toast } from "taro-vant/Toast/toast";
 
 export default function VanGoodsActionPage() {
   return <Block>

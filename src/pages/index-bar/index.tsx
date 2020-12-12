@@ -2,8 +2,8 @@ import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 const { useState, useCallback, useEffect } = Taro /** api **/;
 import './index.less'
-import VanIndexList from 'src/components/vant-react/IndexList'
-import { isWeapp } from 'src/components/vant-react/common/utils';
+import VanIndexList from 'taro-vant/IndexList'
+import { isWeapp } from 'taro-vant/utils';
 let getCitysPromise: Promise<any>
 if (isWeapp) {
   const QQMapWX = require('./lib/qqmap-wx-jssdk.min.js');
