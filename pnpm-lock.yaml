@@ -24,6 +24,7 @@ dependencies:
   babel-runtime: 6.26.0
   big.js: 6.0.1
   classnames: 2.2.6
+  cross-env: 7.0.3
   dayjs: 1.9.1
   fast-memoize: 2.5.2
   glob: 7.1.6
@@ -7460,6 +7461,18 @@ packages:
     resolution:
       integrity: sha1-mDZUL5qqIoaM19Sm+CZn3zgBnco=
       tarball: 'https://registry.npm.taobao.org/create-react-context/download/create-react-context-0.2.2.tgz'
+  /cross-env/7.0.3:
+    dependencies:
+      cross-spawn: 7.0.3
+    dev: false
+    engines:
+      node: '>=10.14'
+      npm: '>=6'
+      yarn: '>=1'
+    hasBin: true
+    resolution:
+      integrity: sha1-hlJkspZ33AFbqEGJGJZd0jL8VM8=
+      tarball: 'https://registry.npm.taobao.org/cross-env/download/cross-env-7.0.3.tgz'
   /cross-spawn-async/2.2.5:
     dependencies:
       lru-cache: 4.1.5
@@ -7513,7 +7526,6 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
-    dev: true
     engines:
       node: '>= 8'
     resolution:
@@ -19486,6 +19498,7 @@ specifiers:
   babel-runtime: ^6.26.0
   big.js: ^6.0.1
   classnames: ^2.2.6
+  cross-env: ^7.0.3
   dayjs: ^1.9.1
   eslint: ^7.9.0
   eslint-config-taro: 2.2.15

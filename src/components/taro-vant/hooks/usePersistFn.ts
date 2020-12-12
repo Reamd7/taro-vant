@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 const { useCallback, useRef, useEffect } = Taro /** api **/;
 
-export type noop = (...args: any[]) => any;
+type noop = (...args: any[]) => any;
 
 export default function usePersistFn<T extends noop>(fn: T, dependencies: any[]) {
   const ref = useRef<T>((() => {

@@ -11,9 +11,10 @@ const wxsPattern = glob.sync("**/*.wxs", { cwd: SRC, mark: true }).map(file => {
 const node_modules = path.resolve(__dirname, "..", "node_modules")
 // console.log(path.resolve(node_modules, '@tarojs/taro'))
 // TARO_ENV: "weapp" | "swan" | "alipay" | "h5" | "rn" | "tt" | "quickapp" | "qq"
+const isBuildComponent = process.env.TARO_BUILD_TYPE === 'component'
 
 const config = {
-  projectName: 'myshop',
+  projectName: 'taro-vant',
   date: '2020-9-19',
   designWidth: 750,
   deviceRatio: {
@@ -22,7 +23,7 @@ const config = {
     '828': 1.81 / 2
   },
   sourceRoot: 'src',
-  outputRoot: `dist/${process.env.TARO_ENV}`,
+  outputRoot: isBuildComponent ? 'dist' : `dist/${process.env.TARO_ENV}`,
   babel: {
     sourceMap: true,
     presets: [
@@ -114,6 +115,45 @@ const config = {
   }
 }
 
+if (isBuildComponent) {
+  Object.assign(config.h5, {
+    enableSourceMap: false,
+    enableExtract: false,
+    enableDll: false
+  })
+  config.h5.webpackChain = chain => {
+    chain.plugins.delete('htmlWebpackPlugin')
+    chain.plugins.delete('addAssetHtmlWebpackPlugin')
+    chain.merge({
+      output: {
+        path: path.join(process.cwd(), 'dist', 'h5'),
+        filename: 'index.js',
+        libraryTarget: 'umd',
+        library: 'taro-vant'
+      },
+      externals: {
+        nervjs: 'commonjs2 nervjs',
+        classnames: 'commonjs2 classnames',
+        '@tarojs/components': 'commonjs2 @tarojs/components',
+        '@tarojs/taro-h5': 'commonjs2 @tarojs/taro-h5',
+        'weui': 'commonjs2 weui',
+
+        "throttle-debounce": 'commonjs2 throttle-debounce',
+        "big.js": 'commonjs2 big.js',
+        "dayjs": 'commonjs2 dayjs'
+      },
+      plugin: {
+        extractCSS: {
+          plugin: MiniCssExtractPlugin,
+          args: [{
+            filename: 'css/index.css',
+            chunkFilename: 'css/[id].css'
+          }]
+        }
+      }
+    })
+  }
+}
 module.exports = function (merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'))
