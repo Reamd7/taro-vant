@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "ES6",
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "../../../ui",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "jsx": "preserve",
+    "jsxFactory": "Taro.createElement",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationDir": "../../../ui",
+    "paths": {
+      "src/*": ["./src/*"],
+      "taro-vant/*": ["./src/components/taro-vant/*"]
+    },
+    "types": [
+      "miniprogram-api-typings",
+      "mini-types",
+      "nervjs/dist"
+    ]
+  },
+  "exclude": ["node_modules", "dist"],
+  "compileOnSave": false
+}

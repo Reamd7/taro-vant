@@ -1,8 +1,8 @@
 const path = require('path');
 const glob = require('glob');
-
-const SRC = path.resolve(__dirname, '..', 'src')
-const DIST = path.resolve(__dirname, '..', `dist/${process.env.TARO_ENV}`)
+const cwd = process.cwd();
+const SRC = path.resolve(cwd, 'src')
+const DIST = path.resolve(cwd, `dist/${process.env.TARO_ENV}`)
 const wxsPattern = glob.sync("**/*.wxs", { cwd: SRC, mark: true }).map(file => {
   return {
     from: path.resolve(SRC, file), to: path.resolve(DIST, file)
