@@ -12,7 +12,6 @@ export * from "./getAllRect";
 export * from "./getContext";
 export * from "./getCurrentPage";
 export * from "./getRect";
-export * from "./GroupContextCreator";
 export * from "./relation";
 
 import classNames from 'classNames';
