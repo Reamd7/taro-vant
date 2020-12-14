@@ -102,7 +102,7 @@ export default function CheckBoxPage() {
       </VanCheckBox>
     </DemoBlock>
     <DemoBlock title={`复选框组${checkboxRed.join()}`}>
-      <VanCheckBoxGroup gid="result" value={checkboxRed} onChange={setcheckboxRed}>
+      <VanCheckBoxGroup gid="result" value={checkboxRed} onChange={setcheckboxRed} total={3}>
         {['a', 'b', 'c'].map(item => {
           return <VanCheckBox
             gid="result"
@@ -114,8 +114,8 @@ export default function CheckBoxPage() {
         })}
       </VanCheckBoxGroup>
     </DemoBlock>
-    <DemoBlock title={`限制最大可选数 复选框组${checkboxRed.join()}`}>
-      <VanCheckBoxGroup gid="result2" value={checkboxRed2} onChange={setcheckboxRed2} max={2}>
+    <DemoBlock title={`限制最大可选数 2 复选框组${checkboxRed2.join()}`}>
+      <VanCheckBoxGroup gid="result2" value={checkboxRed2} onChange={setcheckboxRed2} max={2} total={3}>
         {['a', 'b', 'c'].map(item => {
           return <VanCheckBox
             gid="result2"
@@ -129,7 +129,7 @@ export default function CheckBoxPage() {
       </VanCheckBoxGroup>
     </DemoBlock>
     <DemoBlock title={`搭配单元格组件使用 ${checkboxRed3.join(",")}`}>
-      <VanCheckBoxGroup value={checkboxRed3} gid="result3" onChange={setcheckboxRed3}>
+      <VanCheckBoxGroup value={checkboxRed3} gid="result3" onChange={setcheckboxRed3}total={3}>
         <VanCellGroup>
           {['a', 'b', 'c'].map(item => {
             return <VanCell
@@ -162,7 +162,7 @@ export default function CheckBoxPage() {
       </VanCheckBoxGroup>
     </DemoBlock>
     <DemoBlock title={`单选demo + 搭配单元格组件使用 ${checkboxRed4.join(",")}`}>
-      <VanCheckBoxGroup value={checkboxRed4} gid="result4" onChange={setcheckboxRed4}>
+      <VanCheckBoxGroup value={checkboxRed4} gid="result4" onChange={setcheckboxRed4} total={3}>
         <VanCellGroup>
           {['a', 'b', 'c'].map(item => {
             return <VanCell

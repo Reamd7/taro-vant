@@ -1,7 +1,9 @@
-const { useMemo, useCallback } = Taro /** api **/;
-import { useCheckboxGroupContext } from "./utils";
+import Taro from "@tarojs/taro";
 import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue"
-import { ActiveProps } from "taro-vant/utils"
+import { ActiveProps, useRelationPropsInject } from "taro-vant/utils"
+import usePersistFn from "taro-vant/hooks/usePersistFn";
+import { VanCheckBoxProps } from ".";
+import { View } from "@tarojs/components";
 
 type VanCheckBoxGroupProps = {
   disabled?: boolean; // 是否全局禁用
@@ -10,29 +12,35 @@ type VanCheckBoxGroupProps = {
   onChange?: (val: string[]) => void;
   children: React.ReactNode;
   radio?: boolean;
+  total: number;
 } & ControllerValueProps<Array<string>>
 
 const DefaultProps = {
   disabled: false,
-  max: Infinity
+  max: Infinity,
+  defaultValue: [] as string[],
 } as const
 
 type ActiveVanRateProps = ActiveProps<VanCheckBoxGroupProps, keyof typeof DefaultProps>
 
 const VanCheckBoxGroup: Taro.FunctionComponent<VanCheckBoxGroupProps> = (props: ActiveVanRateProps) => {
-  const {
+  let {
     defaultValue,
     disabled,
     max = props.radio ? 1 : props.max
   } = props;
 
+  if (defaultValue && defaultValue.length > max) {
+    throw Error(`VanCheckBoxGroup defaultValue 长度超过了 max = ${max}的限制`);
+  }
+
   const [currentValue, setCurrentValueOnChange] = useControllableValue(props, {
     defaultValue
   })
 
-  const CheckboxChange = useCallback((key: string, checked: boolean) => {
-    let newCurrentValue: string[] = currentValue || [];
+  const CheckboxChange = usePersistFn((key: string, checked: boolean) => {
     if (disabled) return false; // 禁用就全局禁用不允许修改
+    let newCurrentValue: string[] = currentValue || [];
     const acticeKeyStatus = currentValue && currentValue.includes(key)
 
     if (checked !== acticeKeyStatus) {
@@ -59,59 +67,29 @@ const VanCheckBoxGroup: Taro.FunctionComponent<VanCheckBoxGroupProps> = (props: 
     } else {
       return false
     }
-    // if (checked) {
-    //   // add
-    //   if (currentValue) {
-    //     if (currentValue.includes(key)) {
-    //       if (max === 1) {
-    //         setCurrentValueOnChange([])
-    //       }
-    //       return false;
-    //     } else {
-    //       if (max === 1) {
-    //         setCurrentValueOnChange([])
-    //       }
-    //       if (currentValue.length < max) {
-    //         newCurrentValue = [...currentValue, key];
-    //       } else {
-    //         return false;
-    //       }
-    //     }
-    //   } else {
-    //     newCurrentValue = [key]
-    //   }
-    // } else {
-    //   // remove
-    //   if (currentValue) {
-    //     if (currentValue.includes(key)) {
-    //       newCurrentValue = currentValue.filter(val => val !== key)
-    //     } else {
-    //       return false;
-    //     }
-    //   } else {
-    //     newCurrentValue = []
-    //   }
-    // }
-    // setCurrentValueOnChange(newCurrentValue)
-    // return true; // needChange
-  }, [props.onChange, disabled, currentValue, setCurrentValueOnChange])
+  }, [props.onChange, disabled, currentValue, setCurrentValueOnChange, max])
 
-  const contextValue = useMemo(() => {
-    return {
-      groupdisabled: disabled,
-      max: max,
-      value: currentValue || [],
-      onChange: CheckboxChange
+  useRelationPropsInject<VanCheckBoxProps>(props.gid, (props) => {
+
+    const newProps = { ...props };
+    if (disabled === true) {
+      newProps.disabled = disabled
     }
-  }, [disabled, currentValue, CheckboxChange, max])
 
-  const Context = useCheckboxGroupContext(props.gid, contextValue);
-  if (!Context) {
-    return null;
-  }
+    const name = props.name;
+    if (name) {
+      newProps.value = currentValue.includes(name);
+      newProps.onChange = (v) => {
+        return CheckboxChange(name, v)
+      }
+    }
 
-  return <Context.Provider value={contextValue}>{props.children}</Context.Provider>
+    return newProps;
+  }, [disabled, currentValue, max], props.total)
+
+  return <View>{props.children}</View>
 }
 
+VanCheckBoxGroup.defaultProps = DefaultProps;
 
 export default VanCheckBoxGroup
