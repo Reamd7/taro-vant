@@ -127,11 +127,13 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
       zIndex,
       transitionDuration: currentDuration + "ms",
       WebkitTransitionDuration: currentDuration + "ms",
-      // ...(display
-      //   ? undefined
-      //   : {
-      //     display: "none"
-      //   }),
+      ...(display
+        ? {
+          display: "block"
+        }
+        : {
+          display: "none"
+        }),
       ...props.style
     })
   }, [zIndex, currentDuration, display, props.style])

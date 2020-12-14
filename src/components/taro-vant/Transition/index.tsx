@@ -38,7 +38,9 @@ const VanTransition: Taro.FunctionComponent<VanTransitionProps> = props => {
       transitionDuration: currentDuration + "ms",
       WebkitTransitionDuration: currentDuration + "ms",
       ...(display
-        ? undefined
+        ? {
+          display: "block"
+        }
         : {
           display: "none"
         }),

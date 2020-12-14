@@ -22,8 +22,7 @@
     "declaration": true,
     "declarationDir": "../../../ui",
     "paths": {
-      "src/*": ["./src/*"],
-      "taro-vant/*": ["./src/components/taro-vant/*"]
+      "taro-vant/*": ["./*"]
     },
     "types": [
       "miniprogram-api-typings",

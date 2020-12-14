@@ -112,6 +112,8 @@ return page.route
 import \{(.*)\} from '@tarojs/taro' \/\*\* api \*\*\/
 const {$1} = Taro /** api **/;
 
+const \{(.*)\} = Taro \/\*\* api \*\*\/;
+
 
 throttle-debounce
 big.js
