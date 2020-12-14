@@ -28,7 +28,7 @@ export type ControllerValueProps<
   }
 
 function useControllableValue<
-  T,
+  T extends Exclude<any, (...args: any[]) => any>,
   P extends ControllerValueProps<T, defaultValuePropName, valuePropName, TriggerName>,
   defaultValuePropName extends string = "defaultValue",
   valuePropName extends string = "value",
@@ -39,9 +39,9 @@ function useControllableValue<
   valuePropName?: valuePropName;
   trigger?: TriggerName;
   onRevert?: VoidFunction;
-}): [T, (v: T) => void]
+}): [T, (v: Taro.SetStateAction<T | undefined>) => void]
 function useControllableValue<
-  T,
+  T extends Exclude<any, (...args: any[]) => any>,
   P extends ControllerValueProps<T, defaultValuePropName, valuePropName, TriggerName>,
   defaultValuePropName extends string = "defaultValue",
   valuePropName extends string = "value",
@@ -55,7 +55,7 @@ function useControllableValue<
       onRevert?: VoidFunction;
     }): [T | undefined, (v: T) => void]
 function useControllableValue<
-  T,
+  T extends Exclude<any, (...args: any[]) => any>,
   defaultValuePropName extends string = "defaultValue",
   valuePropName extends string = "value",
   TriggerName extends string = "onChange"
@@ -96,18 +96,27 @@ function useControllableValue<
   }, [value]);
 
   const handleSetState = usePersistFn(
-    (v: T | undefined) => {
+    (v: Taro.SetStateAction<T | undefined>) => {
       if (!(valuePropName in props)) {
         setState(v);
       }
       if (props[trigger]) {
-        const res = props[trigger](v, onRevert);
-        if ((valuePropName in props) && res === false && onRevert) {
-          onRevert()
+        if (typeof v !== "function") {
+          const res = props[trigger](v, onRevert);
+          if ((valuePropName in props) && res === false && onRevert) {
+            onRevert()
+          }
+        } else {
+          const res = props[trigger](
+            (v as ((prevState: T | undefined) => T | undefined))(state)
+          , onRevert);
+          if ((valuePropName in props) && res === false && onRevert) {
+            onRevert()
+          }
         }
       }
     },
-    [props, valuePropName, trigger, onRevert],
+    [props, valuePropName, trigger, onRevert, state],
   );
 
   return [state, handleSetState] as const;
