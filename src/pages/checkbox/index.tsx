@@ -9,7 +9,7 @@ import DemoBlock from '../components/demoBlock';
 
 import "./index.less";
 
-export function CheckBoxPage() {
+export default function CheckBoxPage() {
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(true);
   const [checkboxShape, setcheckboxShape] = useState(true);
