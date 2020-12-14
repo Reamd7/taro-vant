@@ -13,5 +13,5 @@ export function ExtClass<P extends any>(props: P, classNames: keyof P): string |
     })
 
   if (isNormalClass) return props[classNamesMap.nor];
-  return props[classNamesMap.ext]
+  return classNamesMap.ext
 }
