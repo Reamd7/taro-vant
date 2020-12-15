@@ -27,12 +27,11 @@
     "dev:rn": "npm run build:rn -- --watch",
     "dev:qq": "npm run build:qq -- --watch",
     "dev:jd": "npm run build:jd -- --watch",
-    "dev:quickapp": "npm run build:quickapp -- --watch",
-    "dev-api": "typegen -i http://localhost:8009/api/v2/api-docs -o ./src/api -l ts"
+    "dev:quickapp": "npm run build:quickapp -- --watch"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/reamd7/taro-vant-weapp.git"
+    "url": "https://github.com/Reamd7/taro-vant.git"
   },
   "author": "reamd7",
   "license": "MIT",
