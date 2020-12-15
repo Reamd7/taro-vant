@@ -14,7 +14,7 @@ export * from "./getCurrentPage";
 export * from "./getRect";
 export * from "./relation";
 
-import classNames from 'classNames';
+import classNames from 'classnames';
 export function useMemoClassNames() {
   return classNames
 }
