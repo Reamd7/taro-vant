@@ -2,6 +2,30 @@
 
 基于taro2进行多端组件开发，迁移vant-weapp的组件库，兼容h5、微信小程序端、支付宝小程序端。
 
+## 安装
+
+`npm i taro-vant`
+
+`yarn add taro-vant`
+
+## 为什么选择 taro2，而不是最新的taro3
+
+> 为了taro到小程序端的能力，还是使用taro2的编译方向来保证这些低性能的小程序。
+    > 也方便直接写多端组件。
+
+> 不愿意为了开发体验，牺牲性能，没有性能没得作。。
+> 同时，这也基本使用了 hooks 进行开发，
+> 使用的api也基本封装在utils中。
+> 迁移到taro3的组件实现成本也不会太高
+    > 2020.12.15 ：taro3 h5 一堆问题，迁移了有些炸有些不炸，主要还是炸。暂时不处理。
+
+### 如何解决开发体验的问题
+
+1. `React.children.map` （最主要）
+    > 内置实现了一个useRelationListen / useRelationInject 的hook
+
+2. 以及保证判断 `props.children` 是否存在的问题
+    > props中使用 `useSlot` 之类的属性判断
 
 ## 组件
 
@@ -68,3 +92,18 @@
 ### 其他组件
 - [-] 虚拟列表
   - [ ] 下拉刷新
+
+## 未来计划
+
+### 增加组件
+  - 对标framework7的组件类型。
+
+### 将组件迁移到 react-native
+  - 开一个新项目来编写react-native的component
+
+### 完善动画能力
+  - 触摸、跟手交互动画
+  - animation 的处理
+
+### shim抹平taro的多端问题
+- taro有很多多端兼容的问题，因为开发模式的不一样
