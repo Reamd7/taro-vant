@@ -38,7 +38,7 @@
 - [x] Popup 弹出层
 - [x] Transition 动画
 ### 表单组件
-- [*] Calendar 日历
+- [x] Calendar 日历
 - [x] Checkbox 复选框
 - [x] DatetimePicker 时间选择
 - [x] Field 输入框
