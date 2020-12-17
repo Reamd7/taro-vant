@@ -23,7 +23,7 @@ const config = {
     '828': 1.81 / 2
   },
   sourceRoot: 'src',
-  outputRoot: isBuildComponent ? 'dist' : `dist/${process.env.TARO_ENV}`,
+  outputRoot: isBuildComponent ? 'ui' : `dist/${process.env.TARO_ENV}`,
   babel: {
     sourceMap: true,
     presets: [
@@ -98,7 +98,6 @@ const config = {
     'taro-vant': path.resolve(__dirname, '..', 'src/components/taro-vant')
   },
   copy: {
-
     patterns: wxsPattern,
     options: {
       ignore: ['*.js', '*.jsx', '*.ts', "*.tsx", "*.css", "*.less", "*.scss"]
