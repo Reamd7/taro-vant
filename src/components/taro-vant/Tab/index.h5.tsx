@@ -1,14 +1,14 @@
 import Taro from '@tarojs/taro';
 const { useState, useMemo, useEffect, useRef } = Taro /** api **/;
 import "./index.less";
-import { ActiveProps, useMemoClassNames, bem, ExtClass, CssProperties, useScopeRef, getAllRect, getRect, noop, nextTick, addUnit } from 'taro-vant/utils';
+import { ActiveProps, useMemoClassNames, bem, ExtClass, CssProperties, useScopeRef, getAllRect, getRect, noop, nextTick, addUnit } from '../utils';
 import { View, ScrollView, Swiper, SwiperItem } from '@tarojs/components';
 import VanSticky, { VanStickyProps } from '../Sticky';
-import usePersistFn from 'taro-vant/hooks/usePersistFn'
+import usePersistFn from '../hooks/usePersistFn'
 import { useTouch } from '../common/mixins/touch';
 import { ITouchEvent } from '@tarojs/components/types/common';
 import VanInfo from '../info';
-import { useRelationPropsInject } from 'taro-vant/utils/relation';
+import { useRelationPropsInject } from '../utils/relation';
 import { ActiveVanTabItemProps, VanTabItemProps } from './item';
 import ResizeObserver from 'resize-observer-polyfill';
 

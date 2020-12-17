@@ -13,7 +13,7 @@ import {
   ActiveProps,
   isNormalClass,
   isExternalClass
-} from "taro-vant/utils"
+} from "../utils"
 import { Block, View } from "@tarojs/components";
 import VanIcon from "../icon";
 import VanOverlay from "../Overlay";

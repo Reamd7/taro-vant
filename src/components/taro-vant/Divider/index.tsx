@@ -8,7 +8,7 @@ import {
   useMemoAddUnit,
   isExternalClass,
   isNormalClass
-} from "taro-vant/utils"
+} from "../utils"
 import { View } from "@tarojs/components";
 
 export type VanDividerProps = {

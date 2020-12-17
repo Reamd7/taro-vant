@@ -1,12 +1,12 @@
 import { Input, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 const { useEffect, useMemo, useRef, useState, useCallback } = Taro /** api **/;
-import { isExternalClass, isNormalClass, noop, useMemoAddUnit, bem, useMemoClassNames, CssProperties, ActiveProps } from 'taro-vant/utils';
+import { isExternalClass, isNormalClass, noop, useMemoAddUnit, bem, useMemoClassNames, CssProperties, ActiveProps } from '../utils';
 import { InputProps } from '@tarojs/components/types/Input';
 import { BaseEventOrig, CommonEventFunction, ITouchEvent } from '@tarojs/components/types/common';
 import Big from 'big.js';
 import "./index.less"
-import useControllableValue, { ControllerValueProps } from 'taro-vant/hooks/useControllableValue'
+import useControllableValue, { ControllerValueProps } from '../hooks/useControllableValue'
 const LONG_PRESS_START_TIME = 300;
 
 export type VanStepperProps = {

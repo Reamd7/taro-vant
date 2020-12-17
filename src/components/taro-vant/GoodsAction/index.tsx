@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import "./index.less";
-import { bem, isExternalClass, isNormalClass, useMemoClassNames } from "taro-vant/utils"
+import { bem, isExternalClass, isNormalClass, useMemoClassNames } from "../utils"
 import { View } from "@tarojs/components";
 
 export type VanGoodsActionProps = {

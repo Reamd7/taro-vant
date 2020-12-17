@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 const { useMemo, useState, useEffect, useCallback } = Taro /** api **/;
 import { VanDialogProps } from ".";
-import { getContext } from "taro-vant/utils"
+import { getContext } from "../utils"
 
 export function useDialogId() {
   return useMemo(() => "VanDialog" + Date.now().toString(), []);

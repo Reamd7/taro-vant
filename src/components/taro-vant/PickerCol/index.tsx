@@ -2,9 +2,9 @@ import Taro from "@tarojs/taro";
 const { useState, useMemo, useCallback } = Taro /** api **/;
 import "./index.less";
 import { View } from "@tarojs/components";
-import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, range } from "taro-vant/utils"
-import usePersistFn from "taro-vant/hooks/usePersistFn"
-import useUpdateEffect from "taro-vant/hooks/useUpdateEffect"
+import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, range } from "../utils"
+import usePersistFn from "../hooks/usePersistFn"
+import useUpdateEffect from "../hooks/useUpdateEffect"
 
 export type VanPickerColProps<Key extends string> = {
   ['custom-class']?: string

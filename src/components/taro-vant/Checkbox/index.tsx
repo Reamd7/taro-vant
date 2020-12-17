@@ -1,11 +1,11 @@
 import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 const { useMemo } = Taro /** api **/;
-import { addUnit, bem, useMemoClassNames, ActiveProps, useRelationPropsListener, ExtClass } from 'taro-vant/utils';
+import { addUnit, bem, useMemoClassNames, ActiveProps, useRelationPropsListener, ExtClass } from '../utils';
 import VanIcon from '../icon';
 
 import "./index.less";
-import useControllableValue, { ControllerValueProps } from 'taro-vant/hooks/useControllableValue'
+import useControllableValue, { ControllerValueProps } from '../hooks/useControllableValue'
 
 export type VanCheckBoxProps = {
   shape?: "round" | "square";

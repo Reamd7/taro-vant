@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 const { useRef, useCallback, useState, useEffect } = Taro /** api **/;
 import { View } from "@tarojs/components";
 import { ITouchEvent } from "@tarojs/components/types/common";
-import { noop } from "taro-vant/utils"
+import { noop } from "../utils"
 import { useTouch } from "../common/mixins/touch";
 import "./index.less";
 

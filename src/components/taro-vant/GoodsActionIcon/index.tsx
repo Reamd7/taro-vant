@@ -5,7 +5,7 @@ import VanButton, { VanButtonProps } from "../Button";
 import VanIcon, { VanIconProps } from "../icon";
 import { MixinLinkProps, useLink } from "../common/mixins/link";
 import { Text } from "@tarojs/components";
-import { useMemoClassNames, isExternalClass, isNormalClass } from "taro-vant/utils"
+import { useMemoClassNames, isExternalClass, isNormalClass } from "../utils"
 
 export type VanGoodsActionIconProps = {
   'icon-class'?: string;

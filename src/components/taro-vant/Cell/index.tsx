@@ -8,7 +8,7 @@ import {
   CssProperties,
   isNormalClass,
   isExternalClass
-} from "taro-vant/utils"
+} from "../utils"
 import VanIcon, { VanIconProps } from "../icon";
 import "./index.less";
 

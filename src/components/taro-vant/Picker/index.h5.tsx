@@ -2,11 +2,11 @@ import Taro from "@tarojs/taro";
 const { useState, useRef, useMemo } = Taro /** api **/;
 import "./index.less";
 import { View, Block } from "@tarojs/components";
-import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit } from "taro-vant/utils"
+import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit } from "../utils"
 import VanLoading from "../Loading";
 import VanPickerCol, { VanPickerColProps } from "../PickerCol";
-import useUpdateEffect from "taro-vant/hooks/useUpdateEffect"
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import useUpdateEffect from "../hooks/useUpdateEffect"
+import usePersistFn from "../hooks/usePersistFn"
 
 export type VanPickerProps<Key extends string> = {
   ['custom-class']?: string;

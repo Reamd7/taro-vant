@@ -2,10 +2,10 @@ import Taro from "@tarojs/taro";
 const { useMemo, useCallback, useEffect, useRef } = Taro /** api **/;
 import "./index.less";
 import { View, CoverView, Canvas } from "@tarojs/components";
-import { ActiveProps, useScopeRef, isH5, isWeapp, getSystemInfoSync } from "taro-vant/utils"
+import { ActiveProps, useScopeRef, isH5, isWeapp, getSystemInfoSync } from "../utils"
 import { WHITE, BLUE } from "../common/color";
 import { adaptor } from "./utils";
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import usePersistFn from "../hooks/usePersistFn"
 
 export type VanCircleProps = {
   text?: string;

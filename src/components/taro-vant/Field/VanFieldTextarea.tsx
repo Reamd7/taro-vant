@@ -2,9 +2,9 @@ import Taro from "@tarojs/taro";
 const { useState, useEffect, useMemo } = Taro /** api **/;
 import "./index.less";
 import VanCell from "../Cell";
-import { useMemoClassNames, bem, isExternalClass, isNormalClass, addUnit } from "taro-vant/utils"
+import { useMemoClassNames, bem, isExternalClass, isNormalClass, addUnit } from "../utils"
 import { View, Textarea } from "@tarojs/components";
-import useControllableValue from "taro-vant/hooks/useControllableValue"
+import useControllableValue from "../hooks/useControllableValue"
 import { VanFieldDefaultProps, VanFieldTextAreaTextProps, ActiveVanFieldTextAreaTextProps, VanCellContainerTitleStyle, externalClasses } from "./common";
 import VanIcon from "../icon";
 

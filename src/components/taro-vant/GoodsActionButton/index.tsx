@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro"
 import "./index.less";
 import VanButton, { VanButtonProps } from "../Button";
 import { MixinLinkProps, useLink } from "../common/mixins/link";
-import { bem, useMemoClassNames } from "taro-vant/utils"
+import { bem, useMemoClassNames } from "../utils"
 import { View } from "@tarojs/components";
 
 export type VanGoodsActionButtonProps = Pick<VanButtonProps,

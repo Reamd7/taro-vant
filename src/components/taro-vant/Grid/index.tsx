@@ -6,10 +6,10 @@ import {
   useMemoAddUnit,
   isExternalClass,
   isNormalClass
-} from "taro-vant/utils"
+} from "../utils"
 import "./index.less";
 import { VanIconProps } from "../icon";
-import { useRelationPropsInject } from "taro-vant/utils/relation";
+import { useRelationPropsInject } from "../utils/relation";
 import { VanGridItemProps } from "./item";
 
 export type VanGridProps = {

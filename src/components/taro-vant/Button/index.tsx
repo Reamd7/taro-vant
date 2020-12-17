@@ -8,7 +8,7 @@ import {
   CssProperties,
   isNormalClass,
   isExternalClass
-} from "taro-vant/utils"
+} from "../utils"
 import VanIcon from "../icon";
 import VanLoading from "../Loading";
 import type { LoadingType } from '../Loading'

@@ -5,10 +5,10 @@ import VanTransition from "../Transition";
 import VanLoading, { VanLoadingProps } from "../Loading";
 import VanIcon, { VanIconProps } from "../icon";
 import { Block, View, Text } from "@tarojs/components";
-import { useMemoClassNames, getContext, useScopeRef } from "taro-vant/utils"
+import { useMemoClassNames, getContext, useScopeRef } from "../utils"
 import { VanToastMap } from "./toast";
 import "./index.less";
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import usePersistFn from "../hooks/usePersistFn"
 
 type VanOverlayProps = React.ComponentProps<typeof VanOverlay>;
 // type VanLoadingProps = React.ComponentProps<typeof VanLoading>;

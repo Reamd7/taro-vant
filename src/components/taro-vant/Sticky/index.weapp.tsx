@@ -1,6 +1,6 @@
 import Taro, { NodesRef } from "@tarojs/taro";
 import "./index.less";
-import { ActiveProps, getRect, nextTick } from "taro-vant/utils"
+import { ActiveProps, getRect, nextTick } from "../utils"
 import { View } from "@tarojs/components";
 import { pageScrollMixin } from "./common.weapp";
 

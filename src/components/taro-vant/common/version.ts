@@ -1,4 +1,4 @@
-import { getSystemInfoSync } from 'taro-vant/utils/constant';
+import { getSystemInfoSync } from '../utils/constant';
 
 function compareVersion(v1, v2) {
   v1 = v1.split('.');

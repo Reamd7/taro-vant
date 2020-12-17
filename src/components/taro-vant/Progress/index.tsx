@@ -9,7 +9,7 @@ import {
   CssProperties,
   isExternalClass,
   isNormalClass
-} from "taro-vant/utils"
+} from "../utils"
 
 export type VanProgressProps = {
   inactive?: boolean;

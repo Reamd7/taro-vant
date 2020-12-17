@@ -12,8 +12,8 @@ import {
   getRect,
   useScopeRef,
   ExtClass
-} from "taro-vant/utils";
-import VanIcon from "taro-vant/icon";
+} from "../utils";
+import VanIcon from "../icon";
 import "./index.less"
 export type VanNavBarProps = {
   title?: string;

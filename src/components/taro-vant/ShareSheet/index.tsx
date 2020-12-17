@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import { View, Button, ScrollView } from "@tarojs/components";
 import VanPopup from "../Popup";
 import VanShareSheetOptions, { VanShareSheetOption } from "./options";
-import { noop } from "taro-vant/utils"
+import { noop } from "../utils"
 import "./index.less";
 const isMulti = (
   options: Array<VanShareSheetOption[]> | VanShareSheetOption[]

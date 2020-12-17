@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 const { useMemo } = Taro /** api **/;
-import { getContext, noop } from "taro-vant/utils"
+import { getContext, noop } from "../utils"
 import type { VanToastProps } from ".";
 export const VanToastMap = new Map<
   VanToastProps["gid"] | ReturnType<typeof getContext>,

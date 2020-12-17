@@ -1,9 +1,9 @@
 import Taro from "@tarojs/taro";
 const { useMemo, useCallback, useState, useEffect, useRef } = Taro /** api **/;
 import "./index.less";
-import { useMemoClassNames, bem, isExternalClass, isNormalClass, CssProperties, useMemoAddUnit, getRect, useScopeRef, noop, ActiveProps } from "taro-vant/utils"
+import { useMemoClassNames, bem, isExternalClass, isNormalClass, CssProperties, useMemoAddUnit, getRect, useScopeRef, noop, ActiveProps } from "../utils"
 import { View } from "@tarojs/components";
-import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue";
+import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue";
 // import { useTouch } from "../common/mixins/touch";
 // import { ITouchEvent } from "@tarojs/components/types/common";
 

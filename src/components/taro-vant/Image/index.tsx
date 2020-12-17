@@ -9,7 +9,7 @@ import {
   noop,
   isNormalClass,
   isExternalClass,
-} from "taro-vant/utils"
+} from "../utils"
 import VanIcon from "../icon";
 import "./index.less";
 

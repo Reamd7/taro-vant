@@ -1,9 +1,9 @@
 import Nerv from "nervjs";
 import Taro from "@tarojs/taro";
 const { Component } = Taro /** api **/;
-import VanNavBar from "taro-vant/NavBar";
-import { getCurrentPage } from "taro-vant/utils";
-import BehaviorSubject from "taro-vant/utils/BehaviorSubject";
+import VanNavBar from "../../NavBar";
+import { getCurrentPage } from "../../utils";
+import BehaviorSubject from "../../utils/BehaviorSubject";
 import "./index.less"
 
 const routerListener = new BehaviorSubject<Taro.Page | null>(null)

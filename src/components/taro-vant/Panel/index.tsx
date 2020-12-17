@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 
 import "./index.less";
-import { useMemoClassNames, isExternalClass, isNormalClass } from "taro-vant/utils"
+import { useMemoClassNames, isExternalClass, isNormalClass } from "../utils"
 import { View } from "@tarojs/components";
 import VanCell from "../Cell";
 

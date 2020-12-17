@@ -1,8 +1,8 @@
-import { addUnit, noop, ActiveProps } from "taro-vant/utils"
+import { addUnit, noop, ActiveProps } from "../utils"
 import { Input, Textarea, View } from "@tarojs/components";
 import VanCell, { VanCellProps } from "../Cell";
 import VanIcon from "../icon";
-import { ControllerValueProps } from "taro-vant/hooks/useControllableValue"
+import { ControllerValueProps } from "../hooks/useControllableValue"
 
 type FieldSlotType = {
   useLabelSlot?: boolean;

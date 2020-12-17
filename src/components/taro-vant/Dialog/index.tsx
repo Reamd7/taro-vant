@@ -3,15 +3,15 @@ const { useState, useCallback } = Taro /** api **/;
 import "./index.less";
 import { RED, GRAY } from "../common/color";
 import VanPopup, { VanPopupProps } from "../Popup";
-import { ActiveProps, useMemoClassNames, CssProperties, useMemoAddUnit } from "taro-vant/utils"
+import { ActiveProps, useMemoClassNames, CssProperties, useMemoAddUnit } from "../utils"
 import VanGoodsActionButton, { VanGoodsActionButtonProps } from "../GoodsActionButton";
-import { bem } from "taro-vant/utils/bem";
+import { bem } from "../utils/bem";
 import { View, Text } from "@tarojs/components";
 import VanGoodsAction from "../GoodsAction";
 import VanButton from "../Button";
-import useUpdateEffect from "taro-vant/hooks/useUpdateEffect"
+import useUpdateEffect from "../hooks/useUpdateEffect"
 import { useDialogOptions } from "./dialog";
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import usePersistFn from "../hooks/usePersistFn"
 
 export type VanDialogProps = {
   gid?: string;

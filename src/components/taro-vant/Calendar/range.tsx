@@ -3,7 +3,7 @@ const { useMemo, useCallback, useState, useEffect } = Taro /** api **/;
 import { VanCalendarCommonProps, inputDate, getMonths, useInitRect, ROW_HEIGHT } from "./utils";
 import dayjs from "dayjs";
 import "./index.less";
-import { useMemoClassNames, nextTick, ActiveProps } from "taro-vant/utils"
+import { useMemoClassNames, nextTick, ActiveProps } from "../utils"
 import VanCalHeader from "./components/header";
 import { View, ScrollView, Block } from "@tarojs/components";
 import VanCalMonth from "./components/month";
@@ -11,7 +11,7 @@ import VanButton from "../Button";
 import VanPopup from "../Popup";
 import VanToast from "../Toast";
 import { Toast, useUniToastId } from "../Toast/toast";
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import usePersistFn from "../hooks/usePersistFn"
 
 export type VanCalendarSingleProps = VanCalendarCommonProps & {
   type: "range"

@@ -9,7 +9,7 @@ import {
   useMemoAddUnit,
   isExternalClass,
   isNormalClass
-} from "taro-vant/utils"
+} from "../utils"
 
 export type VanSkeletonPops = {
   className?: string;

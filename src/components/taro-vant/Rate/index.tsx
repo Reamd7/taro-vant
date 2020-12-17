@@ -1,12 +1,12 @@
 import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 const { useMemo, useCallback, useRef, useEffect } = Taro /** api **/;
-import { getAllRect, isExternalClass, isNormalClass, useMemoAddUnit, useMemoClassNames, CssProperties, ActiveProps, useScopeRef } from 'taro-vant/utils';
+import { getAllRect, isExternalClass, isNormalClass, useMemoAddUnit, useMemoClassNames, CssProperties, ActiveProps, useScopeRef } from '../utils';
 import VanIcon from '../icon';
 
 import "./index.less";
-import useControllableValue, { ControllerValueProps } from 'taro-vant/hooks/useControllableValue'
-import usePersistFn from 'taro-vant/hooks/usePersistFn'
+import useControllableValue, { ControllerValueProps } from '../hooks/useControllableValue'
+import usePersistFn from '../hooks/usePersistFn'
 
 export type VanRateProps = {
   className?: string;

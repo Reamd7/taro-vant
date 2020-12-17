@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 const { useMemo } = Taro /** api **/;
 import { View, Image } from "@tarojs/components";
-import { useMemoClassNames, isExternalClass, isNormalClass } from "taro-vant/utils"
+import { useMemoClassNames, isExternalClass, isNormalClass } from "../utils"
 import "./index.less";
 
 export type VanEmptyProps = {

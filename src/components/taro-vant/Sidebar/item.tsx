@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import "./item.less";
-import { bem, useMemoClassNames, isExternalClass, isNormalClass } from "taro-vant/utils"
-import { useRelationPropsListener } from "taro-vant/utils/relation";
+import { bem, useMemoClassNames, isExternalClass, isNormalClass } from "../utils"
+import { useRelationPropsListener } from "../utils/relation";
 import { View } from "@tarojs/components";
 import VanInfo, { VanInfoProps } from "../info";
 

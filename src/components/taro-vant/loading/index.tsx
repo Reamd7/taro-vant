@@ -1,7 +1,7 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import classnames from "classnames";
-import { useMemoAddUnit, CssProperties, isExternalClass, isNormalClass } from "taro-vant/utils"
+import { useMemoAddUnit, CssProperties, isExternalClass, isNormalClass } from "../utils"
 import "./index.less";
 
 export type LoadingType = "circular" | "spinner";

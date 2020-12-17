@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { VanPopupProps } from "../Popup";
 import Taro from "@tarojs/taro";
 import { VanCalMonthProps } from "./components/month";
-import { isAlipay, useScopeRef } from "taro-vant/utils"
+import { isAlipay, useScopeRef } from "../utils"
 const { useRef, useCallback, useState } = Taro /** api **/;
 
 export type inputDate = dayjs.ConfigType;

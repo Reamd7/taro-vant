@@ -2,10 +2,10 @@ import Taro from '@tarojs/taro';
 const { useState, useMemo } = Taro /** api **/;
 import "./item.less"
 import { Tab } from "./";
-import { useMemoClassNames, bem, ExtClass } from 'taro-vant/utils';
+import { useMemoClassNames, bem, ExtClass } from '../utils';
 import { View } from '@tarojs/components';
-import { useRelationPropsListener } from 'taro-vant/utils/relation';
-import useUpdateEffect from 'taro-vant/hooks/useUpdateEffect'
+import { useRelationPropsListener } from '../utils/relation';
+import useUpdateEffect from '../hooks/useUpdateEffect'
 export type VanTabItemProps = {
   'custom-class'?: string;
   className?: string;

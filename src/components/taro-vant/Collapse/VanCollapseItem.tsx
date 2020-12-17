@@ -2,11 +2,11 @@ import Taro from "@tarojs/taro";
 const { useEffect, useState, useRef } = Taro /** api **/;
 import "./VanCollapseItem.less";
 import { VanIconProps } from "../icon";
-import { ActiveProps, bem, useMemoClassNames, isExternalClass, isNormalClass, getRect, useScopeRef, ExtClass } from "taro-vant/utils"
+import { ActiveProps, bem, useMemoClassNames, isExternalClass, isNormalClass, getRect, useScopeRef, ExtClass } from "../utils"
 import { View } from "@tarojs/components";
 import VanCell, { VanCellProps } from "../Cell";
-import { useRelationPropsListener } from "taro-vant/utils/relation";
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import { useRelationPropsListener } from "../utils/relation";
+import usePersistFn from "../hooks/usePersistFn"
 
 export type VanCollapseItemProps = {
   name?: string;

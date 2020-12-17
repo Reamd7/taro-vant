@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 const { useMemo } = Taro /** api **/;
 import { Image, View, Text } from "@tarojs/components";
 import "./index.less";
-import { useMemoClassNames, bem, ActiveProps, isExternalClass, isNormalClass } from "taro-vant/utils"
+import { useMemoClassNames, bem, ActiveProps, isExternalClass, isNormalClass } from "../utils"
 import VanTag from "../Tag";
 import { useLink } from "../common/mixins/link";
 

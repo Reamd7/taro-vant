@@ -2,10 +2,10 @@ import Taro from "@tarojs/taro";
 const { useState, useCallback, useEffect } = Taro /** api **/;
 import { View } from "@tarojs/components";
 import "./VanDropDownMenu.less";
-import { getSystemInfoSync, ActiveProps, bem, useMemoClassNames, CssProperties, getRect, addUnit, useScopeRef } from "taro-vant/utils"
-import { useRelationPropsInject } from "taro-vant/utils/relation";
+import { getSystemInfoSync, ActiveProps, bem, useMemoClassNames, CssProperties, getRect, addUnit, useScopeRef } from "../utils"
+import { useRelationPropsInject } from "../utils/relation";
 import { VanDropDownItemProps, ActiveVanDropDownItemProps } from "./VanDropDownItem";
-import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue"
+import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue"
 
 function displayTitle(item: {
   title?: string;

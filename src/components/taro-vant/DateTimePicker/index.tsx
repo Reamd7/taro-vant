@@ -4,7 +4,7 @@ import VanPicker from '../Picker';
 import dayjs from 'dayjs';
 import toArray from "dayjs/plugin/toArray";
 dayjs.extend(toArray)
-import useUpdateEffect from 'taro-vant/hooks/useUpdateEffect'
+import useUpdateEffect from '../hooks/useUpdateEffect'
 export type inputDate = dayjs.ConfigType;
 export type VanDateTimePickerProps = {
   title?: string

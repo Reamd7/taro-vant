@@ -3,9 +3,9 @@ import Taro from '@tarojs/taro'
 const { useState, useMemo, useCallback, useRef, useEffect } = Taro /** api **/;
 import './index.less'
 import { throttle } from "throttle-debounce"
-import { ActiveProps, getSystemInfoSync, isWeapp, useScopeRef, ExtClass, isH5, getAllRect, getRect } from 'taro-vant/utils'
+import { ActiveProps, getSystemInfoSync, isWeapp, useScopeRef, ExtClass, isH5, getAllRect, getRect } from '../utils'
 import { ITouchEvent } from '@tarojs/components/types/common'
-import usePersistFn from 'taro-vant/hooks/usePersistFn'
+import usePersistFn from '../hooks/usePersistFn'
 
 export type VanIndexListProps = {
   list: Array<{

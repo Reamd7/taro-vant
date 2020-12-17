@@ -8,10 +8,10 @@ import {
   isNormalClass,
   isExternalClass,
   useScopeRef
-} from "taro-vant/utils"
+} from "../utils"
 import { View } from "@tarojs/components";
 import "./index.less";
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import usePersistFn from "../hooks/usePersistFn"
 import { ITouchEvent } from "@tarojs/components/types/common";
 
 type WsxTouchEvent = Omit<ITouchEvent, "preventDefault" | "stopPropagation">

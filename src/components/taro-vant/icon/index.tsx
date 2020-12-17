@@ -7,7 +7,7 @@ import {
   noop,
   isExternalClass,
   isNormalClass
-} from "taro-vant/utils"
+} from "../utils"
 import VanInfo from "../info";
 import "./icon.less";
 

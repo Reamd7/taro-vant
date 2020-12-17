@@ -1,10 +1,10 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { useMemoClassNames, ActiveProps, isExternalClass, isNormalClass, bem } from "taro-vant/utils"
+import { useMemoClassNames, ActiveProps, isExternalClass, isNormalClass, bem } from "../utils"
 import "./index.less";
-import { useRelationPropsInject } from "taro-vant/utils/relation";
+import { useRelationPropsInject } from "../utils/relation";
 import { VanTabbarItemProps, ActiveRelationVanTabbarItemProps } from "./item";
-import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue"
+import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue"
 
 export type VanTabbarProps = {
   // active?: number | string;

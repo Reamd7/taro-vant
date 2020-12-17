@@ -7,7 +7,7 @@ import {
   useMemoClassNames,
   isNormalClass,
   isExternalClass
-} from "taro-vant/utils"
+} from "../utils"
 import { View } from "@tarojs/components";
 import "./index.less";
 import { ITouchEvent } from "@tarojs/components/types/common";

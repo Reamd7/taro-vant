@@ -1,5 +1,5 @@
 import { WHITE } from "../../common/color";
-import { noop, getContext } from 'taro-vant/utils';
+import { noop, getContext } from '../../utils';
 import type VanTransition from "../../Transition";
 
 export const VanNotifyMap = new Map<ReturnType<typeof getContext>, {

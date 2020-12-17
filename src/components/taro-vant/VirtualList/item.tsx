@@ -2,8 +2,8 @@ import Taro from "@tarojs/taro";
 const { useMemo } = Taro /** api **/;
 import "./item.less";
 import { View } from "@tarojs/components";
-import { useRelationPropsListener } from "taro-vant/utils/relation";
-import { addUnit, ExtClass } from "taro-vant/utils"
+import { useRelationPropsListener } from "../utils/relation";
+import { addUnit, ExtClass } from "../utils"
 import classNames from "classnames";
 type ActiveVanVirtualListItemProps = {
   pid: string;

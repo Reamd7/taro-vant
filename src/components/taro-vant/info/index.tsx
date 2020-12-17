@@ -1,7 +1,7 @@
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.less";
-import { useMemoClassNames, isExternalClass, isNormalClass } from "taro-vant/utils"
+import { useMemoClassNames, isExternalClass, isNormalClass } from "../utils"
 
 export type VanInfoProps = {
   dot?: boolean;

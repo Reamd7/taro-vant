@@ -9,7 +9,7 @@ import {
   CssProperties,
   isExternalClass,
   isNormalClass
-} from "taro-vant/utils"
+} from "../utils"
 import VanIcon from "../icon";
 
 export type VanTagProps = {

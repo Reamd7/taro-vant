@@ -1,9 +1,9 @@
 import Taro from "@tarojs/taro";
 import "./index.less";
-import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue"
+import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue"
 import { View } from "@tarojs/components";
-import { isExternalClass, isNormalClass, useMemoClassNames } from "taro-vant/utils"
-import { useRelationPropsInject } from "taro-vant/utils/relation";
+import { isExternalClass, isNormalClass, useMemoClassNames } from "../utils"
+import { useRelationPropsInject } from "../utils/relation";
 import { ActiveRelationVanSidebarItemProps, VanSidebarItemProps } from "./item";
 
 export type VanSidebarProps = ControllerValueProps<number, "defaultActiveKey", "activeKey"> & {

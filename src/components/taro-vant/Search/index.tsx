@@ -1,12 +1,12 @@
 import Taro from "@tarojs/taro";
 
 import "./index.less";
-import { bem, useMemoAddUnit, useMemoClassNames, isExternalClass, isNormalClass, noop, ActiveProps } from "taro-vant/utils"
+import { bem, useMemoAddUnit, useMemoClassNames, isExternalClass, isNormalClass, noop, ActiveProps } from "../utils"
 import { View } from "@tarojs/components";
 import { VanCellProps } from "../Cell";
 import VanFieldText from "../Field/VanFieldText";
 import { VanFieldInputTextProps } from "../Field/common";
-import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue"
+import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue"
 const DefaultProps = {
   leftIcon: "search",
   actionText: "取消",

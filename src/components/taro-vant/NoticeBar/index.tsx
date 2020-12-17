@@ -11,7 +11,7 @@ import {
   noop,
   getRect,
   nextTick, useScopeRef, isExternalClass, isNormalClass
-} from "taro-vant/utils"
+} from "../utils"
 
 export type VanNoticeBarProps = {
   mode?: "closeable" | "link";

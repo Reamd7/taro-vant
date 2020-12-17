@@ -1,4 +1,4 @@
-import { getCurrentPage, isH5 } from "taro-vant/utils";
+import { getCurrentPage, isH5 } from "../../utils";
 import Taro, { PageScrollObject } from "@tarojs/taro";
 const { useEffect } = Taro /** api **/;
 

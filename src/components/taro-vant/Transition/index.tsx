@@ -6,9 +6,9 @@ import {
   useMixinsTransition,
   MixinsTransitionExternalClass,
   MixinsTransitionDefaultProps
-} from "taro-vant/common/mixins/transition";
+} from "../common/mixins/transition";
 import "./index.less";
-import { useMemoClassNames, isExternalClass, isNormalClass } from "taro-vant/utils"
+import { useMemoClassNames, isExternalClass, isNormalClass } from "../utils"
 /**
  * 默认 VanTransition 支持的动画效果
  */

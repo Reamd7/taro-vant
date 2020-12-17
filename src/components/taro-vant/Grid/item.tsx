@@ -8,12 +8,12 @@ import {
   noop,
   isNormalClass,
   isExternalClass
-} from "taro-vant/utils"
+} from "../utils"
 import { View, Block, Text } from "@tarojs/components";
 import VanIcon, { VanIconProps } from "../icon";
 import { ITouchEvent } from "@tarojs/components/types/common";
 import { useLink } from "../common/mixins/link";
-import { useRelationPropsListener } from "taro-vant/utils/relation";
+import { useRelationPropsListener } from "../utils/relation";
 import { VanGridProps } from ".";
 
 export type VanGridItemProps = {

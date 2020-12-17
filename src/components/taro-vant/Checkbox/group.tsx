@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
-import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue"
-import { ActiveProps, useRelationPropsInject } from "taro-vant/utils"
-import usePersistFn from "taro-vant/hooks/usePersistFn";
+import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue"
+import { ActiveProps, useRelationPropsInject } from "../utils"
+import usePersistFn from "../hooks/usePersistFn";
 import { VanCheckBoxProps } from ".";
 import { View } from "@tarojs/components";
 

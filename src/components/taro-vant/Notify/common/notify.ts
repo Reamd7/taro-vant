@@ -1,5 +1,5 @@
 import { NotifyProps } from './utils';
-import { getContext } from 'taro-vant/utils';
+import { getContext } from '../../utils';
 import { VanNotifyMap, defaultOptions } from './utils';
 
 export default function Notify(options: NotifyProps) {

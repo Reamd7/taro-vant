@@ -2,11 +2,11 @@ import Taro from "@tarojs/taro";
 const { Component } = Taro /** api **/;
 import "./index.less";
 import { View, ScrollView } from "@tarojs/components";
-import { ActiveProps, addUnit, createSelectorQuery, ExtClass, noop, } from "taro-vant/utils"
+import { ActiveProps, addUnit, createSelectorQuery, ExtClass, noop, } from "../utils"
 import { ScrollViewProps } from "@tarojs/components/types/ScrollView";
 import { BaseEventOrig } from "@tarojs/components/types/common";
 import classNames from "classnames";
-import { RelationPropsInject } from "taro-vant/utils/relation";
+import { RelationPropsInject } from "../utils/relation";
 import { debounce } from 'throttle-debounce';
 
 type SuccessCallback = ((this: VanVirtualList, data: {

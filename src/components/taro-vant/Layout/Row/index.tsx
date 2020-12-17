@@ -6,7 +6,7 @@ import {
   CssProperties,
   isExternalClass,
   isNormalClass
-} from 'taro-vant/utils';
+} from '../../utils';
 import { View } from "@tarojs/components";
 import "./index.less";
 

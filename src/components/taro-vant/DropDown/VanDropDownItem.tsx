@@ -2,13 +2,13 @@ import Taro from "@tarojs/taro";
 const { useState, useEffect, useRef } = Taro /** api **/;
 import "./VanDropDownItem.less";
 import { View, Text } from "@tarojs/components";
-import { bem, ActiveProps, CssProperties } from "taro-vant/utils"
+import { bem, ActiveProps, CssProperties } from "../utils"
 import VanPopup from "../Popup";
 import VanCell from "../Cell";
 import { ActiveVanDropDownMenuProps } from "./VanDropDownMenu";
-import { useRelationPropsListener } from "taro-vant/utils/relation";
+import { useRelationPropsListener } from "../utils/relation";
 import VanIcon, { VanIconProps } from "../icon";
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import usePersistFn from "../hooks/usePersistFn"
 
 
 export type VanDropDownItemProps = {

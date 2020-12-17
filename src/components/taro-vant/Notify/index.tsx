@@ -8,7 +8,7 @@ import {
   getContext,
   getSystemInfoSync,
   nextTick
-} from "taro-vant/utils"
+} from "../utils"
 import { View, Text } from "@tarojs/components";
 import { VanNotifyMap, defaultOptions, NotifyProps } from "./common/utils";
 import "./index.less";

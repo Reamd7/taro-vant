@@ -1,10 +1,10 @@
 import Taro from "@tarojs/taro";
 
 import "./VanCollapse.less";
-import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue"
-import { ActiveProps, useMemoClassNames, noop, isExternalClass, isNormalClass } from "taro-vant/utils"
+import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue"
+import { ActiveProps, useMemoClassNames, noop, isExternalClass, isNormalClass } from "../utils"
 import { View } from "@tarojs/components";
-import { useRelationPropsInject } from "taro-vant/utils/relation";
+import { useRelationPropsInject } from "../utils/relation";
 import { ActiveVanCollapseItemProps, ActiveRelationVanCollapseItemProps } from "./VanCollapseItem";
 
 export type VanCollapseProps = {

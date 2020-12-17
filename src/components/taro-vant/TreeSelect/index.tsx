@@ -1,10 +1,10 @@
 import Taro from "@tarojs/taro";
 import "./index.less";
 import VanIcon, { VanIconProps } from "../icon";
-import { ActiveProps, noop, useMemoAddUnit, useMemoClassNames, bem, isExternalClass, isNormalClass } from "taro-vant/utils"
+import { ActiveProps, noop, useMemoAddUnit, useMemoClassNames, bem, isExternalClass, isNormalClass } from "../utils"
 import VanSidebarItem, { VanSidebarItemProps } from "../Sidebar/item";
 import { View, ScrollView } from "@tarojs/components";
-import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue";
+import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue";
 import VanSidebar from "../Sidebar";
 
 export type VanTreeSelectProps = {

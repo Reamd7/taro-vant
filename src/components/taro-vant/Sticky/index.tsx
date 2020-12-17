@@ -1,9 +1,9 @@
 import Taro, { NodesRef } from "@tarojs/taro";
 const { useEffect, useRef, useState, useCallback } = Taro /** api **/;
 import "./index.less";
-import { ActiveProps, useMemoClassNames, bem, isExternalClass, isNormalClass, CssProperties, getRect, useMemoAddUnit, useScopeRef } from "taro-vant/utils"
+import { ActiveProps, useMemoClassNames, bem, isExternalClass, isNormalClass, CssProperties, getRect, useMemoAddUnit, useScopeRef } from "../utils"
 import { View } from "@tarojs/components";
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import usePersistFn from "../hooks/usePersistFn"
 import usePageScrollMixin from "../common/mixins/page-scroll";
 
 export type VanStickyProps = {

@@ -9,7 +9,7 @@ import {
   bem,
   isExternalClass,
   isNormalClass
-} from "taro-vant/utils"
+} from "../utils"
 import "./index.less";
 
 export type VanStepsProp = {

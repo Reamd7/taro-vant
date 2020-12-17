@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 const { useCallback } = Taro /** api **/;
 import { View, Button, Image } from "@tarojs/components";
-import { bem } from "taro-vant/utils"
+import { bem } from "../utils"
 import { ITouchEvent } from "@tarojs/components/types/common";
 import "./options.less";
 

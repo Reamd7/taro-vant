@@ -19,8 +19,6 @@
     "jsxFactory": "Taro.createElement",
     "allowJs": true,
     "resolveJsonModule": true,
-    "declaration": true,
-    "declarationDir": "../../../ui",
     "paths": {
       "taro-vant/*": ["./*"]
     },

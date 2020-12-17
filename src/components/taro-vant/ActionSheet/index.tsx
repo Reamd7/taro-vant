@@ -13,7 +13,7 @@ import {
   useMemoClassNames,
   bem,
   CssProperties
-} from "taro-vant/utils"
+} from "../utils"
 import { ITouchEvent } from "@tarojs/components/types/common";
 import VanLoading from "../Loading";
 import "./index.less";

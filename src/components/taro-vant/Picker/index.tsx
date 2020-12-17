@@ -3,11 +3,11 @@ const { useState, useRef, useMemo, useCallback } = Taro /** api **/;
 import "./index.less";
 import "../PickerCol/index.less";
 import { View, Block, PickerView, PickerViewColumn } from "@tarojs/components";
-import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, ActiveProps, noop, pxUnit } from "taro-vant/utils"
+import { useMemoClassNames, isExternalClass, isNormalClass, useMemoAddUnit, ActiveProps, noop, pxUnit } from "../utils"
 import VanLoading from "../Loading";
 // import VanPickerCol, { VanPickerColProps } from "../PickerCol";
-import useUpdateEffect from "taro-vant/hooks/useUpdateEffect"
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import useUpdateEffect from "../hooks/useUpdateEffect"
+import usePersistFn from "../hooks/usePersistFn"
 import { VanPickerColProps } from "../PickerCol";
 
 const arrayDiff = (arr: number[], arr2: number[]) => {

@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import { Block, View } from "@tarojs/components";
 import classNames from "classnames";
 import "./index.less";
-import { isNormalClass, isExternalClass } from "taro-vant/utils"
+import { isNormalClass, isExternalClass } from "../utils"
 
 const VanCellGroup: Taro.FunctionComponent<{
   title?: string;

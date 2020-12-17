@@ -5,8 +5,8 @@
 import Taro from "@tarojs/taro";
 import BehaviorSubject from './BehaviorSubject';
 const { useEffect, useState, useMemo, useCallback, useRef } = Taro /** api **/;
-import { getContext } from 'taro-vant/utils';
-import useUpdateEffect from 'taro-vant/hooks/useUpdateEffect';
+import { getContext } from '../utils';
+import useUpdateEffect from '../hooks/useUpdateEffect';
 
 
 

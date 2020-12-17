@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
-import usePersistFn from 'taro-vant/hooks/usePersistFn';
-import { requestAnimationFrame, isNormalClass } from "taro-vant/utils";
+import usePersistFn from '../../hooks/usePersistFn';
+import { requestAnimationFrame, isNormalClass } from "../../utils";
 const { useState, useEffect, useRef, useCallback } = Taro /** api **/;
 export type MixinsTransitionProps = {
   style?: React.CSSProperties;

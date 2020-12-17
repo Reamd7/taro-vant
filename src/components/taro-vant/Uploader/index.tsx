@@ -4,7 +4,7 @@ import "./index.less";
 import { ImageProps } from '@tarojs/components/types/Image';
 import VanIcon, { VanIconProps } from '../icon';
 import { View, Video, Text, Block, Image } from '@tarojs/components';
-import { useMemoAddUnit, useMemoClassNames, ActiveProps } from 'taro-vant/utils';
+import { useMemoAddUnit, useMemoClassNames, ActiveProps } from '../utils';
 import VanLoading from '../Loading';
 import { chooseFile } from './utils';
 

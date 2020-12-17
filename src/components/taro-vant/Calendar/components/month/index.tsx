@@ -3,7 +3,7 @@ const { useMemo, useCallback } = Taro /** api **/;
 import "./index.less";
 import { View, Text } from "@tarojs/components";
 import dayjs from "dayjs";
-import { useMemoClassNames, bem } from "taro-vant/utils";
+import { useMemoClassNames, bem } from "../../../utils";
 import { getDayStyle } from "../../utils";
 
 type dayType = "disabled" | "selected" | "" | "start" | "start-end" | "end" | "middle" | "multiple-middle" | "multiple-selected" | undefined

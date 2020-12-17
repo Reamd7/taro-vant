@@ -1,10 +1,10 @@
 import Taro from "@tarojs/taro";
 const { useMemo } = Taro /** api **/;
 import "./index.less";
-import { bem, useMemoClassNames, isExternalClass, isNormalClass, addUnit, CssProperties } from "taro-vant/utils"
+import { bem, useMemoClassNames, isExternalClass, isNormalClass, addUnit, CssProperties } from "../utils"
 import { View } from "@tarojs/components";
 import VanLoading from "../Loading";
-import useControllableValue, { ControllerValueProps } from "taro-vant/hooks/useControllableValue"
+import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue"
 import { BLUE, GRAY_DARK } from "../common/color";
 
 const DefaultProps = {

@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import usePersistFn from "taro-vant/hooks/usePersistFn"
+import usePersistFn from "../../hooks/usePersistFn"
 export type MixinLinkProps = {
     url?: string;
     linkType?: 'navigateTo' | 'redirectTo' | 'reLaunch' | 'switchTab' | 'navigateBack';

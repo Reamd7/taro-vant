@@ -1,5 +1,5 @@
 const { useRef, useState, useEffect, useCallback, SetStateAction } = Taro /** api **/;
-import { nextTick } from "taro-vant/utils/nextTick";
+import { nextTick } from "../utils/nextTick";
 export type FormField<KeyName extends string, M> = {
   fieldName?: KeyName;
   FormData?: Taro.MutableRefObject<{
