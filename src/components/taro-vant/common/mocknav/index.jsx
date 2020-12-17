@@ -6,7 +6,7 @@ import { getCurrentPage } from "../../utils";
 import BehaviorSubject from "../../utils/BehaviorSubject";
 import "./index.less"
 
-const routerListener = new BehaviorSubject<Taro.Page | null>(null)
+const routerListener = new BehaviorSubject(null)
 
 class MockNav extends Component {
   state = {
@@ -29,13 +29,16 @@ class MockNav extends Component {
       title={page.navigationBarTitleText}
       leftArrow={true}
       onClickLeft={() => Taro.navigateBack()}
-    ></VanNavBar> : null
+    /> : null
   }
 
 }
 
 // const navigateBack = Taro.navigateBack.bind({}) as typeof Taro.navigateBack;
-const navigateTo = Taro.navigateTo.bind({}) as typeof Taro.navigateTo;
+/**
+ * @type {Taro.navigateTo}
+ */
+const navigateTo = Taro.navigateTo.bind({});
 // const reLaunch = Taro.reLaunch.bind({}) as typeof Taro.reLaunch;
 // const redirectTo = Taro.redirectTo.bind({}) as typeof Taro.redirectTo;
 // Taro.navigateBack = function (options) {
@@ -51,39 +54,29 @@ Taro.navigateTo = function (options) {
   console.log(options)
   const page = getCurrentPage();
   if (page) {
-    scrollTop = ((page as any)._rendered.dom as HTMLElement).parentElement!.parentElement!.scrollTop
+    scrollTop = page._rendered.dom.parentElement.parentElement.scrollTop
   }
   return navigateTo(options).then(value => {
     return value
   })
 }
-// Taro.reLaunch = function (options) {
-//   console.log(options)
-//   return reLaunch(options).then(value => {
-//     return value
-//   })
-// }
-// Taro.redirectTo = function (options) {
-//   console.log(options)
-//   return redirectTo(options).then(value => {
-//     return value
-//   })
-// }
-
 
 window.addEventListener("load", function () {
   routerListener.next(getCurrentPage())
 
   const app = document.getElementById("app");
-  app!.style.display = "flex"
+  app.style.display = "flex"
   const navcontainer = document.createElement("div");
   navcontainer.id = "app_nav"
-  app!.insertAdjacentElement('afterbegin', navcontainer)
+  app.insertAdjacentElement('afterbegin', navcontainer)
 
   // Firefox和Chrome早期版本中带有前缀
   var MutationObserver = window.MutationObserver
   // 选择目标节点
-  var target = document.querySelector('.taro_router') as HTMLDivElement;
+  /**
+   * @type {HTMLDivElement}
+   */
+  var target = document.querySelector('.taro_router');
   // 创建观察者对象
   var navTop = 0
   var observer = new MutationObserver(function (mutations) {
@@ -99,7 +92,7 @@ window.addEventListener("load", function () {
     navTop = navTop ? navTop : navcontainer.offsetTop + navcontainer.offsetHeight // NOTE 一般来说这个navbar是不会改变高度的
 
     mutations.forEach(function (mutation) {
-      mutation.addedNodes.forEach((val: Node) => {
+      mutation.addedNodes.forEach((/** @type {Node} */val) => {
         if (val instanceof HTMLDivElement) {
           // let hiddenList: HTMLDivElement[] = []
           // target.childNodes.forEach(v => {
@@ -111,8 +104,8 @@ window.addEventListener("load", function () {
           val.dataset.prevOffestTop = "" + scrollTop
 
           // 模拟背景色
-          let cs = window.getComputedStyle(val.firstElementChild!, null);
-          target!.style.background = cs.background
+          let cs = window.getComputedStyle(val.firstElementChild, null);
+          target.style.background = cs.background
 
           val.style.position = "fixed";
           val.style.top = navTop + "px";
@@ -162,7 +155,7 @@ window.addEventListener("load", function () {
         }
       })
 
-      mutation.removedNodes.forEach((val: HTMLDivElement) => {
+      mutation.removedNodes.forEach((/** @type {HTMLDivElement} */val) => {
         if (val instanceof HTMLDivElement) {
           val.style.position = "fixed";
           val.style.top = navTop + "px";
@@ -181,7 +174,7 @@ window.addEventListener("load", function () {
             top: scrollTop
           })
 
-          val = document.body.appendChild(val) as HTMLDivElement;
+          val = document.body.appendChild(val);
           setTimeout(() => {
             val.style.opacity = "0"
             val.style.transform = "translate(100%, 0)";
@@ -212,7 +205,7 @@ window.addEventListener("load", function () {
   });
   // 配置观察选项:
   // 传入目标节点和观察选项
-  observer.observe(target!, {
+  observer.observe(target, {
     childList: true
   });
 
