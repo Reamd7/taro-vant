@@ -11,7 +11,7 @@ const chalk = require("chalk");
  * @param {import('@tarojs/service').IPluginContext} ctx
  * @param {{
  *  tempPath: string;
- *  modules: string[];
+ *  modules: Record<string, string>;
  *  copySrcWxs: boolean;
  * }} pluginOpts
  */
@@ -28,16 +28,17 @@ async function main(ctx, pluginOpts) {
     nodeModulesPath,
     appPath,
   } = ctx.paths;
+  const modulesList = Object.keys(pluginOpts.modules);
   /**
    * @type {Record<string, {
    *  npm: string;
    *  temp: string;
    * }>}
    */
-  const nodeModulesNamePath = pluginOpts.modules.reduce((res, name) => {
+  const nodeModulesNamePath = modulesList.reduce((res, name) => {
     const temp = path.join(tempPath, name);
     res[name] = {
-      npm: path.resolve(nodeModulesPath, name),
+      npm: path.resolve(nodeModulesPath, name, pluginOpts.modules[name]),
       temp
     }
     return res
@@ -49,7 +50,7 @@ async function main(ctx, pluginOpts) {
   ctx.onBuildStart(async => {
     console.log(chalk.green('编译开始！'));
     let exists = true;
-    pluginOpts.modules.forEach(name => {
+    modulesList.forEach(name => {
       const npmDir = nodeModulesNamePath[name].npm
       const srcDir = path.resolve(sourcePath, nodeModulesNamePath[name].temp);
       if (!fs.existsSync(srcDir)) {
@@ -78,11 +79,11 @@ async function main(ctx, pluginOpts) {
   let deleteList = new Set();
   ctx.modifyBuildAssets(args => {
     if (isNotMini) return;
-    pluginOpts.modules.forEach(k => {
+    modulesList.forEach(k => {
       console.log(chalk.green(`taro-vant/plugin :`), `依赖收集 node_modules/${k} 下的  wxml`)
     })
     // const tempReg = new RegExp(`(.*)node_modules/(${pluginOpts.modules.join("|")})\/`)
-    const tempReg = new RegExp(`(.*)/(${pluginOpts.modules.join("|")})\/`)
+    const tempReg = new RegExp(`(.*)/(${modulesList.join("|")})\/`)
     rely = Object.keys(args.assets)
       .filter((todoPath) =>
         // "npm/taro-vant/ActionSheet/index.wxml" yarn
@@ -129,7 +130,7 @@ async function main(ctx, pluginOpts) {
     const globPattern = "**/*.?(wxs|sjs)"
     await Promise.all(
       // 模块的wxs
-      pluginOpts.modules.map(name => {
+      modulesList.map(name => {
         const srcTemp = path.resolve(sourcePath, nodeModulesNamePath[name].temp);
         const distTemp = path.resolve(outputPath, nodeModulesNamePath[name].temp);
         // TODO glob 模块会忽略软连接，所以要单独处理
