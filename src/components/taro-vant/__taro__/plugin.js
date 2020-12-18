@@ -75,54 +75,60 @@ async function main(ctx, pluginOpts) {
     }
   });
 
-  let rely = []
-  let deleteList = new Set();
-  ctx.modifyBuildAssets(args => {
-    if (isNotMini) return;
-    modulesList.forEach(k => {
-      console.log(chalk.green(`taro-vant/plugin :`), `依赖收集 node_modules/${k} 下的  wxml`)
-    })
-    // const tempReg = new RegExp(`(.*)node_modules/(${pluginOpts.modules.join("|")})\/`)
-    const tempReg = new RegExp(`(.*)/(${modulesList.join("|")})\/`)
-    rely = Object.keys(args.assets)
-      .filter((todoPath) =>
-        // "npm/taro-vant/ActionSheet/index.wxml" yarn
-        // "npm/.pnpm/taro-vant@1.0.2/node_modules/taro-vant/ActionSheet/index.wxml" pnpm
-        tempReg.test(todoPath) && (todoPath !== `${tempPath}/${todoPath.replace(tempReg, '$2/')}`)
-      )
-      .map(todoPath => {
-        const set = todoPath.match(tempReg);
-        if (set) {
-          deleteList.add(
-            path.resolve(outputPath, set[0])
-          )
-        }
-        return [
-          path.resolve(
-            outputPath, todoPath
-          ),
-          path.resolve(
-            outputPath, `${tempPath}/${todoPath.replace(tempReg, '$2/')}`
-          )
-        ]
-      })
-  });
-
+  // let rely = []
+  // let deleteList = new Set();
+  // ctx.modifyBuildAssets(args => {
+  //   if (isNotMini) return;
+  //   modulesList.forEach(k => {
+  //     console.log(chalk.green(`taro-vant/plugin :`), `依赖收集 node_modules/${k} 下的  wxml`)
+  //   })
+  //   // const tempReg = new RegExp(`(.*)node_modules/(${pluginOpts.modules.join("|")})\/`)
+  //   const tempReg = new RegExp(`npm/?(.*)/(${modulesList.join("|")})/`)
+  //   rely = Object.keys(args.assets)
+  //     .filter((todoPath) =>
+  //       // "npm/taro-vant/ActionSheet/index.wxml" yarn
+  //       // "npm/.pnpm/taro-vant@1.0.2/node_modules/taro-vant/ActionSheet/index.wxml" pnpm
+  //       tempReg.test(todoPath)
+  //     )
+  //     .map(todoPath => {
+  //       const set = todoPath.match(tempReg);
+  //       if (set) {
+  //         deleteList.add(
+  //           path.resolve(outputPath, set[0])
+  //         )
+  //       }
+  //       return [
+  //         path.resolve(
+  //           outputPath, todoPath
+  //         ),
+  //         path.resolve(
+  //           outputPath, `${tempPath}/${todoPath.replace(tempReg, '$2/')}`
+  //         )
+  //       ]
+  //     })
+  // });
+  /**
+   *
+   * @param {{
+    *  chain: typeof import("webpack-chain"),
+    *  webpack: typeof import("webpack")
+    * }} args
+    */
   ctx.onBuildFinish(async () => {
     if (isNotMini) return;
 
-    console.log(chalk.yellow(`taro-vant/plugin 开始:`), "移动 wxml");
-    await Promise.all(rely.map(v => {
-      return fs.move(v[0], v[1])
-    }))
-    console.log(chalk.green(`taro-vant/plugin 完成:`), "移动 wxml");
-    await Promise.all(
-      [...deleteList].map(v => {
-        console.log(chalk.yellow(`taro-vant/plugin 开始:`), "删除 " + v)
-        return fs.remove(v)
-      })
-    );
-    console.log(chalk.green(`taro-vant/plugin 完成:`), `删除 移动后的文件夹`)
+    // console.log(chalk.yellow(`taro-vant/plugin 开始:`), "移动 wxml");
+    // await Promise.all(rely.map(v => {
+    //   return fs.move(v[0], v[1])
+    // }))
+    // console.log(chalk.green(`taro-vant/plugin 完成:`), "移动 wxml");
+    // await Promise.all(
+    //   [...deleteList].map(v => {
+    //     console.log(chalk.yellow(`taro-vant/plugin 开始:`), "删除 " + v)
+    //     return fs.remove(v)
+    //   })
+    // );
+    // console.log(chalk.green(`taro-vant/plugin 完成:`), `删除 移动后的文件夹`)
     console.log(chalk.yellow(`taro-vant/plugin 开始:`), "复制 wxs | sjs");
     const glob = require('glob');
     const promiseGlob = util.promisify(glob);

@@ -13,7 +13,7 @@ const { spawnSync, spawn } = require("child_process");
 const taroVantConfig = (pluginOpts = {
   tempPath: "components/.temp",
   modules: {
-    "taro-vant": "src/components/taro-vant"
+    "taro-vant": ""
   },
   copySrcWxs: false
 }) => {
@@ -40,6 +40,15 @@ const taroVantConfig = (pluginOpts = {
       res[v] = path.resolve(sourcePath, tempPath, v);
       return res;
     }, {}),
+    mini: {
+      webpackChain (chain, webpack) {
+        chain.merge({
+          resolve: {
+            symlinks: false // 使用符号链接模块
+          }
+        })
+      }
+    }
   }
 };
 

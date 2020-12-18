@@ -14,6 +14,8 @@
 > 所以研究了几天弄了一个taro的配置和插件，使得原有的组件和自己项目写的代码一样进行编译。
 >
 > 至于为什么使用.temp 文件夹，是因为taro的临时文件夹名称也是.temp，所以这个一般都会写入 .gitignore，而这个文件夹应该是不需要添加到版本管理中的。
+>
+> NOTE: 小程序中，修改了webpack配置 `resolve.symlinks: false` , 不知道这个是否会影响
 ```js
 // config/index.js中最后一部分
 module.exports = function (merge) {
