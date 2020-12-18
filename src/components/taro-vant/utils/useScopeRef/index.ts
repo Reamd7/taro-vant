@@ -7,7 +7,9 @@ export const useScopeRef = isH5 ?
       null
     );
     const scopeRef = useCallback((ref: any) => {
-      setState(ref._parentComponent)
+      if (ref) {
+        setState(ref._parentComponent)
+      }
     }, [])
 
     return [state, scopeRef] as const;
