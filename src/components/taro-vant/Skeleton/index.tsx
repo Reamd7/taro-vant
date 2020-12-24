@@ -108,5 +108,10 @@ const VanSkeleton: Taro.FunctionComponent<VanSkeletonPops> = props => {
 VanSkeleton.options = {
   addGlobalClass: true
 };
-
+VanSkeleton.externalClasses = [
+  "custom-class",
+  "avatar-class",
+  "title-class",
+  "row-class"
+]
 export default VanSkeleton;
