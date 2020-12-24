@@ -47,33 +47,49 @@ async function main(ctx, pluginOpts) {
   const TARO_ENV = process.env.TARO_ENV;
   const isNotMini = ["h5", "rn"].includes(TARO_ENV)
 
-  ctx.onBuildStart(async => {
-    console.log(chalk.green('编译开始！'));
-    let exists = true;
-    modulesList.forEach(name => {
-      const npmDir = nodeModulesNamePath[name].npm
-      const srcDir = path.resolve(sourcePath, nodeModulesNamePath[name].temp);
-      if (!fs.existsSync(srcDir)) {
-        exists = false;
-        fs.ensureSymlinkSync(
-          npmDir,
-          srcDir,
-          "junction"
-        );
-        console.log(chalk.green(`taro-vant/plugin 完成:`), `创建 ${name} 文件夹软连接`)
-      }
-    });
-    if (!exists) {
-      const { spawnSync } = require("child_process");
-      var spawnObj = spawnSync(process.argv[0], process.argv.slice(1), {
-        cwd: process.cwd(),
-        stdio: "inherit",
-        stdout: "inherit",
-        stderr: "inherit"
-      })
-      process.exit(0)
+  ctx.register({
+    name: "onReady",
+    plugin: "onReady",
+    fn: ()=>{
+      console.log(chalk.green('创建文件夹软连接！'));
+      modulesList.forEach(function (name) {
+        var npmDir = nodeModulesNamePath[name].npm;
+        var srcDir = path.resolve(sourcePath, nodeModulesNamePath[name].temp);
+
+        if (!fs.existsSync(srcDir)) {
+          fs.ensureSymlinkSync(npmDir, srcDir, "junction");
+          console.log(chalk.green(`taro-vant/plugin 完成:`), `创建 ${name} 文件夹软连接`)
+        }
+      });
     }
-  });
+  })
+  // ctx.onBuildStart(async => {
+  //   console.log(chalk.green('编译开始！'));
+  //   let exists = true;
+  //   modulesList.forEach(name => {
+  //     const npmDir = nodeModulesNamePath[name].npm
+  //     const srcDir = path.resolve(sourcePath, nodeModulesNamePath[name].temp);
+  //     if (!fs.existsSync(srcDir)) {
+  //       exists = false;
+  //       fs.ensureSymlinkSync(
+  //         npmDir,
+  //         srcDir,
+  //         "junction"
+  //       );
+  //       console.log(chalk.green(`taro-vant/plugin 完成:`), `创建 ${name} 文件夹软连接`)
+  //     }
+  //   });
+  //   if (!exists) {
+  //     const { spawnSync } = require("child_process");
+  //     var spawnObj = spawnSync(process.argv[0], process.argv.slice(1), {
+  //       cwd: process.cwd(),
+  //       stdio: "inherit",
+  //       stdout: "inherit",
+  //       stderr: "inherit"
+  //     })
+  //     process.exit(0)
+  //   }
+  // });
 
   // let rely = []
   // let deleteList = new Set();

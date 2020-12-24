@@ -152,3 +152,6 @@ module.exports = function (merge) {
 
 ### shim抹平taro的多端问题
 - taro有很多多端兼容的问题，因为开发模式的不一样
+
+- [x] 优化 plugin 实现，观察源码，可以注入onReady hook事件，替换原有实现。
+- [ ] 编写babel编译插件，支持驼峰 externalClass
