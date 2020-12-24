@@ -1,5 +1,12 @@
-## [1.0.4] (2020-12-18)
 
+## [1.0.6] (2020-12-18)
+
+### Bug Fixes
+
+- 修复 Skeleton 组件 externalClass 无效的问题
+
+
+## [1.0.4] (2020-12-18)
 
 ### Bug Fixes
 
@@ -40,9 +47,3 @@ module.exports = function (merge) {
 }
 ```
 
-
-## [1.0.6] (2020-12-18)
-
-### Bug Fixes
-
-修复 Skeleton 组件 externalClass 无效的问题
