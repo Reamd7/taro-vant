@@ -208,7 +208,7 @@ class VanVirtualList extends Component<VanVirtualListProps, VanVirtualListState>
       .boundingClientRect()
       .exec((rect) => {
         if (!rect) return
-        this.setState({ offsetTop: rect.top }, ()=> {
+        this.setState({ offsetTop: rect.top }, () => {
           this.state = {
             ...this.state,
             offsetTop: rect.top
@@ -455,5 +455,7 @@ class VanVirtualList extends Component<VanVirtualListProps, VanVirtualListState>
   }
 };
 
-
+VanVirtualList.externalClasses = [
+  'custom-class'
+]
 export default VanVirtualList;

@@ -192,6 +192,12 @@ const VanFieldText: Taro.FunctionComponent<
 }
 
 VanFieldText.defaultProps = VanFieldDefaultProps
-VanFieldText.externalClasses = externalClasses
+VanFieldText.externalClasses = [
+  'label-class',
+  'input-class',
+  'right-icon-class',
+  'custom-class',
+  'icon-class'
+]
 export default VanFieldText
 

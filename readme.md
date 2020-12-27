@@ -155,3 +155,10 @@ module.exports = function (merge) {
 
 - [x] 优化 plugin 实现，观察源码，可以注入onReady hook事件，替换原有实现。
 - [ ] 编写babel编译插件，支持驼峰 externalClass
+  - [ ] 有点头疼，externalClass 在微信小程序是运行时的，所以支持所有的js语法，所以这种插件不能支持很多很复杂的语法规则，
+    > 现在只是支持如下类型的唯一语法
+    > ```
+    > VanCompoentName.externalClass = [""];
+    > export default VanCompoentName
+    > ```
+    > 所以因此妥协：taro-vant 组件编写的时候暂时不能使用 externalClass = 其他标识符的语法。

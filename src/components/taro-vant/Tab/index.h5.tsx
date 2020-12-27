@@ -560,7 +560,12 @@ const VanTab: Taro.FunctionComponent<VanTabProps> = (props: ActiveVanTabProps) =
 }
 
 VanTab.defaultProps = DefaultProps
-VanTab.externalClasses = externalClasses;
+VanTab.externalClasses = [
+  "custom-class",
+  "nav-class",
+  "tab-class",
+  "tab-active-class"
+];
 VanTab.options = {
   addGlobalClass: true
 }

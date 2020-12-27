@@ -63,6 +63,12 @@ VanTransition.options = {
 };
 VanTransition.externalClasses = [
   "custom-class",
-  ...MixinsTransitionExternalClass
+  // ...MixinsTransitionExternalClass
+  'enter-class',
+  'enter-active-class',
+  'enter-to-class',
+  'leave-class',
+  'leave-active-class',
+  'leave-to-class'
 ];
 export default VanTransition;

@@ -187,6 +187,12 @@ const VanFieldNumber: Taro.FunctionComponent<
 }
 
 VanFieldNumber.defaultProps = VanFieldDefaultProps
-VanFieldNumber.externalClasses = externalClasses
+VanFieldNumber.externalClasses = [
+  'label-class',
+  'input-class',
+  'right-icon-class',
+  'custom-class',
+  'icon-class'
+]
 export default VanFieldNumber
 

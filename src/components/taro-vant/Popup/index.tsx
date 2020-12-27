@@ -189,7 +189,13 @@ const VanPopup: Taro.FunctionComponent<VanPopupProps> = (props: ActiveVanPopupPr
 VanPopup.externalClasses = [
   'custom-class',
   'close-icon-class',
-  ...MixinsTransitionExternalClass
+  // ...MixinsTransitionExternalClass
+  'enter-class',
+  'enter-active-class',
+  'enter-to-class',
+  'leave-class',
+  'leave-active-class',
+  'leave-to-class'
 ]
 VanPopup.options = {
   addGlobalClass: true
