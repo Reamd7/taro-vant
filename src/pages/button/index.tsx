@@ -10,7 +10,6 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
         <View className="row">
           <VanButton
             className="demo-margin-right"
-            custom-class="demo-margin-right"
             plain
           >
             默认按钮
@@ -18,14 +17,12 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
           <VanButton
             type="primary"
             className="demo-margin-right"
-            custom-class="demo-margin-right"
           >
             主要按钮
           </VanButton>
           <VanButton
             type="info"
             className="demo-margin-right"
-            custom-class="demo-margin-right"
           >
             信息按钮
           </VanButton>
@@ -33,7 +30,6 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
         <VanButton
           type="danger"
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         >
           危险按钮
         </VanButton>
@@ -45,7 +41,6 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
           type="primary"
           plain
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         >
           朴素按钮
         </VanButton>
@@ -60,7 +55,6 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
           plain
           hairline
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         >
           细边框按钮
         </VanButton>
@@ -74,7 +68,6 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
           type="primary"
           disabled
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         >
           禁用状态
         </VanButton>
@@ -88,14 +81,12 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
           loading
           type="primary"
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         />
         <VanButton
           loading
           type="primary"
           loading-type="spinner"
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         />
         <VanButton loading type="info" loadingText="加载中..." />
       </DemoBlock>
@@ -105,7 +96,6 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
           type="primary"
           square
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         >
           方形按钮
         </VanButton>
@@ -119,13 +109,11 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
           type="primary"
           icon="star-o"
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         />
         <VanButton
           type="primary"
           icon="star-o"
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         >
           按钮
         </VanButton>
@@ -144,14 +132,12 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
           size="large"
           block
           className="demo-margin-bottom"
-          custom-class="demo-margin-bottom"
         >
           大号按钮
         </VanButton>
         <VanButton
           type="primary"
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         >
           普通按钮
         </VanButton>
@@ -159,7 +145,6 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
           type="primary"
           size="small"
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         >
           小型按钮
         </VanButton>
@@ -172,7 +157,6 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
         <VanButton
           type="primary"
           className="demo-margin-bottom"
-          custom-class="demo-margin-bottom"
         >
           普通按钮
         </VanButton>
@@ -185,14 +169,12 @@ const ButtonDemoPage: Taro.FunctionComponent = () => {
         <VanButton
           color="#7232dd"
           className="demo-margin-right"
-          custom-class="demo-margin-right"
         >
           单色按钮
         </VanButton>
         <VanButton
           color="#7232dd"
           className="demo-margin-right"
-          custom-class="demo-margin-right"
           plain
         >
           单色按钮

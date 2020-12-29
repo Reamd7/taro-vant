@@ -307,7 +307,7 @@ const VanUploader: Taro.FunctionComponent<VanUploaderProps> = (props: ActiveVanU
           return <View
             className="van-uploader__preview"
             data-index={index}
-            key={index}
+            // key={index}
             onClick={() => onClickPreview(index)}
           >
             {(item.type === "image") ?
