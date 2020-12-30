@@ -1,3 +1,25 @@
+## [1.0.7] (2020-12-30)
+
+### Support Feature
+
+- 支持驼峰 externalClass 不再需要些hover-class，直接使用 hoverClass
+  > 现在只是支持如下类型的唯一语法
+  >
+  > ```tsx
+  > VanCompoentName.externalClass = [""];
+  >
+  > export default VanCompoentName
+  > ```
+  >
+  > 所以因此妥协：taro-vant 组件编写的时候暂时不能使用 externalClass = 其他标识符的语法。
+  >
+  > 注意因为，需要支持typescript的解析，所以直接用了babel7。（之后有闲我就把 taro 2.x 支持到 babel7）
+  >
+  > 暂时还只是支持 直接引用，不支持原来 index.tsx 中类似的重新导出。还要进一步处理。
+  >
+  >（所以原有使用`import { VanButton } from "taro-vant"`）这种引用还不支持，
+  >
+  > 现在只是支持`import VanButton from "taro-vant/Button"` 这种直接引用的。
 
 ## [1.0.6] (2020-12-18)
 
