@@ -20,7 +20,9 @@ function main(ctx) {
                     .test(/\.[tj]sx$/i)
                     .pre()
                     .use("externalClassesLoader")
-                    .loader(require.resolve("./externalClassesLoader"));
+                    .loader(
+                      require.resolve("../src/components/taro-vant/__taro__/externalClassesLoader")
+                    );
             });
         }
     });

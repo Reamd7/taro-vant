@@ -77,7 +77,7 @@ async function main(ctx, pluginOpts) {
   //     process.exit(0)
   //   }
   // });
-  if (isNotMini) {
+  if (!isNotMini) {
     /**
      * @param {{
       *  chain: typeof import("webpack-chain"),

@@ -13,7 +13,7 @@ async function main(ctx: IPluginContext) {
         .pre()
         .use("externalClassesLoader")
         .loader(
-          require.resolve("./externalClassesLoader")
+          require.resolve("../src/components/taro-vant/__taro__/externalClassesLoader")
         )
     });
   }
