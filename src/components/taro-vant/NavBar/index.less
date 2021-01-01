@@ -12,12 +12,13 @@
 
   &__content {
     position: relative;
+    height: 100%;
   }
 
   &__text {
     display: inline-block;
     vertical-align: middle;
-    .theme(margin, '0 -@padding-md');
+    .theme(margin, '0 @padding-md');
     .theme(padding, '0 @padding-md');
     .theme(color, '@nav-bar-text-color');
 
@@ -28,8 +29,8 @@
 
   &__arrow {
     vertical-align: middle;
-    .theme(font-size, '@nav-bar-arrow-size');
-    .theme(color, '@nav-bar-text-color');
+    .theme(font-size, '@nav-bar-arrow-size') !important;
+    .theme(color, '@nav-bar-text-color') !important;
 
     + .van-nav-bar__text {
       margin-left: -20px;

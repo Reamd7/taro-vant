@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 const { useState, useEffect, useMemo } = Taro /** api **/;
 import type { ReactNode } from 'react'
-import { View, Block } from "@tarojs/components";
+import { View, Block, MovableView } from "@tarojs/components";
 import {
   noop,
   useMemoClassNames,
@@ -87,8 +87,8 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
   }, [fixed, placeholder]);
 
   return (
-    <View ref={scoperef}>
-      {fixed && placeholder && (
+    <Block>
+      {(fixed && placeholder) && (
         <View
           style={{
             height: addUnit(height)
@@ -96,6 +96,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
         />
       )}
       <View
+        ref={scoperef}
         className={classnames(
           bem("nav-bar", { fixed }),
           ExtClass(props, "custom-class"),
@@ -108,7 +109,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
       >
         <View className="van-nav-bar__content">
           <View className="van-nav-bar__left" onClick={onClickLeft}>
-            {leftArrow || leftText ? (
+            {(leftArrow || leftText) ? (
               <Block>
                 {leftArrow && (
                   <VanIcon
@@ -154,7 +155,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
           </View>
         </View>
       </View>
-    </View>
+    </Block>
   );
 };
 VanNavBar.options = {
