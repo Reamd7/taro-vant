@@ -1,0 +1,34 @@
+{
+  "name": "taro-vant",
+  "version": "1.0.7",
+  "description": "基于taro2进行多端组件开发，迁移vant-weapp的组件库，兼容h5、微信小程序端、支付宝小程序端。",
+  "keywords": [
+    "taro",
+    "ui",
+    "vant"
+  ],
+  "author": "reamd7 <reamd7@gmail.com>",
+  "homepage": "https://github.com/Reamd7/taro-vant",
+  "license": "MIT",
+  "main": "index.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Reamd7/taro-vant.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/Reamd7/taro-vant/issues"
+  }
+}
