@@ -1,6 +1,9 @@
 {
   "packages": [
-    "packages/*"
+    "packages/taro-vant",
+    "packages/taro-vant-example"
   ],
-  "version": "0.0.0"
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true
 }
