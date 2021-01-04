@@ -12,13 +12,6 @@
   "homepage": "https://github.com/Reamd7/taro-vant.git",
   "license": "ISC",
   "main": "lib/taro-vant-example.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Reamd7/taro-vant.git"
@@ -43,18 +36,22 @@
     "@tarojs/taro-swan": "^2",
     "@tarojs/taro-tt": "^2",
     "@tarojs/taro-weapp": "^2",
+    "@types/big.js": "^4.0.5",
+    "@types/classnames": "^2.2.10",
+    "@types/node": "^14.14.19",
     "@types/webpack": "^4.41.25",
     "@types/webpack-chain": "^5.2.0",
     "@types/wechat-miniprogram": "^3.1.0",
     "babel-runtime": "^6.26.0",
+    "big.js": "^6.0.1",
     "mini-types": "^0.1.4",
     "miniprogram-api-typings": "^3.2.0",
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",
-    "regenerator-runtime": "0.11.1"
+    "regenerator-runtime": "0.11.1",
+    "taro-vant": "^1.0.7"
   },
   "devDependencies": {
-    "lerna": "^3.22.1",
     "@tarojs/cli": "2.2.16",
     "@tarojs/mini-runner": "^2",
     "@tarojs/plugin-less": "^2",
@@ -78,6 +75,7 @@
     "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-react-hooks": "^1.6.1",
     "eslint-plugin-taro": "^2",
+    "lerna": "^3.22.1",
     "stylelint": "9.3.0",
     "stylelint-config-taro-rn": "^2",
     "stylelint-taro-rn": "^2",
