@@ -26,6 +26,7 @@
     "lib": "lib"
   },
   "dependencies": {
+    "@babel/core": "^7.12.10",
     "@babel/generator": "^7.12.11",
     "@babel/parser": "^7.12.11",
     "@babel/plugin-proposal-do-expressions": "^7.12.1",

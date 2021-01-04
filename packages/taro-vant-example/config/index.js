@@ -45,8 +45,7 @@ const config = {
   },
   plugins: [
     '@tarojs/plugin-less',
-    '@tarojs/plugin-terser',
-    require.resolve("./plugin")
+    '@tarojs/plugin-terser'
   ],
   defineConstants: {
   },
@@ -95,8 +94,7 @@ const config = {
     }
   },
   alias: {
-    'src': path.resolve(__dirname, '..', 'src'),
-    'taro-vant': path.resolve(__dirname, '..', 'src/components/taro-vant')
+    'src': path.resolve(__dirname, '..', 'src')
   },
   copy: {
     patterns: wxsPattern,
@@ -156,7 +154,30 @@ if (isBuildComponent) {
 }
 module.exports = function (merge) {
   if (process.env.NODE_ENV === 'development') {
-    return merge({}, config, require('./dev'))
+    return merge({},
+      config, require('./dev'),
+      require('taro-vant/plugin')({
+        tempPath: "components/.temp", // 在src下的临时文件路径，必须是相对路径 src/components/.temp
+        modules: {
+          // "taro-vant": "src/components/taro-vant" // node_module/taro-vant/src/components/taro-vant, // 兼容各种类型的node模块，我是从npm 安装 git 模块中的需求中发现这个需求的
+          "taro-vant": "" // node_module/taro-vant
+          // "taro-vant": "." // node_module/taro-vant
+
+        }, // 需要inline编译的library => 模块的根目录
+        copySrcWxs: false // 内联一个功能，是否复制src项目编写的wxs文件
+      })
+    )
   }
-  return merge({}, config, require('./prod'))
+  return merge({},
+    config, require('./prod'),
+    require('taro-vant/plugin')({
+      tempPath: "components/.temp",
+      modules: {
+        // "taro-vant": "src/components/taro-vant" // node_module/taro-vant/src/components/taro-vant
+        "taro-vant": "" // node_module/taro-vant
+        // "taro-vant": "." // node_module/taro-vant
+      },
+      copySrcWxs: false
+    })
+  )
 }

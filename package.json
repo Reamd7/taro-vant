@@ -31,7 +31,7 @@
     "regenerator-runtime": "0.11.1"
   },
   "devDependencies": {
-    "@tarojs/cli": "^3.0.21",
+    "@tarojs/cli": "2",
     "@tarojs/mini-runner": "2.2.16",
     "@tarojs/plugin-less": "2.2.16",
     "@tarojs/plugin-terser": "2.2.16",

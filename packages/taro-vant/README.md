@@ -22,7 +22,7 @@ module.exports = function (merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({},
       config, require('./dev'),
-      require('taro-vant/src/components/taro-vant/plugin')({
+      require('taro-vant/plugin')({
         tempPath: "components/.temp", // 在src下的临时文件路径，必须是相对路径 src/components/.temp
         modules: {
           // "taro-vant": "src/components/taro-vant" // node_module/taro-vant/src/components/taro-vant, // 兼容各种类型的node模块，我是从npm 安装 git 模块中的需求中发现这个需求的
@@ -36,7 +36,7 @@ module.exports = function (merge) {
   }
   return merge({},
     config, require('./prod'),
-    require('taro-vant/src/components/taro-vant/plugin')({
+    require('taro-vant/plugin')({
       tempPath: "components/.temp",
       modules: {
         // "taro-vant": "src/components/taro-vant" // node_module/taro-vant/src/components/taro-vant

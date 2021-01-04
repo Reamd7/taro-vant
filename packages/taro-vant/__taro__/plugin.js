@@ -63,7 +63,23 @@ async function main(ctx, pluginOpts) {
       });
     }
   })
+  /**
+   *
+   * @param {{
+    *  chain: typeof import("webpack-chain"),
+    *  webpack: typeof import("webpack")
+    * }} args
+    */
+  function modifyWebpackChain({ chain, webpack }) {
+    // if (TARO_ENV === "h5") {
+    modulesList.forEach(function (name) {
+      var srcDir = path.resolve(sourcePath, nodeModulesNamePath[name].temp, "./node_modules");
+      chain.resolve.modules
+        .add(srcDir)
+    });
+  }
 
+  ctx.modifyWebpackChain(modifyWebpackChain);
   ctx.onBuildFinish(async () => {
     if (isNotMini) return;
     console.log(chalk.yellow(`taro-vant/plugin 开始:`), "复制 wxs | sjs");

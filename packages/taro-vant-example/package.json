@@ -16,9 +16,6 @@
     "type": "git",
     "url": "https://github.com/Reamd7/taro-vant.git"
   },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
   "bugs": {
     "url": "https://github.com/Reamd7/taro-vant/issues"
   },
@@ -43,6 +40,9 @@
     "@types/webpack-chain": "^5.2.0",
     "@types/wechat-miniprogram": "^3.1.0",
     "babel-runtime": "^6.26.0",
+    "throttle-debounce": "^3.0.1",
+    "dayjs": "^1.9.1",
+    "classnames": "^2.2.6",
     "big.js": "^6.0.1",
     "mini-types": "^0.1.4",
     "miniprogram-api-typings": "^3.2.0",
@@ -52,6 +52,9 @@
     "taro-vant": "^1.0.7"
   },
   "devDependencies": {
+    "@types/big.js": "^4.0.5",
+    "@types/classnames": "^2.2.10",
+    "@types/throttle-debounce": "^2.1.0",
     "@tarojs/cli": "2.2.16",
     "@tarojs/mini-runner": "^2",
     "@tarojs/plugin-less": "^2",
@@ -82,5 +85,30 @@
     "tslib": "^2.0.3",
     "typescript": "^3.0.1",
     "webpack-chain": "6.5.1"
+  },
+  "templateInfo": {
+    "name": "default",
+    "typescript": true,
+    "css": "less"
+  },
+  "scripts": {
+    "build:weapp": "yarn taro build --type weapp",
+    "build:swan": "yarn taro build --type swan",
+    "build:alipay": "yarn taro build --type alipay",
+    "build:tt": "yarn taro build --type tt",
+    "build:h5": "yarn taro build --type h5",
+    "build:rn": "yarn taro build --type rn",
+    "build:qq": "yarn taro build --type qq",
+    "build:jd": "yarn taro build --type jd",
+    "build:quickapp": "yarn taro build --type quickapp",
+    "dev:weapp": "npm run build:weapp -- --watch",
+    "dev:swan": "npm run build:swan -- --watch",
+    "dev:alipay": "npm run build:alipay -- --watch",
+    "dev:tt": "npm run build:tt -- --watch",
+    "dev:h5": "npm run build:h5 -- --watch",
+    "dev:rn": "npm run build:rn -- --watch",
+    "dev:qq": "npm run build:qq -- --watch",
+    "dev:jd": "npm run build:jd -- --watch",
+    "dev:quickapp": "npm run build:quickapp -- --watch"
   }
 }
