@@ -4,7 +4,8 @@
   "description": "基于taro2进行多端组件开发，迁移vant-weapp的组件库，兼容h5、微信小程序端、支付宝小程序端。",
   "workspaces": [
     "packages/taro-vant",
-    "packages/taro-vant-example"
+    "packages/taro-vant-example",
+    "packages/taro-externalclass-plugin"
   ],
   "repository": {
     "type": "git",
@@ -66,6 +67,7 @@
     "typescript": "^3.0.1"
   },
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "clean": "rimraf ./node_modules & rimraf ./packages/taro-vant/node_modules & rimraf ./packages/taro-vant-example/node_modules & lerna clean"
   }
 }

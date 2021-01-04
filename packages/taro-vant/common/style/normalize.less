@@ -1,0 +1,81 @@
+/*  #ifdef  h5  */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: @base-font-family;
+}
+
+a {
+  text-decoration: none;
+}
+
+input,
+button,
+textarea {
+  color: inherit;
+  font: inherit;
+}
+
+a,
+input,
+button,
+textarea,
+[class*='van-'] {
+  &:focus {
+    outline: none;
+  }
+}
+
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+// h5 兼容 weapp的样式
+.taro_page {
+  cursor: default;
+  user-select: none;
+  width: 100%;
+  overflow-x: hidden;
+  text-size-adjust: none;
+}
+button {
+  width: auto;
+}
+button::after {
+  content: " ";
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid rgba(0,0,0,.2);
+  -webkit-transform: scale(.5);
+  transform: scale(.5);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.taro-img__mode-scaletofill {
+  /** object-fit: contain; */
+  object-fit: fill;
+  width: 100%;
+  height: 100%;
+}
+.taro-img__mode-aspectfit {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.taro-scroll-view__scroll-x {
+  display: block;
+  width: 100%;
+}
+/*  #endif  */

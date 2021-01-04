@@ -1,0 +1,326 @@
+var MIN_DISTANCE = 10;
+function getDirection(x, y) {
+    if (x > y && x > MIN_DISTANCE) {
+        return 'horizontal'
+    }
+
+    if (y > x && y > MIN_DISTANCE) {
+        return 'vertical'
+    }
+
+    return ''
+}
+function format(value, max, min, step) {
+    return Math.round(Math.max(min, Math.min(value, max)) / step) * step;
+}
+function getRange(max, min) {
+    return max - min;
+}
+
+function print(val) {
+    console.log(JSON.stringify({ "time": Date.now(), "log": val }))
+}
+
+module.exports = {
+    /**
+     *
+     * @param event {
+        {
+            "type":"touchmove",
+            "timeStamp":4374,
+            "target":{"id":"","offsetLeft":0,"offsetTop":0,"dataset":{}},
+            "currentTarget":{"id":"","offsetLeft":149,"offsetTop":1,"dataset":{}},
+            "mark":{},
+            "detail":{},
+            "touches":[
+                {"identifier":0,"pageX":228,"pageY":60,"clientX":228,"clientY":60,"force":1}
+            ],
+            "changedTouches":[
+                {"identifier":0,"pageX":228,"pageY":60,"clientX":228,"clientY":60,"force":1}
+            ],
+            "mut":false,
+        }
+     * @param instance {
+         {
+             "selectAllComponents":null,
+             "selectComponent":null,
+             "removeClass":null,
+             "addClass":null,
+             "hasClass":null,
+             "setStyle":(style: any | string) => void,
+             "getDataset":() => any,
+             "getState":() => any,
+             "triggerEvent":null,
+             "callMethod":null,
+             "requestAnimationFrame": typeof requestAnimationFrame,
+             "getComputedStyle":null,
+             "animate":null,
+             "clearAnimation":null
+            }
+        }
+     */
+    touchmove: function (event, instance) {
+        var state = instance.getState();
+        // =================================================
+        var dataset = instance.selectComponent(".van-slider").getDataset();
+        var disabled = dataset.disabled;
+        var value = parseFloat(dataset.value);
+        var min = dataset.min;
+        var max = dataset.max;
+        var step = dataset.step;
+
+        // =============================================
+        if (disabled) return;
+
+        if (state.dragStatus === 'start') {
+            instance.callMethod("onDragStart")
+        }
+
+
+        var touch = event.touches[0];
+        state.deltaX = state.startX ? (touch.clientX - state.startX) : touch.clientX;
+        state.deltaY = state.startY ? (touch.clientY - state.startY) : touch.clientY;
+        state.offsetX = Math.abs(state.deltaX);
+        state.offsetY = Math.abs(state.deltaY);
+        state.direction = state.direction || getDirection(state.offsetX, state.offsetY);
+
+        if (state.dragStatus !== 'draging') {
+            state.dragStatus = 'draging'
+        }
+
+        var rectWidth = state.width
+
+        var diff = (state.deltaX / rectWidth) * 100;
+
+
+        var dragValue = format(value + diff, max, min, step);
+
+        instance.callMethod("onDrag", [dragValue]);
+
+        state.dragValue = dragValue;
+
+        var WidValue = (
+            ((dragValue - min) * 100) / getRange(max, min)
+        );
+        instance.selectComponent(".van-slider__bar").setStyle({
+            width: WidValue ? WidValue + '%' : 0,
+            transition: "none"
+        });
+    },
+    /**
+     *
+     * @param event {
+        {
+            "type":"touchmove",
+            "timeStamp":4374,
+            "target":{"id":"","offsetLeft":0,"offsetTop":0,"dataset":{}},
+            "currentTarget":{"id":"","offsetLeft":149,"offsetTop":1,"dataset":{}},
+            "mark":{},
+            "detail":{},
+            "touches":[
+                {"identifier":0,"pageX":228,"pageY":60,"clientX":228,"clientY":60,"force":1}
+            ],
+            "changedTouches":[
+                {"identifier":0,"pageX":228,"pageY":60,"clientX":228,"clientY":60,"force":1}
+            ],
+            "mut":false,
+        }
+     * @param instance {
+         {
+             "selectAllComponents":null,
+             "selectComponent":null,
+             "removeClass":null,
+             "addClass":null,
+             "hasClass":null,
+             "setStyle":(style: any | string) => void,
+             "getDataset":() => any,
+             "getState":() => any,
+             "triggerEvent":null,
+             "callMethod":null,
+             "requestAnimationFrame": typeof requestAnimationFrame,
+             "getComputedStyle":null,
+             "animate":null,
+             "clearAnimation":null
+            }
+        }
+     */
+    touchstart: function (event, instance) {
+        var state = instance.getState();
+
+        // =================================================
+        var dataset = instance.selectComponent(".van-slider").getDataset();
+        var disabled = dataset.disabled;
+        var value = dataset.value;
+        var min = dataset.min;
+        var max = dataset.max;
+        var step = dataset.step;
+        // =================================================
+
+        var touch = event.touches[0];
+        state.direction = '';
+        state.deltaX = 0;
+        state.deltaY = 0;
+        state.offsetX = 0;
+        state.offsetY = 0;
+        state.startX = touch.clientX;
+        state.startY = touch.clientY;
+
+        state.dragStatus = 'start';
+
+        state.width = parseFloat(
+            instance.selectComponent('.van-slider')
+                .getComputedStyle(["width"]).width.replace("px", ''));
+
+    },
+    /**
+     *
+     * @param event {
+        {
+            "type":"touchmove",
+            "timeStamp":4374,
+            "target":{"id":"","offsetLeft":0,"offsetTop":0,"dataset":{}},
+            "currentTarget":{"id":"","offsetLeft":149,"offsetTop":1,"dataset":{}},
+            "mark":{},
+            "detail":{},
+            "touches":[
+                {"identifier":0,"pageX":228,"pageY":60,"clientX":228,"clientY":60,"force":1}
+            ],
+            "changedTouches":[
+                {"identifier":0,"pageX":228,"pageY":60,"clientX":228,"clientY":60,"force":1}
+            ],
+            "mut":false,
+        }
+     * @param instance {
+         {
+             "selectAllComponents":null,
+             "selectComponent":null,
+             "removeClass":null,
+             "addClass":null,
+             "hasClass":null,
+             "setStyle":(style: any | string) => void,
+             "getDataset":() => any,
+             "getState":() => any,
+             "triggerEvent":null,
+             "callMethod":null,
+             "requestAnimationFrame": typeof requestAnimationFrame,
+             "getComputedStyle":null,
+             "animate":null,
+             "clearAnimation":null
+            }
+        }
+     */
+    touchend: function (event, instance) {
+        var state = instance.getState();
+        // =================================================
+        var dataset = instance.selectComponent(".van-slider").getDataset();
+        var disabled = dataset.disabled;
+        var value = dataset.value;
+        var min = dataset.min;
+        var max = dataset.max;
+        var step = dataset.step;
+        var onControllComponent = dataset.controllcomponent;
+
+        // =============================================
+        if (disabled) return;
+
+        if (state.dragStatus === 'draging') {
+            var newValue = format(state.dragValue, max, min, step);
+
+            var startTime = Date.now();
+            function run() {
+                instance.requestAnimationFrame(function () {
+                    if (state.dragStatus !== 'draging') {
+                        instance.selectComponent(".van-slider__bar").setStyle({});
+                        return;
+                    }
+                    var dataset = instance.selectComponent(".van-slider").getDataset();
+                    var value = dataset.value;
+                    if (value === newValue) {
+                        // update finish
+                        instance.selectComponent(".van-slider__bar").setStyle({});
+                        state.dragStatus = 'drag-end';
+                        console.log(Date.now() - startTime);
+                        return;
+                    } else {
+                        return run()
+                    }
+                })
+            }
+            run()
+            instance.callMethod("onTouchend", [newValue]);
+        }
+    },
+
+    /**
+     *
+     * @param event {
+        {
+            "type":"touchmove",
+            "timeStamp":4374,
+            "target":{"id":"","offsetLeft":0,"offsetTop":0,"dataset":{}},
+            "currentTarget":{"id":"","offsetLeft":149,"offsetTop":1,"dataset":{}},
+            "mark":{},
+            "detail":{},
+            "touches":[
+                {"identifier":0,"pageX":228,"pageY":60,"clientX":228,"clientY":60,"force":1}
+            ],
+            "changedTouches":[
+                {"identifier":0,"pageX":228,"pageY":60,"clientX":228,"clientY":60,"force":1}
+            ],
+            "mut":false,
+        }
+     * @param instance {
+         {
+             "selectAllComponents":null,
+             "selectComponent":null,
+             "removeClass":null,
+             "addClass":null,
+             "hasClass":null,
+             "setStyle":(style: any | string) => void,
+             "getDataset":() => any,
+             "getState":() => any,
+             "triggerEvent":null,
+             "callMethod":null,
+             "requestAnimationFrame": typeof requestAnimationFrame,
+             "getComputedStyle":null,
+             "animate":null,
+             "clearAnimation":null
+            }
+        }
+     */
+    click: function (event, instance) {
+        var state = instance.getState();
+        // =================================================
+        var dataset = instance.selectComponent(".van-slider").getDataset();
+        var disabled = dataset.disabled;
+        var value = dataset.value;
+        var min = dataset.min;
+        var max = dataset.max;
+        var step = dataset.step;
+        var onControllComponent = dataset.controllcomponent;
+
+        // =============================================
+        if (disabled) return;
+
+        var style = instance.selectComponent('.van-slider')
+            .getComputedStyle(["width", "left"]);
+
+        var rectWidth = (state.width = parseFloat(style.width.replace("px", '')));
+        var rectLeft = (state.left = parseFloat(style.left.replace("px", '')));
+
+        var dragValue = format(
+            ((event.detail.x - rectLeft) / rectWidth) * getRange(max, min) + min, max, min, step
+        );
+
+        var WidValue = (
+            ((dragValue - min) * 100) / getRange(max, min)
+        );
+        instance.selectComponent(".van-slider__bar").setStyle({})
+        // instance.selectComponent(".van-slider__bar").setStyle({
+        //     width: WidValue ? WidValue + '%' : 0,
+        //     transition: "none"
+        // });
+
+        instance.callMethod("onClick", [dragValue])
+    }
+}
