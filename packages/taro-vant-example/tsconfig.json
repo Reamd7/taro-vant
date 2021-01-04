@@ -17,7 +17,7 @@
     "rootDir": ".",
     "jsx": "preserve",
     "jsxFactory": "Taro.createElement",
-    "allowJs": true,
+    "allowJs": false,
     "resolveJsonModule": true,
     "paths": {
       "src/*": ["./src/*"],
