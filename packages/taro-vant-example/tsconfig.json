@@ -17,11 +17,10 @@
     "rootDir": ".",
     "jsx": "preserve",
     "jsxFactory": "Taro.createElement",
-    "allowJs": true,
+    "allowJs": false,
     "resolveJsonModule": true,
     "paths": {
       "src/*": ["./src/*"],
-      "taro-vant/*": ["./src/components/taro-vant/*"]
     },
     "types": [
       "miniprogram-api-typings",

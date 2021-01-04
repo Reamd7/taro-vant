@@ -1,3 +1,8 @@
+## [1.0.8.alpha.0] (2021-01-05)
+- 抽离externalClass plugin到另外的项目中去
+
+- 将项目结构重构为lerna管理的 monorepo 结构，基本分离完成依赖。
+
 ## [1.0.7] (2020-12-30)
 
 ### Support Feature

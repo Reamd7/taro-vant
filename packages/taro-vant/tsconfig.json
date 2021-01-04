@@ -8,7 +8,6 @@
     "experimentalDecorators": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
-    "outDir": "../../../ui",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strictNullChecks": true,
@@ -17,7 +16,7 @@
     "rootDir": ".",
     "jsx": "preserve",
     "jsxFactory": "Taro.createElement",
-    "allowJs": true,
+    "allowJs": false,
     "resolveJsonModule": true,
     "paths": {
       "taro-vant/*": ["./*"]
@@ -28,6 +27,10 @@
       "nervjs/dist"
     ]
   },
-  "exclude": ["node_modules", "dist"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "./__taro__/**/*"
+  ],
   "compileOnSave": false
 }

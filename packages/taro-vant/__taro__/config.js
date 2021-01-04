@@ -34,8 +34,9 @@ const taroVantConfig = (pluginOpts = {
   return {
     plugins: [
       '@tarojs/plugin-less',
+      "taro-externalclass-plugin",
       [require.resolve("./plugin"), pluginOpts]
-    ],
+    ].filter(Boolean),
     alias: Object.keys(pluginOpts.modules).reduce((res, v) => {
       res[v] = path.resolve(sourcePath, tempPath, v);
       return res;

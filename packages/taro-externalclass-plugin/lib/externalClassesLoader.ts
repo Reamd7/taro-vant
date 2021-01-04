@@ -4,10 +4,11 @@ import traverse from "@babel/traverse";
 import * as t from "@babel/types";
 import { readFileSync } from "fs";
 import * as path from 'path';
-import * as chalk from "chalk";
+import chalk from "chalk";
 import { PluginItem, TransformOptions } from "@babel/core";
 import * as fs from "fs";
 import { ResolverFactory, CachedInputFileSystem, Resolver } from "enhanced-resolve"
+
 const class_method_renamer_1 = require("@tarojs/transformer-wx/lib/src/class-method-renamer");
 const functional_1 = require("@tarojs/transformer-wx/lib/src/functional");
 

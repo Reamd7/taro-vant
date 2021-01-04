@@ -63,40 +63,23 @@ async function main(ctx, pluginOpts) {
       });
     }
   })
-  // ctx.onBuildStart(async => {
-  //   console.log(chalk.green('编译开始！'));
-  //   let exists = true;
-  //   if (!exists) {
-  //     const { spawnSync } = require("child_process");
-  //     var spawnObj = spawnSync(process.argv[0], process.argv.slice(1), {
-  //       cwd: process.cwd(),
-  //       stdio: "inherit",
-  //       stdout: "inherit",
-  //       stderr: "inherit"
-  //     })
-  //     process.exit(0)
-  //   }
-  // });
-  if (!isNotMini) {
-    /**
-     * @param {{
-      *  chain: typeof import("webpack-chain"),
-      *  webpack: typeof import("webpack")
-      * }} args
-      */
-    function modifyWebpackChain(args) {
-      args.chain.module
-        .rule("externalClassesLoader")
-        .test(/\.[tj]sx$/i)
-        .pre()
-        .use("externalClassesLoader")
-        .loader(
-          require.resolve("./externalClassesLoader") // 注入 externalClassesLoader
-        )
-    }
-    ctx.modifyWebpackChain(modifyWebpackChain);
+  /**
+   *
+   * @param {{
+    *  chain: typeof import("webpack-chain"),
+    *  webpack: typeof import("webpack")
+    * }} args
+    */
+  function modifyWebpackChain({ chain, webpack }) {
+    // if (TARO_ENV === "h5") {
+    modulesList.forEach(function (name) {
+      var srcDir = path.resolve(sourcePath, nodeModulesNamePath[name].temp, "./node_modules");
+      chain.resolve.modules
+        .add(srcDir)
+    });
   }
-  // =======================================================
+
+  ctx.modifyWebpackChain(modifyWebpackChain);
   ctx.onBuildFinish(async () => {
     if (isNotMini) return;
     console.log(chalk.yellow(`taro-vant/plugin 开始:`), "复制 wxs | sjs");

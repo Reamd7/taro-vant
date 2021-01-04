@@ -9,7 +9,7 @@ import './app.less'
 //   require('nerv-devtools')
 // }
 if (process.env.TARO_ENV === 'h5') {
-  require('./components/taro-vant/common/mocknav')
+  require('./components/.temp/taro-vant/common/mocknav')
 }
 class App extends Component {
 
