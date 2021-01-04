@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 
 import "./index.less";
-import VanButton, { VanButtonProps } from "../../Button";
+import VanButton, { VanButtonProps } from "../Button";
 import VanIcon, { VanIconProps } from "../icon";
 import { MixinLinkProps, useLink } from "../common/mixins/link";
 import { Text } from "@tarojs/components";

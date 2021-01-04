@@ -8,13 +8,13 @@ import {
   CssProperties,
   isNormalClass,
   isExternalClass
-} from "../lib/utils"
-import VanIcon from "../lib/icon";
-import VanLoading from "../lib/Loading";
-import type { LoadingType } from '../lib/Loading'
+} from "../utils"
+import VanIcon from "../icon";
+import VanLoading from "../Loading";
+import type { LoadingType } from '../Loading'
 import "./index.less";
-import { MixinsButtonProps } from "../lib/common/mixins/button";
-import { MixinsOpenTypeProps, MixinsOpenTypeEvents } from "../lib/common/mixins/open-type";
+import { MixinsButtonProps } from "../common/mixins/button";
+import { MixinsOpenTypeProps, MixinsOpenTypeEvents } from "../common/mixins/open-type";
 
 type ButtonType = "default" | "primary" | "info" | "warning" | "danger";
 type ButtonSize = "large" | "normal" | "small" | "mini";

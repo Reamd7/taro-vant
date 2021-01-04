@@ -1,21 +1,21 @@
 import Taro from "@tarojs/taro";
 const { useCallback } = Taro /** api **/;
-import { MixinsButtonProps } from "../lib/common/mixins/button";
+import { MixinsButtonProps } from "../common/mixins/button";
 import {
   MixinsOpenTypeProps,
   MixinsOpenTypeEvents
-} from "../lib/common/mixins/open-type";
+} from "../common/mixins/open-type";
 import { Button, View, Block, Text } from "@tarojs/components";
-import VanIcon from "../lib/icon";
-import VanPopup from "../lib/Popup";
+import VanIcon from "../icon";
+import VanPopup from "../Popup";
 import {
   noop,
   useMemoClassNames,
   bem,
   CssProperties
-} from "../lib/utils"
+} from "../utils"
 import { ITouchEvent } from "@tarojs/components/types/common";
-import VanLoading from "../lib/Loading";
+import VanLoading from "../Loading";
 import "./index.less";
 
 type SourceButtonProps = React.ComponentProps<typeof Button>;

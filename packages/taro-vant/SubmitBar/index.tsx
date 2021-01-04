@@ -4,7 +4,7 @@ import "./index.less";
 import VanIcon, { VanIconProps } from "../icon";
 import { View, Text } from "@tarojs/components";
 import { useMemoClassNames, isExternalClass, isNormalClass, noop, ActiveProps, getSystemInfoSync } from "../utils"
-import VanButton, { VanButtonProps } from "../../Button";
+import VanButton, { VanButtonProps } from "../Button";
 
 export type VanSubmitBarProps = {
   'bar-class'?: string;

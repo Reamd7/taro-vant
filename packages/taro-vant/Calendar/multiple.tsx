@@ -7,7 +7,7 @@ import { useMemoClassNames, nextTick, ActiveProps } from "../utils"
 import VanCalHeader from "./components/header";
 import { View, ScrollView } from "@tarojs/components";
 import VanCalMonth from "./components/month";
-import VanButton from "../../Button";
+import VanButton from "../Button";
 import VanPopup from "../Popup";
 import usePersistFn from "../hooks/usePersistFn"
 export type VanCalendarSingleProps = VanCalendarCommonProps & {

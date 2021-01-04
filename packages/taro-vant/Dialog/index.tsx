@@ -8,7 +8,7 @@ import VanGoodsActionButton, { VanGoodsActionButtonProps } from "../GoodsActionB
 import { bem } from "../utils/bem";
 import { View, Text } from "@tarojs/components";
 import VanGoodsAction from "../GoodsAction";
-import VanButton from "../../Button";
+import VanButton from "../Button";
 import useUpdateEffect from "../hooks/useUpdateEffect"
 import { useDialogOptions } from "./dialog";
 import usePersistFn from "../hooks/usePersistFn"
