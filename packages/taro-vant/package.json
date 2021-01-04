@@ -1,6 +1,6 @@
 {
   "name": "taro-vant",
-  "version": "1.0.8.alpha.0",
+  "version": "1.0.8-alpha.0",
   "description": "基于taro2进行多端组件开发，迁移vant-weapp的组件库，兼容h5、微信小程序端、支付宝小程序端。",
   "keywords": [
     "taro",
@@ -84,12 +84,12 @@
     "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-react-hooks": "^1.6.1",
     "eslint-plugin-taro": "^2",
+    "react": "16.8.0",
     "stylelint": "9.3.0",
     "stylelint-config-taro-rn": "^2",
     "stylelint-taro-rn": "^2",
     "tslib": "^2.0.3",
     "typescript": "^3.0.1",
-    "webpack-chain": "6.5.1",
-    "react": "16.8.0"
+    "webpack-chain": "6.5.1"
   }
 }
