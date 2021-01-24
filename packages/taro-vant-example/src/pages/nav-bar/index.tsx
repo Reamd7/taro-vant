@@ -21,8 +21,36 @@ export default function NavBarPpage() {
         />
       </DemoBlock>
 
-      <DemoBlock title="高级用法">
+      <DemoBlock title="高级用法 默认就是使用 absolute">
         <VanNavBar
+          title="标题"
+          leftText="返回"
+          leftArrow
+          onClickLeft={() => {
+            Taro.showToast({ title: "点击返回", icon: "none" });
+          }}
+        ></VanNavBar>
+      </DemoBlock>
+
+      <DemoBlock title="absolute">
+        <VanNavBar
+          titleAlign="absolute"
+          title="标题"
+          leftText="返回"
+          leftArrow
+          renderRight={
+            <VanIcon
+              name="search"
+              custom-class="icon"
+              className="icon"
+              size={18}
+            />
+          }
+        ></VanNavBar>
+      </DemoBlock>
+      <DemoBlock title="flex ">
+        <VanNavBar
+          titleAlign="flex"
           title="标题"
           leftText="返回"
           leftArrow

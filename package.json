@@ -59,9 +59,11 @@
     "mini-types": "^0.1.4",
     "miniprogram-api-typings": "^3.2.0",
     "nerv-devtools": "^1.5.5",
+    "postcss-jsx": "^0.36.4",
     "rimraf": "^3.0.2",
-    "stylelint": "9.3.0",
+    "stylelint": "^13.8.0",
     "stylelint-config-taro-rn": "2.2.16",
+    "stylelint-react-native": "^2.2.0",
     "stylelint-taro-rn": "2.2.16",
     "tslib": "^2.0.3",
     "typescript": "^3.0.1"

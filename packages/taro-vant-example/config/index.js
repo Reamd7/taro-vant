@@ -1,14 +1,103 @@
 const path = require('path');
 const glob = require('glob');
+const fs = require('fs-extra');
+const chokidar = require("chokidar");
 const cwd = process.cwd();
 const SRC = path.resolve(cwd, 'src')
 const DIST = path.resolve(cwd, `dist/${process.env.TARO_ENV}`)
+
+// =======================
+console.log("复制 taro-vant")
+const sourceTaroVant = path.resolve(cwd, "../taro-vant");
+const destTaroVant = path.resolve(SRC, "./components/.temp/taro-vant")
+fs.removeSync(destTaroVant);
+fs.copySync(sourceTaroVant, destTaroVant, {
+  overwrite: true,
+  preserveTimestamps: true,
+  filter: (src, dest) => {
+    if (src.includes("node_modules")) {
+      console.log(src, dest)
+      return false;
+    }
+    return true;
+  }
+});
+if (!isBuildComponent) {
+  console.log("监听 taro-vant");
+  const watcher = chokidar.watch(sourceTaroVant, {
+    cwd: sourceTaroVant,
+    ignored: /node_modules/,
+    depth: Infinity,
+    ignoreInitial: true
+  });
+  watcher.add('.');
+  watcher
+    .on("add", (filename, stat) => {
+      fs.copy(
+        path.resolve(sourceTaroVant, filename),
+        path.resolve(destTaroVant, filename),
+        {
+          overwrite: true,
+          preserveTimestamps: true,
+        }
+      )
+      console.log(new Date(), "add", filename, stat?.mtimeMs)
+    })
+    .on("unlink", (filename, stat) => {
+      fs.removeSync(path.resolve(destTaroVant, filename))
+      console.log(new Date(), "unlink", filename, stat?.mtimeMs)
+    })
+    .on("addDir", (filename, stat) => {
+      fs.copySync(
+        path.resolve(sourceTaroVant, filename),
+        path.resolve(destTaroVant, filename),
+        {
+          overwrite: true,
+          preserveTimestamps: true,
+        }
+      )
+      console.log(new Date(), "addDir", filename, stat?.mtimeMs)
+    })
+    .on("unlinkDir", (filename, stat) => {
+      fs.removeSync(path.resolve(destTaroVant, filename))
+      console.log(new Date(), "unlinkDir", filename, stat?.mtimeMs)
+    })
+    .on("change", (filename, stat) => {
+      fs.copy(
+        path.resolve(sourceTaroVant, filename),
+        path.resolve(destTaroVant, filename),
+        {
+          overwrite: true,
+          preserveTimestamps: true,
+        }
+      )
+      console.log(new Date(), "change", filename, stat?.mtimeMs)
+    })
+    // .on("ready", function() {
+    //   console.log("ready", arguments)
+    // })
+    // .on("raw", (event, filename, stat) => {
+    //   console.log("raw:" + new Date(), event, filename, stat?.mtimeMs)
+    // })
+
+  // console.log(watcher.getWatched())
+}
+// =======================
+
 const wxsPattern = glob.sync("**/*.wxs", { cwd: SRC, mark: true }).map(file => {
   return {
     from: path.resolve(SRC, file), to: path.resolve(DIST, file)
   }
-});
-const node_modules = path.resolve(__dirname, "..", "node_modules")
+}).concat(
+  glob.sync("**/*.wxs", { cwd: sourceTaroVant, mark: true }).map(file => {
+    return {
+      from: path.resolve(sourceTaroVant, file), to: path.resolve(DIST, "./components/.temp/taro-vant", file)
+    }
+  })
+);
+
+console.log(wxsPattern);
+// const node_modules = path.resolve(__dirname, "..", "node_modules")
 // console.log(path.resolve(node_modules, '@tarojs/taro'))
 // TARO_ENV: "weapp" | "swan" | "alipay" | "h5" | "rn" | "tt" | "quickapp" | "qq"
 const isBuildComponent = process.env.TARO_BUILD_TYPE === 'component'
@@ -94,7 +183,8 @@ const config = {
     }
   },
   alias: {
-    'src': path.resolve(__dirname, '..', 'src')
+    'src': path.resolve(__dirname, '..', 'src'),
+    'taro-vant': path.resolve(SRC, "./components/.temp/taro-vant")
   },
   copy: {
     patterns: wxsPattern,
@@ -160,11 +250,10 @@ module.exports = function (merge) {
         tempPath: "components/.temp", // 在src下的临时文件路径，必须是相对路径 src/components/.temp
         modules: {
           // "taro-vant": "src/components/taro-vant" // node_module/taro-vant/src/components/taro-vant, // 兼容各种类型的node模块，我是从npm 安装 git 模块中的需求中发现这个需求的
-          "taro-vant": "" // node_module/taro-vant
+          // "taro-vant": "" // node_module/taro-vant
           // "taro-vant": "." // node_module/taro-vant
-
         }, // 需要inline编译的library => 模块的根目录
-        copySrcWxs: false // 内联一个功能，是否复制src项目编写的wxs文件
+        copySrcWxs: true // 内联一个功能，是否复制src项目编写的wxs文件
       })
     )
   }
@@ -174,10 +263,10 @@ module.exports = function (merge) {
       tempPath: "components/.temp",
       modules: {
         // "taro-vant": "src/components/taro-vant" // node_module/taro-vant/src/components/taro-vant
-        "taro-vant": "" // node_module/taro-vant
+        // "taro-vant": "" // node_module/taro-vant
         // "taro-vant": "." // node_module/taro-vant
       },
-      copySrcWxs: false
+      copySrcWxs: true
     })
   )
 }

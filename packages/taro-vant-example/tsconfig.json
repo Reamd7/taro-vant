@@ -21,6 +21,7 @@
     "resolveJsonModule": true,
     "paths": {
       "src/*": ["./src/*"],
+      "taro-vant/*": ["./src/components/.temp/taro-vant/*"]
     },
     "types": [
       "miniprogram-api-typings",

@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 const { useState, useEffect, useMemo } = Taro /** api **/;
 import type { ReactNode } from 'react'
-import { View, Block, MovableView } from "@tarojs/components";
+import { View, Block, Text } from "@tarojs/components";
 import {
   noop,
   useMemoClassNames,
@@ -11,11 +11,13 @@ import {
   nextTick,
   getRect,
   useScopeRef,
-  ExtClass
+  ExtClass,
+  ActiveProps
 } from "../utils";
 import VanIcon from "../icon";
 import "./index.less"
 export type VanNavBarProps = {
+  titleAlign?: "absolute" | "flex";
   title?: string;
   leftText?: string;
   rightText?: string;
@@ -38,20 +40,35 @@ export type VanNavBarProps = {
   titleClass?: string;
   ["title-class"]?: string;
 };
+const DefaultProps = {
+  titleAlign : "absolute" as "absolute",
+  title : "",
+  leftText : "",
+  rightText : "",
+  leftArrow : false,
+  fixed : false,
+  placeholder : false,
+  border : true,
+  zIndex : 1,
+  safeAreaInsetTop : true,
+  onClickLeft : noop,
+  onClickRight : noop
+}
+type ActiveVanNavBarProps = ActiveProps<VanNavBarProps, keyof typeof DefaultProps>
 
-const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
+const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = (props: ActiveVanNavBarProps) => {
   const {
-    title = "",
-    leftText = "",
-    rightText = "",
-    leftArrow = false,
-    fixed = false,
-    placeholder = false,
-    border = true,
-    zIndex = 1,
-    safeAreaInsetTop = true,
-    onClickLeft = noop,
-    onClickRight = noop
+    title,
+    leftText,
+    rightText,
+    leftArrow,
+    fixed,
+    placeholder,
+    border,
+    zIndex,
+    safeAreaInsetTop,
+    onClickLeft,
+    onClickRight
   } = props;
 
   const classnames = useMemoClassNames();
@@ -86,15 +103,18 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
     });
   }, [fixed, placeholder]);
 
+  const fixedHeight = useMemo(()=> ({
+    height: addUnit(height)
+  }), [height, addUnit]);
+
+  const navBarStyle = useMemo(()=>({
+    ...data.baseStyle,
+    ...props.customStyle
+  }), [data.baseStyle, props.customStyle]);
+
   return (
     <Block>
-      {(fixed && placeholder) && (
-        <View
-          style={{
-            height: addUnit(height)
-          }}
-        />
-      )}
+      {(fixed && placeholder) && ( <View style={fixedHeight} /> )}
       <View
         ref={scoperef}
         className={classnames(
@@ -102,15 +122,19 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
           ExtClass(props, "custom-class"),
           border && "van-hairline--bottom"
         )}
-        style={{
-          ...data.baseStyle,
-          ...props.customStyle
-        }}
+        style={navBarStyle}
       >
         <View className="van-nav-bar__content">
-          <View className="van-nav-bar__left" onClick={onClickLeft}>
+          <View
+            className={
+              classnames(
+                "van-nav-bar__left",
+                props.titleAlign === "absolute" && "van-nav-bar__left--absolute"
+              )
+            }
+          >
             {(leftArrow || leftText) ? (
-              <Block>
+              <View className='van-nav-bar__action' hoverClass='van-nav-bar__action--hover' onClick={onClickLeft}>
                 {leftArrow && (
                   <VanIcon
                     size={16}
@@ -120,37 +144,37 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = props => {
                   />
                 )}
                 {leftText && (
-                  <View
-                    className="van-nav-bar__text"
-                    hoverClass="van-nav-bar__text--hover"
-                    hoverStayTime={70}
-                  >
-                    { leftText }
-                  </View>
+                  <Text className="van-nav-bar__text">{ leftText }</Text>
                 )}
-              </Block>
+              </View>
             ) : (
-              props.renderLeft
+              <View className="slot van-nav-bar__action" hoverClass='van-nav-bar__action--hover' hoverStayTime={70}>{props.renderLeft}</View>
             )}
           </View>
           <View className={
             classnames(
               "van-nav-bar__title van-ellipsis",
+              props.titleAlign === "absolute" && "van-nav-bar__title--absolute",
               ExtClass(props, "title-class")
             )}>
-            {title ? <Block>{title}</Block> : props.renderTitle}
+            {title ? <Text className='van-nav-bar__title__text'>
+              {title}
+            </Text> : <View className="slot">{props.renderTitle}</View>}
           </View>
-          <View className="van-nav-bar__right" onClick={onClickRight}>
+          <View
+            className={
+              classnames(
+                "van-nav-bar__right",
+                props.titleAlign === "absolute" && "van-nav-bar__right--absolute"
+              )
+            }
+          >
             {rightText ? (
-              <View
-                className="van-nav-bar__text"
-                hoverClass="van-nav-bar__text--hover"
-                hoverStayTime={70}
-              >
-                {rightText}
+              <View className='van-nav-bar__action' hoverClass='van-nav-bar__action--hover' hoverStayTime={70} onClick={onClickRight}>
+                <Text className="van-nav-bar__text">{rightText}</Text>
               </View>
             ) : (
-              props.renderRight
+              <View className="slot van-nav-bar__action" hoverClass='van-nav-bar__action--hover' hoverStayTime={70}>{props.renderRight}</View>
             )}
           </View>
         </View>
@@ -165,4 +189,5 @@ VanNavBar.externalClasses = [
   "custom-class",
   "title-class"
 ]
+VanNavBar.defaultProps = DefaultProps;
 export default VanNavBar;

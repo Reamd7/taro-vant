@@ -2,3 +2,23 @@
   @{property}: e(replace(@imp, '@([^() ]+)', '@{$1}', 'ig'));
   @{property}: e(replace(@imp, '@([^() ]+)', 'var(--$1, @{$1})', 'ig'));
 }
+
+/*  #ifndef  rn  */
+.slot {
+  height: 100%;
+  // width: 100%;
+  display: flex;
+  align-items: center;
+
+  & > view {
+    display: flex;
+    align-items: center;
+    &:empty {
+      display: none;
+    }
+  }
+  &:empty {
+    display: none;
+  }
+}
+/*  #endif  */
