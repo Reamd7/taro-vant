@@ -13,11 +13,15 @@ class MockNav extends Component {
     router: routerListener.getValue()
   }
   componentWillMount = () => {
-    routerListener.subscribe((v) => {
+    this.listener = routerListener.subscribe((v) => {
       this.setState({
         router: v
       })
     })
+  }
+
+  componentWillUnmount() {
+    this.listener.unsubscribe()
   }
 
   render() {
@@ -25,6 +29,8 @@ class MockNav extends Component {
       ...this.state.router.$app.config.window,
       ...this.state.router.config,
     } : {}
+    console.log(page);
+
     return this.state.router ? <VanNavBar
       title={page.navigationBarTitleText}
       leftArrow={true}
@@ -80,7 +86,6 @@ window.addEventListener("load", function () {
   // 创建观察者对象
   var navTop = 0
   var observer = new MutationObserver(function (mutations) {
-    routerListener.next(getCurrentPage())
 
     // TODO 在之后看看怎么增加过度效果。改变 transition
     // console.log(mutations)
@@ -122,6 +127,8 @@ window.addEventListener("load", function () {
           val.style.transform = "translate(100%, 0)";
 
           function ontransitionend() {
+            console.log(getCurrentPage())
+            routerListener.next(getCurrentPage())
             if (val instanceof HTMLDivElement) {
               val.style.position = ""
               val.style.top = "";
@@ -185,6 +192,8 @@ window.addEventListener("load", function () {
           }, 10)
 
           function ontransitionend() {
+            console.log(getCurrentPage())
+            routerListener.next(getCurrentPage())
             if (val instanceof HTMLDivElement) {
               document.body.removeChild(val);
               val.style.transition = "";

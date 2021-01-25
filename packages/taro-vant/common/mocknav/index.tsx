@@ -87,7 +87,6 @@ window.addEventListener("load", function () {
   // 创建观察者对象
   var navTop = 0
   var observer = new MutationObserver(function (mutations) {
-    routerListener.next(getCurrentPage())
 
     // TODO 在之后看看怎么增加过度效果。改变 transition
     // console.log(mutations)
@@ -144,6 +143,7 @@ window.addEventListener("load", function () {
               val.style.transition = "";
               // val.ontransitionend = null;
               val.removeEventListener("transitionend", ontransitionend)
+              routerListener.next(getCurrentPage())
               // =================================
               // hiddenList.forEach(v => v.style.display = "none")
               // hiddenList = []
@@ -196,6 +196,7 @@ window.addEventListener("load", function () {
               document.body.removeChild(val);
               val.style.transition = "";
               val.removeEventListener("transitionend", ontransitionend)
+              routerListener.next(getCurrentPage())
             }
           }
           val.addEventListener("transitionend", ontransitionend)
