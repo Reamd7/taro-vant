@@ -140,17 +140,13 @@ const VanSearch: Taro.FunctionComponent<VanSearchProps> = (props: ActiveVanSearc
       </View>
     </View>
     {(props.showAction || props.useActionSlot) &&
-      <View
-        className="van-search__action"
-        hoverClass="van-search__action--hover"
-        hoverStayTime={70}
-      >
+      <View className="van-search__action" >
         {
-          props.useActionSlot ? props.renderAction :
+          props.useActionSlot ? <View className="slot" hoverClass="van-search__action--hover" hoverStayTime={70}>{props.renderAction}</View> :
             <View onClick={() => {
               props.onCancel()
               setValue('')
-            }} className="cancel-class">
+            }} className="cancel-class" hoverClass="van-search__action--hover" hoverStayTime={70}>
               {props.actionText}
             </View>
         }
