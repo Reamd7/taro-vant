@@ -1,6 +1,6 @@
 {
   "name": "taro-externalclass-plugin",
-  "version": "1.0.1-alpha.0",
+  "version": "1.0.1",
   "description": "支持根据组件的 externalClass 修改驼峰式class类名为externalClass中定义的class类名",
   "keywords": [
     "taro"
