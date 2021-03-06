@@ -64,8 +64,14 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
     isLink,
     clickable,
     icon,
-    titleWidth
+    titleWidth,
+    title,
+    label,
+    value,
+    arrowDirection
   } = props;
+
+  console.log(props);
 
   const jumpLink = useLink(props);
   const onClick = useCallback(
@@ -134,9 +140,9 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
           ...props.titleStyle
         }}
       >
-        {props.title ? <Text>{props.title}</Text> :
+        {(title !== undefined) ? <Text>{title}</Text> :
           (props.useTitleSlot && props.renderTitle)}
-        {(props.label || props.useLabelSlot) && (
+        {(label || props.useLabelSlot) && (
           <View
             className={classNames(
               "van-cell__label",
@@ -145,7 +151,7 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
             )}
           >
             {props.useLabelSlot && props.renderLabel}
-            {props.label && <Text>{props.label}</Text>}
+            {label && <Text>{label}</Text>}
           </View>
         )}
       </View>
@@ -156,8 +162,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
           isNormalClass && props.valueClass
         )}
       >
-        {props.value || props.value === 0 ? (
-          <Text>{props.value}</Text>
+        {value || value === 0 ? (
+          <Text>{value}</Text>
         ) : (
             props.children
           )}
@@ -166,7 +172,7 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
         <View className="van-cell__right-icon-wrap">
           <VanIcon
             name={
-              props.arrowDirection ? `arrow-${props.arrowDirection}` : "arrow"
+              arrowDirection ? `arrow-${arrowDirection}` : "arrow"
             }
             custom-class={classNames(
               isNormalClass && props.rightIconClass,
