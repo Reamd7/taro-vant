@@ -65,6 +65,10 @@ const VanFieldTextarea: Taro.FunctionComponent<
 
   // 奇怪的操作。
   // const TextQuery = useRef<Taro.SelectorQuery>();
+  const {
+    label,
+    errorMessage
+  } = props
 
   return <VanCell
     size={props.size}
@@ -84,10 +88,10 @@ const VanFieldTextarea: Taro.FunctionComponent<
     titleClass={props.labelClass}
     renderIcon={props.renderLeftIcon}
     renderTitle={
-      props.label ? <View className={
+      label ? <View className={
         bem('field__label', { disabled: props.disabled })
       }>
-        {props.label}
+        {label}
       </View> : props.renderLabel
     }
     onClick={(e) => {
@@ -238,12 +242,12 @@ const VanFieldTextarea: Taro.FunctionComponent<
         </View>
       </View>
     }
-    {props.errorMessage && <View className={
+    {errorMessage && <View className={
       bem('field__error-message', [props.errorMessageAlign, {
         disabled: props.disabled, error: props.error
       }])
     }>
-      {props.errorMessage}
+      {errorMessage}
     </View>}
   </VanCell>;
 }

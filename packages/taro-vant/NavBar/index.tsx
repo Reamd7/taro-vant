@@ -148,7 +148,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = (props: ActiveVanNavBa
                 )}
               </View>
             ) : (
-              <View className="slot van-nav-bar__action" hoverClass='van-nav-bar__action--hover' hoverStayTime={70}>{props.renderLeft}</View>
+              <View className="slot van-nav-bar__action" hoverClass='van-nav-bar__action--hover' hoverStayTime={70} onClick={onClickLeft}>{props.renderLeft}</View>
             )}
           </View>
           <View className={
@@ -174,7 +174,7 @@ const VanNavBar: Taro.FunctionComponent<VanNavBarProps> = (props: ActiveVanNavBa
                 <Text className="van-nav-bar__text">{rightText}</Text>
               </View>
             ) : (
-              <View className="slot van-nav-bar__action" hoverClass='van-nav-bar__action--hover' hoverStayTime={70}>{props.renderRight}</View>
+              <View className="slot van-nav-bar__action" hoverClass='van-nav-bar__action--hover' hoverStayTime={70} onClick={onClickRight}>{props.renderRight}</View>
             )}
           </View>
         </View>

@@ -37,6 +37,11 @@ const VanFieldText: Taro.FunctionComponent<
     }
   }, [setValue, props.onInput])
 
+  const {
+    label,
+    errorMessage
+  } = props
+
   return <VanCell
     size={props.size}
     icon={props.leftIcon}
@@ -56,10 +61,10 @@ const VanFieldText: Taro.FunctionComponent<
     renderIcon={props.renderLeftIcon}
     useTitleSlot={!!props.label || props.useLabelSlot}
     renderTitle={
-      props.label ? <View className={
+      label ? <View className={
         bem('field__label', { disabled: props.disabled })
       }>
-        <Text>{props.label}</Text>
+        <Text>{label}</Text>
       </View> : props.renderLabel
     }
   >
@@ -181,12 +186,12 @@ const VanFieldText: Taro.FunctionComponent<
         </View>
       </View>
     }
-    {props.errorMessage && <View className={
+    {errorMessage && <View className={
       bem('field__error-message', [props.errorMessageAlign, {
         disabled: props.disabled, error: props.error
       }])
     }>
-      {props.errorMessage}
+      <Text>{errorMessage}</Text>
     </View>}
   </VanCell>;
 }

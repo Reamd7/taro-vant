@@ -1,11 +1,24 @@
 import Taro from "@tarojs/taro";
-const { useState, useCallback, useEffect } = Taro /** api **/;
-import { View } from "@tarojs/components";
+
+const {useState, useCallback, useEffect} = Taro /** api **/;
+import {View} from "@tarojs/components";
 import "./VanDropDownMenu.less";
-import { getSystemInfoSync, ActiveProps, bem, useMemoClassNames, CssProperties, getRect, addUnit, useScopeRef } from "../utils"
-import { useRelationPropsInject } from "../utils/relation";
-import { VanDropDownItemProps, ActiveVanDropDownItemProps } from "./VanDropDownItem";
-import useControllableValue, { ControllerValueProps } from "../hooks/useControllableValue"
+import {
+  getSystemInfoSync,
+  ActiveProps,
+  bem,
+  useMemoClassNames,
+  CssProperties,
+  getRect,
+  addUnit,
+  useScopeRef
+} from "../utils"
+import {useRelationPropsInject} from "../utils/relation";
+import {
+  VanDropDownItemProps,
+  ActiveVanDropDownItemProps
+} from "./VanDropDownItem";
+import useControllableValue, {ControllerValueProps} from "../hooks/useControllableValue"
 
 function displayTitle(item: {
   title?: string;
@@ -41,7 +54,8 @@ export type VanDropDownMenuProps = {
   closeOnClickOverlay?: boolean;
   closeOnClickOutside?: boolean;
 
-} & ControllerValueProps<number | null, "defaultActiveIndex", "activeIndex">;
+} & ControllerValueProps<number | null, "defaultActiveIndex", "activeIndex">
+  & ControllerValueProps<Array<string | undefined | number>, "defaultActiveValueList", "ValueList", "onChangeValueList">;
 
 export const DropDownMenuDefaultProps = {
   overlay: true,
@@ -64,7 +78,7 @@ const ARRAY = new Set<(v: number | null) => void>(); // TODO 要不要做单例�
 
 const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: ActiveVanDropDownMenuProps) => {
   const [windowHeight] = useState(() => {
-    const { windowHeight } = getSystemInfoSync();
+    const {windowHeight} = getSystemInfoSync();
     return windowHeight
   });
 
@@ -86,7 +100,7 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
    */
   const getChildWrapperStyle = useCallback(() => {
     return getRect(scope, '.van-dropdown-menu').then(rect => {
-      const { top = 0, bottom = 0 } = rect;
+      const {top = 0, bottom = 0} = rect;
       const offset = direction === 'down' ? bottom : windowHeight - top;
 
       let wrapperStyle: React.CSSProperties = {
@@ -110,12 +124,10 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
   // 当为数字的时候，即切换。
   // 主动关闭是有动画的。
   // 切换是没有动画的。
-
   const onFocusClose = useCallback(() => {
     setActiveIndex(null)
   }, []);
-
-  const onCloseOther = useCallback(()=>{
+  const onCloseOther = useCallback(() => {
     ARRAY.forEach(v => {
       if (v !== setActiveIndex) {
         v(null)
@@ -130,13 +142,16 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
     }
   }, [])
 
-  const [ValueList, setValueList] = useState<
-    Array<string | undefined | number>
-  >([]);
+  const [ValueList, setValueList] = useControllableValue<Array<string | undefined | number>, ActiveVanDropDownMenuProps, "defaultActiveValueList", "ValueList", "onChangeValueList">(props, {
+    defaultValue: [],
+    defaultValuePropName: "defaultActiveValueList",
+    valuePropName: "ValueList",
+    trigger: "onChangeValueList"
+  });
 
   // console.log(ValueList)
 
-  const itemListData = useRelationPropsInject<VanDropDownItemProps>(props.gid, (props) => {
+  const itemListData: VanDropDownItemProps[] = useRelationPropsInject<VanDropDownItemProps>(props.gid, (props) => {
     const index = props.index;
 
     const value = (ValueList[index] !== undefined) ? ValueList[index] : props.value;
@@ -153,7 +168,7 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
       onChange: ((item) => {
         if (item) {
           setValueList((v) => {
-            const list = v.slice();
+            const list = v!.slice();
             list[index] = item.value;
             // console.log(index + "before update")
             return list
@@ -185,11 +200,12 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
   // console.log("itemListData", JSON.stringify(itemListData))
 
   return (
-    <View className="van-dropdown-menu van-dropdown-menu--top-bottom" ref={scopeRef}>
+    <View className="van-dropdown-menu van-dropdown-menu--top-bottom"
+          ref={scopeRef}>
       {itemListData.map((item, index) => {
         return <View
           className={
-            bem('dropdown-menu__item', { disabled: item.disabled })
+            bem('dropdown-menu__item', {disabled: item.disabled})
           }
           onClick={() => {
             if (!item.disabled) {
@@ -206,7 +222,10 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
             className={
               classnames(
                 item.titleClass,
-                bem('dropdown-menu__title', { active: (activeIndex === index), down: (activeIndex === index) === (props.direction === 'down') })
+                bem('dropdown-menu__title', {
+                  active: (activeIndex === index),
+                  down: (activeIndex === index) === (props.direction === 'down')
+                })
               )
             }
             style={css({
@@ -220,7 +239,7 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
         </View>
       })}
       {props.children}
-    </View >
+    </View>
   );
 };
 VanDropDownMenu.defaultProps = DropDownMenuDefaultProps;

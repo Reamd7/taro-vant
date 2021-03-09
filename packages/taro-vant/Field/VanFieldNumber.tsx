@@ -35,7 +35,10 @@ const VanFieldNumber: Taro.FunctionComponent<
   }, [value])
 
   const showClear = useMemo(() => !!props.clearable && !!focused && !!value && !props.readonly, [props.clearable, props.readonly, focused, value]);
-
+  const {
+    label,
+    errorMessage
+  } = props
   return <VanCell
     size={props.size}
     icon={props.leftIcon}
@@ -53,12 +56,12 @@ const VanFieldNumber: Taro.FunctionComponent<
     title-class={"label-class"}
     titleClass={props.labelClass}
     renderIcon={props.renderLeftIcon}
-    useTitleSlot={!!props.label || props.useLabelSlot}
+    useTitleSlot={!!label || props.useLabelSlot}
     renderTitle={
-      props.label ? <View className={
+      label ? <View className={
         bem('field__label', { disabled: props.disabled })
       }>
-        {props.label}
+        {label}
       </View> : props.renderLabel
     }
   >
@@ -176,12 +179,12 @@ const VanFieldNumber: Taro.FunctionComponent<
         </View>
       </View>
     }
-    {props.errorMessage && <View className={
+    {errorMessage && <View className={
       bem('field__error-message', [props.errorMessageAlign, {
         disabled: props.disabled, error: props.error
       }])
     }>
-      {props.errorMessage}
+      {errorMessage}
     </View>}
   </VanCell>;
 }

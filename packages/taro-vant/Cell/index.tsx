@@ -71,8 +71,6 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
     arrowDirection
   } = props;
 
-  console.log(props);
-
   const jumpLink = useLink(props);
   const onClick = useCallback(
     (
