@@ -4,6 +4,7 @@ import DemoBlock from "../components/demoBlock";
 import VanCell from "taro-vant/Cell";
 import VanCellGroup from "taro-vant/CellGroup";
 import VanIcon from "taro-vant/icon";
+import VanTag from "taro-vant/Tag";
 import "./index.less";
 
 const Cell: Taro.FunctionComponent<{}> = () => {
@@ -75,10 +76,11 @@ const Cell: Taro.FunctionComponent<{}> = () => {
           value="内容"
           icon="shop-o"
           isLink
+          useTitleSlot
           renderTitle={
             <View>
-              <View className="title">单元格</View>
-              {/* <van-tag type="danger">标签</van-tag> */}
+              <View className="title">单元格Slot</View>
+              <VanTag type="danger">标签</VanTag>
             </View>
           }
         ></VanCell>
