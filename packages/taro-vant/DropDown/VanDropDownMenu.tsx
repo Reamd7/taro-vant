@@ -107,9 +107,9 @@ const VanDropDownMenu: Taro.FunctionComponent<VanDropDownMenuProps> = (props: Ac
         zIndex,
       }
       if (direction === 'down') {
-        wrapperStyle['top'] = addUnit(offset);
+        wrapperStyle['top'] = offset + "px";
       } else {
-        wrapperStyle['bottom'] = addUnit(offset);
+        wrapperStyle['bottom'] = offset + "px";
       }
       return wrapperStyle;
     })
