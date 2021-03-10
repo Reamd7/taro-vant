@@ -166,5 +166,13 @@ VanCard.options = {
   addGlobalClass: true
 }
 VanCard.defaultProps = DefaultProps;
-
+VanCard.externalClasses = [
+  'custom-class',
+  'thumb-class',
+  'title-class',
+  'price-class',
+  'origin-price-class',
+  'desc-class',
+  'num-class'
+]
 export default VanCard
