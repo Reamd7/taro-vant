@@ -30,13 +30,13 @@ export default function VanCardPage() {
         thumb={imageURL}
         renderTags={
           <View>
-            <VanTag plain type="danger" custom-class="tag" className="tag">标签1</VanTag>
+            <VanTag plain type="danger" className="tag">标签1</VanTag>
             <VanTag plain type="danger">标签2</VanTag>
           </View>
         }
         renderFooter={
           <View className="VanCard__footer" custom-class="VanCard__footer">
-            <VanButton size="mini" round custom-class="button" className="button">按钮</VanButton>
+            <VanButton size="mini" round className="button">按钮</VanButton>
             <VanButton size="mini" round>按钮</VanButton>
           </View>
         }

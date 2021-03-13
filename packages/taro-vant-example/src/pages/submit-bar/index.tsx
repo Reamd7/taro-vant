@@ -21,7 +21,7 @@ export default function VanSubmitBarPage() {
         price={3050}
         buttonText="提交订单"
         onSubmit={onClickButton}
-        custom-class="VanSubmitBar" className="VanSubmitBar"
+        className="VanSubmitBar"
         safeAreaInsetBottom={false}
       />
     </DemoBlock>
@@ -34,7 +34,7 @@ export default function VanSubmitBarPage() {
         tip="您的收货地址不支持同城送, 我们已为您推荐快递"
         tipIcon="//img.yzcdn.cn/public_files/2017/8/10/6af5b7168eed548100d9041f07b7c616.png"
         onSubmit={onClickButton}
-        custom-class="VanSubmitBar" className="VanSubmitBar"
+        className="VanSubmitBar"
         safeAreaInsetBottom={false}
       />
     </DemoBlock>
@@ -45,7 +45,7 @@ export default function VanSubmitBarPage() {
         price={3050}
         buttonText="提交订单"
         onSubmit={onClickButton}
-        custom-class="VanSubmitBar" className="VanSubmitBar"
+        className="VanSubmitBar"
         safeAreaInsetBottom={false}
         textAlign={"center"}
       />
@@ -56,7 +56,7 @@ export default function VanSubmitBarPage() {
         price={3050}
         buttonText="提交订单"
         onSubmit={onClickButton}
-        custom-class="VanSubmitBar" className="VanSubmitBar"
+        className="VanSubmitBar"
         tip={true}
         safeAreaInsetBottom={false}
 

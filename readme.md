@@ -166,3 +166,6 @@ module.exports = function (merge) {
   - [ ] 暂时还只是支持 直接引用，不支持原来 index.tsx 中类似的重新导出。还要进一步处理。
   >（所以原有使用`import { VanButton } from "taro-vant"`）这种引用还不支持，
   > 现在只是支持`import VanButton from "taro-vant/Button"` 这种直接引用的。
+
+TODO:
+- [ ] Tree-select 组件，需要记录滚动位置，切换选项卡的时候需要恢复
