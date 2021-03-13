@@ -25,6 +25,8 @@ const VanGoodsActionIcon: Taro.FunctionComponent<VanGoodsActionIconProps> = (pro
   const jumpLink = useLink(props);
   const classnames = useMemoClassNames();
 
+  const { text } = props;
+
   return <VanButton
     square
     id={props.id}
@@ -69,7 +71,7 @@ const VanGoodsActionIcon: Taro.FunctionComponent<VanGoodsActionIconProps> = (pro
         isExternalClass && "text-class",
         isNormalClass && props.textClass
       )
-    }>{props.text}</Text>
+    }>{text}</Text>
   </VanButton>
 }
 VanGoodsActionIcon.options = {
