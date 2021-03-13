@@ -9,7 +9,7 @@ import {
   isNormalClass
 } from "../utils"
 import VanInfo from "../info";
-import "./icon.less";
+import "./index.less";
 
 export type VanIconProps = {
   dot?: boolean;
