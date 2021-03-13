@@ -35,13 +35,13 @@
   &__value {
     overflow: hidden;
     text-align: right;
-    vertical-align: middle;
     .theme(color, '@cell-value-color');
   }
 
   &__title,
   &__value {
     flex: 1;
+    height: 100%;
 
     &:empty {
       display: none;
@@ -54,9 +54,13 @@
 
   &__left-icon-wrap,
   &__right-icon-wrap {
+    position: relative;
+    top: 1PX;
+
     display: flex;
     align-items: center;
     .theme(height, '@cell-line-height');
+    .theme(line-height, '@cell-line-height');
     .theme(font-size, '@cell-icon-size');
   }
 
@@ -70,7 +74,6 @@
   }
 
   &__left-icon {
-    vertical-align: middle;
     .theme(line-height, '@cell-line-height');
   }
 
