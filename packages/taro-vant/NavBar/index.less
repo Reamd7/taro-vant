@@ -56,9 +56,11 @@
 
   &__left {
     justify-content: flex-start;
+    align-items: center;
   }
   &__right {
     justify-content: flex-end;
+    align-items: center;
   }
 
 
@@ -97,8 +99,14 @@
     .theme(color, '@nav-bar-text-color') !important;
   }
 
+  &__arrowContainer {
+    width: 32px;
+    height: 32px;
+  }
+
   &__action {
     display: flex;
+    align-items: center;
     // box-sizing: border-box;
     .theme(padding, '0 @padding-xs');
 
