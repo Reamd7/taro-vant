@@ -1,6 +1,6 @@
 {
   "name": "taro-vant",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "基于taro2进行多端组件开发，迁移vant-weapp的组件库，兼容h5、微信小程序端、支付宝小程序端。",
   "keywords": [
     "taro",
