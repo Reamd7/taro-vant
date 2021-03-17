@@ -23,7 +23,7 @@ export { default as VanGoodsActionButton } from 'taro-vant/GoodsActionButton';
 export { default as VanGoodsActionIcon } from 'taro-vant/GoodsActionIcon';
 export { default as VanGrid } from 'taro-vant/Grid';
 export { default as VanGridItem } from 'taro-vant/Grid/item';
-export { default as VanIcon } from 'taro-vant/Icon';
+export { default as VanIcon } from 'taro-vant/icon';
 export { default as VanImage } from 'taro-vant/Image';
 export { default as VanIndexList } from 'taro-vant/IndexList';
 export { default as VanInfo } from 'taro-vant/Info';

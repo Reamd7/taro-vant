@@ -23,7 +23,7 @@ export { default as VanGoodsActionButton } from './GoodsActionButton';
 export { default as VanGoodsActionIcon } from './GoodsActionIcon';
 export { default as VanGrid } from './Grid';
 export { default as VanGridItem } from './Grid/item';
-export { default as VanIcon } from './Icon';
+export { default as VanIcon } from './icon';
 export { default as VanImage } from './Image';
 export { default as VanIndexList } from './IndexList';
 export { default as VanInfo } from './Info';
