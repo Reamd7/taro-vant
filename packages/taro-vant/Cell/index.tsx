@@ -55,7 +55,7 @@ export type VanCellProps = {
   renderExtra?: React.ReactNode;
 } & MixinLinkProps
 
-type IconArrowName = `arrow-${VanCellProps['arrowDirection']}`
+type IconArrowName = "arrow-left" | "arrow-up" | "arrow-down" // `arrow-${VanCellProps['arrowDirection']}`
 
 const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
   const {
@@ -116,14 +116,6 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
     >
       {/** ICON */}
 
-      {icon ? (
-        <View className="van-cell__left-icon-wrap">
-          <VanIcon name={icon} className="van-cell__left-icon" />
-        </View>
-      ) : (
-          props.renderIcon
-        )}
-
       <View
         className={classNames(
           isNormalClass && props.titleClass,
@@ -142,8 +134,13 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
           ...props.titleStyle
         }}
       >
-        {(title !== undefined) ? <Text>{title}</Text> :
-          (props.useTitleSlot && props.renderTitle)}
+        <View className="van-cell__title__container">
+          <View className="van-cell__left-icon-wrap">
+            {icon ? <VanIcon name={icon} className="van-cell__left-icon" /> : props.renderIcon}
+          </View>
+          {(title !== undefined) ? <Text>{title}</Text> :
+            (props.useTitleSlot && props.renderTitle)}
+        </View>
         {(label || props.useLabelSlot) && (
           <View
             className={classNames(
