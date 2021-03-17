@@ -9,7 +9,7 @@ import {
   isNormalClass,
   isExternalClass
 } from "../utils"
-import VanIcon from "../icon";
+import VanIcon, { VanIconProps } from "../icon";
 import VanLoading from "../Loading";
 import type { LoadingType } from '../Loading'
 import "./index.less";
@@ -36,7 +36,7 @@ export type ButtonProps = {
 
   // nativeType?: SourceBtnProps['type'];
   // iconPosition?: "left" | "right";
-  icon?: string;
+  icon?: VanIconProps['name'];
   IconClassPrefix?: string;
   renderIcon?: React.ReactNode
 

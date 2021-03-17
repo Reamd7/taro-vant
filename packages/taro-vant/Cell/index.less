@@ -5,6 +5,7 @@
 .van-cell {
   position: relative;
   display: flex;
+  justify-content: space-between;
   box-sizing: border-box;
   width: 100%;
   .theme(padding, '@cell-vertical-padding @cell-horizontal-padding');
@@ -32,7 +33,19 @@
     .theme(color, '@cell-label-color');
   }
 
+  &__title {
+    flex-basis: auto;
+
+    &__container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
   &__value {
+    flex-grow: 1;
+    flex-basis: auto;
     overflow: hidden;
     text-align: right;
     .theme(color, '@cell-value-color');
@@ -40,7 +53,6 @@
 
   &__title,
   &__value {
-    flex: 1;
     height: 100%;
 
     &:empty {
@@ -54,6 +66,9 @@
 
   &__left-icon-wrap,
   &__right-icon-wrap {
+    flex-basis: auto;
+    flex-grow: 0;
+
     position: relative;
     top: 1PX;
 
@@ -62,6 +77,10 @@
     .theme(height, '@cell-line-height');
     .theme(line-height, '@cell-line-height');
     .theme(font-size, '@cell-icon-size');
+
+    &:empty {
+      display: none;
+    }
   }
 
   &__left-icon-wrap {

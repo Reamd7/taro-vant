@@ -9,11 +9,13 @@ import {
   isNormalClass
 } from "../utils"
 import VanInfo from "../info";
+import type { IconName } from "./config";
+
 import "./index.less";
 
 export type VanIconProps = {
   dot?: boolean;
-  name?: string;
+  name?: IconName;
   size?: string | number;
   info?: string | number;
   badge?: string | number;

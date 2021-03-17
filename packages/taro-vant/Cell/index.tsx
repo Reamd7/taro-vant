@@ -55,6 +55,8 @@ export type VanCellProps = {
   renderExtra?: React.ReactNode;
 } & MixinLinkProps
 
+type IconArrowName = `arrow-${VanCellProps['arrowDirection']}`
+
 const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
   const {
     size,
@@ -70,6 +72,8 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
     value,
     arrowDirection
   } = props;
+
+  const iconName = arrowDirection ? `arrow-${arrowDirection}` as IconArrowName : "arrow"
 
   const jumpLink = useLink(props);
   const onClick = useCallback(
@@ -169,9 +173,7 @@ const VanCell: Taro.FunctionComponent<VanCellProps> = props => {
       {props.isLink ? (
         <View className="van-cell__right-icon-wrap">
           <VanIcon
-            name={
-              arrowDirection ? `arrow-${arrowDirection}` : "arrow"
-            }
+            name={iconName}
             custom-class={classNames(
               isNormalClass && props.rightIconClass,
               isExternalClass && "right-icon-class",

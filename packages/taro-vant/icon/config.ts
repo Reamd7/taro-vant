@@ -1,4 +1,4 @@
-export default {
+const config = {
   name: 'vant-icon',
   basic: [
     'success',
@@ -241,4 +241,7 @@ export default {
     'enlarge',
     'photo-fail',
   ],
-};
+} as const;
+export default config;
+
+export type IconName = typeof config['basic'][number] | typeof config['outline'][number] | typeof config['filled'][number]

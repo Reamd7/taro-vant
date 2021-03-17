@@ -15,7 +15,7 @@ import {
   isExternalClass
 } from "../utils"
 import { Block, View } from "@tarojs/components";
-import VanIcon from "../icon";
+import VanIcon, { VanIconProps } from "../icon";
 import VanOverlay from "../Overlay";
 import "./index.less";
 import { ITouchEvent } from "@tarojs/components/types/common";
@@ -29,7 +29,7 @@ export type VanPopupProps = {
   overlayStyle?: React.CSSProperties;
   closeOnClickOverlay?: boolean;
   closeable?: Boolean;
-  closeIcon?: string;
+  closeIcon?: VanIconProps['name'];
   closeIconPosition?: string;
   safeAreaInsetBottom?: boolean;
   safeAreaInsetTop?: boolean;
